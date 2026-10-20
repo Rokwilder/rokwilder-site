@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Grok Bot GMU12 sample v2" xmlns="http://www.topografix.com/GPX/1/1">
+<metadata><name>CO GMU 12 AI Scouting v2 (SAMPLE, estimates)</name></metadata>
+<wpt lat="40.05947" lon="-107.15352"><name>Z01 Archery</name><desc>Archery Sept 2–30, 2026; est. score 7.11; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 65%; timber/opening edge (feeding edge); mapped water ~30 m (NHD); ~9.5 km from nearest mapped road; north-facing, slope 5°, 10,655 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.15955" lon="-107.48558"><name>Z02 Archery</name><desc>Archery Sept 2–30, 2026; est. score 7.08; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; inside CPW elk migration corridor; LANDFIRE canopy cover 75%; timber/opening edge (feeding edge); mapped water ~30 m (NHD); ~4.3 km from nearest mapped road; south-facing, slope 13°, 9,465 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.0762" lon="-107.1907"><name>Z03 Archery</name><desc>Archery Sept 2–30, 2026; est. score 7.07; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 35%; timber/opening edge (feeding edge); mapped water ~0 m (NHD); ~8.1 km from nearest mapped road; east/west-facing, slope 14°, 10,270 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.06699" lon="-107.22392"><name>Z04 Archery</name><desc>Archery Sept 2–30, 2026; est. score 7.07; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 55%; timber/opening edge (feeding edge); mapped water ~30 m (NHD); ~7.4 km from nearest mapped road; north-facing, slope 9°, 10,360 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.12693" lon="-107.15984"><name>Z05 Archery</name><desc>Archery Sept 2–30, 2026; est. score 7.04; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 45%; timber/opening edge (feeding edge); mapped water ~30 m (NHD); ~2.6 km from nearest mapped road; north-facing, slope 14°, 10,469 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.20359" lon="-107.53231"><name>Z06 1st Rifle</name><desc>1st Rifle Oct 14–18, 2026; est. score 6.56; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; inside CPW elk migration corridor; LANDFIRE canopy cover 65%; timber/opening edge (feeding edge); mapped water ~108 m (NHD); ~2.5 km from nearest mapped road; north-facing, slope 12°, 9,171 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.17871" lon="-107.49257"><name>Z07 1st Rifle</name><desc>1st Rifle Oct 14–18, 2026; est. score 6.49; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; within 500 m of a CPW elk migration route; inside CPW elk migration corridor; LANDFIRE canopy cover 75%; timber/opening edge (feeding edge); mapped water ~42 m (NHD); ~2.4 km from nearest mapped road; north-facing, slope 10°, 8,842 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.1818" lon="-107.39689"><name>Z08 1st Rifle</name><desc>1st Rifle Oct 14–18, 2026; est. score 6.45; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 65%; mapped water ~228 m (NHD); ~3.6 km from nearest mapped road; north-facing, slope 5°, 8,577 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.22548" lon="-107.49989"><name>Z09 1st Rifle</name><desc>1st Rifle Oct 14–18, 2026; est. score 6.32; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; CPW elk winter range; inside CPW elk migration corridor; LANDFIRE canopy cover 75%; timber/opening edge (feeding edge); mapped water ~85 m (NHD); ~2.1 km from nearest mapped road; north-facing, slope 4°, 8,186 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.25176" lon="-107.34616"><name>Z10 1st Rifle</name><desc>1st Rifle Oct 14–18, 2026; est. score 6.32; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; LANDFIRE canopy cover 65%; mapped water ~594 m (NHD); ~2.4 km from nearest mapped road; north-facing, slope 1°, 9,194 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.17787" lon="-107.51876"><name>Z11 2nd Rifle</name><desc>2nd Rifle Oct 24–Nov 1, 2026; est. score 6.17; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; on/next to a CPW elk migration route (&lt;150 m); inside CPW elk migration corridor; LANDFIRE canopy cover 75%; mapped water ~30 m (NHD); ~3.4 km from nearest mapped road; east/west-facing, slope 20°, 9,165 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.24041" lon="-107.51618"><name>Z12 2nd Rifle</name><desc>2nd Rifle Oct 24–Nov 1, 2026; est. score 5.57; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; CPW elk winter range; on/next to a CPW elk migration route (&lt;150 m); inside CPW elk migration corridor; LANDFIRE canopy cover 55%; timber/opening edge (feeding edge); mapped water ~0 m (NHD); ~1.2 km from nearest mapped road; east/west-facing, slope 10°, 8,251 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.21101" lon="-107.5116"><name>Z13 2nd Rifle</name><desc>2nd Rifle Oct 24–Nov 1, 2026; est. score 5.49; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; inside CPW elk migration corridor; LANDFIRE canopy cover 65%; timber/opening edge (feeding edge); mapped water ~120 m (NHD); ~2.6 km from nearest mapped road; north-facing, slope 18°, 8,860 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.2187" lon="-107.38909"><name>Z14 2nd Rifle</name><desc>2nd Rifle Oct 24–Nov 1, 2026; est. score 5.38; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; inside CPW elk migration corridor; LANDFIRE canopy cover 85%; mapped water ~60 m (NHD); ~1.9 km from nearest mapped road; north-facing, slope 24°, 8,729 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.1629" lon="-107.63705"><name>Z15 2nd Rifle</name><desc>2nd Rifle Oct 24–Nov 1, 2026; est. score 5.31; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; CPW elk winter range; on/next to a CPW elk migration route (&lt;150 m); inside CPW elk migration corridor; LANDFIRE canopy cover 35%; timber/opening edge (feeding edge); mapped water ~85 m (NHD); ~1.4 km from nearest mapped road; north-facing, slope 13°, 8,224 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.22745" lon="-107.40689"><name>Z16 3rd Rifle</name><desc>3rd Rifle Nov 7–15, 2026; est. score 6.03; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; CPW elk winter concentration area; inside CPW elk migration corridor; LANDFIRE canopy cover 55%; timber/opening edge (feeding edge); mapped water ~42 m (NHD); ~1.9 km from nearest mapped road; east/west-facing, slope 23°, 7,789 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.2751" lon="-107.78145"><name>Z17 3rd Rifle</name><desc>3rd Rifle Nov 7–15, 2026; est. score 5.88; BLM; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified); CPW elk summer range; CPW elk winter concentration area; CPW severe winter range; on/next to a CPW elk migration route (&lt;150 m); inside CPW elk migration corridor; LANDFIRE canopy cover 25%; timber/opening edge (feeding edge); mapped water ~95 m (NHD); ~1.6 km from nearest mapped road; south-facing, slope 12°, 7,006 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.35702" lon="-107.45567"><name>Z18 3rd Rifle</name><desc>3rd Rifle Nov 7–15, 2026; est. score 5.7; BLM; ACCESS: CHECK – parcel group continues past the GMU line; access may exist outside the unit; CPW elk summer concentration area; CPW elk winter concentration area; CPW severe winter range; within 500 m of a CPW elk migration route; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; timber/opening edge (feeding edge); mapped water ~90 m (NHD); ~0.6 km from nearest mapped road; south-facing, slope 10°, 6,477 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.22783" lon="-107.51502"><name>Z19 3rd Rifle</name><desc>3rd Rifle Nov 7–15, 2026; est. score 5.67; USFS; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead; CPW elk summer concentration area; CPW elk winter range; inside CPW elk migration corridor; LANDFIRE canopy cover 65%; timber/opening edge (feeding edge); mapped water ~60 m (NHD); ~2.6 km from nearest mapped road; south-facing, slope 13°, 8,457 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.3274" lon="-107.72438"><name>Z20 3rd Rifle</name><desc>3rd Rifle Nov 7–15, 2026; est. score 5.65; Iles Grove STL (CPW STL); ACCESS: CHECK – touches a Census-mapped road (public/private status not verified); CPW elk winter concentration area; CPW severe winter range; within 500 m of a CPW elk migration route; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; mapped water ~108 m (NHD); ~1.5 km from nearest mapped road; east/west-facing, slope 4°, 6,306 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.33008" lon="-107.66703"><name>Z21 4th Rifle</name><desc>4th Rifle Nov 18–22, 2026; est. score 6.16; Iles Grove STL (CPW STL); ACCESS: CHECK – parcel group continues past the GMU line; access may exist outside the unit; CPW elk winter concentration area; CPW severe winter range; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; mapped water ~247 m (NHD); ~0.9 km from nearest mapped road; south-facing, slope 5°, 6,507 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.37158" lon="-107.55121"><name>Z22 4th Rifle</name><desc>4th Rifle Nov 18–22, 2026; est. score 6.01; BLM; ACCESS: CHECK – parcel group continues past the GMU line; access may exist outside the unit; CPW elk summer concentration area; CPW elk winter concentration area; CPW severe winter range; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; timber/opening edge (feeding edge); mapped water ~67 m (NHD); ~0.6 km from nearest mapped road; south-facing, slope 7°, 6,359 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.29395" lon="-107.67541"><name>Z23 4th Rifle</name><desc>4th Rifle Nov 18–22, 2026; est. score 5.99; BLM; ACCESS: LIKELY LANDLOCKED – no mapped road/trailhead contact even with federal corner crossing; CPW elk summer range; CPW elk winter concentration area; CPW severe winter range; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; mapped water ~0 m (NHD); ~0.5 km from nearest mapped road; south-facing, slope 3°, 6,484 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.35701" lon="-107.45637"><name>Z24 4th Rifle</name><desc>4th Rifle Nov 18–22, 2026; est. score 5.98; BLM; ACCESS: CHECK – parcel group continues past the GMU line; access may exist outside the unit; CPW elk summer concentration area; CPW elk winter concentration area; CPW severe winter range; within 500 m of a CPW elk migration route; inside CPW elk migration corridor; LANDFIRE canopy cover 0%; timber/opening edge (feeding edge); mapped water ~90 m (NHD); ~0.6 km from nearest mapped road; south-facing, slope 8°, 6,478 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.27483" lon="-107.78144"><name>Z25 4th Rifle</name><desc>4th Rifle Nov 18–22, 2026; est. score 5.96; BLM; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified); CPW elk summer range; CPW elk winter concentration area; CPW severe winter range; on/next to a CPW elk migration route (&lt;150 m); inside CPW elk migration corridor; LANDFIRE canopy cover 25%; timber/opening edge (feeding edge); mapped water ~67 m (NHD); ~1.6 km from nearest mapped road; south-facing, slope 13°, 6,976 ft</desc><type>Hotspot zones (estimates)</type></wpt>
+<wpt lat="40.14212" lon="-107.75784"><name>Funnel-Saddle 1</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7981 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.3521" lon="-107.58307"><name>Funnel-Saddle 2</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7020 ft; ACCESS: LIKELY LANDLOCKED – no mapped road/trailhead contact even with federal corner crossing</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.22503" lon="-107.39456"><name>Funnel-Saddle 3</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 8458 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.1486" lon="-107.54529"><name>Funnel-Saddle 4</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 9839 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.23036" lon="-107.7002"><name>Funnel-Saddle 5</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7793 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.22881" lon="-107.72078"><name>Funnel-Saddle 6</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7827 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.18383" lon="-107.51619"><name>Funnel-Saddle 7</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 9344 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.17099" lon="-107.51466"><name>Funnel-Saddle 8</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 9345 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.25189" lon="-107.7084"><name>Funnel-Saddle 9</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7508 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.16558" lon="-107.52915"><name>Funnel-Saddle 10</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 9634 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.21048" lon="-107.51158"><name>Funnel-Saddle 11</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 8926 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.34394" lon="-107.53965"><name>Funnel-Saddle 12</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7304 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.15392" lon="-107.46056"><name>Funnel-Saddle 13</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 8799 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.28838" lon="-107.61426"><name>Funnel-Saddle 14</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 7684 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.18954" lon="-107.3594"><name>Funnel-Saddle 15</name><desc>terrain saddle inside/near a CPW elk migration corridor or route; 9445 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.23837" lon="-107.71311"><name>Funnel-Pinch 1</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7677 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.1667" lon="-107.77282"><name>Funnel-Pinch 2</name><desc>narrow strip of public land inside a migration corridor with private land close by; 8091 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.32011" lon="-107.61058"><name>Funnel-Pinch 3</name><desc>narrow strip of public land inside a migration corridor with private land close by; 6943 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.25958" lon="-107.42239"><name>Funnel-Pinch 4</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7134 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.35133" lon="-107.58164"><name>Funnel-Pinch 5</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7148 ft; ACCESS: LIKELY LANDLOCKED – no mapped road/trailhead contact even with federal corner crossing</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.26576" lon="-107.76811"><name>Funnel-Pinch 6</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7070 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.28525" lon="-107.61029"><name>Funnel-Pinch 7</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7867 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.19242" lon="-107.81828"><name>Funnel-Pinch 8</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7849 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.3238" lon="-107.70672"><name>Funnel-Pinch 9</name><desc>narrow strip of public land inside a migration corridor with private land close by; 6333 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.14785" lon="-107.60292"><name>Funnel-Pinch 10</name><desc>narrow strip of public land inside a migration corridor with private land close by; 8109 ft; ACCESS: LIKELY ACCESSIBLE – parcel group touches a USFS MVUM road or COTREX trailhead</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.34499" lon="-107.54075"><name>Funnel-Pinch 11</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7267 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.29717" lon="-107.66398"><name>Funnel-Pinch 12</name><desc>narrow strip of public land inside a migration corridor with private land close by; 6905 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.24163" lon="-107.75698"><name>Funnel-Pinch 13</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7155 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.27576" lon="-107.66209"><name>Funnel-Pinch 14</name><desc>narrow strip of public land inside a migration corridor with private land close by; 6590 ft; ACCESS: CHECK – touches a Census-mapped road (public/private status not verified)</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.18765" lon="-107.73766"><name>Funnel-Pinch 15</name><desc>narrow strip of public land inside a migration corridor with private land close by; 7391 ft; ACCESS: LIKELY LANDLOCKED – no mapped road/trailhead contact even with federal corner crossing</desc><type>Corridor funnels / pinch points (estimates)</type></wpt>
+<wpt lat="40.14212" lon="-107.75784"><name>Saddle 1</name><desc>7981 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.20488" lon="-107.30362"><name>Saddle 2</name><desc>9250 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.0867" lon="-107.13134"><name>Saddle 3</name><desc>11606 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.11842" lon="-107.25494"><name>Saddle 4</name><desc>9813 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.3521" lon="-107.58307"><name>Saddle 5</name><desc>7020 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.22503" lon="-107.39456"><name>Saddle 6</name><desc>8458 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.1486" lon="-107.54529"><name>Saddle 7</name><desc>9839 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.23036" lon="-107.7002"><name>Saddle 8</name><desc>7793 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.22881" lon="-107.72078"><name>Saddle 9</name><desc>7827 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.18383" lon="-107.51619"><name>Saddle 10</name><desc>9344 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.25189" lon="-107.7084"><name>Saddle 11</name><desc>7508 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.16558" lon="-107.52915"><name>Saddle 12</name><desc>9634 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.21048" lon="-107.51158"><name>Saddle 13</name><desc>8926 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.34394" lon="-107.53965"><name>Saddle 14</name><desc>7304 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.15392" lon="-107.46056"><name>Saddle 15</name><desc>8799 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.28838" lon="-107.61426"><name>Saddle 16</name><desc>7684 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.132" lon="-107.19005"><name>Saddle 17</name><desc>10393 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.22448" lon="-107.43338"><name>Saddle 18</name><desc>8193 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.18954" lon="-107.3594"><name>Saddle 19</name><desc>9445 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.12794" lon="-107.4715"><name>Saddle 20</name><desc>8878 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.24044" lon="-107.51478"><name>Saddle 21</name><desc>8344 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.06521" lon="-107.20466"><name>Saddle 22</name><desc>10784 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.21456" lon="-107.7223"><name>Saddle 23</name><desc>7441 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.11938" lon="-107.16205"><name>Saddle 24</name><desc>11001 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.13123" lon="-107.53032"><name>Saddle 25</name><desc>10439 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.20703" lon="-107.38309"><name>Saddle 26</name><desc>8873 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.15539" lon="-107.5777"><name>Saddle 27</name><desc>9008 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.1953" lon="-107.50647"><name>Saddle 28</name><desc>9180 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.16254" lon="-107.30219"><name>Saddle 29</name><desc>10099 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.19398" lon="-107.5302"><name>Saddle 30</name><desc>9099 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.29456" lon="-107.66073"><name>Saddle 31</name><desc>6893 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.15511" lon="-107.14466"><name>Saddle 32</name><desc>9717 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.15413" lon="-107.59792"><name>Saddle 33</name><desc>8362 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.06011" lon="-107.1333"><name>Saddle 34</name><desc>11629 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.09998" lon="-107.13804"><name>Saddle 35</name><desc>11216 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.17827" lon="-107.48801"><name>Saddle 36</name><desc>8973 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.20021" lon="-107.15657"><name>Saddle 37</name><desc>9788 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.22815" lon="-107.52518"><name>Saddle 38</name><desc>8545 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.03369" lon="-107.15515"><name>Saddle 39</name><desc>11479 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.20488" lon="-107.5467"><name>Saddle 40</name><desc>8889 ft</desc><type>Saddles (DEM)</type></wpt>
+<wpt lat="40.09054" lon="-107.12657"><name>Bench 1</name><desc>11887 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.08696" lon="-107.14601"><name>Bench 2</name><desc>11895 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.243" lon="-107.68705"><name>Bench 3</name><desc>7747 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.21612" lon="-107.49884"><name>Bench 4</name><desc>8753 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.05561" lon="-107.13037"><name>Bench 5</name><desc>11735 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.2183" lon="-107.71126"><name>Bench 6</name><desc>7782 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.18848" lon="-107.75902"><name>Bench 7</name><desc>8164 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.22467" lon="-107.43723"><name>Bench 8</name><desc>8317 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.13419" lon="-107.75298"><name>Bench 9</name><desc>8005 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.16836" lon="-107.53659"><name>Bench 10</name><desc>9703 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.35774" lon="-107.59486"><name>Bench 11</name><desc>7174 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.07293" lon="-107.15045"><name>Bench 12</name><desc>11089 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.05523" lon="-107.22179"><name>Bench 13</name><desc>11771 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.03095" lon="-107.15855"><name>Bench 14</name><desc>11693 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.16132" lon="-107.45279"><name>Bench 15</name><desc>8276 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.25793" lon="-107.42408"><name>Bench 16</name><desc>7033 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.16916" lon="-107.80403"><name>Bench 17</name><desc>7491 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.17928" lon="-107.51567"><name>Bench 18</name><desc>9614 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.35798" lon="-107.57208"><name>Bench 19</name><desc>7125 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.19131" lon="-107.49269"><name>Bench 20</name><desc>8221 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.18529" lon="-107.43512"><name>Bench 21</name><desc>7656 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.23705" lon="-107.49786"><name>Bench 22</name><desc>7790 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.22527" lon="-107.54641"><name>Bench 23</name><desc>8345 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.35237" lon="-107.54663"><name>Bench 24</name><desc>6665 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.26053" lon="-107.7175"><name>Bench 25</name><desc>7579 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.29016" lon="-107.61853"><name>Bench 26</name><desc>7863 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.21954" lon="-107.38772"><name>Bench 27</name><desc>8816 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.11663" lon="-107.75856"><name>Bench 28</name><desc>7648 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.19576" lon="-107.5467"><name>Bench 29</name><desc>8274 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.27473" lon="-107.60148"><name>Bench 30</name><desc>7084 ft</desc><type>Benches (DEM)</type></wpt>
+<wpt lat="40.1273" lon="-107.6418"><name>Spring/Seep 1</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24106" lon="-107.70586"><name>Spring/Seep 2</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.29153" lon="-107.524"><name>Spring/Seep 3</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2917" lon="-107.52372"><name>Spring/Seep 4</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30375" lon="-107.61499"><name>Spring/Seep 5</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30461" lon="-107.53831"><name>Spring/Seep 6</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30524" lon="-107.60763"><name>Spring/Seep 7</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30583" lon="-107.53864"><name>Spring/Seep 8</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.3063" lon="-107.60738"><name>Spring/Seep 9</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30675" lon="-107.56321"><name>Spring/Seep 10</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21208" lon="-107.44283"><name>Water point 11</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26096" lon="-107.29502"><name>Water point 12</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.28651" lon="-107.4395"><name>Water point 13</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30389" lon="-107.45127"><name>Spring/Seep 14</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.33667" lon="-107.46514"><name>Spring/Seep 15</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.30745" lon="-107.53855"><name>Spring/Seep 16</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.322" lon="-107.54995"><name>Spring/Seep 17</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.32818" lon="-107.55043"><name>Spring/Seep 18</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.33483" lon="-107.49325"><name>Spring/Seep 19</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.33612" lon="-107.46535"><name>Spring/Seep 20</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11848" lon="-107.62249"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12199" lon="-107.50273"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13144" lon="-107.51659"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14506" lon="-107.58131"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14696" lon="-107.57802"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14704" lon="-107.57843"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15751" lon="-107.57756"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16007" lon="-107.58406"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16046" lon="-107.58553"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16113" lon="-107.56596"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1615" lon="-107.56624"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1212" lon="-107.6225"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12195" lon="-107.62231"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12238" lon="-107.59888"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12459" lon="-107.63052"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12522" lon="-107.63118"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1255" lon="-107.63255"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12588" lon="-107.59799"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12631" lon="-107.63405"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1264" lon="-107.63491"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12657" lon="-107.63176"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12658" lon="-107.6331"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12685" lon="-107.63441"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12775" lon="-107.63542"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12889" lon="-107.63714"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12927" lon="-107.63707"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12957" lon="-107.63712"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13044" lon="-107.63689"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13288" lon="-107.63772"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13318" lon="-107.64485"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13372" lon="-107.64495"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13365" lon="-107.67009"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13392" lon="-107.66915"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13496" lon="-107.67824"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13525" lon="-107.67765"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13664" lon="-107.66698"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13898" lon="-107.66419"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14146" lon="-107.66478"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14201" lon="-107.66305"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1385" lon="-107.6459"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13908" lon="-107.63372"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14023" lon="-107.63528"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14085" lon="-107.63783"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.141" lon="-107.6249"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14132" lon="-107.64571"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14225" lon="-107.64568"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14253" lon="-107.604"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1429" lon="-107.62599"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14301" lon="-107.64529"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14319" lon="-107.62566"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14376" lon="-107.64615"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14463" lon="-107.62092"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1455" lon="-107.62557"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14598" lon="-107.62663"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14658" lon="-107.62082"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1466" lon="-107.62737"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14689" lon="-107.62788"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14772" lon="-107.62484"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14786" lon="-107.64028"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14795" lon="-107.63169"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14803" lon="-107.64163"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14819" lon="-107.64196"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14871" lon="-107.64316"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14903" lon="-107.64433"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14995" lon="-107.6244"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15761" lon="-107.64108"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15786" lon="-107.64161"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14637" lon="-107.52643"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14833" lon="-107.52575"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16045" lon="-107.52721"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16264" lon="-107.53547"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16273" lon="-107.54113"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1633" lon="-107.53145"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16384" lon="-107.53146"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16622" lon="-107.55913"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1672" lon="-107.55891"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16804" lon="-107.55884"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1579" lon="-107.64774"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15832" lon="-107.64782"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15835" lon="-107.59794"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15979" lon="-107.60258"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15994" lon="-107.60404"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16063" lon="-107.60568"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16102" lon="-107.60627"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16122" lon="-107.60708"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16267" lon="-107.61454"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17169" lon="-107.59842"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16219" lon="-107.56922"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16222" lon="-107.55948"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16759" lon="-107.5952"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16799" lon="-107.56195"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16862" lon="-107.57441"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16902" lon="-107.55925"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16996" lon="-107.57136"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1751" lon="-107.58969"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17637" lon="-107.58142"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17721" lon="-107.58287"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11569" lon="-107.54722"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11628" lon="-107.51814"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1163" lon="-107.53635"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11665" lon="-107.52789"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1169" lon="-107.55108"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11733" lon="-107.53326"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.10516" lon="-107.47353"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11191" lon="-107.45973"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11231" lon="-107.45438"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11512" lon="-107.46381"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11671" lon="-107.42806"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12264" lon="-107.46128"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11858" lon="-107.54772"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11859" lon="-107.54502"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12021" lon="-107.52024"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12069" lon="-107.53247"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12081" lon="-107.53411"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.122" lon="-107.53092"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12243" lon="-107.54206"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1341" lon="-107.53237"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13525" lon="-107.53128"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1354" lon="-107.52162"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12546" lon="-107.42887"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12832" lon="-107.43359"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12891" lon="-107.43372"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13083" lon="-107.46886"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13308" lon="-107.41942"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13652" lon="-107.47806"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13738" lon="-107.47342"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13803" lon="-107.47503"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1418" lon="-107.47896"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14375" lon="-107.47783"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13478" lon="-107.51413"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13672" lon="-107.48161"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13809" lon="-107.4794"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14174" lon="-107.48962"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14175" lon="-107.48543"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14356" lon="-107.48374"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14367" lon="-107.48414"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14369" lon="-107.48456"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14395" lon="-107.48515"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14594" lon="-107.48122"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14616" lon="-107.48326"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14623" lon="-107.48665"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14716" lon="-107.48796"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14721" lon="-107.48602"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1489" lon="-107.48185"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14896" lon="-107.48464"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14988" lon="-107.48203"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15064" lon="-107.48269"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15088" lon="-107.48159"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15132" lon="-107.48532"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14727" lon="-107.45254"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14999" lon="-107.44097"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15022" lon="-107.44023"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15031" lon="-107.46156"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15049" lon="-107.43998"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15072" lon="-107.43982"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15113" lon="-107.43963"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15213" lon="-107.4671"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15228" lon="-107.47839"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15291" lon="-107.46807"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15329" lon="-107.4186"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1533" lon="-107.43584"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15383" lon="-107.43897"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1546" lon="-107.47028"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15758" lon="-107.46086"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15989" lon="-107.45457"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16027" lon="-107.46515"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16058" lon="-107.4538"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16101" lon="-107.45291"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16213" lon="-107.45138"><name>Berry Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15136" lon="-107.48414"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15202" lon="-107.48222"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15239" lon="-107.48471"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15302" lon="-107.48544"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15299" lon="-107.48692"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15378" lon="-107.48288"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15473" lon="-107.4881"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16923" lon="-107.48902"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16961" lon="-107.48857"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17297" lon="-107.47905"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16257" lon="-107.4669"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1647" lon="-107.42882"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16475" lon="-107.44672"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16696" lon="-107.42859"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16796" lon="-107.41832"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16825" lon="-107.44106"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16927" lon="-107.42077"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16955" lon="-107.43989"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13298" lon="-107.66423"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1336" lon="-107.66955"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13265" lon="-107.76559"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14166" lon="-107.69848"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14206" lon="-107.69872"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14699" lon="-107.79773"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14823" lon="-107.7924"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14994" lon="-107.7973"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15135" lon="-107.79483"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15596" lon="-107.78397"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15601" lon="-107.80072"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15671" lon="-107.80539"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15672" lon="-107.78454"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15828" lon="-107.7853"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14408" lon="-107.66253"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14976" lon="-107.65932"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15527" lon="-107.67969"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15546" lon="-107.67992"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15923" lon="-107.66222"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16296" lon="-107.69026"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16312" lon="-107.69791"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16343" lon="-107.69"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16393" lon="-107.69012"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16474" lon="-107.69326"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15547" lon="-107.70063"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15564" lon="-107.69942"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15658" lon="-107.70395"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15716" lon="-107.70333"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15856" lon="-107.78542"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15895" lon="-107.78544"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.159" lon="-107.78812"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15903" lon="-107.78847"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15903" lon="-107.78646"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15902" lon="-107.78586"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15909" lon="-107.78879"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15915" lon="-107.79044"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15914" lon="-107.78912"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15921" lon="-107.78994"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15754" lon="-107.70504"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15759" lon="-107.70075"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.158" lon="-107.70616"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1591" lon="-107.70281"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15966" lon="-107.69979"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1609" lon="-107.7013"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16103" lon="-107.70581"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16152" lon="-107.70208"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15929" lon="-107.78964"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15936" lon="-107.7853"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15937" lon="-107.78501"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15946" lon="-107.78477"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15951" lon="-107.7845"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16022" lon="-107.79609"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16039" lon="-107.79638"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16071" lon="-107.78302"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16071" lon="-107.79686"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16162" lon="-107.79924"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16312" lon="-107.70472"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16327" lon="-107.70252"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16378" lon="-107.69893"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16386" lon="-107.70659"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16473" lon="-107.69934"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16536" lon="-107.70118"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16548" lon="-107.7066"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16499" lon="-107.69626"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16547" lon="-107.67121"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16565" lon="-107.6912"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16599" lon="-107.67103"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16603" lon="-107.65901"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16608" lon="-107.69545"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16636" lon="-107.69726"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16637" lon="-107.69019"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16646" lon="-107.69469"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16663" lon="-107.65944"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16183" lon="-107.79967"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16228" lon="-107.80012"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16257" lon="-107.80017"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16288" lon="-107.80027"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16301" lon="-107.78169"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16345" lon="-107.80109"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16741" lon="-107.77136"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16766" lon="-107.76602"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16866" lon="-107.80427"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16696" lon="-107.69453"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16731" lon="-107.69424"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16763" lon="-107.68974"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16779" lon="-107.69519"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16786" lon="-107.67258"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16808" lon="-107.6598"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16835" lon="-107.69303"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16848" lon="-107.67221"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16929" lon="-107.6895"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16934" lon="-107.69164"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16832" lon="-107.70366"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1689" lon="-107.70186"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16953" lon="-107.70068"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17012" lon="-107.70481"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17212" lon="-107.70567"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16966" lon="-107.69017"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16997" lon="-107.6882"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17058" lon="-107.68906"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17112" lon="-107.68846"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17113" lon="-107.68887"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17128" lon="-107.68907"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1725" lon="-107.68619"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17367" lon="-107.66996"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17414" lon="-107.66967"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17464" lon="-107.6694"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17102" lon="-107.80404"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18411" lon="-107.76234"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17399" lon="-107.70373"><name>Aldrich Lakes (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17412" lon="-107.72371"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.175" lon="-107.70072"><name>Aldrich Lakes (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17821" lon="-107.70273"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19329" lon="-107.7395"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17188" lon="-107.61338"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17209" lon="-107.61358"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17222" lon="-107.61382"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17374" lon="-107.61491"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1739" lon="-107.61461"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17409" lon="-107.61525"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17494" lon="-107.59751"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17697" lon="-107.62684"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17846" lon="-107.60105"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17917" lon="-107.64595"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17917" lon="-107.63391"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18493" lon="-107.59838"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18645" lon="-107.60112"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18204" lon="-107.58537"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18436" lon="-107.59531"><name>Konopik Reservoir (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18609" lon="-107.58529"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18968" lon="-107.58457"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18998" lon="-107.57349"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19079" lon="-107.57848"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19312" lon="-107.58587"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19443" lon="-107.58086"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1749" lon="-107.66929"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17513" lon="-107.66918"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17523" lon="-107.69006"><name>D D and E Wise Reservoir (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18745" lon="-107.55101"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18836" lon="-107.54282"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18836" lon="-107.54246"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18874" lon="-107.54428"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19013" lon="-107.54556"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2002" lon="-107.63809"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20856" lon="-107.53596"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20983" lon="-107.54358"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21084" lon="-107.53359"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16854" lon="-107.5591"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16944" lon="-107.55908"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17323" lon="-107.5327"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17594" lon="-107.55004"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17818" lon="-107.52594"><name>Wymore Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1786" lon="-107.52982"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18407" lon="-107.53877"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1869" lon="-107.54929"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18731" lon="-107.54966"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18743" lon="-107.54997"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17758" lon="-107.48457"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18857" lon="-107.50966"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19028" lon="-107.517"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19041" lon="-107.51628"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19436" lon="-107.48758"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20566" lon="-107.48271"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20582" lon="-107.48244"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20596" lon="-107.48215"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20612" lon="-107.48192"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21157" lon="-107.48767"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21438" lon="-107.48433"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21472" lon="-107.4831"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2182" lon="-107.5067"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17421" lon="-107.46234"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17603" lon="-107.44189"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17707" lon="-107.47321"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21869" lon="-107.50701"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21902" lon="-107.50693"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21923" lon="-107.51209"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21934" lon="-107.5118"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21951" lon="-107.51143"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21966" lon="-107.51046"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22003" lon="-107.50761"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22179" lon="-107.5043"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22907" lon="-107.49698"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23024" lon="-107.49651"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21348" lon="-107.53183"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23813" lon="-107.52379"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24045" lon="-107.5237"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23781" lon="-107.4968"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2413" lon="-107.52355"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24199" lon="-107.52417"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24224" lon="-107.52442"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2426" lon="-107.54464"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24313" lon="-107.54188"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24347" lon="-107.53573"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24369" lon="-107.5332"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2437" lon="-107.53279"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24375" lon="-107.53965"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24416" lon="-107.55072"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24478" lon="-107.50288"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24491" lon="-107.49839"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24491" lon="-107.49797"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24527" lon="-107.49904"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24538" lon="-107.49952"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24456" lon="-107.54789"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24554" lon="-107.53042"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24561" lon="-107.53002"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24599" lon="-107.52898"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06302" lon="-107.22169"><name>Dines Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06693" lon="-107.22004"><name>East Lost Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06695" lon="-107.22228"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06694" lon="-107.22744"><name>Deep Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06822" lon="-107.2135"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06798" lon="-107.18515"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06805" lon="-107.1891"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06832" lon="-107.18342"><name>Round Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0687" lon="-107.19271"><name>Long Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06898" lon="-107.18606"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07116" lon="-107.18536"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07295" lon="-107.18228"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07301" lon="-107.20331"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07397" lon="-107.183"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07411" lon="-107.19918"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06895" lon="-107.21259"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0696" lon="-107.20992"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06971" lon="-107.23136"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07064" lon="-107.23151"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07167" lon="-107.21559"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07225" lon="-107.23871"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07324" lon="-107.2397"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07359" lon="-107.23338"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07392" lon="-107.23771"><name>West Lost Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07425" lon="-107.22821"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07431" lon="-107.20874"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07484" lon="-107.23473"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07571" lon="-107.22771"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07581" lon="-107.23076"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.076" lon="-107.23698"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0762" lon="-107.21006"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07627" lon="-107.24055"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07645" lon="-107.2341"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07674" lon="-107.23752"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07677" lon="-107.23259"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11456" lon="-107.28563"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11763" lon="-107.38126"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11862" lon="-107.37854"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11915" lon="-107.38265"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12078" lon="-107.41057"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12286" lon="-107.38626"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12338" lon="-107.39401"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12456" lon="-107.39583"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12595" lon="-107.38612"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.03096" lon="-107.16759"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.04615" lon="-107.155"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05063" lon="-107.16969"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05188" lon="-107.17085"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05259" lon="-107.1604"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.04694" lon="-107.17669"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05113" lon="-107.17514"><name>Causeway Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05425" lon="-107.17898"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05529" lon="-107.17782"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05545" lon="-107.1812"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05679" lon="-107.18088"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05815" lon="-107.18492"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06046" lon="-107.18178"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06076" lon="-107.18186"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06093" lon="-107.18134"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05278" lon="-107.16875"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05661" lon="-107.17062"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05917" lon="-107.1685"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.05948" lon="-107.15389"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0627" lon="-107.17289"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06774" lon="-107.16084"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06777" lon="-107.17434"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06905" lon="-107.15173"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07492" lon="-107.15848"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07644" lon="-107.1605"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06297" lon="-107.18864"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06375" lon="-107.18528"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06438" lon="-107.18437"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06498" lon="-107.18533"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.065" lon="-107.17861"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06581" lon="-107.19413"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06577" lon="-107.19239"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06683" lon="-107.18174"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06695" lon="-107.1939"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.06745" lon="-107.1858"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07509" lon="-107.18367"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07535" lon="-107.19931"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0781" lon="-107.18561"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09741" lon="-107.19041"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09755" lon="-107.19148"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09779" lon="-107.1918"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09814" lon="-107.19241"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09849" lon="-107.1845"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0985" lon="-107.19019"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09935" lon="-107.19095"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07981" lon="-107.16666"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.08429" lon="-107.17284"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.0853" lon="-107.17459"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.08982" lon="-107.16046"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09266" lon="-107.1428"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09508" lon="-107.14784"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09847" lon="-107.15815"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09852" lon="-107.1494"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.10336" lon="-107.1502"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.10412" lon="-107.17383"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07679" lon="-107.22984"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07825" lon="-107.22589"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07849" lon="-107.21477"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07859" lon="-107.23489"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.07867" lon="-107.20828"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.08026" lon="-107.23274"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.08371" lon="-107.23678"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.085" lon="-107.21072"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.08579" lon="-107.21551"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.09886" lon="-107.23044"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12106" lon="-107.2827"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12333" lon="-107.24772"><name>Marsh (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12777" lon="-107.25278"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.101" lon="-107.1923"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11417" lon="-107.20368"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12658" lon="-107.18533"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13328" lon="-107.18901"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14717" lon="-107.19766"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14766" lon="-107.19491"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15107" lon="-107.1928"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15455" lon="-107.19204"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15489" lon="-107.1934"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1555" lon="-107.19466"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1284" lon="-107.25238"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13024" lon="-107.26037"><name>Vaughan Lake (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13159" lon="-107.26904"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13384" lon="-107.27537"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13672" lon="-107.26441"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13695" lon="-107.26453"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13711" lon="-107.26121"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1375" lon="-107.26027"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13775" lon="-107.2604"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13838" lon="-107.25779"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13859" lon="-107.25728"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1388" lon="-107.25848"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1389" lon="-107.25687"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13906" lon="-107.25983"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13912" lon="-107.25904"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13952" lon="-107.25613"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15137" lon="-107.28156"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16216" lon="-107.27895"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16413" lon="-107.27745"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16863" lon="-107.27031"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.11537" lon="-107.20866"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12273" lon="-107.21837"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13726" lon="-107.21504"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13774" lon="-107.21902"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14168" lon="-107.22087"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1867" lon="-107.26873"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19789" lon="-107.27291"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19976" lon="-107.27897"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20533" lon="-107.31337"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20574" lon="-107.31321"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20672" lon="-107.28907"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20712" lon="-107.31376"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20792" lon="-107.31444"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20806" lon="-107.2903"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20868" lon="-107.3159"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20902" lon="-107.31748"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21535" lon="-107.31164"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21576" lon="-107.31233"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21584" lon="-107.3113"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21737" lon="-107.29369"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21799" lon="-107.29241"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1238" lon="-107.29705"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12398" lon="-107.29371"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12464" lon="-107.29692"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12586" lon="-107.2949"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12676" lon="-107.30589"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1274" lon="-107.29683"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12762" lon="-107.31107"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13003" lon="-107.30788"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13832" lon="-107.3202"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.12989" lon="-107.40368"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13015" lon="-107.40284"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13025" lon="-107.40712"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13036" lon="-107.40401"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13064" lon="-107.3915"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1313" lon="-107.40818"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13206" lon="-107.4093"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13283" lon="-107.39027"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13318" lon="-107.41806"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13522" lon="-107.38553"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13645" lon="-107.38725"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13732" lon="-107.38784"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13976" lon="-107.38639"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13986" lon="-107.39029"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13985" lon="-107.41549"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.142" lon="-107.41261"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14318" lon="-107.37286"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14364" lon="-107.40862"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14765" lon="-107.41231"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14887" lon="-107.40203"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14893" lon="-107.40795"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14926" lon="-107.39934"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15003" lon="-107.40714"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15025" lon="-107.39249"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15028" lon="-107.39674"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15094" lon="-107.40585"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15122" lon="-107.40527"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15166" lon="-107.38162"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1519" lon="-107.38217"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15223" lon="-107.40233"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13783" lon="-107.3595"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13854" lon="-107.35762"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14092" lon="-107.35938"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14522" lon="-107.33009"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14551" lon="-107.34861"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1456" lon="-107.36192"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14638" lon="-107.35631"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15592" lon="-107.33501"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16128" lon="-107.34024"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17075" lon="-107.33728"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15245" lon="-107.38506"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15255" lon="-107.39387"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15263" lon="-107.39434"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15298" lon="-107.4095"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15309" lon="-107.40307"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15356" lon="-107.40735"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16072" lon="-107.41241"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1633" lon="-107.4046"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1665" lon="-107.41761"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16658" lon="-107.41359"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16739" lon="-107.41752"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16781" lon="-107.41795"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16826" lon="-107.41823"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1685" lon="-107.3741"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16891" lon="-107.3744"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16924" lon="-107.37447"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16997" lon="-107.37514"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17101" lon="-107.39645"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17126" lon="-107.41627"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17201" lon="-107.41578"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14345" lon="-107.29806"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15313" lon="-107.29508"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15451" lon="-107.29414"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1794" lon="-107.32197"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18361" lon="-107.32469"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18512" lon="-107.32689"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18589" lon="-107.3219"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18926" lon="-107.32515"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19998" lon="-107.29051"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20079" lon="-107.28737"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17341" lon="-107.34353"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17487" lon="-107.36631"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17488" lon="-107.33641"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17545" lon="-107.34105"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17549" lon="-107.34359"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17554" lon="-107.34568"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17556" lon="-107.36849"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1762" lon="-107.36613"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17622" lon="-107.33431"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17645" lon="-107.34408"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.10576" lon="-107.1735"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13396" lon="-107.16703"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13833" lon="-107.16422"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.13988" lon="-107.1703"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14947" lon="-107.17041"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15384" lon="-107.17078"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15593" lon="-107.17304"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16647" lon="-107.16537"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.167" lon="-107.16628"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16781" lon="-107.15848"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16801" lon="-107.16707"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1681" lon="-107.16665"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16823" lon="-107.16063"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16823" lon="-107.16355"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16872" lon="-107.16159"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.16879" lon="-107.16265"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17313" lon="-107.15603"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15633" lon="-107.19607"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15689" lon="-107.19902"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.15738" lon="-107.19874"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1594" lon="-107.20247"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17318" lon="-107.15658"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17318" lon="-107.15734"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17459" lon="-107.16275"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17526" lon="-107.16423"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17682" lon="-107.17039"><name>Haley Reservoir (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19468" lon="-107.16183"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1949" lon="-107.16869"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19537" lon="-107.16524"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19549" lon="-107.15901"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19584" lon="-107.15929"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19583" lon="-107.16656"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19614" lon="-107.1605"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19617" lon="-107.15968"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1963" lon="-107.16147"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19681" lon="-107.16888"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19693" lon="-107.16963"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19704" lon="-107.1686"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19711" lon="-107.16718"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19716" lon="-107.16606"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19725" lon="-107.16967"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19748" lon="-107.16608"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19759" lon="-107.16584"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1979" lon="-107.16077"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19921" lon="-107.16102"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17655" lon="-107.34849"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17658" lon="-107.36635"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17667" lon="-107.33085"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17687" lon="-107.3646"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17732" lon="-107.36413"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17753" lon="-107.34684"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17773" lon="-107.33027"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17818" lon="-107.33163"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1786" lon="-107.34334"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17879" lon="-107.35122"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17886" lon="-107.3504"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17903" lon="-107.33788"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17895" lon="-107.34705"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17904" lon="-107.34447"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17914" lon="-107.35535"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17935" lon="-107.35215"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1825" lon="-107.34534"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18382" lon="-107.35653"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18897" lon="-107.34811"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19098" lon="-107.34265"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17408" lon="-107.3796"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17655" lon="-107.38385"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.17713" lon="-107.38787"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18706" lon="-107.39319"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18862" lon="-107.39606"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.18938" lon="-107.39744"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.1899" lon="-107.39794"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19026" lon="-107.39808"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19545" lon="-107.394"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19582" lon="-107.39347"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19107" lon="-107.34862"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19167" lon="-107.34585"><name>Stinsby Reservoir (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19192" lon="-107.34827"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19476" lon="-107.34159"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19674" lon="-107.34059"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19798" lon="-107.36214"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19867" lon="-107.33558"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19905" lon="-107.33571"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19921" lon="-107.33587"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19942" lon="-107.33593"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19618" lon="-107.39323"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19965" lon="-107.4007"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.19999" lon="-107.40073"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20022" lon="-107.40079"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20048" lon="-107.40087"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20072" lon="-107.40082"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20321" lon="-107.40145"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20386" lon="-107.40134"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2043" lon="-107.39439"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20606" lon="-107.39511"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20057" lon="-107.33706"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20128" lon="-107.33737"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20143" lon="-107.34504"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20167" lon="-107.33757"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20215" lon="-107.33785"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20261" lon="-107.33817"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2032" lon="-107.33845"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20659" lon="-107.36152"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20911" lon="-107.3385"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21072" lon="-107.33909"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20916" lon="-107.31812"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20981" lon="-107.32022"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21023" lon="-107.32181"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21031" lon="-107.3233"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21055" lon="-107.32443"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21105" lon="-107.32647"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21158" lon="-107.32826"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20695" lon="-107.39551"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20786" lon="-107.40213"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20819" lon="-107.4021"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20839" lon="-107.39638"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20895" lon="-107.40231"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21299" lon="-107.38789"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2131" lon="-107.37114"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22241" lon="-107.38016"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22476" lon="-107.37893"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22561" lon="-107.3772"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2127" lon="-107.3404"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21283" lon="-107.3353"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2136" lon="-107.33839"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22427" lon="-107.36564"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22516" lon="-107.36567"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22891" lon="-107.33476"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23009" lon="-107.35656"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23039" lon="-107.35565"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23124" lon="-107.35355"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23529" lon="-107.36441"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22741" lon="-107.33002"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23296" lon="-107.31219"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21832" lon="-107.29231"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21863" lon="-107.29238"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21892" lon="-107.29245"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2197" lon="-107.29253"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22031" lon="-107.29348"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.22054" lon="-107.29372"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.20829" lon="-107.19284"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21046" lon="-107.19081"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21067" lon="-107.18866"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21184" lon="-107.18691"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21327" lon="-107.18675"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23543" lon="-107.33794"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23562" lon="-107.34001"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23573" lon="-107.33984"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23601" lon="-107.33923"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23701" lon="-107.36179"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23786" lon="-107.36377"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.2386" lon="-107.36541"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.23889" lon="-107.36982"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24669" lon="-107.3801"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24679" lon="-107.38059"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26014" lon="-107.39299"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26014" lon="-107.39444"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26027" lon="-107.38729"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.21059" lon="-107.71022"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.24358" lon="-107.72513"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26241" lon="-107.76587"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26304" lon="-107.76625"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.26331" lon="-107.77564"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.31785" lon="-107.68882"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.31913" lon="-107.70757"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.31922" lon="-107.7188"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.34497" lon="-107.49205"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.32528" lon="-107.61145"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.33784" lon="-107.66726"><name>Pond/Stock tank (NHD)</name><desc>Mapped; may be dry</desc><type>Water (NHD)</type></wpt>
+<wpt lat="40.14181" lon="-107.23485"><name>Transfer Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.15209" lon="-107.25351"><name>Cyclone Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.15387" lon="-107.2237"><name>East Fork Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.18981" lon="-107.56154"><name>Morapos Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.23074" lon="-107.59353"><name>Morapos Winter Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.16526" lon="-107.21835"><name>Baldy Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.23385" lon="-107.3776"><name>Elk Draw Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.27003" lon="-107.41742"><name>Indian Run SWA East Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<wpt lat="40.27119" lon="-107.4304"><name>Indian Run SWA Trailhead</name><desc>Access point</desc><type>Trailheads (COTREX)</type></wpt>
+<trk><name>CPW elk migration route 1</name><trkseg><trkpt lat="40.15349" lon="-107.81397"/><trkpt lat="40.15396" lon="-107.81621"/><trkpt lat="40.15406" lon="-107.81664"/><trkpt lat="40.15500" lon="-107.82040"/><trkpt lat="40.15536" lon="-107.82414"/><trkpt lat="40.15561" lon="-107.82758"/><trkpt lat="40.15573" lon="-107.83073"/><trkpt lat="40.15620" lon="-107.83342"/><trkpt lat="40.15621" lon="-107.83536"/><trkpt lat="40.15609" lon="-107.83626"/></trkseg></trk>
+<trk><name>CPW elk migration route 2</name><trkseg><trkpt lat="40.21422" lon="-107.71618"/><trkpt lat="40.21341" lon="-107.71539"/><trkpt lat="40.21000" lon="-107.71209"/><trkpt lat="40.20410" lon="-107.70638"/><trkpt lat="40.20148" lon="-107.70426"/><trkpt lat="40.19586" lon="-107.69971"/><trkpt lat="40.19457" lon="-107.69868"/><trkpt lat="40.19413" lon="-107.69834"/><trkpt lat="40.18716" lon="-107.69297"/><trkpt lat="40.18558" lon="-107.69176"/><trkpt lat="40.18379" lon="-107.69037"/><trkpt lat="40.17243" lon="-107.68372"/><trkpt lat="40.17023" lon="-107.68231"/><trkpt lat="40.16845" lon="-107.68117"/><trkpt lat="40.16278" lon="-107.67753"/><trkpt lat="40.16268" lon="-107.67748"/><trkpt lat="40.16266" lon="-107.67747"/><trkpt lat="40.16014" lon="-107.67616"/><trkpt lat="40.16013" lon="-107.67618"/></trkseg></trk>
+<trk><name>CPW elk migration route 3</name><trkseg><trkpt lat="40.18211" lon="-107.49119"/><trkpt lat="40.18151" lon="-107.49116"/><trkpt lat="40.18026" lon="-107.49346"/><trkpt lat="40.17893" lon="-107.49966"/><trkpt lat="40.17888" lon="-107.49979"/><trkpt lat="40.17830" lon="-107.50120"/><trkpt lat="40.17815" lon="-107.50822"/><trkpt lat="40.17750" lon="-107.51053"/><trkpt lat="40.17803" lon="-107.51368"/><trkpt lat="40.17786" lon="-107.52148"/><trkpt lat="40.17791" lon="-107.52220"/><trkpt lat="40.17832" lon="-107.52774"/><trkpt lat="40.17929" lon="-107.53190"/><trkpt lat="40.17942" lon="-107.53246"/><trkpt lat="40.17936" lon="-107.53480"/><trkpt lat="40.18049" lon="-107.53797"/><trkpt lat="40.18160" lon="-107.54191"/><trkpt lat="40.18271" lon="-107.54586"/><trkpt lat="40.18442" lon="-107.54983"/><trkpt lat="40.18553" lon="-107.55377"/><trkpt lat="40.18724" lon="-107.55774"/></trkseg></trk>
+<trk><name>CPW elk migration route 4</name><trkseg><trkpt lat="40.34122" lon="-107.44233"/><trkpt lat="40.34234" lon="-107.44336"/><trkpt lat="40.34612" lon="-107.44550"/><trkpt lat="40.34725" lon="-107.44603"/><trkpt lat="40.34875" lon="-107.44709"/><trkpt lat="40.35064" lon="-107.44815"/><trkpt lat="40.35251" lon="-107.44972"/><trkpt lat="40.35402" lon="-107.45077"/><trkpt lat="40.35515" lon="-107.45131"/><trkpt lat="40.35564" lon="-107.45198"/><trkpt lat="40.35589" lon="-107.45233"/><trkpt lat="40.35763" lon="-107.45331"/><trkpt lat="40.35778" lon="-107.45340"/><trkpt lat="40.35829" lon="-107.45376"/><trkpt lat="40.35928" lon="-107.45445"/><trkpt lat="40.36002" lon="-107.45548"/><trkpt lat="40.36116" lon="-107.45602"/><trkpt lat="40.36228" lon="-107.45706"/><trkpt lat="40.36302" lon="-107.45808"/><trkpt lat="40.36452" lon="-107.45963"/><trkpt lat="40.36466" lon="-107.45978"/><trkpt lat="40.36601" lon="-107.46118"/><trkpt lat="40.36734" lon="-107.46256"/><trkpt lat="40.36750" lon="-107.46273"/><trkpt lat="40.36831" lon="-107.46358"/><trkpt lat="40.36900" lon="-107.46429"/><trkpt lat="40.37049" lon="-107.46584"/><trkpt lat="40.37161" lon="-107.46688"/><trkpt lat="40.37384" lon="-107.46995"/><trkpt lat="40.37493" lon="-107.47047"/><trkpt lat="40.37497" lon="-107.47049"/><trkpt lat="40.37607" lon="-107.47253"/></trkseg></trk>
+<trk><name>CPW elk migration route 5</name><trkseg><trkpt lat="40.14816" lon="-107.19987"/><trkpt lat="40.14831" lon="-107.20162"/><trkpt lat="40.14845" lon="-107.20337"/><trkpt lat="40.14860" lon="-107.20512"/><trkpt lat="40.14875" lon="-107.20687"/><trkpt lat="40.14890" lon="-107.20862"/><trkpt lat="40.14905" lon="-107.21037"/><trkpt lat="40.14921" lon="-107.21211"/><trkpt lat="40.14937" lon="-107.21386"/><trkpt lat="40.14952" lon="-107.21561"/><trkpt lat="40.14968" lon="-107.21736"/><trkpt lat="40.14983" lon="-107.21911"/><trkpt lat="40.14999" lon="-107.22086"/><trkpt lat="40.15015" lon="-107.22260"/><trkpt lat="40.15030" lon="-107.22435"/><trkpt lat="40.15046" lon="-107.22610"/><trkpt lat="40.15062" lon="-107.22785"/><trkpt lat="40.15077" lon="-107.22960"/><trkpt lat="40.15093" lon="-107.23135"/><trkpt lat="40.15108" lon="-107.23310"/><trkpt lat="40.15124" lon="-107.23484"/><trkpt lat="40.15138" lon="-107.23659"/><trkpt lat="40.15153" lon="-107.23834"/><trkpt lat="40.15168" lon="-107.24009"/><trkpt lat="40.15182" lon="-107.24184"/><trkpt lat="40.15196" lon="-107.24359"/><trkpt lat="40.15210" lon="-107.24535"/><trkpt lat="40.15223" lon="-107.24710"/><trkpt lat="40.15229" lon="-107.24790"/><trkpt lat="40.15236" lon="-107.24885"/><trkpt lat="40.15249" lon="-107.25060"/><trkpt lat="40.15260" lon="-107.25235"/><trkpt lat="40.15272" lon="-107.25411"/><trkpt lat="40.15283" lon="-107.25586"/><trkpt lat="40.15293" lon="-107.25762"/><trkpt lat="40.15302" lon="-107.25937"/><trkpt lat="40.15298" lon="-107.26198"/></trkseg></trk>
+<trk><name>CPW elk migration route 6</name><trkseg><trkpt lat="40.32011" lon="-107.52614"/><trkpt lat="40.32285" lon="-107.52867"/><trkpt lat="40.32460" lon="-107.53361"/><trkpt lat="40.32554" lon="-107.53364"/><trkpt lat="40.32729" lon="-107.53858"/><trkpt lat="40.32820" lon="-107.53983"/><trkpt lat="40.32859" lon="-107.54094"/><trkpt lat="40.32907" lon="-107.54230"/><trkpt lat="40.33173" lon="-107.54849"/><trkpt lat="40.33170" lon="-107.54970"/><trkpt lat="40.33351" lon="-107.55221"/><trkpt lat="40.33521" lon="-107.55957"/><trkpt lat="40.33516" lon="-107.56201"/><trkpt lat="40.33604" lon="-107.56448"/><trkpt lat="40.33686" lon="-107.56938"/><trkpt lat="40.33683" lon="-107.57062"/><trkpt lat="40.33680" lon="-107.57194"/><trkpt lat="40.33664" lon="-107.57934"/><trkpt lat="40.33659" lon="-107.58154"/><trkpt lat="40.33650" lon="-107.58560"/><trkpt lat="40.33643" lon="-107.58884"/><trkpt lat="40.33547" lon="-107.59002"/><trkpt lat="40.33528" lon="-107.59854"/><trkpt lat="40.33330" lon="-107.60333"/><trkpt lat="40.33325" lon="-107.60577"/><trkpt lat="40.33226" lon="-107.60816"/><trkpt lat="40.33223" lon="-107.60964"/><trkpt lat="40.33223" lon="-107.60980"/><trkpt lat="40.33221" lon="-107.61060"/></trkseg></trk>
+<trk><name>CPW elk migration route 7</name><trkseg><trkpt lat="40.35983" lon="-107.32343"/><trkpt lat="40.37233" lon="-107.32045"/><trkpt lat="40.39257" lon="-107.31562"/><trkpt lat="40.39509" lon="-107.31534"/><trkpt lat="40.39665" lon="-107.31517"/><trkpt lat="40.39667" lon="-107.31517"/><trkpt lat="40.39729" lon="-107.31510"/><trkpt lat="40.40039" lon="-107.31516"/><trkpt lat="40.40336" lon="-107.31587"/><trkpt lat="40.40498" lon="-107.31626"/></trkseg></trk>
+<trk><name>CPW elk migration route 8</name><trkseg><trkpt lat="40.24085" lon="-107.51600"/><trkpt lat="40.24087" lon="-107.51522"/><trkpt lat="40.24143" lon="-107.51680"/><trkpt lat="40.24125" lon="-107.52539"/><trkpt lat="40.24119" lon="-107.52794"/><trkpt lat="40.24108" lon="-107.53320"/><trkpt lat="40.24104" lon="-107.53469"/><trkpt lat="40.24090" lon="-107.54101"/><trkpt lat="40.24070" lon="-107.55037"/><trkpt lat="40.24070" lon="-107.55049"/><trkpt lat="40.24059" lon="-107.55506"/><trkpt lat="40.23996" lon="-107.55660"/><trkpt lat="40.23979" lon="-107.56441"/><trkpt lat="40.23972" lon="-107.56753"/><trkpt lat="40.23969" lon="-107.56909"/><trkpt lat="40.24020" lon="-107.57302"/><trkpt lat="40.24013" lon="-107.57614"/><trkpt lat="40.24008" lon="-107.57848"/><trkpt lat="40.24004" lon="-107.58004"/></trkseg></trk>
+<trk><name>CPW elk migration route 9</name><trkseg><trkpt lat="40.13378" lon="-107.68045"/><trkpt lat="40.14159" lon="-107.68911"/><trkpt lat="40.14766" lon="-107.69544"/><trkpt lat="40.15277" lon="-107.70271"/><trkpt lat="40.15499" lon="-107.70588"/><trkpt lat="40.15501" lon="-107.70590"/><trkpt lat="40.15579" lon="-107.70702"/><trkpt lat="40.16213" lon="-107.71616"/><trkpt lat="40.16403" lon="-107.71890"/><trkpt lat="40.16638" lon="-107.72288"/><trkpt lat="40.17204" lon="-107.73244"/><trkpt lat="40.17941" lon="-107.74656"/><trkpt lat="40.18090" lon="-107.74942"/><trkpt lat="40.18109" lon="-107.74978"/></trkseg></trk>
+<trk><name>CPW elk migration route 10</name><trkseg><trkpt lat="40.36313" lon="-107.07113"/><trkpt lat="40.35740" lon="-107.07040"/><trkpt lat="40.35595" lon="-107.07021"/><trkpt lat="40.34976" lon="-107.07003"/><trkpt lat="40.34968" lon="-107.07003"/><trkpt lat="40.34844" lon="-107.07063"/><trkpt lat="40.34735" lon="-107.07115"/><trkpt lat="40.34659" lon="-107.07151"/><trkpt lat="40.34569" lon="-107.07195"/><trkpt lat="40.34135" lon="-107.07521"/><trkpt lat="40.33735" lon="-107.07787"/><trkpt lat="40.33494" lon="-107.08099"/><trkpt lat="40.33266" lon="-107.08411"/><trkpt lat="40.32933" lon="-107.09020"/><trkpt lat="40.32669" lon="-107.09957"/><trkpt lat="40.32484" lon="-107.10522"/><trkpt lat="40.32278" lon="-107.11072"/><trkpt lat="40.32026" lon="-107.11488"/><trkpt lat="40.31877" lon="-107.11681"/><trkpt lat="40.31683" lon="-107.11840"/><trkpt lat="40.31500" lon="-107.11992"/><trkpt lat="40.31291" lon="-107.12048"/><trkpt lat="40.31123" lon="-107.12094"/><trkpt lat="40.29891" lon="-107.12534"/><trkpt lat="40.29474" lon="-107.12744"/><trkpt lat="40.29422" lon="-107.12770"/><trkpt lat="40.28498" lon="-107.13418"/></trkseg></trk>
+<trk><name>CPW elk migration route 11</name><trkseg><trkpt lat="40.16795" lon="-107.75949"/><trkpt lat="40.16968" lon="-107.76216"/><trkpt lat="40.17969" lon="-107.77773"/><trkpt lat="40.18301" lon="-107.78288"/><trkpt lat="40.18439" lon="-107.78632"/><trkpt lat="40.19031" lon="-107.80107"/><trkpt lat="40.19435" lon="-107.81355"/><trkpt lat="40.19746" lon="-107.82317"/><trkpt lat="40.19821" lon="-107.82542"/><trkpt lat="40.19895" lon="-107.82766"/><trkpt lat="40.20066" lon="-107.83282"/><trkpt lat="40.20257" lon="-107.83859"/></trkseg></trk>
+<trk><name>CPW elk migration route 12</name><trkseg><trkpt lat="40.32758" lon="-107.68039"/><trkpt lat="40.32752" lon="-107.68266"/><trkpt lat="40.32748" lon="-107.68430"/><trkpt lat="40.32732" lon="-107.69133"/><trkpt lat="40.32788" lon="-107.69292"/><trkpt lat="40.32772" lon="-107.69995"/><trkpt lat="40.32826" lon="-107.70232"/><trkpt lat="40.32802" lon="-107.71248"/><trkpt lat="40.32857" lon="-107.71485"/><trkpt lat="40.32853" lon="-107.71630"/><trkpt lat="40.32840" lon="-107.72189"/><trkpt lat="40.32894" lon="-107.72425"/><trkpt lat="40.32859" lon="-107.73947"/><trkpt lat="40.32850" lon="-107.74301"/><trkpt lat="40.32845" lon="-107.74536"/><trkpt lat="40.32899" lon="-107.74773"/><trkpt lat="40.32894" lon="-107.74956"/><trkpt lat="40.32891" lon="-107.75082"/><trkpt lat="40.32885" lon="-107.75338"/><trkpt lat="40.32882" lon="-107.75476"/><trkpt lat="40.32936" lon="-107.75713"/><trkpt lat="40.32923" lon="-107.76260"/><trkpt lat="40.32979" lon="-107.76419"/><trkpt lat="40.32968" lon="-107.76888"/></trkseg></trk>
+<trk><name>CPW elk migration route 13</name><trkseg><trkpt lat="40.36612" lon="-107.14075"/><trkpt lat="40.36618" lon="-107.13984"/><trkpt lat="40.36637" lon="-107.13676"/><trkpt lat="40.36660" lon="-107.13315"/><trkpt lat="40.36661" lon="-107.12868"/><trkpt lat="40.36674" lon="-107.12421"/><trkpt lat="40.36641" lon="-107.12108"/><trkpt lat="40.36624" lon="-107.11897"/><trkpt lat="40.36608" lon="-107.11705"/><trkpt lat="40.36521" lon="-107.11198"/><trkpt lat="40.36518" lon="-107.11183"/><trkpt lat="40.36497" lon="-107.11041"/><trkpt lat="40.36494" lon="-107.11025"/><trkpt lat="40.36440" lon="-107.10676"/><trkpt lat="40.36316" lon="-107.10213"/><trkpt lat="40.36311" lon="-107.10186"/><trkpt lat="40.36308" lon="-107.10171"/><trkpt lat="40.36226" lon="-107.09706"/><trkpt lat="40.36102" lon="-107.09274"/><trkpt lat="40.36012" lon="-107.09000"/><trkpt lat="40.35989" lon="-107.08930"/><trkpt lat="40.35830" lon="-107.08358"/></trkseg></trk>
+<trk><name>CPW elk migration route 14</name><trkseg><trkpt lat="40.27465" lon="-107.78241"/><trkpt lat="40.27253" lon="-107.77317"/><trkpt lat="40.27027" lon="-107.77002"/><trkpt lat="40.27038" lon="-107.76544"/><trkpt lat="40.26928" lon="-107.76235"/><trkpt lat="40.26815" lon="-107.76077"/><trkpt lat="40.26729" lon="-107.75702"/><trkpt lat="40.26497" lon="-107.74690"/><trkpt lat="40.26384" lon="-107.74533"/><trkpt lat="40.26168" lon="-107.73761"/><trkpt lat="40.26059" lon="-107.73452"/><trkpt lat="40.25945" lon="-107.73294"/><trkpt lat="40.25917" lon="-107.73171"/><trkpt lat="40.25733" lon="-107.72370"/><trkpt lat="40.25624" lon="-107.72060"/><trkpt lat="40.25504" lon="-107.71895"/><trkpt lat="40.25397" lon="-107.71746"/><trkpt lat="40.25404" lon="-107.71441"/><trkpt lat="40.24838" lon="-107.70655"/><trkpt lat="40.24728" lon="-107.70345"/><trkpt lat="40.24732" lon="-107.70193"/><trkpt lat="40.24512" lon="-107.69574"/><trkpt lat="40.24516" lon="-107.69421"/></trkseg></trk>
+<trk><name>CPW elk migration route 15</name><trkseg><trkpt lat="40.20332" lon="-107.63786"/><trkpt lat="40.19852" lon="-107.63774"/><trkpt lat="40.17557" lon="-107.63717"/><trkpt lat="40.15914" lon="-107.63675"/><trkpt lat="40.15841" lon="-107.63674"/><trkpt lat="40.15471" lon="-107.63664"/><trkpt lat="40.15469" lon="-107.63664"/><trkpt lat="40.15116" lon="-107.63656"/><trkpt lat="40.14592" lon="-107.63653"/><trkpt lat="40.14342" lon="-107.63652"/><trkpt lat="40.14104" lon="-107.63651"/></trkseg></trk>
+<trk><name>CPW elk migration route 16</name><trkseg><trkpt lat="40.13652" lon="-107.76466"/><trkpt lat="40.13930" lon="-107.77048"/><trkpt lat="40.14174" lon="-107.77535"/><trkpt lat="40.14185" lon="-107.77556"/><trkpt lat="40.14452" lon="-107.78168"/><trkpt lat="40.14638" lon="-107.78691"/><trkpt lat="40.14824" lon="-107.79259"/><trkpt lat="40.14987" lon="-107.79812"/><trkpt lat="40.15161" lon="-107.80275"/><trkpt lat="40.15193" lon="-107.80434"/><trkpt lat="40.15266" lon="-107.80798"/><trkpt lat="40.15333" lon="-107.81279"/><trkpt lat="40.15337" lon="-107.81308"/><trkpt lat="40.15349" lon="-107.81397"/></trkseg></trk>
+</gpx>
