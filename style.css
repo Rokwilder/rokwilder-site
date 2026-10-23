@@ -24,7 +24,7 @@ footer{border-top:1px solid var(--line);margin-top:3rem;padding:1.5rem 1rem;colo
 ul.check li{margin:.3rem 0}
 input[type=checkbox]{width:auto;margin:0 .5rem 0 0;padding:0;flex:0 0 auto;vertical-align:middle}ul.ck li label,label.cb{display:flex;flex-direction:row;align-items:center;gap:.4rem}
 
-.brand img{height:60px;width:auto;display:block}@media(max-width:600px){.brand img{height:44px}}
+.brand img{height:84px;width:auto;display:block}.brand picture{display:block}@media(max-width:600px){.brand img{height:46px}}
 footer{background:url(img/brand/topo.svg) repeat}
 /* draw odds simple */
 .dox{max-width:34rem}.dox .lbl{display:block;font-weight:700;margin:1.1rem 0 .4rem;font-size:1.05rem}
