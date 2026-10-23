@@ -31,10 +31,12 @@ const hunters=k=>{const f=typeof FL!='undefined'&&FL[k];return f?f[1]:null};
 function succHTML(k,cls){const d=D[k],l=lab(k);if(l)return `<div class="${cls}"><b>${l}</b> <span>for hunter success</span></div>`;
  const n=hunters(k);return `<div class="${cls}"><b>${Math.round(d[7])}%</b> <span>of hunters got one (CPW, 2025)${n!=null?` · ${n.toLocaleString()} hunters`:''}${n!=null&&n<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span></div>`}
 function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk"><span>Exact draw odds: <a href="unitiq.html">Full Pass</a></span></div>`}
-function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(priv(d)&&!S.priv)return false;if(!wOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
+function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
 const seas=k=>k.at(-1)=='X'?'season choice (archery, muzzleloader or rifle)':D[k][2];
-function title(k){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}Unit ${d[1]} · ${seas(k)}`}
+const units=k=>{const f=typeof FL!='undefined'&&FL[k];return f&&f[2]?f[2]:[D[k][1]]};
+function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return full||u.length<=4?'Units '+u.join(', '):`Units ${u.slice(0,3).join(', ')} +${u.length-3} more`}
+function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
 function showList(){const r=ranked(),o=$('out');
  $('detail').hidden=true;o.hidden=false;
  const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.yo?' · kid 12–17':''}`;
@@ -51,7 +53,7 @@ function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true
  let sure='';if(d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
  else sure='<p class="dq"><b>Moose is a lottery once you have 3 points.</b> No number of points guarantees a tag.</p>';
  o.innerHTML=`<button class="btn big2" id="back">← Back to my list</button>
- <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k)}</p><div class="vd">${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
+ <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
  <p class="dq">${landS(d[4])}</p></div>${lad}
  ${d[6]?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>Drew out at: ${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
  <p class="note">Hunt code <b>${k}</b>. Estimates from CPW's past draw and harvest reports, not a guarantee. Check the CPW brochure before you apply.</p>
@@ -79,7 +81,7 @@ const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts}
 $('go').onclick=()=>{S.n=25;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
 if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25});
- const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
+ const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={ranked,odds,S,FULLPASS_GATING};
 })();
