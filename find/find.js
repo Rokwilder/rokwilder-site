@@ -46,14 +46,14 @@ function showList(){const r=ranked(),o=$('out');
   `<div id="map" class="gmap" aria-label="Map of Colorado hunting units"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<div class="mleg"><span><i style="background:${VC[0][1]}"></i>YES</span><span><i style="background:${VC[1][1]}"></i>LIKELY</span><span><i style="background:${VC[2][1]}"></i>MAYBE</span><span><i style="background:${VC[3][1]}"></i>LONG SHOT</span><span><i style="background:${MC.none}"></i>No hunt you can draw</span></div>`+
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the CPW big game brochure for official unit boundaries before you apply or hunt.</p>`+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't shown${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`;
+  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't shown${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fbA('maps');
   wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Best odds first, down to long shots. Tap a hunt for details.</p>`+
   (S.sp=='elk'?`<p class="note"><b>No points needed:</b> ${S.res=='res'?'Colorado residents can buy an over-the-counter elk license for many units.':'Out-of-state hunters can buy over-the-counter rifle elk; OTC archery elk for nonresidents is east of I-25 only.'} <a href="https://cpw.state.co.us/activities/hunting/big-game/over-counter-otc-licenses">CPW over-the-counter licenses</a></p>`:'')+
   `<ol class="fl">`+r.slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.</p>')+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't listed${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the CPW big game brochure before you apply.</p>`;
+  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't listed${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the CPW big game brochure before you apply.</p>`+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};}
 // ===== Map tab (preview) =====
@@ -104,7 +104,7 @@ function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true
  <p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the CPW big game brochure for official unit boundaries before you apply or hunt.</p>
  <p><button class="btn o" id="vsm">View on statewide map</button></p>
  <p class="note">Hunt code <b>${k}</b>. Estimates from CPW's past draw and harvest reports, not a guarantee. Check the CPW brochure before you apply.</p>
- <p><a class="btn" href="packages.html">Scouting help for this hunt</a></p>
+ <p><a class="btn" href="packages.html">Scouting help for this hunt</a></p>${fbA('find')}
  <button class="btn o big2" id="back2">${bk}</button>`;
  $('back').onclick=$('back2').onclick=goBack;$('vsm').onclick=()=>{S.tab='map';S.mv=null;S.mu=null;S.ol=units(k).map(String);history.pushState(st('list'),'',url());showList();top2($('out'))};
  drawDetailMap(k);top2(o)}
@@ -114,6 +114,7 @@ async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e
  const on=[];L.geoJSON(GJ,{interactive:false,style:f=>{const h=f.properties.u!=null&&us.has(String(f.properties.u));return h?{color:MC.sel,weight:2.5,fillColor:vcol(odds(k)),fillOpacity:1}:{color:MC.sel,opacity:.3,weight:.5,fillColor:MC.none,fillOpacity:.35}},
   onEachFeature:(f,l)=>{if(f.properties.u!=null&&us.has(String(f.properties.u))){on.push(l);l.bindTooltip(String(f.properties.u),{permanent:true,direction:'center',className:'ulab'})}}}).addTo(DM);
  window.__FY.dlab=on.map(l=>String(l.feature.properties.u));if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9})}
+const fbA=about=>`<p class="fbk"><a class="fbl" href="feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
 const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
 const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
@@ -124,6 +125,7 @@ function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',yo:+s.
 function sync(){document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
  document.querySelectorAll('[data-w]').forEach(x=>{x.classList.toggle('on',x.dataset.w==S.w);x.disabled=S.sp=='turkey'});$('wnote').hidden=S.sp!='turkey';if($('ynote'))$('ynote').hidden=!S.yo}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.fbl');if(a)a.href='feedback.html?about='+a.dataset.about+'&from='+encodeURIComponent(location.href)},true);
 addEventListener('popstate',e=>{const s=e.state;if(!s){$('out').hidden=true;$('detail').hidden=true;return}apply(s);
  if(s.v=='detail'){fromList=false;showDetail(s.k)}else{PY=s.tab=='map'?s.y||0:null;showList();requestAnimationFrame(()=>scrollTo(0,s.y||0))}});
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;sync()});

@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feedback | Rokwilder Scouting</title><meta name="robots" content="noindex"><link rel="stylesheet" href="style.css"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
+<header><nav class="nav"><a class="brand" href="index.html"><picture><source media="(max-width:600px)" srcset="img/brand/logo-gw5-compact.svg"><img src="img/brand/logo-gw5.svg" alt="Rokwilder: Research, Scout, Hunt" width="252" height="84"></picture></a><a class="l" href="find.html">Find Your Hunt</a><a class="l" href="unitiq.html">UnitIQ</a><a class="l" href="samples.html">Sample packages</a><a class="l" href="pricing.html">Pricing</a><a class="l" href="packages.html">Packages</a><a class="l" href="about.html">About</a><a class="l" href="faq.html">FAQ</a></nav></header><main>
+<style>
+.fb label{display:block;font-weight:700;margin:1rem 0 .3rem}.fb .seg{display:flex;flex-wrap:wrap;gap:.4rem}.fb .seg label{margin:0;font-weight:600}
+.fb .seg input{position:absolute;opacity:0;width:1px;height:1px}.fb .seg span{display:inline-block;padding:.7rem 1rem;min-height:44px;border:2px solid var(--line);border-radius:10px;background:var(--panel);cursor:pointer}
+.fb .seg input:checked+span{background:var(--ink);color:var(--panel);border-color:var(--ink)}.fb .seg input:focus-visible+span{outline:3px solid var(--acc);outline-offset:2px}
+.fb textarea,.fb input[type=email]{width:100%;box-sizing:border-box;font:inherit;font-size:1.05rem;padding:.75rem;border:2px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+.fb textarea{min-height:9rem;resize:vertical}.fb .cnt{font-size:.85rem;color:var(--mute);text-align:right}.fb .att{font-size:.9rem;color:var(--mute);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:.6rem .8rem;margin:1rem 0;word-break:break-word}
+.fb .btn{display:block;width:100%;min-height:56px;font-size:1.15rem;margin-top:1rem}.fb .hint{font-weight:400;color:var(--mute);font-size:.9rem}
+.fb .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.fb .msg{margin-top:.8rem}#fbok{background:var(--panel);border:2px solid var(--green);border-radius:10px;padding:1rem;font-size:1.1rem}.fb .msg.err{color:#e8833a;font-weight:700}
+</style>
+<h1>Feedback</h1><p class="lead">Something off, missing, or confusing? Tell us. We read every message.</p>
+<form class="fb dox" id="fb" novalidate>
+<fieldset style="border:0;padding:0;margin:0"><legend><b>What is it about?</b></legend><div class="seg" role="radiogroup">
+<label><input type="radio" name="topic" value="find" checked><span>Find Your Hunt</span></label><label><input type="radio" name="topic" value="maps"><span>Maps</span></label><label><input type="radio" name="topic" value="packages"><span>Packages</span></label><label><input type="radio" name="topic" value="other"><span>Other</span></label></div></fieldset>
+<label for="fbm">Your message</label><textarea id="fbm" name="message" maxlength="2000" required placeholder="What did you notice? If it's a hunt, what looked wrong?"></textarea><div class="cnt" id="fbc">0 / 2000</div>
+<label for="fbe">Email <span class="hint">(optional, only if you want a reply)</span></label><input type="email" id="fbe" name="email" maxlength="254" autocomplete="email" placeholder="you@example.com">
+<div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="att" id="fba"></div>
+<button class="btn" id="fbs">Send feedback</button><div class="msg" id="fbmsg" role="status"></div>
+<p class="note">No account or personal info needed. We only use your email to reply, and never share it. See our <a href="privacy.html">privacy policy</a>.</p>
+</form>
+<script src="feedback.js"></script>
+</main>
+<footer>Rokwilder Scouting · UnitIQ · Family owned · Colorado<br>Zones are estimates from public data, not guarantees. Not an outfitter or guide service. Not affiliated with or endorsed by Colorado Parks and Wildlife.<br>Follow: <a href="https://www.instagram.com/rokwilderscouting/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595232467176" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/rokwilderco" target="_blank" rel="noopener">X</a><br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="feedback.html">Feedback</a><br>Contact: <a href="mailto:christopher@rokwilder.com">christopher@rokwilder.com</a></footer></body></html>
