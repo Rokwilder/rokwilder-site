@@ -9,7 +9,7 @@ const Q=new URLSearchParams(location.search);
 const FULLPASS_GATING=false;
 // ==========================
 const FP=!FULLPASS_GATING||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&Q.get('preview')=='fullpass');
-let S={sp:'elk',res:'res',pts:0,w:'',yo:0,priv:0,n:25};
+let S={sp:'elk',res:'res',pts:0,w:'',yo:0,priv:0,n:25,tab:'list',mv:null};
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
 // X = season choice (one license good in archery, muzzleloader and rifle seasons), so it matches every weapon choice.
 const WN={'':'Any weapon',A:'Archery',M:'Muzzleloader',R:'Rifle'};const wOK=k=>!S.w||S.sp=='turkey'||k.at(-1)==S.w||k.at(-1)=='X';
@@ -38,35 +38,72 @@ const units=k=>{const f=typeof FL!='undefined'&&FL[k];return f&&f[2]?f[2]:[D[k][
 function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return full||u.length<=4?'Units '+u.join(', '):`Units ${u.slice(0,3).join(', ')} +${u.length-3} more`}
 function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
 function showList(){const r=ranked(),o=$('out');
- $('detail').hidden=true;o.hidden=false;
+ $('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}
  const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.yo?' · kid 12–17':''}`;
- o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2><p class="dq">${who}. Best odds first, down to long shots. Tap a hunt for details.</p>`+
+ const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Colored units have at least one hunt you can draw; the color is the best odds in that unit. Tap a unit to see its hunts.</p>`+
+  (S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
+  `<div id="map" class="gmap" aria-label="Map of Colorado hunting units"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
+  `<div class="mleg"><span><i style="background:${VC[0][1]}"></i>YES</span><span><i style="background:${VC[1][1]}"></i>LIKELY</span><span><i style="background:${VC[2][1]}"></i>MAYBE</span><span><i style="background:${VC[3][1]}"></i>LONG SHOT</span><span><i class="nd"></i>No hunt you can draw</span></div>`+
+  `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the CPW big game brochure for official unit boundaries before you apply or hunt.</p>`+
+  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't shown${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`;
+  wireTabs(o);drawMap(r);return}
+ o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Best odds first, down to long shots. Tap a hunt for details.</p>`+
   (S.sp=='elk'?`<p class="note"><b>No points needed:</b> ${S.res=='res'?'Colorado residents can buy an over-the-counter elk license for many units.':'Out-of-state hunters can buy over-the-counter rifle elk; OTC archery elk for nonresidents is east of I-25 only.'} <a href="https://cpw.state.co.us/activities/hunting/big-game/over-counter-otc-licenses">CPW over-the-counter licenses</a></p>`:'')+
   `<ol class="fl">`+r.slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.</p>')+
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). Hunts under 5% aren't listed${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the CPW big game brochure before you apply.</p>`;
- o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};}
+// ===== Map tab (preview) =====
+// Same buckets as the verdict words.
+const VC=[[.995,'#1b7a3a'],[.75,'#7cb342'],[.25,'#f2c12e'],[.05,'#e8833a']];
+const vcol=v=>(VC.find(c=>v>=c[0])||[0,'#e9e6df'])[1];
+let M=null,GJ=null;
+function wireTabs(o){o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.mv=null;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))})}
+const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
+async function ensureMap(){if(!window.L){const c=document.createElement('link');c.rel='stylesheet';c.href='find/vendor/leaflet.css';document.head.appendChild(c);await loadJS('find/vendor/leaflet.js')}
+ if(!window.topojson)await loadJS('find/vendor/topojson-client.min.js');if(!GJ){const t=await(await fetch('find/gmu.json')).json();GJ=topojson.feature(t,t.objects.gmu)}}
+function byUnit(r){const m={};r.forEach(x=>units(x.k).forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
+function popHTML(u,h){return `<div class="mp"><p class="mpt">Unit ${u} · best odds: <b>${verdict(h[0].v)}</b></p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=D[x.k],sx=sexL(d),n=units(x.k).length;
+ return `<li><button class="mh" data-k="${x.k}"><b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${sx?sx+' · ':''}${seas(x.k)}${n>1?` · covers ${n} units`:''}</span></button></li>`}).join('')+'</ul></div>'}
+let SEL=null;
+function pick(u,h,l){if(SEL)SEL.setStyle({weight:.7,color:'#5b5548'});SEL=l;l.setStyle({weight:3,color:'#111'});l.bringToFront();S.mu=String(u);
+ const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
+async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load. Use the List tab.</p>';return}
+ if(!el.isConnected)return;if(M){M.remove();M=null}
+ M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__FY.map=M;
+ M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Unit boundaries: Colorado Parks and Wildlife');
+ const bu=byUnit(r),cnt={hl:0};
+ const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:'#5b5548',weight:.7,fillColor:h?vcol(h[0].v):'#e9e6df',fillOpacity:h?.85:.6}},
+  onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h){l.options.interactive=false;return}cnt.hl++;
+   l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
+ window.__FY.hl=cnt.hl;M.setMaxBounds(ly.getBounds().pad(.3));
+ if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(ly.getBounds(),{padding:[4,4]});
+ if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&bu[S.mu])pick(S.mu,bu[S.mu],l)});
+ M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
 function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;
  let lad='';if(FP&&d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number);lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+ks.map(n=>{const z=oAt(k,p,n)[0];return `<div class="lr${n==Math.min(S.pts,Math.max(...ks))?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
  let sure='';if(d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
  else sure='<p class="dq"><b>Moose is a lottery once you have 3 points.</b> No number of points guarantees a tag.</p>';
- o.innerHTML=`<button class="btn big2" id="back">← Back to my list</button>
+ const bk=S.tab=='map'?'← Back to my map':'← Back to my list';if(M){M.remove();M=null}
+ o.innerHTML=`<button class="btn big2" id="back">${bk}</button>
  <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
  <p class="dq">${landS(d[4])}</p></div>${lad}
  ${d[6]?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>Drew out at: ${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
  <p class="note">Hunt code <b>${k}</b>. Estimates from CPW's past draw and harvest reports, not a guarantee. Check the CPW brochure before you apply.</p>
  <p><a class="btn" href="packages.html">Scouting help for this hunt</a></p>
- <button class="btn o big2" id="back2">← Back to my list</button>`;
+ <button class="btn o big2" id="back2">${bk}</button>`;
  $('back').onclick=$('back2').onclick=goBack;top2(o)}
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,yo:S.yo,priv:S.priv,n:S.n,y:v=='list'?scrollY:0});
-const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':'list')};
+const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,y:v=='list'?scrollY:0});
+const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
-function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25});sync()}
+function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null});sync()}
 function sync(){document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
  document.querySelectorAll('[data-w]').forEach(x=>{x.classList.toggle('on',x.dataset.w==S.w);x.disabled=S.sp=='turkey'});$('wnote').hidden=S.sp!='turkey';if($('ynote'))$('ynote').hidden=!S.yo}
@@ -78,9 +115,9 @@ document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{S.w=b.dataset.w;
 document.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>{S.yo=+b.dataset.yo;sync()});
 $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
-$('go').onclick=()=>{S.n=25;history.pushState(st('list'),'',url());showList();top2($('out'))};
+$('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
-if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25});
+if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={ranked,odds,S,FULLPASS_GATING};
