@@ -68,7 +68,7 @@ async function ensureMap(){if(!window.L){const c=document.createElement('link');
 function byUnit(r){const m={};r.forEach(x=>units(x.k).forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
 function popHTML(u,h){return `<div class="mp"><p class="mpt">Unit ${u} · best odds: <b>${verdict(h[0].v)}</b></p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=D[x.k],sx=sexL(d),n=units(x.k).length;
  return `<li><button class="mh" data-k="${x.k}"><b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${sx?sx+' · ':''}${seas(x.k)}${n>1?` · covers ${n} units`:''}</span></button></li>`}).join('')+'</ul></div>'}
-let SEL=null;
+let SEL=null,PY=null;
 function pick(u,h,l){if(SEL)SEL.setStyle({weight:.7,color:'#5b5548'});SEL=l;l.setStyle({weight:3,color:'#111'});l.bringToFront();S.mu=String(u);
  const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
@@ -82,7 +82,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
    l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
  window.__FY.hl=cnt.hl;M.setMaxBounds(ly.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(ly.getBounds(),{padding:[4,4]});
- if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&bu[S.mu])pick(S.mu,bu[S.mu],l)});
+ if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&bu[S.mu])pick(S.mu,bu[S.mu],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
  M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
 function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;
  let lad='';if(FP&&d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number);lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+ks.map(n=>{const z=oAt(k,p,n)[0];return `<div class="lr${n==Math.min(S.pts,Math.max(...ks))?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
@@ -108,7 +108,7 @@ function sync(){document.querySelectorAll('[data-sp]').forEach(x=>x.classList.to
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
  document.querySelectorAll('[data-w]').forEach(x=>{x.classList.toggle('on',x.dataset.w==S.w);x.disabled=S.sp=='turkey'});$('wnote').hidden=S.sp!='turkey';if($('ynote'))$('ynote').hidden=!S.yo}
 addEventListener('popstate',e=>{const s=e.state;if(!s){$('out').hidden=true;$('detail').hidden=true;return}apply(s);
- if(s.v=='detail'){fromList=false;showDetail(s.k)}else{showList();requestAnimationFrame(()=>scrollTo(0,s.y||0))}});
+ if(s.v=='detail'){fromList=false;showDetail(s.k)}else{PY=s.tab=='map'?s.y||0:null;showList();requestAnimationFrame(()=>scrollTo(0,s.y||0))}});
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;sync()});
 document.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{S.res=b.dataset.res;sync()});
 document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{S.w=b.dataset.w;sync()});
