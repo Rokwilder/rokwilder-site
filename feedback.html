@@ -11,7 +11,7 @@
 .fb .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.fb .msg{margin-top:.8rem}#fbok{background:var(--panel);border:2px solid var(--green);border-radius:10px;padding:1rem;font-size:1.1rem}.fb .msg.err{color:#e8833a;font-weight:700}
 </style>
 <h1>Feedback</h1><p class="lead">Something off, missing, or confusing? Tell us. We read every message.</p>
-<form class="fb dox" id="fb" novalidate>
+<form class="fb dox" id="fb" novalidate onsubmit="return false">
 <fieldset style="border:0;padding:0;margin:0"><legend><b>What is it about?</b></legend><div class="seg" role="radiogroup">
 <label><input type="radio" name="topic" value="find" checked><span>Find Your Hunt</span></label><label><input type="radio" name="topic" value="maps"><span>Maps</span></label><label><input type="radio" name="topic" value="packages"><span>Packages</span></label><label><input type="radio" name="topic" value="other"><span>Other</span></label></div></fieldset>
 <label for="fbm">Your message</label><textarea id="fbm" name="message" maxlength="2000" required placeholder="What did you notice? If it's a hunt, what looked wrong?"></textarea><div class="cnt" id="fbc">0 / 2000</div>
