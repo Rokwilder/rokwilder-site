@@ -52,3 +52,5 @@ footer{background:url(img/brand/topo.svg) repeat}
 .lr .kd{font-size:.7em;background:#2d6a4f;color:#fff;border-radius:4px;padding:0 4px;margin-left:4px}
 .lr .kd.al{background:#888}
 .yinfo{background:rgba(45,106,79,.25);color:inherit;border-left:3px solid #2d6a4f;padding:8px 10px}
+
+.stp{display:flex;gap:.5rem;margin:.2rem 0 1rem}.stp a{flex:0 1 9rem;text-align:center;padding:.6rem .8rem;font-weight:700;border:2px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);text-decoration:none}.stp a.on{background:var(--acc);color:#111;border-color:var(--acc)}.stp a:hover{border-color:var(--acc)}
