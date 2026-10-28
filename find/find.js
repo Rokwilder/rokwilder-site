@@ -58,8 +58,8 @@ function showList(){const r=ranked(),o=$('out');
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Colored units have at least one hunt you can draw; the color is the best odds in that unit. Tap a unit to see its hunts.</p>`+
   wtNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
   (OIL(S.sp)?`<p class="note">${S.sp=='goat'?'Mountain goat':'Bighorn sheep'} units are not the big game units: CPW numbers them ${S.sp=='goat'?'G1, G2…':'S1, S2…'}, and this map shows those ${S.sp=='goat'?'goat':'sheep'} units.</p>`:'')+
+  mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
   `<div id="map" class="gmap" aria-label="Map of Colorado hunting units"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
-  `<div class="mleg"><span><i style="background:${VC[0][1]}"></i>YES</span><span><i style="background:${VC[1][1]}"></i>LIKELY</span><span><i style="background:${VC[2][1]}"></i>MAYBE</span><span><i style="background:${VC[3][1]}"></i>LONG SHOT</span><span><i style="background:${MC.none}"></i>${WT(S.sp)?'Under 5% (tap to see) or no hunt':'No hunt you can draw'}</span></div>`+
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>`+
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fbA('maps');
   wireTabs(o);drawMap(r);return}
@@ -79,6 +79,30 @@ const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E
 const VC=[[.995,MC.yes],[.75,MC.likely],[.25,MC.maybe],[.05,MC.long]];
 const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];
 const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
+const KU='unit';
+// ===== Map key =====
+// Big swatches with the same verdict words as the hunt cards. The swatches are drawn the way the map draws them
+// (same fill colors, same opacity over the map background, same cream outline), so the key matches what you see.
+const KEYB=[['yes','Yes','sure to draw (over 99%)'],['likely','Likely','75–99%'],['maybe','Maybe','25–74%'],['long','Long shot','5–24%']];
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
+const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255].join(',');return op>=1?`background:${c}`:`background:linear-gradient(rgba(${rgb},${op}),rgba(${rgb},${op})),${MC.bg}`};
+function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
+ items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
+// Statewide map key. noneW: what the light color means on this map; noneOp: its fill opacity there.
+function mapKey(noneW,noneOp){const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
+ it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push({w:'Cream outline',d:`the ${KU} you tapped${S.ol?`, and the ${KU}s of the hunt you came from`:''}`,ring:1,st:`background:${MC.bg}`});
+ return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
+// After the map draws: how many units are in each color. A color with none says so, so a missing color isn't a mystery.
+function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');
+ li.classList.toggle('zero',!n);s.textContent=n?` · ${n} ${KU}${n==1?'':'s'}`:li.dataset.b=='none'?` · none`:` · none on this map with your choices`});
+ window.__KEY=cnt}
+// Selected-hunt map: this hunt's units in its color (cream border), every other unit dimmed.
+function huntKey(v,dimOp,thisW,other){return keyHTML('hkey','Map key',[
+ {w:thisW,d:v>=.05?`your odds: ${vword(v)}`:'your odds: under 5% (shown in the light color)',st:fillSt(v>=.05?vcol(v):MC.none,1)+`;border:3px solid ${MC.sel}`},
+ {w:other,d:'dimmed: not part of this hunt',st:fillSt(MC.none,dimOp)}])}
+
 // Two-tone outline (charcoal under cream) reads on every fill color.
 function halo(m,ls){const g=L.layerGroup().addTo(m);ls.forEach(l=>{g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.line,weight:7}}));g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.sel,weight:3}}))});return g}
 let M=null,GJ=null,DM=null;const GJS={};
@@ -103,6 +127,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
  const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?vcol(h[0].v):MC.none,fillOpacity:h?1:.9}},
   onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h){l.options.interactive=false;return}if(h[0].v>=.05)cnt.hl++;
    l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
+ {const kc={},seen=new Set();GJ.features.forEach(f=>{const u=f.properties.u;if(u==null||seen.has(String(u)))return;seen.add(String(u));const h=bu[u];const b=h?bucket(h[0].v):'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
  window.__FY.hl=cnt.hl;M.setMaxBounds(ly.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(ly.getBounds(),{padding:[4,4]});
  if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g).eachLayer(x=>x.eachLayer(y=>y.getElement&&y.getElement()&&y.getElement().classList.add('olh')));window.__FY.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:8})}
@@ -118,7 +143,7 @@ function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true
  <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
  <p class="dq">${landS(d[4])}</p>${d[10]?`<p class="dq">${d[10]}</p>`:''}</div>${lad}${feeHTML(d)}
  ${d[6]&&d[6].length?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>${WT(d[0])?(S.res=='res'?'Residents':'Nonresidents')+': ':'Drew out at: '}${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
- <h3>Where this hunt is</h3><p class="dq">${uL(k,1)}, highlighted on the unit map.</p><div id="dmap" class="gmap dm" aria-label="Map of the units in this hunt"></div>
+ <h3>Where this hunt is</h3><p class="dq">${uL(k,1)}, highlighted on the unit map.</p>${huntKey(v??0,.35,`This hunt's unit${units(k).length==1?'':'s'} (numbered)`,'Other units')}<div id="dmap" class="gmap dm" aria-label="Map of the units in this hunt"></div>
  <p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>${OIL(d[0])?`<p class="note">${d[0]=='goat'?'Goat':'Sheep'} units (${d[0]=='goat'?'G':'S'} numbers) are not the big game units.</p>`:''}
  <p><button class="btn o" id="vsm">View on statewide map</button></p>
  <p class="note">Hunt code <b>${k}</b>. Estimates from CPW's past draw and harvest reports, not a guarantee. Check the ${bro()} before you apply.</p>

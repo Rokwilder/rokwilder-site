@@ -52,8 +52,8 @@ function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden
  const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Colored areas have at least one hunt you can draw; the color is the best odds there. Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
+  mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
   `<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
-  `<div class="mleg"><span><i style="background:${VC[0][1]}"></i>YES</span><span><i style="background:${VC[1][1]}"></i>LIKELY</span><span><i style="background:${VC[2][1]}"></i>MAYBE</span><span><i style="background:${VC[3][1]}"></i>LONG SHOT</span><span><i style="background:${MC.none}"></i>Other hunt areas of this type</span></div>`+
   CRED+note+fbA('maps');wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Best odds first, down to long shots. Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+
@@ -99,7 +99,31 @@ const CRED='<p class="mapcred"><b>Hunt boundaries: Utah Division of Wildlife Res
 // ===== Map (same brand palette and buckets as Colorado) =====
 const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',bg:'#2A2D26',sel:'#E8E0D2'};
 const VC=[[.995,MC.yes],[.75,MC.likely],[.25,MC.maybe],[.05,MC.long]];
-const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
+const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];const KU='hunt area';
+// ===== Map key =====
+// Big swatches with the same verdict words as the hunt cards. The swatches are drawn the way the map draws them
+// (same fill colors, same opacity over the map background, same cream outline), so the key matches what you see.
+const KEYB=[['yes','Yes','sure to draw (over 99%)'],['likely','Likely','75–99%'],['maybe','Maybe','25–74%'],['long','Long shot','5–24%']];
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
+const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255].join(',');return op>=1?`background:${c}`:`background:linear-gradient(rgba(${rgb},${op}),rgba(${rgb},${op})),${MC.bg}`};
+function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
+ items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
+// Statewide map key. noneW: what the light color means on this map; noneOp: its fill opacity there.
+function mapKey(noneW,noneOp){const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
+ it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push({w:'Cream outline',d:`the ${KU} you tapped${S.ol?`, and the ${KU}s of the hunt you came from`:''}`,ring:1,st:`background:${MC.bg}`});
+ return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
+// After the map draws: how many units are in each color. A color with none says so, so a missing color isn't a mystery.
+function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');
+ li.classList.toggle('zero',!n);s.textContent=n?` · ${n} ${KU}${n==1?'':'s'}`:li.dataset.b=='none'?` · none`:` · none on this map with your choices`});
+ window.__KEY=cnt}
+// Selected-hunt map: this hunt's units in its color (cream border), every other unit dimmed.
+function huntKey(v,dimOp,thisW,other){return keyHTML('hkey','Map key',[
+ {w:thisW,d:v>=.05?`your odds: ${vword(v)}`:'your odds: under 5% (shown in the light color)',st:fillSt(v>=.05?vcol(v):MC.none,1)+`;border:3px solid ${MC.sel}`},
+ {w:other,d:'dimmed: not part of this hunt',st:fillSt(MC.none,dimOp)}])}
+
+const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 function halo(m,ls){const g=L.layerGroup().addTo(m);ls.forEach(l=>{g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.line,weight:7}}));g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.sel,weight:3}}))});return g}
 let M=null,GJ=null,DM=null;
 function wireTabs(o){o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))})}
@@ -124,6 +148,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
   onEachFeature:(f,l)=>{const u=f.properties.u,h=bu[u];if(!h){l.options.interactive=false;return}cnt.hl++;
    l.bindTooltip(f.properties.n,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
  ly.eachLayer(l=>{if(bu[l.feature.properties.u])l.bringToFront()});
+ {const kc={},seen=new Set();fc.features.forEach(f=>{const u=String(f.properties.u);if(seen.has(u))return;seen.add(u);const h=bu[f.properties.u];const b=h?bucket(h[0].v):'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
  window.__UT.hl=cnt.hl;const all=L.geoJSON(GJ);M.setMaxBounds(all.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(all.getBounds(),{padding:[4,4]});
  if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g);window.__UT.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:9})}
@@ -153,7 +178,7 @@ function showDetail(k){const h=UH[k],v=odds(k),o=$('detail');$('out').hidden=tru
  ${h.h25?`<h3>2025 draw (1st choice, Utah DWR)</h3><div class="yr"><b>Residents</b><span>${h.h25[1]} drew of ${h.h25[0].toLocaleString()} applied</span></div><div class="yr"><b>Nonresidents</b><span>${h.h25[3]} drew of ${h.h25[2].toLocaleString()} applied</span></div><p class="note">Source: Utah DWR 2025 drawing odds reports (<a href="https://wildlife.utah.gov/biggame/odds">wildlife.utah.gov/biggame/odds</a>).</p>`:''}
  <h3>2026 season</h3>${ss||'<p class="dq">See the Utah DWR guidebook.</p>'}
  ${f&&BIRD.has(h.pool)&&!f[0]&&!f[1]?`<h3>Permit fee (2026–27)</h3><p class="dq">No permit fee ($0). You pay only the $${h.af[0]} resident / $${h.af[1]} nonresident application fee, plus a hunting license. Source: ${gl('tk','page 8')}.</p>`:f?`<h3>Permit fee (${h.fs=='tk'||h.fs=='wf'?'2026–27':'2026'})</h3><div class="yr"><b>Resident</b><span>${money(f[0])}</span></div><div class="yr"><b>Nonresident</b><span>${f[1]==null&&h.cw?"CWMU operator only":money(f[1])}</span></div><p class="note">Plus a $10 resident / $21 nonresident application fee and a hunting license.${h.cw&&h.pool=='deer-le'?' Premium CWMU buck deer permits are $185 resident / $1,398 nonresident.':''}${h.cw&&f[1]==null?' Nonresidents can get CWMU permits only through the CWMU operator.':''} ${h.fy?` Youth: ${money(h.fy[0])} resident, ${money(h.fy[1])} nonresident.`:''} Source: ${h.fs=='al'?gl('al','hunt tables'):h.fs=='tk'||h.fs=='wf'?gl('tk','page 8'):h.fs=='br'?gl('br','hunt tables'):h.pool=='deer-dh'?gl('bg','page 47'):gl('bg','pages 15–16')}.</p>`:''}
- <h3>Where this hunt is</h3><div id="dmap" class="gmap dm" aria-label="Map of this hunt's boundary"></div>${CRED}
+ <h3>Where this hunt is</h3>${huntKey(v??0,.25,`This hunt's area${(h.b||[]).length>1?'s':''} (named on the map)`,`Other ${PSHORT[h.pool].toLowerCase()} hunt areas`)}<div id="dmap" class="gmap dm" aria-label="Map of this hunt's boundary"></div>${CRED}
  <p><button class="btn o" id="vsm">View on statewide map</button> <a class="btn o" href="${h.map}" target="_blank" rel="noopener">Official boundary (Utah Hunt Planner)</a></p>
  <p class="note">Hunt number <b>${k}</b>. Estimates from Utah DWR's past draw and harvest reports, not a guarantee. Check the Utah DWR guidebook before you apply.</p>
  <p><a class="btn" href="../packages.html">Scouting help for this hunt</a></p>${fbA('find')}<button class="btn o big2" id="back2">${bk}</button>`;
