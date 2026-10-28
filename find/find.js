@@ -83,7 +83,7 @@ const KU='unit';
 // ===== Map key =====
 // Big swatches with the same verdict words as the hunt cards. The swatches are drawn the way the map draws them
 // (same fill colors, same opacity over the map background, same cream outline), so the key matches what you see.
-const KEYB=[['yes','Yes','sure to draw (over 99%)'],['likely','Likely','75–99%'],['maybe','Maybe','25–74%'],['long','Long shot','5–24%']];
+const KEYB=[['yes','Yes','sure to draw'],['likely','Likely',''],['maybe','Maybe',''],['long','Long shot','']];
 const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
 const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
 const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255].join(',');return op>=1?`background:${c}`:`background:linear-gradient(rgba(${rgb},${op}),rgba(${rgb},${op})),${MC.bg}`};
