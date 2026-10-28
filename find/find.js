@@ -124,7 +124,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
  M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__FY.map=M;
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Unit boundaries: Colorado Parks and Wildlife');
  const bu=byUnit(r),cnt={hl:0};
- const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?vcol(h[0].v):MC.none,fillOpacity:h?1:.9}},
+ const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?vcol(h[0].v):MC.none,fillOpacity:h&&h[0].v>=.05?1:.9}},
   onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h){l.options.interactive=false;return}if(h[0].v>=.05)cnt.hl++;
    l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
  {const kc={},seen=new Set();GJ.features.forEach(f=>{const u=f.properties.u;if(u==null||seen.has(String(u)))return;seen.add(String(u));const h=bu[u];const b=h?bucket(h[0].v):'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
