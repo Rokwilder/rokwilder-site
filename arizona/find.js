@@ -32,7 +32,7 @@ const nextDraw=h=>h.dr=='M'?'2027 elk and pronghorn draw':h.dr=='F'?'2027 fall d
 function oddsHTML(v,cls,k){const h=AH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()} (estimate for the ${nextDraw(h)})</span></div>`}
 const fee=h=>h.fee;const money=n=>'$'+n.toLocaleString();
 const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
-const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2'};
+const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',bg:'#2A2D26',sel:'#C8792F'};
 const vcol=v=>(vcolList.find(c=>v>=c[0])||[0,MC.none])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 const bk=(d,pg)=>{const t={M:'2026 Pronghorn and Elk Regulations',F:'2026–27 Arizona Hunting Regulations',S:'2027 Spring Hunting Regulations'}[d];return `<a href="${SRC.bk[d]}">${t}</a>${pg?' ('+(typeof pg=='number'?'PDF page '+pg:pg)+')':''}`};
 const rep=d=>{const s=SRC[{M:'M26',F:'F26',S:'S26'}[d]];const n={M:'2026 elk and pronghorn',F:'2026 fall',S:'2026 spring'}[d];return `AZGFD ${n} draw reports: <a href="${s.bp}">Bonus Point Report</a>, <a href="${s.bonus}">Bonus Pass</a>, <a href="${s.p12}">1-2 Pass</a>`};
@@ -62,21 +62,39 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Arizona resident':'Out of state'} · ${ptsWord()} · ${WN[S.w].toLowerCase()}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. The color is the best odds for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+youthBox()+tiles(r)+
-  `<div id="mpanel" class="mp" hidden aria-live="polite"></div><div class="mleg"><span><i style="background:${MC.yes}"></i>YES</span><span><i style="background:${MC.likely}"></i>LIKELY</span><span><i style="background:${MC.maybe}"></i>MAYBE</span><span><i style="background:${MC.long}"></i>LONG SHOT</span><span><i style="background:${MC.none}"></i>No hunt you can draw</span></div>`+
-  `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fbA('maps');wireTabs(o);wireTiles(o,r);if(S.mu)pickU(S.mu,r);return}
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. The color is the best odds for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+youthBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+tiles(r)+
+  `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
+  `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Best odds first, down to long shots. Tap a hunt for details.</p>`+youthBox()+spNote()+
   `<ol class="fl">`+r.slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+note+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}}
+// ===== Map key (same as Colorado and Utah, for unit tiles) =====
+// Big swatches with the same verdict words as the hunt cards, drawn the way the tiles are drawn: the same fill colors,
+// the light square is the greyed tile (55% over the panel), and the orange outline is the tile you tapped.
+const KU='unit';
+const KEYB=[['yes','Yes','sure to draw'],['likely','Likely',''],['maybe','Maybe',''],['long','Long shot','']];
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255].join(',');return op>=1?`background:${c}`:`background:linear-gradient(rgba(${rgb},${op}),rgba(${rgb},${op})),${MC.bg}`};
+function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
+ items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
+function mapKey(noneW,noneOp){const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
+ it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push({w:'Orange outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
+ return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
+// After the tiles draw: how many tiles are in each color (the Special areas tile counts too). A color with none says so.
+function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');
+ li.classList.toggle('zero',!n);s.textContent=n?` · ${n} ${KU}${n==1?'':'s'}`:li.dataset.b=='none'?` · none`:` · none on this map with your choices`});
+ window.__KEY=cnt}
+let TK={};
 // ===== Unit tiles by AZGFD region (no boundary data is used) =====
 function byUnit(r){const m={};r.forEach(x=>{const h=AH[x.k];(h.u.length?h.u:['SP']).forEach(u=>(m[u]=m[u]||[]).push(x))});return m}
-function tiles(r){const bu=byUnit(r);const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(h.pool==S.pl)(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
+function tiles(r){const bu=byUnit(r);TK={};const tk=h=>{const b=h?bucket(h[0].v):'none';TK[b]=(TK[b]||0)+1};const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(h.pool==S.pl)(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
  let s='<div class="rgs" id="tiles">';for(const g of Object.keys(RG)){const us=RG[g].split(' ');
-  s+=`<div class="rg"><p class="rgt">${RGN[g]}</p><div class="ut">`+us.map(u=>{const h=bu[u];const c=h?vcol(h[0].v):MC.none;return `<button class="un${h?'':' off'}" data-u="${u}" style="background:${c}" ${h?'':'disabled'} aria-label="Unit ${u}${h?': '+h.length+' hunt'+(h.length==1?'':'s'):''}">${u}</button>`}).join('')+'</div></div>'}
- if(pu.has('SP')){const h=bu.SP;s+=`<div class="rg"><p class="rgt">Special hunt areas (named areas, see the hunt's notes)</p><div class="ut"><button class="un wide${h?'':' off'}" data-u="SP" style="background:${h?vcol(h[0].v):MC.none}" ${h?'':'disabled'}>Special areas</button></div></div>`}
+  s+=`<div class="rg"><p class="rgt">${RGN[g]}</p><div class="ut">`+us.map(u=>{const h=bu[u];const c=h?vcol(h[0].v):MC.none;tk(h);return `<button class="un${h?'':' off'}" data-u="${u}" style="background:${c}" ${h?'':'disabled'} aria-label="Unit ${u}${h?': '+h.length+' hunt'+(h.length==1?'':'s'):''}">${u}</button>`}).join('')+'</div></div>'}
+ if(pu.has('SP')){const h=bu.SP;tk(h);s+=`<div class="rg"><p class="rgt">Special hunt areas (named areas, see the hunt's notes)</p><div class="ut"><button class="un wide${h?'':' off'}" data-u="SP" style="background:${h?vcol(h[0].v):MC.none}" ${h?'':'disabled'}>Special areas</button></div></div>`}
  return s+'</div>'}
 function wireTiles(o,r){o.querySelectorAll('.un[data-u]').forEach(b=>b.onclick=()=>{pickU(b.dataset.u,r);const pn=$('mpanel'),bb=pn.getBoundingClientRect();if(bb.top>innerHeight-80)scrollBy({top:bb.top-innerHeight*.45,behavior:'instant'})})}
 function pickU(u,r){const h=byUnit(r)[u];if(!h)return;S.mu=u;document.querySelectorAll('.un.sel').forEach(x=>x.classList.remove('sel'));const b=document.querySelector(`.un[data-u="${u}"]`);if(b)b.classList.add('sel');
