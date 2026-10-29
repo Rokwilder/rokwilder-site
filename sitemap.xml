@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://rokwilder.com/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/find.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/utah/find.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/arizona/find.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/about.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/faq.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/pricing.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/unitiq.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/samples.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/samples/unit-a/teaser.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/samples/unit-b/teaser.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/privacy.html</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://rokwilder.com/terms.html</loc><lastmod>2026-10-29</lastmod></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://rokwilder.com/sitemap-pages.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+  <sitemap><loc>https://rokwilder.com/sitemap-colorado.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+  <sitemap><loc>https://rokwilder.com/sitemap-utah.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+  <sitemap><loc>https://rokwilder.com/sitemap-arizona.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+</sitemapindex>
