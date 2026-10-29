@@ -9,10 +9,15 @@ const Q=new URLSearchParams(location.search);
 const FULLPASS_GATING=false;
 // ==========================
 const FP=!FULLPASS_GATING||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&Q.get('preview')=='fullpass');
-let S={sp:'elk',res:'res',pts:0,w:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
+let S={sp:'elk',res:'res',pts:0,w:'',sx:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
 // X = season choice (one license good in archery, muzzleloader and rifle seasons), so it matches every weapon choice.
 const WN={'':'Any weapon',A:'Archery',M:'Muzzleloader',R:'Rifle'};const wOK=k=>!S.w||S.sp=='turkey'||k.at(-1)==S.w||k.at(-1)=='X';
+// Sex = 2nd character of the CPW hunt code (CPW brochure): M male (antlered / bearded), F female (antlerless / ewe / nanny), E either sex.
+const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};const sxOf=k=>'MFE'.includes(k[1])?k[1]:null;const sxOK=k=>!S.sx||sxOf(k)==S.sx;
+const SXW={elk:{M:'bull (antlered)',F:'cow (antlerless)'},deer:{M:'buck (antlered)',F:'doe (antlerless)'},pronghorn:{M:'buck (antlered)',F:'doe (antlerless)'},moose:{M:'bull (antlered)',F:'cow (antlerless)'},turkey:{M:'bearded turkey (tom)'},sheep:{M:'ram',F:'ewe'},dsheep:{M:'ram'},goat:{F:'nanny'}};
+const sxAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){const x=sxOf(k);if(x)o.add(x)}return['M','F','E'].filter(x=>o.has(x))};
+function sxNote(sp,av){const w=SXW[sp]||{};return av.map(x=>x=='E'?'Either sex = you may take a male or a female':`${SXN[x]} = ${w[x]||SXN[x].toLowerCase()} hunts`).join('. ')+'. From the sex letter in each CPW hunt code (M, F or E).'}
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',bear:'Bear',moose:'Moose',turkey:'Turkey',sheep:'Bighorn sheep',dsheep:'Desert bighorn sheep',goat:'Mountain goat'};
 // Lottery species: moose, Rocky Mountain bighorn sheep and mountain goat use weighted preference points; desert bighorn is a pure random draw.
 const WT=sp=>sp=='moose'||sp=='sheep'||sp=='dsheep'||sp=='goat';
@@ -45,7 +50,7 @@ const hunters=k=>{const f=typeof FL!='undefined'&&FL[k];return f?f[1]:null};
 function succHTML(k,cls){const d=D[k],l=lab(k);if(l)return `<div class="${cls}"><b>${l}</b> <span>for hunter success</span></div>`;
  const n=hunters(k);return `<div class="${cls}"><b>${Math.round(d[7])}%</b> <span>of hunters got one (CPW, 2025)${n!=null?` · ${n.toLocaleString()} hunters`:''}${n!=null&&n<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span></div>`}
 function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk"><span>Exact draw odds: <a href="unitiq.html">Full Pass</a></span></div>`}
-function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
+function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
 const seas=k=>k.at(-1)=='X'?'season choice (archery, muzzleloader or rifle)':D[k][2];
 const units=k=>{const f=typeof FL!='undefined'&&FL[k];return f&&f[2]?f[2]:[D[k][1]]};
@@ -53,7 +58,7 @@ function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return f
 function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
 function showList(){const r=ranked(),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
- const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.yo?' · kid 12–17':''}`;
+ const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · kid 12–17':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who}. Colored units have at least one hunt you can draw; the color is the best odds in that unit. Tap a unit to see its hunts.</p>`+
   wtNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
@@ -169,13 +174,15 @@ function feeHTML(d){const sp=d[0];if(!WT(sp))return'';const r=S.res=='res';
  return `<h3>Cost (CPW 2026)</h3><p class="dq">License ${lic}${app}${pt}. Apply by April 7; results April 23.${OIL(sp)?' Every sheep and goat harvest must be checked in person by CPW within 5 business days.':''}</p>`}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
-const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,sx:S.sx,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
+const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
-function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
-function sync(){document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
+function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
+function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';
+ $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
+ document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
  document.querySelectorAll('[data-w]').forEach(x=>{x.classList.toggle('on',x.dataset.w==S.w);x.disabled=S.sp=='turkey'});$('wnote').hidden=S.sp!='turkey';if($('pnote'))$('pnote').hidden=!WT(S.sp)||S.sp=='dsheep';if($('dnote'))$('dnote').hidden=S.sp!='dsheep';if($('ynote'))$('ynote').hidden=!S.yo}
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.fbl');if(a)a.href='feedback.html?about='+a.dataset.about+'&from='+encodeURIComponent(location.href)},true);
@@ -189,8 +196,8 @@ $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
 $('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
-if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
+if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__FY={ranked,odds,wOdds,S,FULLPASS_GATING,MC,vcol,gfile};
+window.__FY={ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
 })();

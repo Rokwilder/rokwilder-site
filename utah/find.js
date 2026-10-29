@@ -11,9 +11,24 @@
 (function(){
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const MAXP=33;
-let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
+let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',bison:'Bison',sheep:'Bighorn sheep',goat:'Mountain goat',bear:'Black bear',turkey:'Turkey',crane:'Sandhill crane',swan:'Tundra swan',sgrouse:'Greater sage-grouse',stgrouse:'Sharp-tailed grouse'};
 const PL=UT_META.pools;const poolsOf=sp=>Object.keys(PL).filter(k=>PL[k][0]==sp);
+// Sex of each permit, from Utah DWR's own wording. Big game: the hunt's legal animal (bull, buck, ram, bearded = male; cow, doe, ewe = female).
+// "Hunter's choice" means either sex may be taken (2026 Big Game Application Guidebook, Definitions p. 79). Bison: hunter's choice except the
+// "cow only" hunts in the guidebook's 2026 bison table (p. 65) and DWR's 2025 draw results. Mountain goat: hunter's choice (R657-62, goat
+// listed as "mountain goat (hunter's choice)"). Draw-only youth "any bull/hunter's choice" elk: may take a bull or an antlerless elk (p. 54).
+// Black bear: any bear except a cub or a sow with cubs (Black Bear, Cougar & Furbearer Guidebook). Bird permits (crane, swan, grouse) are not sex-specific.
+const BI_COW=new Set(['BI6505','BI6506','BI6529','BI6536','BI6539']);
+const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};
+function sxOf(k){const h=UH[k],x=(h.sex||'').toUpperCase();if(/^(BULL|BUCK|RAM|BEARDED)$/.test(x))return'M';if(/^(COW|DOE|EWE)$/.test(x))return'F';
+ if(/HUNTER.S CHOICE/.test(x))return'E';if(h.sp=='bison')return BI_COW.has(k)?'F':'E';if(!x&&['goat','bear','crane','swan','sgrouse','stgrouse'].includes(h.sp))return'E';return null}
+const SX={};if(typeof UH!='undefined')for(const k in UH)SX[k]=sxOf(k);
+const sxOK=k=>!S.sx||SX[k]==S.sx;
+const SXW={elk:{M:'bull',F:'cow (antlerless)',E:'youth any bull or antlerless'},deer:{M:'buck',F:'doe (antlerless)'},pronghorn:{M:'buck',F:'doe'},moose:{M:'bull',F:'cow (antlerless)'},bison:{F:'cow only',E:"hunter's choice: bull or cow"},sheep:{M:'ram',F:'ewe'},goat:{E:"hunter's choice: billy or nanny"},bear:{E:'any bear except a cub or a sow with cubs'},turkey:{M:'bearded turkey'}};
+const sxAvail=sp=>{const o=new Set();for(const k in UH)if(UH[k].sp==sp&&SX[k])o.add(SX[k]);return['M','F','E'].filter(x=>o.has(x))};
+function sxNote(sp,av){const w=SXW[sp]||{};return av.map(x=>`${SXN[x]} = ${w[x]||(x=='E'?'either sex':SXN[x].toLowerCase())}`).join('. ')+". From Utah DWR's hunt tables. Only the choices this species has are shown."}
+const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||Object.keys(UH).some(k=>UH[k].pool==pl&&SX[k]==S.sx));
 const PT={bonus:'bonus points',pref:'preference points',lottery:'no points'};
 const PSHORT={'elk-le':'Limited-entry bull','elk-yo':'Youth draw-only','elk-al':'Antlerless (cow)','deer-gen':'General-season buck','deer-le':'Limited-entry buck','deer-al':'Antlerless (doe)','pronghorn-le':'Limited-entry buck','pronghorn-al':'Doe','moose-oial':'Bull (once in a lifetime)','moose-al':'Antlerless','bison-oial':'Once in a lifetime','sheep-dbs':'Desert bighorn','sheep-rbs':'Rocky Mountain bighorn','goat-oial':'Once in a lifetime','deer-dh':'Dedicated Hunter','sheep-ewe':'Ewe (Rocky Mountain)','turkey-le':'Limited-entry spring','bear-le':'Limited-entry','crane-pp':'Permit draw (1 bird)','swan-pp':'Permit draw (1 bird)','sgrouse-pp':'Permit draw (2 birds)','stgrouse-pp':'Permit draw (2 birds)'};
 const BIRD=new Set(['crane-pp','swan-pp','sgrouse-pp','stgrouse-pp']);   // crane / swan / grouse permit draws
@@ -30,7 +45,7 @@ function odds(k){const h=UH[k],b=h.d[S.res];if(!b)return null;
  return v??null}
 const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
-function ranked(){return Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h))return false;const v=odds(k);return v!=null&&v>=.05})
+function ranked(){return Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||((UH[b.k].hv||[])[3]??-1)-((UH[a.k].hv||[])[3]??-1)||a.k.localeCompare(b.k))}
 const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const dt=s=>{const [y,m,d]=s.split('-');return `${MO[+m-1]} ${+d}, ${y}`};
@@ -47,7 +62,7 @@ function oddsHTML(v,cls,k){const h=UH[k];return `<div class="${cls}"><b>${pct(v)
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
 const money=n=>n==null?'not offered':'$'+n.toLocaleString();
 function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
- const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Utah resident':'Out of state'}${PL[S.pl][1]=='lottery'?'':' · '+ptsWord()} · ${NOW.has(S.pl)?'any legal weapon':WN[S.w].toLowerCase()}${S.yo?' · youth':''}`;
+ const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Utah resident':'Out of state'}${PL[S.pl][1]=='lottery'?'':' · '+ptsWord()} · ${NOW.has(S.pl)?'any legal weapon':WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
@@ -71,7 +86,7 @@ const gl=(g,pg)=>`<a href="${G[g][0]}">${G[g][1]}</a>${pg?', '+pg:''}`;
 const ylink=(pl,txt)=>`<a href="?${new URLSearchParams({sp:PL[pl][0],pl,r:S.res,p:S.pts,kid:1})}#list" data-pl="${pl}" class="ygo">${txt}</a>`;
 // Youth box: what a youth (17 or younger on July 31) can get for this species, with sources. Shown when "Yes, youth" is on.
 function youthBox(){const sp=S.sp;let li=[];
- if(!S.yo){const yo=sp=='elk'||sp=='deer'||sp=='turkey'||S.pl.endsWith('-al')||BIRD.has(S.pl);return yo?`<p class="note ybox"><b>Hunting with a youth (17 or younger on July 31)?</b> Utah has youth-only and youth-reserved permits for ${SP[sp].toLowerCase()}. Turn on "Yes, youth" in step ${NOW.has(S.pl)?5:6} to see them.</p>`:''}
+ if(!S.yo){const yo=sp=='elk'||sp=='deer'||sp=='turkey'||S.pl.endsWith('-al')||BIRD.has(S.pl);return yo?`<p class="note ybox"><b>Hunting with a youth (17 or younger on July 31)?</b> Utah has youth-only and youth-reserved permits for ${SP[sp].toLowerCase()}. Turn on "Yes, youth" in step ${NOW.has(S.pl)?6:7} to see them.</p>`:''}
  if(sp=='elk'){const e=UH.EB1007,b=e&&e.d[S.res];if(b){const n=sumN(b.raw),d=Object.values(b.raw).reduce((a,x)=>a+x[1],0);li.push(`<b>Youth only, by draw:</b> draw-only youth any bull/hunter's choice elk (EB1007), Sept. 12–22, 2026, on general-season any bull units. In 2026, ${d.toLocaleString()} of ${n.toLocaleString()} ${S.res=='res'?'resident':'nonresident'} youth applicants drew (${pct(d/n)}). Random draw, no points. ${S.pl=='elk-yo'?'':ylink('elk-yo','See this hunt')} (${gl('bg','page 39')})`)}
   li.push(`<b>Youth only, no draw:</b> general-season youth elk permits are unlimited and sold over the counter from July 7, 2026 ($50 resident, $749 nonresident). Valid on any bull and spike units in the general seasons (${gl('bg','pages 13, 15 and 39')}).`);
   if(S.pl=='elk-al')li.push(`<b>Youth reserve:</b> 20% of antlerless elk permits are set aside for youth (${gl('al','page 4')}). Hunts below show your youth odds.`);
@@ -194,17 +209,18 @@ async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e
  window.__UT.dlab=on.map(l=>String(l.feature.properties.u));const all=L.geoJSON(GJ);if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});else DM.fitBounds(all.getBounds())}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
-const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
+const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
-function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
-function sync(){if(!PL[S.pl]||PL[S.pl][0]!=S.sp)S.pl=poolsOf(S.sp)[0];
- $('pools').innerHTML=poolsOf(S.sp).map(k=>`<button data-pl="${k}" class="${k==S.pl?'on':''}">${PSHORT[k]}<br><span class="ptl">${PT[PL[k][1]]}</span></button>`).join('');
+function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
+function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl))S.pl=sp2[0];
+ $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
+ $('pools').innerHTML=sp2.map(k=>`<button data-pl="${k}" class="${k==S.pl?'on':''}">${PSHORT[k]}<br><span class="ptl">${PT[PL[k][1]]}</span></button>`).join('');
  $('pools').querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{S.pl=b.dataset.pl;sync()});
  const t=PL[S.pl][1];$('pnote').textContent=PL[S.pl][2]+': '+(S.pl=='deer-dh'?'uses your Dedicated Hunter preference points.':S.pl=='sheep-ewe'?'uses your ewe bighorn sheep bonus points.':BIRD.has(S.pl)?`uses your ${SP[S.sp].toLowerCase()} preference points.`:t=='bonus'?'uses your bonus points for this species.':t=='pref'?'uses your preference points for this hunt type.':'random draw, youth only.');
- const nw=NOW.has(S.pl)?4:5;$('plbl').textContent=nw+(t=='bonus'?'. How many bonus points do you have for this species?':'. How many preference points do you have for this hunt type?');if($('ylbl'))$('ylbl').textContent=(t=='lottery'?nw:nw+1)+'. Is the hunter a youth (17 or younger on July 31)?';
+ const nw=NOW.has(S.pl)?5:6;$('plbl').textContent=nw+(t=='bonus'?'. How many bonus points do you have for this species?':'. How many preference points do you have for this hunt type?');if($('ylbl'))$('ylbl').textContent=(t=='lottery'?nw:nw+1)+'. Is the hunter a youth (17 or younger on July 31)?';
  $('ptsbox').hidden=t=='lottery';$('lotnote').hidden=t!='lottery';if($('wbox')){$('wbox').hidden=NOW.has(S.pl);$('wnow').hidden=!NOW.has(S.pl);$('wnow').textContent=S.pl=='turkey-le'?'Every limited-entry turkey permit is any legal weapon: archery, crossbow or shotgun in spring.':S.pl=='bear-le'?'Every limited-entry bear permit is any legal weapon. The hunt type (spring, summer, fall, multi-season, spot-and-stalk) is shown on each hunt.':BIRD.has(S.pl)?`Every ${SP[S.sp].toLowerCase()} permit allows any legal method: ${BW[S.pl].toLowerCase()}.`:''}
  document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
@@ -220,8 +236,8 @@ $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
 $('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0];
- apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
+ apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__UT={ranked,odds,S,MC,vcol,fee,NOW};
+window.__UT={ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
 })();
