@@ -72,7 +72,7 @@ function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there. Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
   mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
-  `<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
+  mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   CRED+note+fbA('maps');wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
@@ -141,7 +141,7 @@ function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${s
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
-function HB(){return [['hh','High',`50% or more of hunters harvested ${SPN[S.sp]||'one'}`,MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
+function HB(){return [['hh','High',`50% or more of hunters harvested ${SPN[S.sp]||'one'}`,HC.hh],['hg','Good','30–49%',HC.hg],['hf','Fair','15–29%',HC.hf],['hl','Low','under 15%',HC.hl],['hn','No data','no official harvest number for these hunts',HND]]}
 function hbk(p){return p==null?'hn':p>=50?'hh':p>=30?'hg':p>=15?'hf':'hl'}
 function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
@@ -150,6 +150,16 @@ function ubk(h){return S.mc=='h'?hbk(hBest(h)):bucket(h[0].v)}
 function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is the best harvest success (`+'Utah DWR 2025 harvest reports'+`) among the hunts you can draw in that ${KU}`,it)}
+// Harvest map colors: their own blue family so a harvest map can't be mistaken for draw odds (greens/tan/orange).
+// Sequential light-to-dark blues stay ordered for red-green color blindness; Low is pale blue-gray, not the tan "no hunt" fill.
+const HC={hh:'#08306B',hg:'#2171B5',hf:'#6BAED6',hl:'#B7CDE3'};
+const hdot=p=>`<i class="vdot" style="background:${hcol(p)}"></i>`;
+const HBW={hh:'High',hg:'Good',hf:'Fair',hl:'Low',hn:'No data'};
+function uLead(h,V){if(S.mc!='h')return `best odds: ${vdot(h[0].v)}<b>${V(h[0].v)}</b>`;const p=hBest(h);
+ return `best harvest success: ${hdot(p)}<b>${p==null?'No data':Math.round(p)+'%'}</b>${p==null?'':' ('+HBW[hbk(p)]+')'} · best odds: ${vdot(h[0].v)}${V(h[0].v)}`}
+const hLi=k=>{if(S.mc!='h')return '';const p=hsv(k);return `Harvest ${p==null?'no data':Math.round(p)+'%'} · `};
+function mLab(){return S.mc=='h'?'<p class="mlab mlh">Map colored by <b>harvest success</b> (blues), not draw odds.</p>':'<p class="mlab">Map colored by <b>draw odds</b>.</p>'}
+function hCtl(m){if(S.mc!='h')return;const c=L.control({position:'topright'});c.onAdd=()=>{const d=L.DomUtil.create('div','hctl');d.textContent='Harvest success';return d};c.addTo(m)}
 function hPop(h){if(S.mc!='h')return '';const p=hBest(h);return ` · best harvest success: <b>${p==null?'No data':Math.round(p)+'%'}</b>`}
 function wireSM(o){o.querySelectorAll('[data-so]').forEach(b=>b.onclick=()=>{S.so=b.dataset.so;history.replaceState(st('list'),'',url());showList()});
  o.querySelectorAll('[data-mc]').forEach(b=>b.onclick=()=>{S.mc=b.dataset.mc;S.mu=null;history.replaceState(st('list'),'',url());showList()})}
@@ -181,14 +191,14 @@ async function ensureMap(){if(!window.L){const c=document.createElement('link');
 const bname=u=>{const f=GJ&&GJ.features.find(f=>f.properties.u==u);return f?f.properties.n:'Hunt area'};
 function byUnit(r){const m={};r.forEach(x=>UH[x.k].b.forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
 const poolB=()=>{const s=new Set();Object.values(UH).forEach(h=>{if(h.pool==S.pl&&(!h.cw||S.priv))h.b.forEach(u=>s.add(String(u)))});return s};
-function popHTML(u,h){return `<div class="mp"><p class="mpt">${bname(u)} · best odds: ${vdot(h[0].v)}<b>${verdict(h[0].v)}</b>${hPop(h)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=UH[x.k];
- return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)} · ${pct(x.v)}<span>${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul></div>'}
+function popHTML(u,h){return `<div class="mp"><p class="mpt">${bname(u)} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=UH[x.k];
+ return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)} · ${pct(x.v)}<span>${hLi(x.k)}${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul></div>'}
 let SEL=null,PY=null;
 function pick(u,h,l){if(SEL)SEL.remove();SEL=halo(M,[l]);S.mu=String(u);const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
 async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load. Use the List tab.</p>';return}
  if(!el.isConnected)return;if(M){M.remove();M=null}
- M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__UT.map=M;
+ M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__UT.map=M;hCtl(M);
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunt boundaries: Utah Division of Wildlife Resources');
  const bu=byUnit(r),pb=poolB(),cnt={hl:0};
  const fc={type:'FeatureCollection',features:GJ.features.filter(f=>pb.has(String(f.properties.u)))};
