@@ -32,14 +32,25 @@ const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||AHk.some(k=>AH[k].pool==pl&&SX[k
 const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
-function ranked(){return AHk.filter(k=>{const h=AH[k];if(h.pool!=S.pl||!avail(h)||!wOK(h)||!sxOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
+function ranked(){return AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||((AH[b.k].hv||[])[3]??-1)-((AH[a.k].hv||[])[3]??-1)||a.k.localeCompare(b.k))}
-const noHist=()=>AHk.filter(k=>{const h=AH[k];return h.pool==S.pl&&avail(h)&&wOK(h)&&sxOK(k)&&!h.od});
+const noHist=()=>AHk.filter(k=>{const h=AH[k];return plOK(h)&&avail(h)&&wOK(h)&&sxOK(k)&&!h.od});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const tag=h=>(h.t=='youth'?'<b class="yb">YOUTH ONLY</b> ':'')+(h.t=='champ'?'<b class="yb">CHAMP</b> ':'')+(h.t=='lo'?'<b class="sx">Limited opportunity</b> · ':'');
 function title(k){const h=AH[k];return `${tag(h)}${esc(h.legal)} · ${esc(h.area)} · ${WN[h.w]}`}
 function succHTML(k,cls){const h=AH[k],x=h.hv;if(!x||x[3]==null)return `<div class="${cls}">${hsLab(k)}<b>No data</b> <span>for hunter success (no matching hunt in AZGFD's latest harvest summary)</span></div>`;
- return `<div class="${cls}">${hsLab(k)}<b>${x[3]}%</b> <span>of hunters got one (AZGFD ${x[0]} harvest summary) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(x[1])}</div>`}
+ return `<div class="${cls}">${hsLab(k)}<b>${x[3]}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc(`AZGFD ${x[0]} harvest summary`,x[1])}${ssn(x[1])}</div>`}
+// What the harvest number counts: AZGFD's elk and deer summaries split harvest into bull/spike/cow/calf and buck/antlerless
+// (mule deer and whitetail); on every bull, buck and whitetail-buck hunt here the other columns are 0, and the reverse for
+// antlerless hunts. Pronghorn and bighorn draw hunts are buck-only and ram-only. Other species use the species name.
+const SPN={elk:'an elk',deer:'a deer',pronghorn:'a pronghorn',turkey:'a turkey',javelina:'a javelina',sheep:'a bighorn sheep',bison:'a bison',crane:'a sandhill crane',bear:'a black bear'};
+const HN={elk:{M:'a bull elk',F:'a cow or calf elk'},deer:{M:'a buck deer',F:'an antlerless deer'},pronghorn:{M:'a buck pronghorn'},sheep:{M:'a bighorn ram'}};
+function hWhat(k){const h=AH[k];if(h.legal=='Antlered whitetail deer')return 'a whitetail buck';return (HN[h.sp]||{})[SX[k]]||SPN[h.sp]||'one'}
+// Arizona has no mule-deer-only muzzleloader hunts: every muzzleloader deer hunt is "Any antlered deer" (mule deer or whitetail)
+// or "Antlered whitetail deer". So "Antlered mule deer" + Muzzleloader lists the "Any antlered deer" muzzleloader hunts, with a note.
+const XP={'deer-mule':{M:'deer-ad'}};
+const plOK=h=>h.pool==S.pl||(!!S.w&&(XP[S.pl]||{})[S.w]==h.pool);
+const xpNote=()=>S.pl=='deer-mule'&&S.w=='M'?'<p class="dq"><b>Muzzleloader mule deer:</b> AZGFD has no muzzleloader hunts for mule deer only. These muzzleloader hunts are for any antlered deer, so a mule deer buck (or a whitetail buck) is legal.</p>':''
 const ptsWord=()=>`${S.pts} point${S.pts==1?'':'s'}`;
 const nextDraw=h=>h.dr=='M'?'2027 elk and pronghorn draw':h.dr=='F'?'2027 fall draw':'next spring draw';
 function oddsHTML(v,cls,k){const h=AH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()} (estimate for the ${nextDraw(h)})</span></div>`}
@@ -57,7 +68,7 @@ function youthBox(){const sp=S.sp;if(sp=='bear')return '';
  const yo=AHk.filter(k=>AH[k].sp==sp&&AH[k].t=='youth');
  if(!S.yo)return yo.length?`<p class="note ybox"><b>Hunting with a youth (under 18)?</b> Arizona has ${yo.length} youth-only ${SP[sp].toLowerCase()} hunts. Turn on "Yes, youth" in step 7 to see them.</p>`:'';
  const li=[];const fy={elk:'$63 resident, $65 nonresident',deer:'$38 resident, $40 nonresident',javelina:'$28 resident, $30 nonresident',turkey:'$23 resident, $25 nonresident'}[sp];
- if(yo.length)li.push(`<b>Youth-only hunts:</b> ${yo.length} ${SP[sp].toLowerCase()} hunt${yo.length==1?'':'s'} in the current booklets${yo.some(k=>AH[k].pool==S.pl)?', listed below with the rest':'. None are in the hunt type you picked; try another type in step 3'}. Youth hunters can take part up to their 18th birthday. A youth who turns 18 after opening day can finish that youth-only hunt.`);
+ if(yo.length)li.push(`<b>Youth-only hunts:</b> ${yo.length} ${SP[sp].toLowerCase()} hunt${yo.length==1?'':'s'} in the current booklets${yo.some(k=>plOK(AH[k]))?', listed below with the rest':'. None are in the hunt type you picked; try another type in step 3'}. Youth hunters can take part up to their 18th birthday. A youth who turns 18 after opening day can finish that youth-only hunt.`);
  else li.push(`${SP[sp]} has no youth-only draw hunts in the current booklets. Youth draw with everyone else, using the same points.`);
  if(fy)li.push(`<b>Youth-only fee:</b> ${fy} (includes the application fee). A youth pays the regular fee if the application also lists a regular hunt.`);
  if(sp=='turkey')li.push('<b>No draw needed:</b> a youth-only fall turkey nonpermit-tag is sold over the counter ($10) for the youth-only nonpermit fall hunt in Units 4A, 4B, 6A and 27.');
@@ -75,10 +86,10 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Arizona resident':'Out of state'} · ${ptsWord()} · ${WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+youthBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+tiles(r)+
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
- o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+youthBox()+spNote()+
+ o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+
   `<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+note+fbA('find');
@@ -96,16 +107,17 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){const x=AH[k].hv;return x&&x[3]!=null?x[3]:null}
 function hsY(k){const x=AH[k].hv;return x&&x[3]!=null?String(x[0]):''}
-function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Only ${n} hunter${n==1?'':'s'}, so this number may not reflect a typical year.</span>`:''}
+const hSrc=(s,n)=>`<span class="hsrc">${s}${n!=null?` · ${n.toLocaleString()} hunter${n==1?'':'s'}`:''}</span>`;
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Numbers based on fewer than 30 hunters have a note under them.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
-function HB(){return [['hh','High','50% or more of hunters took one',MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
+function HB(){return [['hh','High',`50% or more of hunters harvested ${SPN[S.sp]||'one'}`,MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
 function hbk(p){return p==null?'hn':p>=50?'hh':p>=30?'hg':p>=15?'hf':'hl'}
 function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
@@ -131,7 +143,7 @@ function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>
 let TK={};
 // ===== Unit tiles by AZGFD region (no boundary data is used) =====
 function byUnit(r){const m={};r.forEach(x=>{const h=AH[x.k];(h.u.length?h.u:['SP']).forEach(u=>(m[u]=m[u]||[]).push(x))});return m}
-function tiles(r){const bu=byUnit(r);TK={};const tk=h=>{const b=h?ubk(h):'none';TK[b]=(TK[b]||0)+1};const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(h.pool==S.pl)(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
+function tiles(r){const bu=byUnit(r);TK={};const tk=h=>{const b=h?ubk(h):'none';TK[b]=(TK[b]||0)+1};const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(plOK(h))(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
  let s='<div class="rgs" id="tiles">';for(const g of Object.keys(RG)){const us=RG[g].split(' ');
   s+=`<div class="rg"><p class="rgt">${RGN[g]}</p><div class="ut">`+us.map(u=>{const h=bu[u];const c=h?ucol(h):MC.none;tk(h);return `<button class="un${h?'':' off'}" data-u="${u}" style="background:${c}" ${h?'':'disabled'} aria-label="Unit ${u}${h?': '+h.length+' hunt'+(h.length==1?'':'s'):''}">${u}</button>`}).join('')+'</div></div>'}
  if(pu.has('SP')){const h=bu.SP;tk(h);s+=`<div class="rg"><p class="rgt">Special hunt areas (named areas, see the hunt's notes)</p><div class="ut"><button class="un wide${h?'':' off'}" data-u="SP" style="background:${h?ucol(h):MC.none}" ${h?'':'disabled'}>Special areas</button></div></div>`}
@@ -172,7 +184,7 @@ let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
 function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',yo:+s.yo||0,champ:+s.champ||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mu:s.mu??null});sync()}
-const wsOf=pl=>[...new Set(AHk.filter(k=>AH[k].pool==pl).map(k=>AH[k].w))];
+const wsOf=pl=>[...new Set([...AHk.filter(k=>AH[k].pool==pl).map(k=>AH[k].w),...Object.keys(XP[pl]||{})])];
 function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(S.sp!='bear'&&(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl)))S.pl=sp2[0];
  const bear=S.sp=='bear';$('form2').hidden=bear;
  if(!bear){$('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
@@ -195,7 +207,7 @@ const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pt
 $('go').onclick=()=>{S.n=25;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 if(Q.get('sp')){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=sp=='bear'?'':(PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0]);
  apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
- const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&AH[h].pool==S.pl){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
+ const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&plOK(AH[h])){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__AZ={hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
+window.__AZ={hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
 })();

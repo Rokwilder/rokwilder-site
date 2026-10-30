@@ -55,8 +55,12 @@ const land=h=>h.pool=='stgrouse-pp'?'Mostly private land: get written landowner 
 function title(k){const h=UH[k];return `${h.pool=='elk-yo'?'<b class="yb">YOUTH ONLY</b> ':''}${h.sex?`<b class="sx">${h.sex}</b> · `:''}${h.name} · ${wL(h)}`}
 const yTag=k=>{const h=UH[k];return S.yo&&h.y&&h.y[S.res]&&(h.ys||sumN(h.y[S.res].raw)>=10)?`<span class="fd ytag"><b>Youth permits set aside:</b> ${h.ys?'15%, in a separate youth drawing':BIRD.has(h.pool)?'15%':'20%, then back into the regular draw'}. Your odds use the 2026 youth draw.</span>`:''};
 function succHTML(k,cls){const h=UH[k],x=h.hv;if(!x)return h.pool=='swan-pp'?`<div class="${cls}">${hsLab(k)}<b>Not published</b> <span>Utah DWR doesn't publish tundra swan hunter success</span></div>`:`<div class="${cls}">${hsLab(k)}<b>No data</b> <span>for hunter success (not in Utah DWR's 2025 harvest report)</span></div>`;
- const g=h.pool=='sgrouse-pp'||h.pool=='stgrouse-pp';
- return `<div class="${cls}">${hsLab(k)}<b>${Math.round(x[3])}%</b> <span>of hunters got ${g?'at least one bird':'one'} (Utah DWR, 2025${h.hs=='up'?' upland game report':' preliminary'}) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(x[1])}</div>`}
+ return `<div class="${cls}">${hsLab(k)}<b>${Math.round(x[3])}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc(h.hs=='up'?'Utah DWR 2025–26 upland game report':'Utah DWR 2025 preliminary harvest report',x[1])}${ssn(x[1])}</div>`}
+// What the harvest number counts: Utah DWR reports harvest per hunt, and each permit allows only the animal named on it
+// (bull, buck, ram, antlerless), so the words follow the permit. Birds: hunters who took at least one bird.
+const SPN={elk:'an elk',deer:'a deer',pronghorn:'a pronghorn',moose:'a moose',bison:'a bison',sheep:'a bighorn sheep',goat:'a mountain goat',bear:'a black bear',turkey:'a turkey',crane:'at least one sandhill crane',swan:'a tundra swan',sgrouse:'at least one greater sage-grouse',stgrouse:'at least one sharp-tailed grouse'};
+const HN={elk:{M:'a bull elk',F:'an antlerless elk'},deer:{M:'a buck deer',F:'an antlerless deer'},pronghorn:{M:'a buck pronghorn',F:'an antlerless pronghorn'},moose:{M:'a bull moose',F:'an antlerless moose'},sheep:{M:'a bighorn ram',F:'a bighorn ewe'}};
+function hWhat(k){const h=UH[k];if(h.pool=='sheep-dbs')return 'a desert bighorn ram';if(h.pool=='sheep-rbs')return 'a Rocky Mountain bighorn ram';return (HN[h.sp]||{})[SX[k]]||SPN[h.sp]||'one'}
 const ptsWord=()=>{const t=UH&&PL[S.pl][1];return t=='lottery'?'':`${S.pts} ${t=='bonus'?'bonus':'preference'} point${S.pts==1?'':'s'}`};
 function oddsHTML(v,cls,k){const h=UH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${h.pt=='lottery'?' (random draw, 2026)':' with '+ptsWord()+' (2027 estimate)'}</span></div>`}
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
@@ -127,16 +131,17 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){const x=UH[k].hv;return x?x[3]:null}
 function hsY(k){return UH[k].hv?'2025':''}
-function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Only ${n} hunter${n==1?'':'s'}, so this number may not reflect a typical year.</span>`:''}
+const hSrc=(s,n)=>`<span class="hsrc">${s}${n!=null?` · ${n.toLocaleString()} hunter${n==1?'':'s'}`:''}</span>`;
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Numbers based on fewer than 30 hunters have a note under them.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
-function HB(){return [['hh','High','50% or more of hunters took one',MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
+function HB(){return [['hh','High',`50% or more of hunters harvested ${SPN[S.sp]||'one'}`,MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
 function hbk(p){return p==null?'hn':p>=50?'hh':p>=30?'hg':p>=15?'hf':'hl'}
 function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
@@ -267,5 +272,5 @@ if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'el
  apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__UT={hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
+window.__UT={hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
 })();

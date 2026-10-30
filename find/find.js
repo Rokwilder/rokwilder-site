@@ -60,7 +60,13 @@ function landS(l){if(/^(Bighorn Sheep Access|Chancellor|Part of the unit)/.test(
 function lab(k){const f=typeof FL!='undefined'&&FL[k];if(f&&f[0]==1)return'New hunt, no data';if(D[k][7]==null||(f&&f[0]==2))return'No data';return''}
 const hunters=k=>{const f=typeof FL!='undefined'&&FL[k];return f?f[1]:null};
 function succHTML(k,cls){const d=D[k],l=lab(k);if(l)return `<div class="${cls}">${hsLab(k)}<b>${l}</b> <span>for hunter success</span></div>`;
- const n=hunters(k);return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters got one (CPW, 2025)${n!=null?` · ${n.toLocaleString()} hunters`:''}${n!=null&&n<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(n)}</div>`}
+ const n=hunters(k);return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc('CPW 2025 harvest report',n)}${ssn(n)}</div>`}
+// What the harvest number counts. CPW's 2025 harvest report splits each hunt code's harvest by bulls/cows/calves, bucks/does/fawns,
+// rams/ewes and billies/nannies; on every male-only hunt code the female and young columns are 0 (and the reverse), so the
+// sex-specific words match what CPW counted. Either-sex hunts and species without a split use the species name.
+const SPN={elk:'an elk',deer:'a deer',pronghorn:'a pronghorn',bear:'a bear',moose:'a moose',turkey:'a turkey',sheep:'a bighorn sheep',dsheep:'a desert bighorn sheep',goat:'a mountain goat'};
+const HN={elk:{M:'a bull elk',F:'a cow or calf elk'},deer:{M:'a buck deer',F:'a doe or fawn deer'},pronghorn:{M:'a buck pronghorn',F:'a doe or fawn pronghorn'},sheep:{M:'a bighorn ram',F:'a bighorn ewe'},dsheep:{M:'a desert bighorn ram'},goat:{F:'a nanny mountain goat'}};
+function hWhat(k){const sp=D[k][0];return (HN[sp]||{})[sxOf(k)]||SPN[sp]||'one'}
 function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk"><span>Exact draw odds: <a href="unitiq.html">Full Pass</a></span></div>`}
 function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
@@ -108,16 +114,17 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){return lab(k)?null:D[k][7]}
 function hsY(k){return '2025'}
-function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Only ${n} hunter${n==1?'':'s'}, so this number may not reflect a typical year.</span>`:''}
+const hSrc=(s,n)=>`<span class="hsrc">${s}${n!=null?` · ${n.toLocaleString()} hunter${n==1?'':'s'}`:''}</span>`;
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Numbers based on fewer than 30 hunters have a note under them.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
-function HB(){return [['hh','High','50% or more of hunters took one',MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
+function HB(){return [['hh','High',`50% or more of hunters harvested ${SPN[S.sp]||'one'}`,MC.yes],['hg','Good','30–49%',MC.likely],['hf','Fair','15–29%',MC.maybe],['hl','Low','under 15%',MC.long],['hn','No data','no official harvest number for these hunts',HND]]}
 function hbk(p){return p==null?'hn':p>=50?'hh':p>=30?'hg':p>=15?'hf':'hl'}
 function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
@@ -242,5 +249,5 @@ $('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('
 if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LOSRP'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__FY={seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
+window.__FY={hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
 })();
