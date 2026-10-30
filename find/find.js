@@ -18,10 +18,14 @@ const WN={'':'Any weapon',A:'Archery',M:'Muzzleloader',R:'Rifle'};const wOK=k=>!
 // O1-O6 = seasons, L1-L3 = late, E = early, P = private-land-only, K = youth-only, S = special or split, W = Ranching for Wildlife.
 // For deer, elk and pronghorn, O1-O4 are the 1st-4th rifle seasons. Every other rifle code (early, private-land-only, youth-only,
 // special, Ranching for Wildlife, and the seasons of species with their own season dates: bear, moose, sheep, goat) is "Other".
-const SEN={'':'All','1':'1st','2':'2nd','3':'3rd','4':'4th',L:'Late',O:'Other'};
-function seaOf(k){if(k.at(-1)!='R'||D[k][0]=='turkey')return null;const t=k[5],n=k[6];if(['deer','elk','pronghorn'].includes(D[k][0])&&t=='O'&&'1234'.includes(n))return n;return t=='L'?'L':'O'}
+const SEN={'':'All','1':'1st','2':'2nd','3':'3rd','4':'4th',L:'Late',O:'Other',S:'Sept. rifle',R:'Oct.–Nov. rifle',P:'Private land only'};
+// Bear (2026 CPW brochure, Bear Season Dates and rifle hunt tables): O1-R = September rifle (Sept. 2–30); O5-R = valid in all four regular
+// rifle seasons (Oct. 14–18, Oct. 24–Nov. 1, Nov. 7–15, Nov. 18–22); P1-R / P5-R = private-land-only rifle.
+function seaOf(k){if(k.at(-1)!='R'||D[k][0]=='turkey')return null;const t=k[5],n=k[6],sp=D[k][0];
+ if(sp=='bear')return t=='O'&&n=='1'?'S':t=='O'&&n=='5'?'R':t=='P'?'P':'O';
+ if(['deer','elk','pronghorn'].includes(sp)&&t=='O'&&'1234'.includes(n))return n;return t=='L'?'L':'O'}
 const seOK=k=>!S.se||seaOf(k)==S.se;
-const seAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){const x=seaOf(k);if(x)o.add(x)}return['1','2','3','4','L','O'].filter(x=>o.has(x))};
+const seAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){if(priv(D[k])&&!S.priv)continue;const x=seaOf(k);if(x)o.add(x)}return['1','2','3','4','S','R','P','L','O'].filter(x=>o.has(x))};
 const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};const sxOf=k=>'MFE'.includes(k[1])?k[1]:null;const sxOK=k=>!S.sx||sxOf(k)==S.sx;
 const SXW={elk:{M:'bull (antlered)',F:'cow (antlerless)'},deer:{M:'buck (antlered)',F:'doe (antlerless)'},pronghorn:{M:'buck (antlered)',F:'doe (antlerless)'},moose:{M:'bull (antlered)',F:'cow (antlerless)'},turkey:{M:'bearded turkey (tom)'},sheep:{M:'ram',F:'ewe'},dsheep:{M:'ram'},goat:{F:'nanny'}};
 const sxAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){const x=sxOf(k);if(x)o.add(x)}return['M','F','E'].filter(x=>o.has(x))};
@@ -56,7 +60,7 @@ function landS(l){if(/^(Bighorn Sheep Access|Chancellor|Part of the unit)/.test(
 function lab(k){const f=typeof FL!='undefined'&&FL[k];if(f&&f[0]==1)return'New hunt, no data';if(D[k][7]==null||(f&&f[0]==2))return'No data';return''}
 const hunters=k=>{const f=typeof FL!='undefined'&&FL[k];return f?f[1]:null};
 function succHTML(k,cls){const d=D[k],l=lab(k);if(l)return `<div class="${cls}">${hsLab(k)}<b>${l}</b> <span>for hunter success</span></div>`;
- const n=hunters(k);return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters got one (CPW, 2025)${n!=null?` · ${n.toLocaleString()} hunters`:''}${n!=null&&n<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span></div>`}
+ const n=hunters(k);return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters got one (CPW, 2025)${n!=null?` · ${n.toLocaleString()} hunters`:''}${n!=null&&n<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(n)}</div>`}
 function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk"><span>Exact draw odds: <a href="unitiq.html">Full Pass</a></span></div>`}
 function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
@@ -66,7 +70,7 @@ function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return f
 function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
 function showList(){const r=ranked(),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
- const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.se?' · '+(S.se=='O'?'other rifle seasons':SEN[S.se].toLowerCase()+' rifle season'):''}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · kid 12–17':''}`;
+ const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.se?' · '+(S.se=='O'?'other rifle seasons':'SRP'.includes(S.se)?({S:'September rifle',R:'Oct.–Nov. rifle',P:'private-land-only rifle'})[S.se]:SEN[S.se].toLowerCase()+' rifle season'):''}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · kid 12–17':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit. Tap a unit to see its hunts.</p>`+
   wtNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
@@ -104,11 +108,12 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){return lab(k)?null:D[k][7]}
 function hsY(k){return '2025'}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
@@ -216,7 +221,7 @@ function goBack(){if(fromList)history.back();else{history.replaceState(st('list'
 function apply(s){Object.assign(S,{sp:s.sp,res:s.res,pts:+s.pts,w:s.w||'',se:s.se||'',sx:s.sx||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
 function sync(){{const ea=S.w=='R'&&S.sp!='turkey'?seAvail(S.sp):[];if(S.se&&!ea.includes(S.se))S.se='';const show=ea.length>=2;$('sebox').hidden=!show;
  $('seseg').innerHTML=show?['',...ea].map(x=>`<button data-se="${x}" class="${S.se==x?'on':''}">${SEN[x]}</button>`).join(''):'';$('seseg').querySelectorAll('[data-se]').forEach(b=>b.onclick=()=>{S.se=b.dataset.se;sync()});
- $('senote').textContent=ea.includes('O')?'Other = '+(['deer','elk','pronghorn'].includes(S.sp)?'early, private-land-only, youth-only, special and Ranching for Wildlife rifle hunts':'this species\' own rifle season dates (see each hunt)')+'. From the season part of each CPW hunt code.':'From the season part of each CPW hunt code.'}
+ $('senote').textContent=S.sp=='bear'?'CPW 2026 bear rifle seasons: Sept. rifle is Sept. 2–30; Oct.–Nov. rifle hunts are good in all four regular rifle seasons (Oct. 14–18, Oct. 24–Nov. 1, Nov. 7–15, Nov. 18–22); private-land-only hunts show when you turn them on under More options. From the season part of each CPW hunt code.':ea.includes('O')?'Other = '+(['deer','elk','pronghorn'].includes(S.sp)?'early, private-land-only, youth-only, special and Ranching for Wildlife rifle hunts':'this species\' own rifle season dates (see each hunt)')+'. From the season part of each CPW hunt code.':'From the season part of each CPW hunt code.'}
  const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';
  $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
  document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
@@ -233,7 +238,7 @@ $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
 $('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
-if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LO'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
+if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LOSRP'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};

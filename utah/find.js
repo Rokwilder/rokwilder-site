@@ -56,7 +56,7 @@ function title(k){const h=UH[k];return `${h.pool=='elk-yo'?'<b class="yb">YOUTH 
 const yTag=k=>{const h=UH[k];return S.yo&&h.y&&h.y[S.res]&&(h.ys||sumN(h.y[S.res].raw)>=10)?`<span class="fd ytag"><b>Youth permits set aside:</b> ${h.ys?'15%, in a separate youth drawing':BIRD.has(h.pool)?'15%':'20%, then back into the regular draw'}. Your odds use the 2026 youth draw.</span>`:''};
 function succHTML(k,cls){const h=UH[k],x=h.hv;if(!x)return h.pool=='swan-pp'?`<div class="${cls}">${hsLab(k)}<b>Not published</b> <span>Utah DWR doesn't publish tundra swan hunter success</span></div>`:`<div class="${cls}">${hsLab(k)}<b>No data</b> <span>for hunter success (not in Utah DWR's 2025 harvest report)</span></div>`;
  const g=h.pool=='sgrouse-pp'||h.pool=='stgrouse-pp';
- return `<div class="${cls}">${hsLab(k)}<b>${Math.round(x[3])}%</b> <span>of hunters got ${g?'at least one bird':'one'} (Utah DWR, 2025${h.hs=='up'?' upland game report':' preliminary'}) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span></div>`}
+ return `<div class="${cls}">${hsLab(k)}<b>${Math.round(x[3])}%</b> <span>of hunters got ${g?'at least one bird':'one'} (Utah DWR, 2025${h.hs=='up'?' upland game report':' preliminary'}) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(x[1])}</div>`}
 const ptsWord=()=>{const t=UH&&PL[S.pl][1];return t=='lottery'?'':`${S.pts} ${t=='bonus'?'bonus':'preference'} point${S.pts==1?'':'s'}`};
 function oddsHTML(v,cls,k){const h=UH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${h.pt=='lottery'?' (random draw, 2026)':' with '+ptsWord()+' (2027 estimate)'}</span></div>`}
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
@@ -126,11 +126,12 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){const x=UH[k].hv;return x?x[3]:null}
 function hsY(k){return UH[k].hv?'2025':''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';

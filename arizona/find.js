@@ -39,7 +39,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const tag=h=>(h.t=='youth'?'<b class="yb">YOUTH ONLY</b> ':'')+(h.t=='champ'?'<b class="yb">CHAMP</b> ':'')+(h.t=='lo'?'<b class="sx">Limited opportunity</b> · ':'');
 function title(k){const h=AH[k];return `${tag(h)}${esc(h.legal)} · ${esc(h.area)} · ${WN[h.w]}`}
 function succHTML(k,cls){const h=AH[k],x=h.hv;if(!x||x[3]==null)return `<div class="${cls}">${hsLab(k)}<b>No data</b> <span>for hunter success (no matching hunt in AZGFD's latest harvest summary)</span></div>`;
- return `<div class="${cls}">${hsLab(k)}<b>${x[3]}%</b> <span>of hunters got one (AZGFD ${x[0]} harvest summary) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span></div>`}
+ return `<div class="${cls}">${hsLab(k)}<b>${x[3]}%</b> <span>of hunters got one (AZGFD ${x[0]} harvest summary) · ${x[1].toLocaleString()} hunters${x[1]<30?' · <em class="ss">SMALL SAMPLE</em>':''}</span>${ssn(x[1])}</div>`}
 const ptsWord=()=>`${S.pts} point${S.pts==1?'':'s'}`;
 const nextDraw=h=>h.dr=='M'?'2027 elk and pronghorn draw':h.dr=='F'?'2027 fall draw':'next spring draw';
 function oddsHTML(v,cls,k){const h=AH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()} (estimate for the ${nextDraw(h)})</span></div>`}
@@ -96,11 +96,12 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){const x=AH[k].hv;return x&&x[3]!=null?x[3]:null}
 function hsY(k){const x=AH[k].hv;return x&&x[3]!=null?String(x[0]):''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">Small sample: only ${n} hunter${n==1?'':'s'}, so this number may not reflect typical success.</span>`:''}
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
 function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Hunts with few hunters are marked Small sample.</p>':''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
