@@ -8,7 +8,11 @@
 // tags, applicants, harvest %, hunter counts) are Full Pass only and are not in the public data file (band values only).
 (function(){
 const FP=window.RW_FP===true;   // true only when a Full Pass data file is loaded (member loader; not on the site yet)
-const FPN='<span class="fpn">Exact draw odds and harvest %: coming with the Full Pass.</span>';
+const FPN='<span class="fpn">Exact odds and harvest %: Full Pass</span>';
+// What the Full Pass adds: shown on the free results only (hidden when Full Pass data is loaded). Every line is something the
+// Full Pass view of this page really shows (see the FP branches); prices match pricing.html.
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level</li><li>About how many points you need to be sure to draw</li><li>2026 draw results: tags, applicants and who drew at each point level</li><li>Exact harvest success % and how many hunters it's based on</li><li>For Colorado, Utah and Arizona</li></ul><p class="fpp">Full Pass: $29.99 a year. Founding Hunter: $19.99 the first year for the first 200 members. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact odds, past draws and harvest numbers for every hunt come with the Full Pass (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const MAXP=AZ_META.maxp;const SRC=AZ_META.src;
 let S={sp:'elk',pl:'elk-bull',res:'res',pts:0,w:'',sx:'',so:'',mc:'',yo:0,champ:0,n:25,tab:'list',mu:null};
@@ -91,13 +95,13 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Arizona resident':'Out of state'} · ${ptsWord()} · ${WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
-  `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
+  `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fpLine()+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+
-  `<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+note+fbA('find');
+  (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+note+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}}
 // ===== Map key (same as Colorado and Utah, for unit tiles) =====

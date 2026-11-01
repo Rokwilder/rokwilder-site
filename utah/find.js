@@ -13,7 +13,11 @@
 (function(){
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const FP=window.RW_FP===true;   // true only when a Full Pass data file is loaded (member loader; not on the site yet)
-const FPN='<span class="fpn">Exact draw odds and harvest %: coming with the Full Pass.</span>';
+const FPN='<span class="fpn">Exact odds and harvest %: Full Pass</span>';
+// What the Full Pass adds: shown on the free results only (hidden when Full Pass data is loaded). Every line is something the
+// Full Pass view of this page really shows (see the FP branches); prices match pricing.html.
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level</li><li>About how many points you need to be sure to draw</li><li>2026 draw results by point level (permits, applicants, who drew), plus 2025 totals</li><li>Exact harvest success % and how many hunters it's based on</li><li>For Colorado, Utah and Arizona</li></ul><p class="fpp">Full Pass: $29.99 a year. Founding Hunter: $19.99 the first year for the first 200 members. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact odds, past draws and harvest numbers for every hunt come with the Full Pass (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
 const yOK=y=>y.ok!=null?!!y.ok:sumN(y.raw)>=10;   // band-only files carry an ok flag (10+ youth applied) instead of the counts
 const MAXP=33;
 let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
@@ -77,15 +81,15 @@ function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden
  const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there. Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
-  mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
+  fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
-  CRED+note+fbA('maps');wireTabs(o);drawMap(r);return}
+  CRED+note+fpLine()+fbA('maps');wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
   (S.sp=='elk'?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:'')+
-  `<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length||yoOnly?'':'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+note+fbA('find');
+  (r.length||yoOnly?'':'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+note+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  o.querySelectorAll('a.ygo').forEach(a=>a.onclick=e=>{e.preventDefault();S.pl=a.dataset.pl;S.sp=PL[S.pl][0];S.yo=1;S.n=25;sync();history.pushState(st('list'),'',url());showList();top2(o)});
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}}

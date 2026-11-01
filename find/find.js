@@ -9,7 +9,11 @@ const Q=new URLSearchParams(location.search);
 // only when a Full Pass data file has been loaded (window.RW_FP, set by the member loader; not on the site yet).
 const FULLPASS_GATING=true;
 const FP=window.RW_FP===true;
-const FPN='<span class="fpn">Exact draw odds and harvest %: coming with the Full Pass.</span>';
+const FPN='<span class="fpn">Exact odds and harvest %: Full Pass</span>';
+// What the Full Pass adds: shown on the free results only (hidden when Full Pass data is loaded). Every line is something the
+// Full Pass view of this page really shows (see the FP branches); prices match pricing.html.
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level</li><li>About how many points you need to be sure to draw</li><li>Past draw results back to 2021: tags, applicants and the points it took to draw</li><li>Exact harvest success % and how many hunters it's based on</li><li>For Colorado, Utah and Arizona</li></ul><p class="fpp">Full Pass: $29.99 a year. Founding Hunter: $19.99 the first year for the first 200 members. Not on sale yet. <a href="pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact odds, past draws and harvest numbers for every hunt come with the Full Pass (not on sale yet). <a href="pricing.html">See pricing</a></p>`;
 // =====================
 let S={sp:'elk',res:'res',pts:0,w:'',se:'',sx:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
@@ -84,17 +88,17 @@ function showList(){const r=ranked(),o=$('out');
  if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit. Tap a unit to see its hunts.</p>`+
   wtNote()+yxNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
   (OIL(S.sp)?`<p class="note">${S.sp=='goat'?'Mountain goat':'Bighorn sheep'} units are not the big game units: CPW numbers them ${S.sp=='goat'?'G1, G2…':'S1, S2…'}, and this map shows those ${S.sp=='goat'?'goat':'sheep'} units.</p>`:'')+
-  mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
+  fpBox()+mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Colorado hunting units"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>`+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fbA('maps');
+  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
   wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+(S.sp=='elk'?`<p class="note"><b>No points needed:</b> ${S.res=='res'?'Colorado residents can buy an over-the-counter elk license for many units.':'Out-of-state hunters can buy over-the-counter rifle elk; OTC archery elk for nonresidents is east of I-25 only.'} <a href="https://cpw.state.co.us/activities/hunting/big-game/over-counter-otc-licenses">CPW over-the-counter licenses</a></p>`:'')+
-  `<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':`<p class="dq">${WT(S.sp)?'No hunts you can draw with these choices.':'No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.'}</p>`)+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p>`+fbA('find');
+  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p>`+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};}
 // ===== Map tab (preview) =====
