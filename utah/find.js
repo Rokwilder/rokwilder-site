@@ -8,8 +8,13 @@
 //    applicant counts and quotas to get the chance for one applicant at your points (build_utah.py, bonus_model).
 //  - Draw-only youth elk: straight random draw, no points.
 //  - Limited-entry turkey: one shared resident/nonresident quota; 15% drawn in a separate youth drawing (R657-62-25).
+// Free shows the verdict word and the harvest-success band. Exact numbers (draw %, odds by points, points needed, draw tables,
+// permits, applicants, harvest %, hunter counts) are Full Pass only and are not in the public data file (band values only).
 (function(){
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
+const FP=window.RW_FP===true;   // true only when a Full Pass data file is loaded (member loader; not on the site yet)
+const FPN='<span class="fpn">Exact draw odds and harvest %: coming with the Full Pass.</span>';
+const yOK=y=>y.ok!=null?!!y.ok:sumN(y.raw)>=10;   // band-only files carry an ok flag (10+ youth applied) instead of the counts
 const MAXP=33;
 let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',bison:'Bison',sheep:'Bighorn sheep',goat:'Mountain goat',bear:'Black bear',turkey:'Turkey',crane:'Sandhill crane',swan:'Tundra swan',sgrouse:'Greater sage-grouse',stgrouse:'Sharp-tailed grouse'};
@@ -41,7 +46,7 @@ const sumN=raw=>Object.values(raw||{}).reduce((a,x)=>a+x[0],0);
 function odds(k){const h=UH[k],b=h.d[S.res];if(!b)return null;
  if(h.pt=='lottery')return S.yo?b.o[0]:null;
  const p=Math.min(S.pts,MAXP);let v=b.o[p];
- if(S.yo&&h.y&&h.y[S.res]){const y=h.y[S.res];if(h.ys){if(y.o[p]!=null)v=y.o[p]}else if(sumN(y.raw)>=10&&y.o[p]!=null)v=Math.max(v??0,y.o[p])}
+ if(S.yo&&h.y&&h.y[S.res]){const y=h.y[S.res];if(h.ys){if(y.o[p]!=null)v=y.o[p]}else if(yOK(y)&&y.o[p]!=null)v=Math.max(v??0,y.o[p])}
  return v??null}
 const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
@@ -53,8 +58,9 @@ const wL=h=>{if(BIRD.has(h.pool))return (h.seas[0]?`${dt(h.seas[0][0]).replace(/
  if(h.sub)return h.sub+(wn.length?' · '+wn.join(', '):'');return h.cw?'CWMU (any legal weapon, CWMU dates)':h.ms?'Multi-season: '+wn.join(', '):wn.join(', ')};
 const land=h=>h.pool=='stgrouse-pp'?'Mostly private land: get written landowner permission before you apply':BIRD.has(h.pool)?'Public draw. Residents and nonresidents share the permits. Check land access (private land needs written permission)':h.cw?(h.comb?'CWMU: private land. Residents and nonresidents can apply':'CWMU: private land, Utah residents only in the draw'):'Public draw. Check land access (private land needs written permission)';
 function title(k){const h=UH[k];return `${h.pool=='elk-yo'?'<b class="yb">YOUTH ONLY</b> ':''}${h.sex?`<b class="sx">${h.sex}</b> · `:''}${h.name} · ${wL(h)}`}
-const yTag=k=>{const h=UH[k];return S.yo&&h.y&&h.y[S.res]&&(h.ys||sumN(h.y[S.res].raw)>=10)?`<span class="fd ytag"><b>Youth permits set aside:</b> ${h.ys?'15%, in a separate youth drawing':BIRD.has(h.pool)?'15%':'20%, then back into the regular draw'}. Your odds use the 2026 youth draw.</span>`:''};
+const yTag=k=>{const h=UH[k];return S.yo&&h.y&&h.y[S.res]&&(h.ys||yOK(h.y[S.res]))?`<span class="fd ytag"><b>Youth permits set aside:</b> ${h.ys?'15%, in a separate youth drawing':BIRD.has(h.pool)?'15%':'20%, then back into the regular draw'}. Your odds use the 2026 youth draw.</span>`:''};
 function succHTML(k,cls){const h=UH[k],x=h.hv;if(!x)return h.pool=='swan-pp'?`<div class="${cls}">${hsLab(k)}<b>Not published</b> <span>Utah DWR doesn't publish tundra swan hunter success</span></div>`:`<div class="${cls}">${hsLab(k)}<b>No data</b> <span>for hunter success (not in Utah DWR's 2025 harvest report)</span></div>`;
+ if(!FP)return `<div class="${cls}">${hsLab(k)}${hdot(x[3])}<b>${HBW[hbk(x[3])]}</b> <span>${HBR[hbk(x[3])]} of hunters harvested ${hWhat(k)}</span>${hSrc(h.hs=='up'?'Utah DWR 2025–26 upland game report':'Utah DWR 2025 preliminary harvest report',null)}${ssn(x[1])}</div>`;
  return `<div class="${cls}">${hsLab(k)}<b>${Math.round(x[3])}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc(h.hs=='up'?'Utah DWR 2025–26 upland game report':'Utah DWR 2025 preliminary harvest report',x[1])}${ssn(x[1])}</div>`}
 // What the harvest number counts: Utah DWR reports harvest per hunt, and each permit allows only the animal named on it
 // (bull, buck, ram, antlerless), so the words follow the permit. Birds: hunters who took at least one bird.
@@ -62,7 +68,7 @@ const SPN={elk:'an elk',deer:'a deer',pronghorn:'a pronghorn',moose:'a moose',bi
 const HN={elk:{M:'a bull elk',F:'an antlerless elk'},deer:{M:'a buck deer',F:'an antlerless deer'},pronghorn:{M:'a buck pronghorn',F:'an antlerless pronghorn'},moose:{M:'a bull moose',F:'an antlerless moose'},sheep:{M:'a bighorn ram',F:'a bighorn ewe'}};
 function hWhat(k){const h=UH[k];if(h.pool=='sheep-dbs')return 'a desert bighorn ram';if(h.pool=='sheep-rbs')return 'a Rocky Mountain bighorn ram';return (HN[h.sp]||{})[SX[k]]||SPN[h.sp]||'one'}
 const ptsWord=()=>{const t=UH&&PL[S.pl][1];return t=='lottery'?'':`${S.pts} ${t=='bonus'?'bonus':'preference'} point${S.pts==1?'':'s'}`};
-function oddsHTML(v,cls,k){const h=UH[k];return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${h.pt=='lottery'?' (random draw, 2026)':' with '+ptsWord()+' (2027 estimate)'}</span></div>`}
+function oddsHTML(v,cls,k){const h=UH[k];if(!FP)return `<div class="${cls} lk">${FPN}</div>`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${h.pt=='lottery'?' (random draw, 2026)':' with '+ptsWord()+' (2027 estimate)'}</span></div>`}
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
 const money=n=>n==null?'not offered':'$'+n.toLocaleString();
 function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
@@ -91,7 +97,7 @@ const ylink=(pl,txt)=>`<a href="?${new URLSearchParams({sp:PL[pl][0],pl,r:S.res,
 // Youth box: what a youth (17 or younger on July 31) can get for this species, with sources. Shown when "Yes, youth" is on.
 function youthBox(){const sp=S.sp;let li=[];
  if(!S.yo){const yo=sp=='elk'||sp=='deer'||sp=='turkey'||S.pl.endsWith('-al')||BIRD.has(S.pl);return yo?`<p class="note ybox"><b>Hunting with a youth (17 or younger on July 31)?</b> Utah has youth-only and youth-reserved permits for ${SP[sp].toLowerCase()}. Turn on "Yes, youth" in step ${NOW.has(S.pl)?6:7} to see them.</p>`:''}
- if(sp=='elk'){const e=UH.EB1007,b=e&&e.d[S.res];if(b){const n=sumN(b.raw),d=Object.values(b.raw).reduce((a,x)=>a+x[1],0);li.push(`<b>Youth only, by draw:</b> draw-only youth any bull/hunter's choice elk (EB1007), Sept. 12–22, 2026, on general-season any bull units. In 2026, ${d.toLocaleString()} of ${n.toLocaleString()} ${S.res=='res'?'resident':'nonresident'} youth applicants drew (${pct(d/n)}). Random draw, no points. ${S.pl=='elk-yo'?'':ylink('elk-yo','See this hunt')} (${gl('bg','page 39')})`)}
+ if(sp=='elk'){const e=UH.EB1007,b=e&&e.d[S.res];if(b){const n=sumN(b.raw),d=Object.values(b.raw||{}).reduce((a,x)=>a+x[1],0);li.push(`<b>Youth only, by draw:</b> draw-only youth any bull/hunter's choice elk (EB1007), Sept. 12–22, 2026, on general-season any bull units. ${FP?`In 2026, ${d.toLocaleString()} of ${n.toLocaleString()} ${S.res=='res'?'resident':'nonresident'} youth applicants drew (${pct(d/n)}).`:`Your odds as a ${S.res=='res'?'resident':'nonresident'} youth: ${verdict(b.o[0])}.`} Random draw, no points. ${S.pl=='elk-yo'?'':ylink('elk-yo','See this hunt')} (${gl('bg','page 39')})`)}
   li.push(`<b>Youth only, no draw:</b> general-season youth elk permits are unlimited and sold over the counter from July 7, 2026 ($50 resident, $749 nonresident). Valid on any bull and spike units in the general seasons (${gl('bg','pages 13, 15 and 39')}).`);
   if(S.pl=='elk-al')li.push(`<b>Youth reserve:</b> 20% of antlerless elk permits are set aside for youth (${gl('al','page 4')}). Hunts below show your youth odds.`);
   if(S.pl=='elk-le')li.push('<b>Limited-entry bull elk</b> has no youth reserve. Youth draw with everyone else.')}
@@ -131,13 +137,13 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){const x=UH[k].hv;return x?x[3]:null}
 function hsY(k){return UH[k].hv?'2025':''}
-function ssn(n){return n!=null&&n<30?`<span class="ssn">Only ${n} hunter${n==1?'':'s'}, so this number may not reflect a typical year.</span>`:''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">${FP?`Only ${n} hunter${n==1?'':'s'}, so this number`:'Fewer than 30 hunters, so this rating'} may not reflect a typical year.</span>`:''}
 const hSrc=(s,n)=>`<span class="hsrc">${s}${n!=null?` · ${n.toLocaleString()} hunter${n==1?'':'s'}`:''}</span>`;
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
-function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
+function sortTxt(){return S.so=='h'?(FP?'Best harvest success first; hunts with no official harvest number are last.':'Best harvest success first (High, Good, Fair, Low), then best odds; hunts with no official harvest number are last.'):'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Numbers based on fewer than 30 hunters have a note under them.</p>':''}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?`<p class="dq ssnote">${FP?'Numbers':'Ratings'} based on fewer than 30 hunters have a note under them.</p>`:''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
@@ -155,12 +161,14 @@ function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1
 const HC={hh:'#08306B',hg:'#2171B5',hf:'#6BAED6',hl:'#B7CDE3'};
 const hdot=p=>`<i class="vdot" style="background:${hcol(p)}"></i>`;
 const HBW={hh:'High',hg:'Good',hf:'Fair',hl:'Low',hn:'No data'};
+const HBR={hh:'50% or more',hg:'30–49%',hf:'15–29%',hl:'Under 15%',hn:''};
+const hpv=p=>p==null?'No data':FP?Math.round(p)+'%':HBW[hbk(p)];
 function uLead(h,V){if(S.mc!='h')return `best odds: ${vdot(h[0].v)}<b>${V(h[0].v)}</b>`;const p=hBest(h);
- return `best harvest success: ${hdot(p)}<b>${p==null?'No data':Math.round(p)+'%'}</b>${p==null?'':' ('+HBW[hbk(p)]+')'} · best odds: ${vdot(h[0].v)}${V(h[0].v)}`}
-const hLi=k=>{if(S.mc!='h')return '';const p=hsv(k);return `Harvest ${p==null?'no data':Math.round(p)+'%'} · `};
+ return `best harvest success: ${hdot(p)}<b>${hpv(p)}</b>${p==null||!FP?'':' ('+HBW[hbk(p)]+')'} · best odds: ${vdot(h[0].v)}${V(h[0].v)}`}
+const hLi=k=>{if(S.mc!='h')return '';const p=hsv(k);return `Harvest ${p==null?'no data':hpv(p)} · `};
 function mLab(){return S.mc=='h'?'<p class="mlab mlh">Map colored by <b>harvest success</b> (blues), not draw odds.</p>':'<p class="mlab">Map colored by <b>draw odds</b>.</p>'}
 function hCtl(m){if(S.mc!='h')return;const c=L.control({position:'topright'});c.onAdd=()=>{const d=L.DomUtil.create('div','hctl');d.textContent='Harvest success';return d};c.addTo(m)}
-function hPop(h){if(S.mc!='h')return '';const p=hBest(h);return ` · best harvest success: <b>${p==null?'No data':Math.round(p)+'%'}</b>`}
+function hPop(h){if(S.mc!='h')return '';const p=hBest(h);return ` · best harvest success: <b>${hpv(p)}</b>`}
 function wireSM(o){o.querySelectorAll('[data-so]').forEach(b=>b.onclick=()=>{S.so=b.dataset.so;history.replaceState(st('list'),'',url());showList()});
  o.querySelectorAll('[data-mc]').forEach(b=>b.onclick=()=>{S.mc=b.dataset.mc;S.mu=null;history.replaceState(st('list'),'',url());showList()})}
 const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
@@ -192,7 +200,7 @@ const bname=u=>{const f=GJ&&GJ.features.find(f=>f.properties.u==u);return f?f.pr
 function byUnit(r){const m={};r.forEach(x=>UH[x.k].b.forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
 const poolB=()=>{const s=new Set();Object.values(UH).forEach(h=>{if(h.pool==S.pl&&(!h.cw||S.priv))h.b.forEach(u=>s.add(String(u)))});return s};
 function popHTML(u,h){return `<div class="mp"><p class="mpt">${bname(u)} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=UH[x.k];
- return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)} · ${pct(x.v)}<span>${hLi(x.k)}${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul></div>'}
+ return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul></div>'}
 let SEL=null,PY=null;
 function pick(u,h,l){if(SEL)SEL.remove();SEL=halo(M,[l]);S.mu=String(u);const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
@@ -217,12 +225,14 @@ function qt(h,b){const y=(h.yq||[0,0])[S.res=='res'?0:1],who=S.res=='res'?'resid
 function yTbl(h){const y=S.yo&&h.y&&h.y[S.res];if(!y||!sumN(y.raw))return '';const rows=Object.entries(y.raw).map(([p,x])=>[+p,x]).sort((a,c)=>c[0]-a[0]);
  return `<h3>2026 youth draw at your residency (1st choice, Utah DWR)</h3><table class="dt ydt"><tr><th>Points</th><th>Applied</th><th>Drew</th></tr>`+rows.map(([p,x])=>`<tr${p==S.pts?' class="on"':''}><td>${p}</td><td>${x[0].toLocaleString()}</td><td>${x[1].toLocaleString()}</td></tr>`).join('')+'</table>'+
  `<p class="note">${h.ys?`Youth drawing: ${y.q} permits (${y.mp} top-points, ${y.rg} random), drawn with bonus points among youth only (Utah Admin. Rule R657-62-25). Youth odds use only this drawing.`:`Youth permits reserved${h.comb?' (shared by residents and nonresidents)':' for '+(S.res=='res'?'residents':'nonresidents')}: ${((h.yq||[0,0])[S.res=='res'?0:1]).toLocaleString()}. Applied counts every youth who applied at that point level, including youth who didn't draw (Utah DWR lists those in the regular rows). ${BIRD.has(h.pool)?'Your':'Youth who miss go back into the regular draw, so your'} youth odds are the higher of the youth and regular estimates${sumN(y.raw)<10?' (fewer than 10 youth applied in 2026, so we use the regular estimate)':''}.`} Source: <a href="https://utahdraws.com/drawodds">Utah DWR draw odds, 2026</a>.</p>`}
-function how(h){if(h.pt=='bonus')return `<p class="how"><b>How Utah draws this hunt (bonus points):</b> half of the permits are reserved for the applicants with the most bonus points. The other half are drawn at random among everyone left, and you get one random number for applying plus one for each bonus point, so points help in both halves (Utah Admin. Rule R657-62-8). Your odds above are a 2027 estimate. We replay that rule with the 2026 permit numbers two ways: on Utah DWR's 2026 applicants as they were, and with everyone who didn't draw moved up one point (point creep). We show the lower of the two. The table below is the actual 2026 draw.</p>`;
+function how(h){const t=how0(h);return FP?t:t.replace(' The table below is the actual 2026 draw.','').replace(' Your odds above are the share of 2026 applicants who drew.',' Your odds above come from the share of 2026 applicants who drew.')}
+function how0(h){if(h.pt=='bonus')return `<p class="how"><b>How Utah draws this hunt (bonus points):</b> half of the permits are reserved for the applicants with the most bonus points. The other half are drawn at random among everyone left, and you get one random number for applying plus one for each bonus point, so points help in both halves (Utah Admin. Rule R657-62-8). Your odds above are a 2027 estimate. We replay that rule with the 2026 permit numbers two ways: on Utah DWR's 2026 applicants as they were, and with everyone who didn't draw moved up one point (point creep). We show the lower of the two. The table below is the actual 2026 draw.</p>`;
  if(h.pt=='pref')return `<p class="how"><b>How Utah draws this hunt (preference points):</b> permits go to the applicants with the most preference points first, with ties broken at random (Utah Admin. Rule R657-62-9). Your odds above are a 2027 estimate. We hand out the 2026 number of permits by points two ways: to Utah DWR's 2026 first-choice applicants as they were, and with everyone who didn't draw moved up one point (point creep). We show the lower of the two. Lifetime license holders, who are drawn first, are left out. The table below is the actual 2026 draw.</p>`;
  return `<p class="how"><b>How Utah draws this hunt:</b> a straight random draw among youth applicants. Points aren't used. Your odds above are the share of 2026 applicants who drew.</p>`}
 function showDetail(k){const h=UH[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;const b=h.d[S.res];
  let lad='',sure='',tbl='';
- if(b&&h.pt!='lottery'){const mx=Math.min(MAXP,Math.max(S.pts,...Object.keys(b.raw).map(Number),0)+2);const ks=[...Array(mx+1).keys()];
+ if(!FP){tbl=`<p class="note fpx">Odds at every point level, points needed and the ${h.pt=='lottery'?'':'2025 and '}2026 draw results (permits, applicants, who drew): coming with the Full Pass.</p>`}
+ else if(b&&h.pt!='lottery'){const mx=Math.min(MAXP,Math.max(S.pts,...Object.keys(b.raw).map(Number),0)+2);const ks=[...Array(mx+1).keys()];
   lad=`<p class="lh">Odds by points (2027 estimate)</p><div class="lad">`+ks.map(n=>{const z=b.o[n];return `<div class="lr${n==Math.min(S.pts,MAXP)?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${z==null?0:Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${z==null?'no data':pct(z)}</span></div>`}).join('')+'</div>';
   const s=b.o.findIndex(z=>z!=null&&z>=.995);sure=`<p class="dq"><b>${s>=0?`Our 2027 estimate: about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw in our 2027 estimate.'}</b>${h.pt=='bonus'&&s>0?' Below that, you are in the random half, where each point is one more random number.':''}</p>`;
   const rows=Object.entries(b.raw).map(([p,x])=>[+p,x]).sort((a,c)=>c[0]-a[0]);
@@ -233,7 +243,7 @@ function showDetail(k){const h=UH[k],v=odds(k),o=$('detail');$('out').hidden=tru
  const bk=S.tab=='map'?'← Back to my map':'← Back to my list';if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=`<button class="btn big2" id="back">${bk}</button>
  <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k)}</p><div class="vd">${vdot(v??0)}${v==null?'NO DATA':verdict(v)}</div>${v==null?'':oddsHTML(v,'fo',k)}${sure}${succHTML(k,'fs')}${h.hs=='up'?`<p class="note hvn">Hunter success comes from the ${gl('up','pages 48, 50 and 52')} (2025 season; hunters who took at least one bird).</p>`:h.pool=='swan-pp'?'<p class="note hvn">Utah DWR requires a harvest report for every tundra swan permit but doesn\'t publish hunter success for this hunt.</p>':'<p class="note hvn">Hunter success comes from Utah DWR\'s <a href="https://wildlife.utah.gov/biggame/reports">2025 preliminary harvest report</a>. Utah DWR may revise these numbers in the final report.</p>'}<p class="dq">${land(h)}</p></div>${['deer-dh','turkey-le','bear-le'].includes(h.pool)||BIRD.has(h.pool)?spNote():''}${how(h)}${lad}${tbl}
- ${h.h25?`<h3>2025 draw (1st choice, Utah DWR)</h3><div class="yr"><b>Residents</b><span>${h.h25[1]} drew of ${h.h25[0].toLocaleString()} applied</span></div><div class="yr"><b>Nonresidents</b><span>${h.h25[3]} drew of ${h.h25[2].toLocaleString()} applied</span></div><p class="note">Source: Utah DWR 2025 drawing odds reports (<a href="https://wildlife.utah.gov/biggame/odds">wildlife.utah.gov/biggame/odds</a>).</p>`:''}
+ ${FP&&h.h25?`<h3>2025 draw (1st choice, Utah DWR)</h3><div class="yr"><b>Residents</b><span>${h.h25[1]} drew of ${h.h25[0].toLocaleString()} applied</span></div><div class="yr"><b>Nonresidents</b><span>${h.h25[3]} drew of ${h.h25[2].toLocaleString()} applied</span></div><p class="note">Source: Utah DWR 2025 drawing odds reports (<a href="https://wildlife.utah.gov/biggame/odds">wildlife.utah.gov/biggame/odds</a>).</p>`:''}
  <h3>2026 season</h3>${ss||'<p class="dq">See the Utah DWR guidebook.</p>'}
  ${f&&BIRD.has(h.pool)&&!f[0]&&!f[1]?`<h3>Permit fee (2026–27)</h3><p class="dq">No permit fee ($0). You pay only the $${h.af[0]} resident / $${h.af[1]} nonresident application fee, plus a hunting license. Source: ${gl('tk','page 8')}.</p>`:f?`<h3>Permit fee (${h.fs=='tk'||h.fs=='wf'?'2026–27':'2026'})</h3><div class="yr"><b>Resident</b><span>${money(f[0])}</span></div><div class="yr"><b>Nonresident</b><span>${f[1]==null&&h.cw?"CWMU operator only":money(f[1])}</span></div><p class="note">Plus a $10 resident / $21 nonresident application fee and a hunting license.${h.cw&&h.pool=='deer-le'?' Premium CWMU buck deer permits are $185 resident / $1,398 nonresident.':''}${h.cw&&f[1]==null?' Nonresidents can get CWMU permits only through the CWMU operator.':''} ${h.fy?` Youth: ${money(h.fy[0])} resident, ${money(h.fy[1])} nonresident.`:''} Source: ${h.fs=='al'?gl('al','hunt tables'):h.fs=='tk'||h.fs=='wf'?gl('tk','page 8'):h.fs=='br'?gl('br','hunt tables'):h.pool=='deer-dh'?gl('bg','page 47'):gl('bg','pages 15–16')}.</p>`:''}
  <h3>Where this hunt is</h3>${huntKey(v??0,.25,`This hunt's area${(h.b||[]).length>1?'s':''} (named on the map)`,`Other ${PSHORT[h.pool].toLowerCase()} hunt areas`)}<div id="dmap" class="gmap dm" aria-label="Map of this hunt's boundary"></div>${CRED}
@@ -253,6 +263,7 @@ async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
 const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,so:S.so,mc:S.mc,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
+const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
 const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
@@ -282,5 +293,5 @@ if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'el
  apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__UT={hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
+window.__UT={FP,oddsAt,hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
 })();

@@ -1,14 +1,16 @@
 // Find Your Hunt: the one draw-odds lookup on the site.
-// Free shows the verdict word; exact % is Full Pass. FP is only ever true in a local preview (localhost + ?preview=fullpass).
+// Free shows the verdict word and the harvest-success band. Exact numbers (draw %, odds by points, points needed, past draws,
+// harvest %, hunter counts) are Full Pass only and are not in the public data files (they hold band values only).
 (function(){
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
-// ===== LAUNCH SWITCH =====
-// false = everyone sees exact draw-odds % (same as the live site today).
-// true  = free users see only the verdict word; exact % is Full Pass (flip at Full Pass launch).
-const FULLPASS_GATING=false;
-// ==========================
-const FP=!FULLPASS_GATING||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&Q.get('preview')=='fullpass');
+// ===== FULL PASS =====
+// The public data files are band-only, so there are no exact numbers to show here. FP turns on the exact-number views
+// only when a Full Pass data file has been loaded (window.RW_FP, set by the member loader; not on the site yet).
+const FULLPASS_GATING=true;
+const FP=window.RW_FP===true;
+const FPN='<span class="fpn">Exact draw odds and harvest %: coming with the Full Pass.</span>';
+// =====================
 let S={sp:'elk',res:'res',pts:0,w:'',se:'',sx:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
 // X = season choice (one license good in archery, muzzleloader and rifle seasons), so it matches every weapon choice.
@@ -49,7 +51,7 @@ function mooseRow(d){const M=d[8];if(!M)return null;const ys=Object.keys(M).sort
 // latest CPW draw; times the backtest shrink OI_K; and never above how often "100%" predictions really drew in backtests (OI_SR ceiling).
 const bkt=(sp,P)=>sp=='dsheep'||P<3?'lo':P-3<=2?'a':P-3<=6?'b':P-3<=12?'c':'d';
 const pAt=(m,P)=>m.r!=null?m.r:P>=3?(m.t==null?1:Math.min(1,m.t*(P-2))):m.l[P];
-function wOdds(d,P,res){const m=d[9]&&d[9][res||S.res];if(!m)return null;const sp=d[0],v=Math.min(pAt(m.p,P),pAt(m.b,P));
+function wOdds(d,P,res){const m=d[9]&&d[9][res||S.res];if(!m)return null;if(m.vb)return m.vb[Math.min(P,30)]??null;const sp=d[0],v=Math.min(pAt(m.p,P),pAt(m.b,P));
  const w=Math.min(1,v*((OI_K[sp]||{})[bkt(sp,P)]??1));return OI_SR[sp]?Math.min(w,OI_SR[sp][P>=3?'hi':'lo']):w}
 function odds(k){const d=D[k];if(d[9])return wOdds(d,Math.min(S.pts,30));if(d[0]=='moose'){const r=mooseRow(d);return r?r.v:null}
  const p=d[5][S.res];if(!p)return null;const m=Math.max(...Object.keys(p.o).map(Number));return oAt(k,p,Math.min(S.pts,m))[0]}
@@ -60,14 +62,15 @@ function landS(l){if(/^(Bighorn Sheep Access|Chancellor|Part of the unit)/.test(
 function lab(k){const f=typeof FL!='undefined'&&FL[k];if(f&&f[0]==1)return'New hunt, no data';if(D[k][7]==null||(f&&f[0]==2))return'No data';return''}
 const hunters=k=>{const f=typeof FL!='undefined'&&FL[k];return f?f[1]:null};
 function succHTML(k,cls){const d=D[k],l=lab(k);if(l)return `<div class="${cls}">${hsLab(k)}<b>${l}</b> <span>for hunter success</span></div>`;
- const n=hunters(k);return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc('CPW 2025 harvest report',n)}${ssn(n)}</div>`}
+ const n=hunters(k);if(!FP)return `<div class="${cls}">${hsLab(k)}${hdot(d[7])}<b>${HBW[hbk(d[7])]}</b> <span>${HBR[hbk(d[7])]} of hunters harvested ${hWhat(k)}</span>${hSrc('CPW 2025 harvest report',null)}${ssn(n)}</div>`;
+ return `<div class="${cls}">${hsLab(k)}<b>${Math.round(d[7])}%</b> <span>of hunters harvested ${hWhat(k)}</span>${hSrc('CPW 2025 harvest report',n)}${ssn(n)}</div>`}
 // What the harvest number counts. CPW's 2025 harvest report splits each hunt code's harvest by bulls/cows/calves, bucks/does/fawns,
 // rams/ewes and billies/nannies; on every male-only hunt code the female and young columns are 0 (and the reverse), so the
 // sex-specific words match what CPW counted. Either-sex hunts and species without a split use the species name.
 const SPN={elk:'an elk',deer:'a deer',pronghorn:'a pronghorn',bear:'a bear',moose:'a moose',turkey:'a turkey',sheep:'a bighorn sheep',dsheep:'a desert bighorn sheep',goat:'a mountain goat'};
 const HN={elk:{M:'a bull elk',F:'a cow or calf elk'},deer:{M:'a buck deer',F:'a doe or fawn deer'},pronghorn:{M:'a buck pronghorn',F:'a doe or fawn pronghorn'},sheep:{M:'a bighorn ram',F:'a bighorn ewe'},dsheep:{M:'a desert bighorn ram'},goat:{F:'a nanny mountain goat'}};
 function hWhat(k){const sp=D[k][0];return (HN[sp]||{})[sxOf(k)]||SPN[sp]||'one'}
-function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk"><span>Exact draw odds: <a href="unitiq.html">Full Pass</a></span></div>`}
+function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk">${FPN}</div>`}
 function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
 const seas=k=>k.at(-1)=='X'?'season choice (archery, muzzleloader or rifle)':D[k][2];
@@ -114,13 +117,13 @@ const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none
 // Sorting and map color only reorder or recolor the same hunts you can draw (5% or better); they never add hunts.
 function hsv(k){return lab(k)?null:D[k][7]}
 function hsY(k){return '2025'}
-function ssn(n){return n!=null&&n<30?`<span class="ssn">Only ${n} hunter${n==1?'':'s'}, so this number may not reflect a typical year.</span>`:''}
+function ssn(n){return n!=null&&n<30?`<span class="ssn">${FP?`Only ${n} hunter${n==1?'':'s'}, so this number`:'Fewer than 30 hunters, so this rating'} may not reflect a typical year.</span>`:''}
 const hSrc=(s,n)=>`<span class="hsrc">${s}${n!=null?` · ${n.toLocaleString()} hunter${n==1?'':'s'}`:''}</span>`;
 function hsLab(k){const y=hsY(k);return `<span class="hsl">Harvest success${y?' · '+y:''}</span>`}
 function lsort(r){if(S.so!='h')return r;return [...r].sort((a,b)=>{const x=hsv(a.k),y=hsv(b.k);if((x==null)!=(y==null))return x==null?1:-1;return (y??0)-(x??0)||b.v-a.v||a.k.localeCompare(b.k)})}
-function sortTxt(){return S.so=='h'?'Best harvest success first; hunts with no official harvest number are last.':'Best odds first, down to long shots.'}
+function sortTxt(){return S.so=='h'?(FP?'Best harvest success first; hunts with no official harvest number are last.':'Best harvest success first (High, Good, Fair, Low), then best odds; hunts with no official harvest number are last.'):'Best odds first, down to long shots.'}
 function segB(id,attr,cur,opts){return `<div class="seg" id="${id}">`+opts.map(([v,t])=>`<button data-${attr}="${v}" class="${cur==v?'on':''}">${t}</button>`).join('')+'</div>'}
-function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?'<p class="dq ssnote">Numbers based on fewer than 30 hunters have a note under them.</p>':''}</div>`}
+function sortBar(){return `<div class="sbar"><span class="lbl">Sort by</span>${segB('soseg','so',S.so,[['','Best draw odds'],['h','Best harvest success']])}${S.so=='h'?`<p class="dq ssnote">${FP?'Numbers':'Ratings'} based on fewer than 30 hunters have a note under them.</p>`:''}</div>`}
 function mcBar(){return `<div class="sbar"><span class="lbl">Color map by</span>${segB('mcseg','mc',S.mc,[['','Draw odds'],['h','Harvest success']])}</div>`}
 // Harvest bands (words only, same ramp as the odds key): High 50%+, Good 30-49%, Fair 15-29%, Low under 15%, dark gray = no official number.
 const HND='#666666';
@@ -138,12 +141,14 @@ function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1
 const HC={hh:'#08306B',hg:'#2171B5',hf:'#6BAED6',hl:'#B7CDE3'};
 const hdot=p=>`<i class="vdot" style="background:${hcol(p)}"></i>`;
 const HBW={hh:'High',hg:'Good',hf:'Fair',hl:'Low',hn:'No data'};
+const HBR={hh:'50% or more',hg:'30–49%',hf:'15–29%',hl:'Under 15%',hn:''};
+const hpv=p=>p==null?'No data':FP?Math.round(p)+'%':HBW[hbk(p)];
 function uLead(h,V){if(S.mc!='h')return `best odds: ${vdot(h[0].v)}<b>${V(h[0].v)}</b>`;const p=hBest(h);
- return `best harvest success: ${hdot(p)}<b>${p==null?'No data':Math.round(p)+'%'}</b>${p==null?'':' ('+HBW[hbk(p)]+')'} · best odds: ${vdot(h[0].v)}${V(h[0].v)}`}
-const hLi=k=>{if(S.mc!='h')return '';const p=hsv(k);return `Harvest ${p==null?'no data':Math.round(p)+'%'} · `};
+ return `best harvest success: ${hdot(p)}<b>${hpv(p)}</b>${p==null||!FP?'':' ('+HBW[hbk(p)]+')'} · best odds: ${vdot(h[0].v)}${V(h[0].v)}`}
+const hLi=k=>{if(S.mc!='h')return '';const p=hsv(k);return `Harvest ${p==null?'no data':hpv(p)} · `};
 function mLab(){return S.mc=='h'?'<p class="mlab mlh">Map colored by <b>harvest success</b> (blues), not draw odds.</p>':'<p class="mlab">Map colored by <b>draw odds</b>.</p>'}
 function hCtl(m){if(S.mc!='h')return;const c=L.control({position:'topright'});c.onAdd=()=>{const d=L.DomUtil.create('div','hctl');d.textContent='Harvest success';return d};c.addTo(m)}
-function hPop(h){if(S.mc!='h')return '';const p=hBest(h);return ` · best harvest success: <b>${p==null?'No data':Math.round(p)+'%'}</b>`}
+function hPop(h){if(S.mc!='h')return '';const p=hBest(h);return ` · best harvest success: <b>${hpv(p)}</b>`}
 function wireSM(o){o.querySelectorAll('[data-so]').forEach(b=>b.onclick=()=>{S.so=b.dataset.so;history.replaceState(st('list'),'',url());showList()});
  o.querySelectorAll('[data-mc]').forEach(b=>b.onclick=()=>{S.mc=b.dataset.mc;S.mu=null;history.replaceState(st('list'),'',url());showList()})}
 const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
@@ -198,12 +203,12 @@ function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true
  let lad='';if(FP&&d[9]&&d[0]!='dsheep'){const L=[0,1,2,3,4,5,6,8,10,13,16,20,25,30];if(!L.includes(S.pts))L.push(S.pts);L.sort((a,b)=>a-b);
   lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+L.map(n=>{const z=wOdds(d,n);return `<div class="lr${n==S.pts?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
  else if(FP&&!WT(d[0])){const p=d[5][S.res],ks=Object.keys(p.o).map(Number);lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+ks.map(n=>{const z=oAt(k,p,n)[0];return `<div class="lr${n==Math.min(S.pts,Math.max(...ks))?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
- let sure='';if(WT(d[0]))sure=wtSure(d);else if(d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
+ let sure='';if(WT(d[0]))sure=wtSure(d);else if(FP&&d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
  const bk=S.tab=='map'?'← Back to my map':'← Back to my list';if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=`<button class="btn big2" id="back">${bk}</button>
  <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
  <p class="dq">${landS(d[4])}</p>${d[10]?`<p class="dq">${d[10]}</p>`:''}</div>${lad}${feeHTML(d)}
- ${d[6]&&d[6].length?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>${WT(d[0])?(S.res=='res'?'Residents':'Nonresidents')+': ':'Drew out at: '}${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
+ ${FP?'':`<p class="note fpx">Odds at every point level, points needed and past draw results (tags, applicants, points drawn at): coming with the Full Pass.</p>`}${FP&&d[6]&&d[6].length?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>${WT(d[0])?(S.res=='res'?'Residents':'Nonresidents')+': ':'Drew out at: '}${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
  <h3>Where this hunt is</h3><p class="dq">${uL(k,1)}, highlighted on the unit map.</p>${huntKey(v??0,.35,`This hunt's unit${units(k).length==1?'':'s'} (numbered)`,'Other units')}<div id="dmap" class="gmap dm" aria-label="Map of the units in this hunt"></div>
  <p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>${OIL(d[0])?`<p class="note">${d[0]=='goat'?'Goat':'Sheep'} units (${d[0]=='goat'?'G':'S'} numbers) are not the big game units.</p>`:''}
  <p><button class="btn o" id="vsm">View on statewide map</button></p>
@@ -232,6 +237,7 @@ function feeHTML(d){const sp=d[0];if(!WT(sp))return'';const r=S.res=='res';
 const fbA=about=>`<p class="fbk"><a class="fbl" href="feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
 const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,se:S.se,sx:S.sx,so:S.so,mc:S.mc,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
+const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
 const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.se)u.set('se',S.se);if(S.sx)u.set('sx',S.sx);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
@@ -259,5 +265,5 @@ $('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('
 if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LOSRP'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__FY={hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
+window.__FY={FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
 })();
