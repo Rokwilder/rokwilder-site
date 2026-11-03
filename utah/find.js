@@ -75,24 +75,46 @@ const ptsWord=()=>{const t=UH&&PL[S.pl][1];return t=='lottery'?'':`${S.pts} ${t=
 function oddsHTML(v,cls,k){const h=UH[k];if(!FP)return `<div class="${cls} lk">${FPN}</div>`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${h.pt=='lottery'?' (random draw, 2026)':' with '+ptsWord()+' (2027 estimate)'}</span></div>`}
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
 const money=n=>n==null?'not offered':'$'+n.toLocaleString();
-function showList(){const r=ranked(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
+// ===== Over-the-counter (OTC) general-season bull elk permits: utah/otc.js =====
+// Areas from Utah DWR's hunt boundary table; dates, caps and sale dates from the 2026 Utah Big Game Application Guidebook (pp. 7, 13, 15, 31);
+// legal animals from the 2026 Field Regulations (p. 49). No draw and no points, so no verdicts. Shown with the limited-entry bull elk choice.
+const OTCL=()=>typeof UT_OTC!='undefined'?UT_OTC:[];
+const hasOTC=()=>S.pl=='elk-le'&&OTCL().length>0;
+function otcOK(r){if(!hasOTC()||r.sp!=S.sp)return false;if(S.res=='res'?!r.res:!r.nr)return false;if(S.w&&r.w!=S.w)return false;if(S.sx&&r.sx!=S.sx)return false;return true}
+function otcRows(){if(!hasOTC())return[];const o=[];OTCL().filter(otcOK).forEach(r=>r.u.forEach(u=>o.push({u:String(u.b),a:u,r})));
+ const hv=x=>x.r.hb??-1;return o.sort((a,b)=>(S.so=='h'?hv(b)-hv(a):0)||a.a.n.localeCompare(b.a.n)||OTCL().indexOf(a.r)-OTCL().indexOf(b.r))}
+const OWN={A:'Archery',R:'Any legal weapon (rifle)',M:'Muzzleloader'};
+const oSea=r=>r.w=='A'?'Archery':r.sn=='Muzzleloader'?'Muzzleloader':r.sn.replace('Any legal weapon','Rifle (any legal weapon)');
+const oAni=(r,a)=>r.w=='A'?(a.t=='any'?"Bull or antlerless elk (hunter's choice)":/^Book Cliffs/.test(a.n)?'Spike bull elk':'Spike bull or antlerless elk'):r.ty=='spike'?'Spike bull elk':'Any bull elk';
+function otcHarv(r){const b=r.hb;return `<div class="fs"><span class="hsl">Harvest success · 2025</span>${b==null?"<b>No data</b> <span>Utah DWR has no 2025 harvest number for this permit</span>":`${hdot(b)}<b>${HBW[hbk(b)]}</b> <span>${HBR[hbk(b)]} of hunters harvested an elk</span>`}<span class="hsrc">Utah DWR 2025 preliminary harvest report · all areas on this permit together${r.w=='A'?' (reported for any bull units)':''}</span></div>`}
+const otcDot=()=>`<i class="vdot" style="background:${MC.otc}"></i>`;
+function otcLi(x,i){const r=x.r,a=x.a;
+ return `<li><div class="oh" data-k="${r.k}" data-u="${x.u}"><span class="rk">${i+1}</span><span class="ov">${otcDot()}OVER THE COUNTER</span><span class="ft">${a.n} · ${oSea(r)} · ${oAni(r,a)}</span>`+
+ `<span class="fd">Over the counter, no draw needed. Buy at a license agent, a DWR office or online at wildlife.utah.gov. Season ${a.d||r.d}, 2026.</span>`+
+ `<span class="fd">Residents and nonresidents: $56 resident, $849 nonresident, plus a valid hunting or combination license. No bonus or preference points needed or used. On sale ${r.on}, 8 a.m. MDT. ${r.cap}${a.x?' '+a.x:''}</span>${otcHarv(r)}<span class="fk">Hunt number ${r.k} · ${gl('bg','pages 7, 13, 15 and 31')}</span></div></li>`}
+function otcSec(o){if(!hasOTC())return'';const ns=S.on||25;
+ return `<h3 id="otc" class="oth">Over the counter: no draw needed (${o.length})</h3><p class="dq">${o.length?`General-season bull elk permits aren't drawn and don't use points, so there are no odds. One row per hunt area the permit is valid in, ${S.so=='h'?'best harvest success first, then by area':'by area name'}. Multiseason spike bull and youth general-season elk permits are also sold over the counter (${gl('bg','page 15')}).`:'No over-the-counter permit matches these choices.'}</p>`+
+  (o.length?`<ol class="fl otl">`+o.slice(0,ns).map(otcLi).join('')+'</ol>':'')+(o.length>ns?`<button class="btn o big2" id="omore">Show ${Math.min(25,o.length-ns)} more over-the-counter (${o.length-ns} left)</button>`:'')}
+function otcTop(o){if(!hasOTC())return'';return `<p class="note otn"><b>No draw needed:</b> ${o.length?`${o.length} over-the-counter general-season bull elk hunt${o.length==1?'':'s'} match${o.length==1?'es':''} your choices (2026: archery from July 7, any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). <a href="#otc" class="otj">See them after the draw list</a>.`:'no over-the-counter general-season bull elk permit matches these choices.'} Source: ${gl('bg','pages 13 and 15')}.</p>`}
+function showList(){const r=ranked(),oR=otcRows(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Utah resident':'Out of state'}${PL[S.pl][1]=='lottery'?'':' · '+ptsWord()} · ${NOW.has(S.pl)?'any legal weapon':WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there. Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there.${hasOTC()?' Purple areas have no hunt to draw with your choices but sell an over-the-counter general-season bull elk permit (no draw).':''} Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
   fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   CRED+note+fpLine()+fbA('maps');wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
-  (S.sp=='elk'?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:'')+
+  (S.sp=='elk'&&!hasOTC()?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:otcTop(oR))+
   fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length||yoOnly?'':'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+note+fpLine()+fbA('find');
+  (r.length||yoOnly?'':'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+otcSec(oR)+note+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  o.querySelectorAll('a.ygo').forEach(a=>a.onclick=e=>{e.preventDefault();S.pl=a.dataset.pl;S.sp=PL[S.pl][0];S.yo=1;S.n=25;sync();history.pushState(st('list'),'',url());showList();top2(o)});
- if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}}
+ if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
+ if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
 const G={bg:['https://wildlife.utah.gov/guidebooks/biggameapp.pdf','2026 Utah Big Game Application Guidebook'],al:['https://wildlife.utah.gov/guidebooks/antlerless_guidebook.pdf','2026 Utah Antlerless Application Guidebook'],
  tk:['https://wildlife.utah.gov/guidebooks/waterfowl-upland-game-turkey-guidebook.pdf','2026–27 Utah Waterfowl, Upland Game and Turkey Guidebook'],br:['https://wildlife.utah.gov/guidebooks/black-bear-cougar-furbearer-guidebook.pdf','2026 Utah Black Bear, Cougar and Furbearer Guidebook'],
  up:['https://wildlife.utah.gov/pdf/annual-reports/upland/2025-26.pdf','Utah Upland Game and Turkey Annual Report 2025–26']};
@@ -127,7 +149,9 @@ function spNote(){if(S.sp=='turkey')return `<p class="note"><b>2027 drawing:</b>
  return ''}
 const CRED='<p class="mapcred"><b>Hunt boundaries: Utah Division of Wildlife Resources.</b> Lines are simplified and approximate. Check the Utah DWR guidebook or the Utah Hunt Planner (hunt.utah.gov) for official boundaries before you apply or hunt.</p>';
 // ===== Map (same brand palette and buckets as Colorado) =====
-const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',bg:'#2A2D26',sel:'#E8E0D2'};
+const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',bg:'#2A2D26',sel:'#E8E0D2',otc:'#6A4C93'};
+// Over the counter: its own purple, outside both the draw-odds ramp and the harvest blues.
+const otcKey=()=>hasOTC()?[{b:'otc',w:'Over the counter',d:'no hunt to draw here with your choices, but an over-the-counter general-season bull elk permit is sold (no draw)',st:fillSt(MC.otc,1)}]:[];
 const VC=[[.995,MC.yes],[.75,MC.likely],[.25,MC.maybe],[.05,MC.long]];
 const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];const KU='hunt area';
 // ===== Map key =====
@@ -157,7 +181,7 @@ function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
 function ucol(h){return S.mc=='h'?hcol(hBest(h)):vcol(h[0].v)}
 function ubk(h){return S.mc=='h'?hbk(hBest(h)):bucket(h[0].v)}
-function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is the best harvest success (`+'Utah DWR 2025 harvest reports'+`) among the hunts you can draw in that ${KU}`,it)}
 // Harvest map colors: their own blue family so a harvest map can't be mistaken for draw odds (greens/tan/orange).
@@ -181,7 +205,7 @@ function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="grou
  items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
 // Statewide map key. noneW: what the light color means on this map; noneOp: its fill opacity there.
 function mapKey(noneW,noneOp){if(S.mc=='h')return hKey(noneW,noneOp);const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
- it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped${S.ol?`, and the ${KU}s of the hunt you came from`:''}`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
 // After the map draws: how many units are in each color. A color with none says so, so a missing color isn't a mystery.
@@ -203,26 +227,29 @@ async function ensureMap(){if(!window.L){const c=document.createElement('link');
 const bname=u=>{const f=GJ&&GJ.features.find(f=>f.properties.u==u);return f?f.properties.n:'Hunt area'};
 function byUnit(r){const m={};r.forEach(x=>UH[x.k].b.forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
 const poolB=()=>{const s=new Set();Object.values(UH).forEach(h=>{if(h.pool==S.pl&&(!h.cw||S.priv))h.b.forEach(u=>s.add(String(u)))});return s};
-function popHTML(u,h){return `<div class="mp"><p class="mpt">${bname(u)} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=UH[x.k];
- return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul></div>'}
+function otcPop(u,oh){return oh&&oh.length?`<p class="mps">Over the counter here (no draw): ${oh.length} permit${oh.length==1?'':'s'}</p><ul>`+oh.map(x=>`<li><div class="mh mo">${otcDot()}<b>Over the counter</b> · ${oSea(x.r)} · ${oAni(x.r,x.a)}<span>Season ${x.a.d||x.r.d} · hunt number ${x.r.k}</span></div></li>`).join('')+'</ul>':''}
+function popHTML(u,h,oh){if(!h||!h.length)return `<div class="mp"><p class="mpt">${bname(u)} · ${otcDot()}<b>Over the counter</b></p><p class="mps">No hunt you can draw here with your choices.</p>${otcPop(u,oh)}</div>`;return `<div class="mp"><p class="mpt">${bname(u)} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=UH[x.k];
+ return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${d.sex?d.sex+' · ':''}${d.name} · ${wL(d)}</span></button></li>`}).join('')+'</ul>'+otcPop(u,oh)+'</div>'}
 let SEL=null,PY=null;
-function pick(u,h,l){if(SEL)SEL.remove();SEL=halo(M,[l]);S.mu=String(u);const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+let OU={};
+function pick(u,h,l){if(SEL)SEL.remove();SEL=halo(M,[l]);S.mu=String(u);const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h,OU[String(u)]);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
 async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load. Use the List tab.</p>';return}
  if(!el.isConnected)return;if(M){M.remove();M=null}
  M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__UT.map=M;hCtl(M);
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunt boundaries: Utah Division of Wildlife Resources');
- const bu=byUnit(r),pb=poolB(),cnt={hl:0};
- const fc={type:'FeatureCollection',features:GJ.features.filter(f=>pb.has(String(f.properties.u)))};
- const ly=L.geoJSON(fc,{style:f=>{const h=bu[f.properties.u];return{color:MC.sel,opacity:.55,weight:.8,fillColor:h?ucol(h):MC.none,fillOpacity:h?1:.25}},
-  onEachFeature:(f,l)=>{const u=f.properties.u,h=bu[u];if(!h){l.options.interactive=false;return}cnt.hl++;
+ const bu=byUnit(r),pb=poolB(),cnt={hl:0,otc:0};OU={};otcRows().forEach(x=>{(OU[x.u]=OU[x.u]||[]).push(x)});
+ const oo=u=>!bu[u]&&OU[String(u)];   // OTC color only where there is no hunt to draw with these choices
+ const fc={type:'FeatureCollection',features:GJ.features.filter(f=>pb.has(String(f.properties.u))||OU[String(f.properties.u)])};
+ const ly=L.geoJSON(fc,{style:f=>{const u=f.properties.u,h=bu[u];return{color:MC.sel,opacity:.55,weight:.8,fillColor:h?ucol(h):oo(u)?MC.otc:MC.none,fillOpacity:h||oo(u)?1:.25}},
+  onEachFeature:(f,l)=>{const u=f.properties.u,h=bu[u];if(!h&&!oo(u)){l.options.interactive=false;return}if(h)cnt.hl++;else cnt.otc++;
    l.bindTooltip(f.properties.n,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
- ly.eachLayer(l=>{if(bu[l.feature.properties.u])l.bringToFront()});
- {const kc={},seen=new Set();fc.features.forEach(f=>{const u=String(f.properties.u);if(seen.has(u))return;seen.add(u);const h=bu[f.properties.u];const b=h?ubk(h):'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
- window.__UT.hl=cnt.hl;const all=L.geoJSON(GJ);M.setMaxBounds(all.getBounds().pad(.3));
+ ly.eachLayer(l=>{if(oo(l.feature.properties.u))l.bringToFront()});ly.eachLayer(l=>{if(bu[l.feature.properties.u])l.bringToFront()});
+ {const kc={},seen=new Set();fc.features.forEach(f=>{const u=String(f.properties.u);if(seen.has(u))return;seen.add(u);const h=bu[f.properties.u];const b=h?ubk(h):oo(f.properties.u)?'otc':'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
+ window.__UT.hl=cnt.hl;window.__UT.otcU=cnt.otc;const all=L.geoJSON(GJ);M.setMaxBounds(all.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(all.getBounds(),{padding:[4,4]});
  if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g);window.__UT.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:9})}
- if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&bu[S.mu])pick(S.mu,bu[S.mu],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
+ if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&(bu[S.mu]||OU[S.mu]))pick(S.mu,bu[S.mu],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
  M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
 function qy(h){const y=(h.yq||[0,0])[S.res=='res'?0:1];return y>0?`, ${y.toLocaleString()} of them set aside for youth`:''}
 function qt(h,b){const y=(h.yq||[0,0])[S.res=='res'?0:1],who=S.res=='res'?'residents':'nonresidents';return `2026 permits for ${who}: ${b.q.toLocaleString()}`+(y>0?`, including ${y.toLocaleString()} set aside for youth hunters (${(b.q-y).toLocaleString()} for adults). <span class="yq">Utah's draw-odds page may list only the adult share (${(b.q-y).toLocaleString()}) as the quota; both numbers are Utah DWR's.</span> `:'. ')}
@@ -292,10 +319,10 @@ document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{S.w=b.dataset.w;
 document.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>{S.yo=+b.dataset.yo;sync()});
 $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
-$('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
+$('go').onclick=()=>{S.n=25;S.on=0;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0];
  apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__UT={FP,oddsAt,hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
+window.__UT={otcRows,OU:()=>OU,FP,oddsAt,hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
 })();

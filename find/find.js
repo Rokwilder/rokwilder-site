@@ -77,15 +77,39 @@ function hWhat(k){const sp=D[k][0];return (HN[sp]||{})[sxOf(k)]||SPN[sp]||'one'}
 function oddsHTML(v,cls){return FP?`<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${S.pts} point${S.pts==1?'':'s'}</span></div>`:`<div class="${cls} lk">${FPN}</div>`}
 function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
  .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||(D[b.k][7]??-1)-(D[a.k][7]??-1)||a.k.localeCompare(b.k))}
+// ===== Over-the-counter (OTC) licenses: find/otc.js, from the CPW 2026 big game brochure OTC tables (pages 38-41) =====
+// Not drawn and no preference points, so no verdict and no odds: one row per unit the license is valid in. The weapon, rifle-season,
+// sex and residency choices filter these rows the same way they filter draw hunts. Harvest success is CPW's 2025 number for the
+// license (all its units together), shown as a band.
+const OTCL=()=>typeof OTC!='undefined'?OTC:[];
+const hasOTC=()=>OTCL().some(r=>r.sp==S.sp);
+function otcOK(r){if(r.sp!=S.sp)return false;if(S.res=='res'?!r.res:!r.nr)return false;if(S.w&&r.w!=S.w)return false;if(S.sx&&r.sx!=S.sx)return false;if(S.se&&(r.w!='R'||r.se!=S.se))return false;return true}
+const OSO=r=>r.w=='A'?0:r.se=='2'?1:r.se=='3'?2:3;
+function otcRows(){const o=[];OTCL().filter(otcOK).forEach(r=>r.u.forEach(u=>o.push({u:String(u),r})));const hv=x=>x.r.hb;
+ return o.sort((a,b)=>(S.so=='h'?((hv(a)==null)-(hv(b)==null))||((hv(b)??0)-(hv(a)??0)):0)||(+a.u-+b.u)||(OSO(a.r)-OSO(b.r))||a.r.k.localeCompare(b.r.k))}
+const OSX={elk:{M:'Bull elk',F:'Cow elk',E:'Either-sex elk'}};
+const OWH={elk:{M:'a bull elk',F:'a cow or calf elk',E:'an elk'}};
+const oSea=r=>r.sn[0].toUpperCase()+r.sn.slice(1);
+const oRes=r=>r.res&&r.nr?'Residents and nonresidents.':r.res?'Colorado residents only.':'Nonresident license.';
+function otcHarv(r){const b=r.hb;return `<div class="fs"><span class="hsl">Harvest success · 2025</span>${b==null?'<b>No data</b> <span>CPW has no 2025 harvest number for this license</span>':`${hdot(b)}<b>${HBW[hbk(b)]}</b> <span>${HBR[hbk(b)]} of hunters harvested ${(OWH[r.sp]||{})[r.sx]||'one'}</span>`}<span class="hsrc">CPW 2025 harvest report · all units on this license together${r.hx?'; 2026 adds units that weren\'t on it in 2025':''}</span></div>`}
+const otcDot=()=>`<i class="vdot" style="background:${MC.otc}"></i>`;
+function otcLi(x,i){const r=x.r,n=r.un&&r.un[x.u];
+ return `<li><div class="oh" data-k="${r.k}" data-u="${x.u}"><span class="rk">${i+1}</span><span class="ov">${otcDot()}OVER THE COUNTER</span><span class="ft">Unit ${x.u} · ${oSea(r)} · ${OSX[r.sp][r.sx]}</span>`+
+ `<span class="fd">Over the counter, no draw needed. Buy at a license agent, online or by phone. Season ${r.d}.</span>`+
+ `<span class="fd">${oRes(r)} No preference points needed or used. On sale Aug. 4, 2026, 9 a.m. MT. List ${r.lst} license.${n?` In unit ${x.u}: ${n}.`:''}${r.why?' '+r.why:''}</span>${otcHarv(r)}<span class="fk">Hunt code ${r.c} · CPW 2026 big game brochure, page ${r.pg}</span></div></li>`}
+function otcSec(o){if(!hasOTC())return'';const ns=S.on||25;
+ return `<h3 id="otc" class="oth">Over the counter: no draw needed (${o.length})</h3><p class="dq">${o.length?`These licenses aren't drawn and don't use preference points, so there are no odds. One row per unit the license is valid in, ${S.so=='h'?'best harvest success first, then by unit':'by unit number'}.`:'No over-the-counter license matches these choices.'} From the over-the-counter tables in the ${bro()}.</p>`+
+  (o.length?`<ol class="fl otl">`+o.slice(0,ns).map(otcLi).join('')+'</ol>':'')+(o.length>ns?`<button class="btn o big2" id="omore">Show ${Math.min(25,o.length-ns)} more over-the-counter (${o.length-ns} left)</button>`:'')}
+function otcTop(o){if(!hasOTC())return'';return `<p class="note otn"><b>No points needed:</b> ${o.length?`${o.length} over-the-counter ${SP[S.sp].toLowerCase()} hunt${o.length==1?'':'s'} match${o.length==1?'es':''} your choices (no draw). <a href="#otc" class="otj">See them after the draw list</a>.`:'no over-the-counter license matches these choices.'}${S.res=='nonres'?' For nonresidents, over-the-counter archery elk is east of I-25 only.':''} <a href="https://cpw.state.co.us/activities/hunting/big-game/over-counter-otc-licenses">CPW over-the-counter licenses</a></p>`}
 const seas=k=>k.at(-1)=='X'?'season choice (archery, muzzleloader or rifle)':D[k][2];
 const units=k=>{const f=typeof FL!='undefined'&&FL[k];return f&&f[2]?f[2]:[D[k][1]]};
 function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return full||u.length<=4?'Units '+u.join(', '):`Units ${u.slice(0,3).join(', ')} +${u.length-3} more`}
 function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
-function showList(){const r=ranked(),o=$('out');
+function showList(){const r=ranked(),oR=otcRows(),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
  const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.se?' · '+(S.se=='O'?'other rifle seasons':'SRP'.includes(S.se)?({S:'September rifle',R:'Oct.–Nov. rifle',P:'private-land-only rifle'})[S.se]:SEN[S.se].toLowerCase()+' rifle season'):''}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · kid 12–17':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit. Tap a unit to see its hunts.</p>`+
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter license (no draw).':''} Tap a unit to see its hunts.</p>`+
   wtNote()+yxNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
   (OIL(S.sp)?`<p class="note">${S.sp=='goat'?'Mountain goat':'Bighorn sheep'} units are not the big game units: CPW numbers them ${S.sp=='goat'?'G1, G2…':'S1, S2…'}, and this map shows those ${S.sp=='goat'?'goat':'sheep'} units.</p>`:'')+
   fpBox()+mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
@@ -94,18 +118,21 @@ function showList(){const r=ranked(),o=$('out');
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
   wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+
-  wtNote()+yxNote()+(S.sp=='elk'?`<p class="note"><b>No points needed:</b> ${S.res=='res'?'Colorado residents can buy an over-the-counter elk license for many units.':'Out-of-state hunters can buy over-the-counter rifle elk; OTC archery elk for nonresidents is east of I-25 only.'} <a href="https://cpw.state.co.us/activities/hunting/big-game/over-counter-otc-licenses">CPW over-the-counter licenses</a></p>`:'')+
+  wtNote()+yxNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length?'':`<p class="dq">${WT(S.sp)?'No hunts you can draw with these choices.':'No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.'}</p>`)+
+  (r.length?'':`<p class="dq">${WT(S.sp)?'No hunts you can draw with these choices.':'No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.'}</p>`)+otcSec(oR)+
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p>`+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
- if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};}
+ if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};
+ if($('omore'))$('omore').onclick=()=>{const y=scrollY;S.on=(S.on||25)+25;showList();scrollTo(0,y)};
+ o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))});}
 // ===== Map tab (preview) =====
 // Same buckets as the verdict words.
 // Rokwilder brand palette (BRAND_GUIDE.txt + style.css). Ramp runs dark green -> olive -> tan -> orange:
 // each step changes lightness and hue, so the buckets stay apart for red-green colorblind users too.
-const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',bg:'#2A2D26',sel:'#E8E0D2'};
+const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',bg:'#2A2D26',sel:'#E8E0D2',otc:'#6A4C93'};
+// Over the counter: its own purple, outside both the draw-odds ramp and the harvest blues. Used where you can't draw a hunt with your choices but an OTC license is sold.
 const VC=[[.995,MC.yes],[.75,MC.likely],[.25,MC.maybe],[.05,MC.long]];
 const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];
 const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
@@ -137,7 +164,7 @@ function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
 function ucol(h){return S.mc=='h'?hcol(hBest(h)):vcol(h[0].v)}
 function ubk(h){return S.mc=='h'?hbk(hBest(h)):bucket(h[0].v)}
-function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is the best harvest success (`+'CPW 2025 harvest statistics'+`) among the hunts you can draw in that ${KU}`,it)}
 // Harvest map colors: their own blue family so a harvest map can't be mistaken for draw odds (greens/tan/orange).
@@ -160,8 +187,9 @@ const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255]
 function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
  items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
 // Statewide map key. noneW: what the light color means on this map; noneOp: its fill opacity there.
+const otcKey=()=>hasOTC()?[{b:'otc',w:'Over the counter',d:`no hunt to draw here with your choices, but an over-the-counter license is sold (no draw)`,st:fillSt(MC.otc,1)}]:[];
 function mapKey(noneW,noneOp){if(S.mc=='h')return hKey(noneW,noneOp);const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
- it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped${S.ol?`, and the ${KU}s of the hunt you came from`:''}`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
 // After the map draws: how many units are in each color. A color with none says so, so a missing color isn't a mystery.
@@ -183,25 +211,29 @@ const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script')
 async function ensureMap(){if(!window.L){const c=document.createElement('link');c.rel='stylesheet';c.href='find/vendor/leaflet.css';document.head.appendChild(c);await loadJS('find/vendor/leaflet.js')}
  if(!window.topojson)await loadJS('find/vendor/topojson-client.min.js');const f=gfile(S.sp);if(!GJS[f]){const t=await(await fetch(f)).json();GJS[f]=topojson.feature(t,t.objects.gmu)}GJ=GJS[f]}
 function byUnit(r){const m={};r.forEach(x=>units(x.k).forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
-function popHTML(u,h){return `<div class="mp"><p class="mpt">Unit ${u} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=D[x.k],sx=sexL(d),n=units(x.k).length;
- return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${sx?sx+' · ':''}${seas(x.k)}${n>1?` · covers ${n} units`:''}</span></button></li>`}).join('')+'</ul></div>'}
-let SEL=null,PY=null;
+function otcPop(oh){return oh&&oh.length?`<p class="mps">Over the counter here (no draw): ${oh.length} license${oh.length==1?'':'s'}</p><ul>`+oh.map(r=>`<li><div class="mh mo">${otcDot()}<b>Over the counter</b> · ${oSea(r)} · ${OSX[r.sp][r.sx]}<span>Season ${r.d} · hunt code ${r.c}${r.un&&r.un[u0]?' · '+r.un[u0]:''}</span></div></li>`).join('')+'</ul>':''}
+let u0=null;
+function popHTML(u,h,oh){u0=String(u);if(!h.length)return `<div class="mp"><p class="mpt">Unit ${u} · ${otcDot()}<b>Over the counter</b></p><p class="mps">No hunt you can draw here with your choices.</p>${otcPop(oh)}</div>`;
+ return `<div class="mp"><p class="mpt">Unit ${u} · ${uLead(h,verdict)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here</p><ul>`+h.map(x=>{const d=D[x.k],sx=sexL(d),n=units(x.k).length;
+ return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${x.k}</b> · ${verdict(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${sx?sx+' · ':''}${seas(x.k)}${n>1?` · covers ${n} units`:''}</span></button></li>`}).join('')+'</ul>'+otcPop(oh)+'</div>'}
+let SEL=null,PY=null,OU={};
 function pick(u,h,l){if(SEL)SEL.remove();SEL=halo(M,[l]);S.mu=String(u);
- const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ const pn=$('mpanel');pn.hidden=false;pn.innerHTML=popHTML(u,h||[],OU[String(u)]);pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
 async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load. Use the List tab.</p>';return}
  if(!el.isConnected)return;if(M){M.remove();M=null}
  M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__FY.map=M;
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Unit boundaries: Colorado Parks and Wildlife');hCtl(M);
- const bu=byUnit(r),cnt={hl:0};
- const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?ucol(h):MC.none,fillOpacity:h&&(S.mc=='h'||h[0].v>=.05)?1:.9}},
-  onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h){l.options.interactive=false;return}if(h[0].v>=.05)cnt.hl++;
-   l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
- {const kc={},seen=new Set();GJ.features.forEach(f=>{const u=f.properties.u;if(u==null||seen.has(String(u)))return;seen.add(String(u));const h=bu[u];const b=h?ubk(h):'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
- window.__FY.hl=cnt.hl;M.setMaxBounds(ly.getBounds().pad(.3));
+ const bu=byUnit(r),cnt={hl:0,otc:0};OU={};otcRows().forEach(x=>{const a=OU[x.u]=OU[x.u]||[];if(!a.includes(x.r))a.push(x.r)});
+ const oo=u=>u!=null&&!bu[u]&&OU[String(u)];   // OTC color only where there is no hunt to draw with these choices
+ const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?ucol(h):oo(u)?MC.otc:MC.none,fillOpacity:(h&&(S.mc=='h'||h[0].v>=.05))||oo(u)?1:.9}},
+  onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h&&!oo(u)){l.options.interactive=false;return}if(h&&h[0].v>=.05)cnt.hl++;if(!h)cnt.otc++;
+   l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h||[],l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
+ {const kc={},seen=new Set();GJ.features.forEach(f=>{const u=f.properties.u;if(u==null||seen.has(String(u)))return;seen.add(String(u));const h=bu[u];const b=h?ubk(h):oo(u)?'otc':'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
+ window.__FY.hl=cnt.hl;window.__FY.otcU=cnt.otc;M.setMaxBounds(ly.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(ly.getBounds(),{padding:[4,4]});
  if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g).eachLayer(x=>x.eachLayer(y=>y.getElement&&y.getElement()&&y.getElement().classList.add('olh')));window.__FY.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:8})}
- if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&bu[S.mu])pick(S.mu,bu[S.mu],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
+ if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&(bu[S.mu]||oo(S.mu)))pick(S.mu,bu[S.mu]||[],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
  M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
 function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;
  let lad='';if(FP&&d[9]&&d[0]!='dsheep'){const L=[0,1,2,3,4,5,6,8,10,13,16,20,25,30];if(!L.includes(S.pts))L.push(S.pts);L.sort((a,b)=>a-b);
@@ -264,10 +296,10 @@ document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{S.w=b.dataset.w;
 document.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>{S.yo=+b.dataset.yo;sync()});
 $('priv').onchange=()=>{S.priv=$('priv').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
-$('go').onclick=()=>{S.n=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
+$('go').onclick=()=>{S.n=25;S.on=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
 if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LOSRP'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__FY={FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
+window.__FY={otcRows,OU:()=>OU,FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
 })();

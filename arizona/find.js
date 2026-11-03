@@ -65,7 +65,9 @@ const nextDraw=h=>h.dr=='M'?'2027 elk and pronghorn draw':h.dr=='F'?'2027 fall d
 function oddsHTML(v,cls,k){const h=AH[k];if(!FP)return `<div class="${cls} lk">${FPN}</div>`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()} (estimate for the ${nextDraw(h)})</span></div>`}
 const fee=h=>h.fee;const money=n=>'$'+n.toLocaleString();
 const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
-const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',bg:'#2A2D26',sel:'#C8792F'};
+const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',bg:'#2A2D26',sel:'#C8792F',otc:'#6A4C93'};
+// Over the counter: its own purple, outside both the draw-odds ramp and the harvest blues.
+const otcKey=()=>hasOTC()?[{b:'otc',w:'Over the counter',d:'no hunt to draw here with your choices, but an over-the-counter nonpermit-tag is sold (no draw)',st:fillSt(MC.otc,1)}]:[];
 const vcol=v=>(vcolList.find(c=>v>=c[0])||[0,MC.none])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 const bk=(d,pg)=>{const t={M:'2026 Pronghorn and Elk Regulations',F:'2026–27 Arizona Hunting Regulations',S:'2027 Spring Hunting Regulations'}[d];return `<a href="${SRC.bk[d]}">${t}</a>${pg?' ('+(typeof pg=='number'?'PDF page '+pg:pg)+')':''}`};
 const rep=d=>{const s=SRC[{M:'M26',F:'F26',S:'S26'}[d]];const n={M:'2026 elk and pronghorn',F:'2026 fall',S:'2026 spring'}[d];return `AZGFD ${n} draw reports: <a href="${s.bp}">Bonus Point Report</a>, <a href="${s.bonus}">Bonus Pass</a>, <a href="${s.p12}">1-2 Pass</a>`};
@@ -84,26 +86,49 @@ function youthBox(){const sp=S.sp;if(sp=='bear')return '';
  li.push('<b>Age rules:</b> no one under 10 may hunt big game in Arizona. Ages 10 through 13 must finish a hunter education course first. A youth combination hunt and fish license (ages 10–17) is $5.');
  return `<div class="note ybox"><p><b>Youth (under 18): what's available</b></p><ul>${li.map(x=>`<li>${x}</li>`).join('')}</ul><p class="note">Source: ${bk('F','PDF pages 7 and 24')}.</p></div>`}
 function spNote(){const sp=S.sp;
- if(sp=='elk'||sp=='pronghorn')return `<p class="note"><b>Next draw:</b> the 2027 elk and pronghorn draw. AZGFD usually posts the booklet in early January with a deadline in February (2026 was Feb. 3, 2026, 11:59 p.m. Arizona time). Your odds use the 2026 hunts and permit numbers until the 2027 booklet is out.${sp=='elk'?' <b>No draw needed:</b> elk nonpermit-tags are sold over the counter for some areas ($135 resident, $650 nonresident). They aren\'t listed here.':''} Source: ${bk('M','PDF pages 3–5')}.</p>`;
- if(sp=='deer'||sp=='sheep'||sp=='bison'||sp=='crane'||S.pl=='turkey-f'||S.pl=='jav-f')return `<p class="note"><b>Next draw:</b> the 2027 fall draw (deer, fall turkey, fall javelina, bighorn sheep, fall bison, sandhill crane). AZGFD usually posts the booklet in early May with a deadline in June (2026 was June 2, 2026, 11:59 p.m. Arizona time). Your odds use the 2026–27 hunts and permit numbers until the new booklet is out.${sp=='deer'?' <b>No draw needed:</b> archery-only deer nonpermit-tags are sold over the counter ($45 resident, $300 nonresident; nonresident tags are capped). They aren\'t listed here.':''}${S.pl=='turkey-f'?' <b>No draw needed:</b> archery turkey nonpermit-tags ($25 resident, $90 nonresident) are sold over the counter for the archery-only nonpermit seasons.':''}${S.pl=='jav-f'?' <b>No draw needed:</b> javelina nonpermit-tags ($25 resident, $100 nonresident) are sold over the counter for the archery-only nonpermit seasons.':''} Source: ${bk('F','PDF pages 6–7')}.</p>`;
+ if(sp=='elk'||sp=='pronghorn')return `<p class="note"><b>Next draw:</b> the 2027 elk and pronghorn draw. AZGFD usually posts the booklet in early January with a deadline in February (2026 was Feb. 3, 2026, 11:59 p.m. Arizona time). Your odds use the 2026 hunts and permit numbers until the 2027 booklet is out.${sp=='elk'?' <b>No draw needed:</b> elk nonpermit-tags are sold over the counter for some areas ($135 resident, $650 nonresident). They\'re listed after the draw hunts.':''} Source: ${bk('M','PDF pages 3–5')}.</p>`;
+ if(sp=='deer'||sp=='sheep'||sp=='bison'||sp=='crane'||S.pl=='turkey-f'||S.pl=='jav-f')return `<p class="note"><b>Next draw:</b> the 2027 fall draw (deer, fall turkey, fall javelina, bighorn sheep, fall bison, sandhill crane). AZGFD usually posts the booklet in early May with a deadline in June (2026 was June 2, 2026, 11:59 p.m. Arizona time). Your odds use the 2026–27 hunts and permit numbers until the new booklet is out.${sp=='deer'?' <b>No draw needed:</b> archery-only deer nonpermit-tags are sold over the counter ($45 resident, $300 nonresident; nonresident tags are capped). They\'re listed after the draw hunts.':''}${S.pl=='turkey-f'?' <b>No draw needed:</b> archery turkey nonpermit-tags ($25 resident, $90 nonresident) are sold over the counter for the archery-only nonpermit seasons.':''}${S.pl=='jav-f'?' <b>No draw needed:</b> javelina nonpermit-tags ($25 resident, $100 nonresident) are sold over the counter for the archery-only nonpermit seasons.':''} Source: ${bk('F','PDF pages 6–7')}.</p>`;
  if(S.pl=='turkey-s'||S.pl=='jav-s')return `<p class="note"><b>Next draw:</b> the 2027 spring draw closed Oct. 6, 2026, and results are out, so the next chance is the spring draw in fall 2027 (for 2028 hunts). AZGFD usually posts that booklet in early September with a deadline in October. Hunts and permits shown are from the 2027 spring booklet. Odds use AZGFD's 2026 spring draw (the latest with published reports), with a guard for more applicants: 1st-choice applicants rose a median ${Math.round(AZ_META.grow.S*100)}% from the 2025 to the 2026 spring draw.${S.pl=='turkey-s'?' <b>No draw needed:</b> archery turkey nonpermit-tags ($25 resident, $90 nonresident).':' <b>No draw needed:</b> javelina nonpermit-tags for the archery-only nonpermit seasons ($25 resident, $100 nonresident).'} Source: ${bk('S','PDF pages 4–5')}.</p>`;
  return ''}
 function bearNote(){return `<div class="note"><p><b>Arizona black bear has no draw.</b> Every bear hunt in the 2026–27 fall booklet and the 2027 spring booklet is a nonpermit-tag hunt: you buy a bear tag over the counter ($25 resident, $150 nonresident) and hunt the open units until the season ends or the unit's female harvest limit is reached. You must check that the unit is still open before you hunt. Source: ${bk('F','PDF pages 7 and 46')}, ${bk('S','PDF page 21')}.</p></div>`}
+// ===== Over-the-counter (nonpermit-tag) hunts: arizona/otc.js, from AZGFD's nonpermit-tag tables =====
+// No draw and no bonus points, so no verdicts. One row per unit; named elk hunt areas are rows under "Special hunt areas".
+const OTCL=()=>typeof AZ_OTC!='undefined'?AZ_OTC:[];
+const hasOTC=()=>OTCL().some(r=>r.pl==S.pl||plOK({pool:r.pl}));
+function otcOK(r){if(!(r.pl==S.pl||plOK({pool:r.pl})))return false;if(r.yo&&!S.yo)return false;if(S.w&&r.w!=S.w)return false;if(S.sx&&r.sx!=S.sx)return false;return true}
+function otcRows(){const o=[];OTCL().filter(otcOK).forEach(r=>r.u.forEach(u=>o.push({u,r})));const hv=x=>x.r.hb[x.u]??-1,un=u=>u=='SP'?999:parseInt(u);
+ return o.sort((a,b)=>(S.so=='h'?hv(b)-hv(a):0)||un(a.u)-un(b.u)||a.u.localeCompare(b.u)||OTCL().indexOf(a.r)-OTCL().indexOf(b.r))}
+const ADT=s=>s.replace(/\b(Jan|Feb|Mar|Apr|Aug|Sep|Oct|Nov|Dec)\b/g,m=>({Jan:'Jan.',Feb:'Feb.',Mar:'March',Apr:'April',Aug:'Aug.',Sep:'Sept.',Oct:'Oct.',Nov:'Nov.',Dec:'Dec.'})[m]).replace(/ - /g,'–');
+const OWHO={deer:'a deer'};
+function otcHarv(x){const r=x.r,b=r.hb[x.u],n=r.hn[x.u];if(r.sp!='deer')return `<div class="fs"><span class="hsl">Harvest success</span><b>No data</b> <span>AZGFD doesn't publish a harvest number for this nonpermit-tag hunt</span></div>`;
+ return `<div class="fs"><span class="hsl">Harvest success · 2025</span>${b==null?'<b>No data</b> <span>no 2025 number for this unit</span>':`${hdot(b)}<b>${HBW[hbk(b)]}</b> <span>${HBR[hbk(b)]} of hunters harvested a deer (all OTC archery deer in this unit)</span>`}${hSrc('AZGFD 2025 over-the-counter archery deer questionnaire',null)}${b!=null?ssn(n):''}</div>`}
+const otcDot=()=>`<i class="vdot" style="background:${MC.otc}"></i>`;
+const oWho=r=>`Residents and nonresidents: $${r.fee[0]} resident, $${r.fee[1]} nonresident, plus a valid Arizona hunting or combination license.`;
+const oWhy=r=>r.sp=='deer'?' Each unit closes when its harvest limit is reached; check that it is still open at azgfd.gov/harvestreports. Tags are good for one calendar year, so January hunting needs a 2027 tag. Nonresident tags are sold at otcarchery.azgfd.com and are limited.':r.sp=='elk'?' Elk numbers in these areas are very low and success is expected to be very low (AZGFD). One elk per calendar year; get landowner permission on private land.':r.yo?' Youth only (under 18).':'';
+function otcLi(x,i){const r=x.r,tu=x.u=='SP'?r.area:`Unit ${x.u}`;
+ return `<li><div class="oh" data-k="${r.t}" data-u="${x.u}"><span class="rk">${i+1}</span><span class="ov">${otcDot()}OVER THE COUNTER</span><span class="ft">${esc(tu)} · ${WN[r.w]} · ${esc(r.legal)}</span>`+
+ `<span class="fd">Over the counter, no draw needed. ${r.sp=='deer'?'Booklet sale schedule: residents buy the tag at an AZGFD office (from Nov. 2, 2026) or a license dealer (from Nov. 23, 2026); nonresidents buy online only, from Nov. 2, 2026, 8 a.m. Arizona time':'Buy the tag at an AZGFD office or a license dealer'}. Season ${ADT(r.d)}.</span>`+
+ `<span class="fd">${oWho(r)} No bonus points needed or used.${r.nt?` In unit ${x.u}: ${esc(r.nt)}.`:''}${x.u!='SP'&&r.u.length>1?` Open areas as printed: ${esc(r.area)}.`:''}${oWhy(r)}</span>${otcHarv(x)}<span class="fk">${r.t} · ${bk(r.bk,r.pg)}</span></div></li>`}
+function otcSec(o){if(!hasOTC())return'';const ns=S.on||25;
+ return `<h3 id="otc" class="oth">Over the counter: no draw needed (${o.length})</h3><p class="dq">${o.length?`Nonpermit-tags aren't drawn and don't use bonus points, so there are no odds. One row per unit, ${S.so=='h'?'best harvest success first, then by unit':'by unit'}.`:'No over-the-counter nonpermit-tag matches these choices.'} From AZGFD's nonpermit-tag tables.</p>`+
+  (o.length?`<ol class="fl otl">`+o.slice(0,ns).map(otcLi).join('')+'</ol>':'')+(o.length>ns?`<button class="btn o big2" id="omore">Show ${Math.min(25,o.length-ns)} more over-the-counter (${o.length-ns} left)</button>`:'')}
+function otcTop(o){if(!hasOTC())return'';return `<p class="note otn"><b>No draw needed:</b> ${o.length?`${o.length} over-the-counter (nonpermit-tag) hunt${o.length==1?'':'s'} match${o.length==1?'es':''} your choices. <a href="#otc" class="otj">See them after the draw list</a>.`:'no over-the-counter nonpermit-tag matches these choices (some are archery, HAM or youth only).'}</p>`}
 function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  if(S.sp=='bear'){o.innerHTML=`<h2 id="lt">Black bear</h2>${bearNote()}${fbA('find')}`;return}
- const r=ranked(),nh=noHist();
+ const r=ranked(),nh=noHist(),oR=otcRows();
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Arizona resident':'Out of state'} · ${ptsWord()} · ${WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit. Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
+ if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter nonpermit-tag (no draw).':''} Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fpLine()+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
- o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+
+ o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+note+fpLine()+fbA('find');
+  (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+otcSec(oR)+note+fpLine()+fbA('find');
  wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
- if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}}
+ if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
+ if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
 // ===== Map key (same as Colorado and Utah, for unit tiles) =====
 // Big swatches with the same verdict words as the hunt cards, drawn the way the tiles are drawn: the same fill colors,
 // the light square is the greyed tile (55% over the panel), and the orange outline is the tile you tapped.
@@ -132,7 +157,7 @@ function hcol(p){return HB().find(x=>x[0]==hbk(p))[3]}
 function hBest(h){let m=null;for(const x of h){const p=hsv(x.k);if(p!=null&&(m==null||p>m))m=p}return m}
 function ucol(h){return S.mc=='h'?hcol(hBest(h)):vcol(h[0].v)}
 function ubk(h){return S.mc=='h'?hbk(hBest(h)):bucket(h[0].v)}
-function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Orange outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is the best harvest success (`+'AZGFD harvest summaries'+`) among the hunts you can draw in that ${KU}`,it)}
 // Harvest map colors: their own blue family so a harvest map can't be mistaken for draw odds (greens/tan/orange).
@@ -154,7 +179,7 @@ const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255]
 function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
  items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
 function mapKey(noneW,noneOp){if(S.mc=='h')return hKey(noneW,noneOp);const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
- it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
+ it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Orange outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
  return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
 // After the tiles draw: how many tiles are in each color (the Special areas tile counts too). A color with none says so.
@@ -164,16 +189,18 @@ function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>
 let TK={};
 // ===== Unit tiles by AZGFD region (no boundary data is used) =====
 function byUnit(r){const m={};r.forEach(x=>{const h=AH[x.k];(h.u.length?h.u:['SP']).forEach(u=>(m[u]=m[u]||[]).push(x))});return m}
-function tiles(r){const bu=byUnit(r);TK={};const tk=h=>{const b=h?ubk(h):'none';TK[b]=(TK[b]||0)+1};const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(plOK(h))(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
+let OU={};
+function tiles(r){const bu=byUnit(r);TK={};OU={};otcRows().forEach(x=>(OU[x.u]=OU[x.u]||[]).push(x));const tk=(h,u)=>{const b=h?ubk(h):OU[u]?'otc':'none';TK[b]=(TK[b]||0)+1};const pu=new Set();AHk.forEach(k=>{const h=AH[k];if(plOK(h))(h.u.length?h.u:['SP']).forEach(u=>pu.add(u))});
  let s='<div class="rgs" id="tiles">';for(const g of Object.keys(RG)){const us=RG[g].split(' ');
-  s+=`<div class="rg"><p class="rgt">${RGN[g]}</p><div class="ut">`+us.map(u=>{const h=bu[u];const c=h?ucol(h):MC.none;tk(h);const tc=h&&S.mc=='h'&&['hf','hl'].includes(ubk(h))?';color:#10233D;text-shadow:none':'';return `<button class="un${h?'':' off'}" data-u="${u}" style="background:${c}${tc}" ${h?'':'disabled'} aria-label="Unit ${u}${h?': '+h.length+' hunt'+(h.length==1?'':'s'):''}">${u}</button>`}).join('')+'</div></div>'}
- if(pu.has('SP')){const h=bu.SP;tk(h);s+=`<div class="rg"><p class="rgt">Special hunt areas (named areas, see the hunt's notes)</p><div class="ut"><button class="un wide${h?'':' off'}" data-u="SP" style="background:${h?ucol(h):MC.none}" ${h?'':'disabled'}>Special areas</button></div></div>`}
+  s+=`<div class="rg"><p class="rgt">${RGN[g]}</p><div class="ut">`+us.map(u=>{const h=bu[u],oo=!h&&OU[u];const c=h?ucol(h):oo?MC.otc:MC.none;tk(h,u);const tc=h&&S.mc=='h'&&['hf','hl'].includes(ubk(h))?';color:#10233D;text-shadow:none':'';return `<button class="un${h||oo?'':' off'}${oo?' uo':''}" data-u="${u}" style="background:${c}${tc}" ${h||oo?'':'disabled'} aria-label="Unit ${u}${h?': '+h.length+' hunt'+(h.length==1?'':'s'):oo?': over the counter':''}">${u}</button>`}).join('')+'</div></div>'}
+ if(pu.has('SP')||OU.SP){const h=bu.SP,oo=!h&&OU.SP;tk(h,'SP');s+=`<div class="rg"><p class="rgt">Special hunt areas (named areas, see the hunt's notes)</p><div class="ut"><button class="un wide${h||oo?'':' off'}${oo?' uo':''}" data-u="SP" style="background:${h?ucol(h):oo?MC.otc:MC.none}" ${h||oo?'':'disabled'}>Special areas</button></div></div>`}
  return s+'</div>'}
 function wireTiles(o,r){o.querySelectorAll('.un[data-u]').forEach(b=>b.onclick=()=>{pickU(b.dataset.u,r);const pn=$('mpanel'),bb=pn.getBoundingClientRect();if(bb.top>innerHeight-80)scrollBy({top:bb.top-innerHeight*.45,behavior:'instant'})})}
-function pickU(u,r){const h=byUnit(r)[u];if(!h)return;S.mu=u;document.querySelectorAll('.un.sel').forEach(x=>x.classList.remove('sel'));const b=document.querySelector(`.un[data-u="${u}"]`);if(b)b.classList.add('sel');
+function otcPop(u){const oh=OU[u];return oh&&oh.length?`<p class="mps">Over the counter here (no draw): ${oh.length} nonpermit-tag hunt${oh.length==1?'':'s'}</p><ul>`+oh.map(x=>`<li><div class="mh mo">${otcDot()}<b>Over the counter</b> · ${esc(x.r.legal)} · ${WN[x.r.w]}<span>${u=='SP'?esc(x.r.area)+' · ':''}Season ${ADT(x.r.d)} · ${x.r.t}</span></div></li>`).join('')+'</ul>':''}
+function pickU(u,r){const h=byUnit(r)[u]||[];if(!h.length&&!OU[u])return;S.mu=u;document.querySelectorAll('.un.sel').forEach(x=>x.classList.remove('sel'));const b=document.querySelector(`.un[data-u="${u}"]`);if(b)b.classList.add('sel');
  const pn=$('mpanel');pn.hidden=false;const reg=u=='SP'?null:Object.keys(RG).find(g=>RG[g].split(' ').includes(u));
- pn.innerHTML=`<p class="mpt">${u=='SP'?'Special hunt areas':'Unit '+u} · ${uLead(h,VERD)}</p><p class="mps">${h.length} hunt${h.length==1?'':'s'} you can draw here${u=='SP'?'':` · <a href="${gmu(u)}">AZGFD Unit ${u} page</a>`}</p><ul>`+h.map(x=>{const d=AH[x.k];
-  return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${d.n}</b> · ${VERD(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${esc(d.legal)} · ${esc(d.area)} · ${WN[d.w]} · ${esc(d.d)}</span></button></li>`}).join('')+'</ul>';
+ pn.innerHTML=`<p class="mpt">${u=='SP'?'Special hunt areas':'Unit '+u} · ${h.length?uLead(h,VERD):otcDot()+'<b>Over the counter</b>'}</p><p class="mps">${h.length?`${h.length} hunt${h.length==1?'':'s'} you can draw here`:'No hunt you can draw here with your choices'}${u=='SP'?'':` · <a href="${gmu(u)}">AZGFD Unit ${u} page</a>`}</p><ul>`+h.map(x=>{const d=AH[x.k];
+  return `<li><button class="mh" data-k="${x.k}">${vdot(x.v)}<b>${d.n}</b> · ${VERD(x.v)}${FP?' · '+pct(x.v):''}<span>${hLi(x.k)}${esc(d.legal)} · ${esc(d.area)} · ${WN[d.w]} · ${esc(d.d)}</span></button></li>`}).join('')+'</ul>'+otcPop(u);
  pn.querySelectorAll('.mh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())}
 function wireTabs(o){wireSM(o);o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))})}
 function how(h){const t=how0(h);return FP?t:t.replace(' The table below is the actual 2026 draw.','')}
@@ -228,10 +255,10 @@ document.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{S.res=b.datase
 document.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>{S.yo=+b.dataset.yo;sync()});
 $('champ').onchange=()=>{S.champ=$('champ').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
-$('go').onclick=()=>{S.n=25;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
+$('go').onclick=()=>{S.n=25;S.on=0;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 if(Q.get('sp')){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=sp=='bear'?'':(PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0]);
  apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&plOK(AH[h])){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
-window.__AZ={FP,oddsAt,hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
+window.__AZ={otcRows,OU:()=>OU,FP,oddsAt,hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
 })();
