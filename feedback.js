@@ -23,6 +23,6 @@ const f=$('fb');f.onsubmit=async e=>{e.preventDefault();const m=$('fbmsg'),b=$('
   const d=await r.json().catch(()=>({}));
   if(r.ok&&d.ok){f.outerHTML=`<div class="ok" id="fbok"><b>Thanks! We got it.</b><br>${em?"We'll reply to you by email.":'We read every message.'}${from?`<br><a href="${esc(from)}">← Back to where you were</a>`:''}</div>`;return}
   m.className='msg err';m.textContent=d.error||'Something went wrong. Please try again.'}
- catch(x){m.className='msg err';m.textContent="Couldn't send right now. Please try again, or email christopher@rokwilder.com."}
+ catch(x){m.className='msg err';m.textContent="Couldn't send right now. Please try again, or email support@rokwilder.com."}
  b.disabled=false;b.textContent='Send feedback'};
 })();
