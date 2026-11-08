@@ -9,6 +9,7 @@ This branch prepares the member pages on top of the live Wyoming release. It doe
 - Boots-on-the-Ground requests are Colorado only. Utah and Arizona stay disabled until licensed. Asking does not charge anyone.
 - The server sets the price and the quantity. The package form cannot name a different amount.
 - Legal pages (`terms.html`, `refund.html`, `privacy.html`) are unchanged. The FAQ repeats the rules already in those pages: Founding Hunter stays $19.99 a year only while renewal continues, a failed renewal has 7 days, the Full Pass refund is 7 days once per person, package problems are 30 days, each order gets a delivery date, Boots refunds are 72 hours and only before travel or scouting, and a closure after travel is a new date or the report, not cash back.
+- Canceling a Full Pass stops the next renewal and keeps the year already paid. The Founding price ends at that cancel. A failed renewal has 7 days, and that deadline does not move. The site does not change a Stripe subscription and does not refund a card by itself. A Full Pass refund is an email to support@rokwilder.com, once per person, within 7 days.
 - The public contact stays support@rokwilder.com. Do not publish a personal address.
 - Do not merge this while checkout should stay closed. Live `main` keeps the Wyoming release and its checkout-closed warnings.
 
