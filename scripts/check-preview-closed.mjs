@@ -44,6 +44,23 @@ for (const f of publicCopy) {
   else ok(f + ' has no competitor name');
 }
 
+const home = rd('index.html');
+const how = home.slice(home.indexOf('id="how"'), home.indexOf('<h2>Options</h2>'));
+if (!/3\. You go scout[\s\S]*4\. Need a hand\?/.test(how)) bad('How it works card 4 is not after step 3');
+else ok('How it works card 4 follows step 3');
+if (!/Utah and Arizona Boots-on-the-Ground scouting is coming soon, once licensed/.test(how)) bad('Boots coming soon is missing the license caveat');
+else ok('Utah and Arizona coming soon is the Boots line, once licensed');
+if (!/That coming soon is for Boots only/.test(how)) bad('coming soon is not limited to Boots');
+else ok('coming soon is limited to Boots');
+if (!/Map packs and scouting packages are already described for Colorado, Utah, and Arizona/.test(how)) bad('map packages are not kept separate from Boots');
+else ok('map packages stay described for Colorado, Utah, and Arizona');
+if (!/not bookable yet/.test(how)) bad('Boots card does not say it is not bookable');
+else ok('Boots coming soon is not bookable');
+if (/outfitter|guided hunt we|we guide|we'll take you/i.test(how)) bad('How it works makes an outfitter or guide claim');
+else ok('How it works does not claim guiding');
+if (/\b(January|February|March|April|May|June|July|August|September|October|November|December|20\d\d)\b/.test(how)) bad('How it works names a launch date');
+else ok('How it works names no launch date');
+
 const buy = rd('buy.html');
 if (!/startCheckout/.test(buy) || !/The server sets the price/.test(buy)) bad('buy page can set its own price');
 else ok('buy page uses the server price and the closed checkout helper');
