@@ -85,6 +85,33 @@ for (const p of walk(root)) {
 }
 ok('no private exact-data file in the repository');
 
+const nvPath = join(root, 'nevada/data.js');
+const nvSrc = readFileSync(nvPath, 'utf8');
+if (/window\.RW_FP\s*=\s*true/.test(nvSrc)) bad('nevada/data.js sets window.RW_FP');
+else ok('Nevada public file does not set window.RW_FP');
+if (/"raw"\s*:/.test(nvSrc) || /\bquota\b/.test(nvSrc) || /\bapplicants\b/.test(nvSrc) || /%/.test(nvSrc)) bad('nevada/data.js contains raw, quota, applicants or a percent sign');
+else ok('Nevada public file has no raw counts or percent signs');
+const nvBox = {window: {}};
+vm.createContext(nvBox);
+vm.runInContext(nvSrc + '\nglobalThis.NH=NH; globalThis.NV_META=NV_META;', nvBox);
+const nvBands = new Set([0, 0.01, 0.05, 0.25, 0.75, 1]);
+let nvCells = 0;
+for (const h of Object.values(nvBox.NH || {})) {
+  for (const v of Object.values(h.bp || {})) {
+    nvCells++;
+    if (!nvBands.has(v)) bad('Nevada band is not a verdict band: ' + v);
+  }
+}
+ok(`${Object.keys(nvBox.NH || {}).length} Nevada hunts, ${nvCells} point-level bands`);
+const nvHtml = readFileSync(join(root, 'nevada/find.html'), 'utf8');
+if (!/noindex/i.test(nvHtml)) bad('nevada/find.html is indexable before publication review');
+else ok('Nevada page stays noindex for this draft');
+if (nvSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'nevada/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Nevada turns on exact figures');
+else ok('Nevada cannot be switched to exact figures');
+const smNv = readFileSync(join(root, 'sitemap.xml'), 'utf8') + readFileSync(join(root, 'sitemap-pages.xml'), 'utf8');
+if (/nevada\/find\.html/.test(smNv)) bad('Nevada preview is in the sitemap');
+else ok('Nevada preview is not in the sitemap');
+
 if (fails) {
   console.error(fails + ' FAIL');
   process.exit(1);
