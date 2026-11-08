@@ -85,6 +85,35 @@ for (const p of walk(root)) {
 }
 ok('no private exact-data file in the repository');
 
+const idPath = join(root, 'idaho/data.js');
+const idSrc = readFileSync(idPath, 'utf8');
+if (/window\.RW_FP\s*=\s*true/.test(idSrc)) bad('idaho/data.js sets window.RW_FP');
+else ok('Idaho public file does not set window.RW_FP');
+if (/"raw"\s*:/.test(idSrc) || /\bquota\b/.test(idSrc) || /\bapplicants\b/.test(idSrc) || /%/.test(idSrc)) bad('idaho/data.js contains raw, quota, applicants or a percent sign');
+else ok('Idaho public file has no raw counts or percent signs');
+const idBox = {window: {}};
+vm.createContext(idBox);
+vm.runInContext(idSrc + '\nglobalThis.IH=IH; globalThis.ID_META=ID_META;', idBox);
+const idBands = new Set([0, 0.01, 0.05, 0.25, 0.75, 1, null]);
+let idOdds = 0;
+for (const h of Object.values(idBox.IH || {})) {
+  for (const v of [h.res, h.nr]) {
+    idOdds++;
+    if (!idBands.has(v)) bad('Idaho odds value not a verdict band or null: ' + v);
+  }
+}
+ok(`${idOdds} Idaho residency cells, bands or null only`);
+const idHtml = readFileSync(join(root, 'idaho/find.html'), 'utf8');
+if (/noindex/i.test(idHtml)) bad('idaho/find.html is still noindex');
+else ok('idaho/find.html is indexable');
+const idSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
+if (!sm.includes('sitemap-idaho.xml')) bad('sitemap index missing Idaho');
+if (!idSm.includes('https://rokwilder.com/idaho/find.html')) bad('Idaho sitemap missing the find page');
+if (!sp.includes('https://rokwilder.com/idaho/find.html')) bad('pages sitemap missing Idaho');
+else ok('sitemaps list Idaho');
+if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho turns on exact figures');
+else ok('Idaho cannot be switched to exact figures');
+
 if (fails) {
   console.error(fails + ' FAIL');
   process.exit(1);
