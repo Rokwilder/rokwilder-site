@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>My account | Rokwilder Scouting</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="member/member.css"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
+<header><nav class="nav"><a class="brand" href="index.html"><picture><source media="(max-width:600px)" srcset="img/brand/logo-gw5-compact.svg"><img src="img/brand/logo-gw5.svg" alt="Rokwilder: Research, Scout, Hunt" width="252" height="84"></picture></a><a class="l" href="find.html">Find Your Hunt</a><a class="l" href="unitiq.html">UnitIQ</a><a class="l" href="samples.html">Sample packages</a><a class="l" href="pricing.html">Pricing</a><a class="l" href="packages.html">Packages</a><a class="l" href="about.html">About</a><a class="l" href="faq.html">FAQ</a></nav></header><main>
+<div class="mbox" id="box"><p>Loading…</p></div>
+</main>
+<footer>Rokwilder Scouting · UnitIQ · Family owned · Colorado<br>Zones are estimates from public data, not guarantees. Not an outfitter or guide service. Not affiliated with or endorsed by Colorado Parks and Wildlife, the Utah Division of Wildlife Resources, the Arizona Game and Fish Department or the Wyoming Game and Fish Department.<br>Follow: <a href="https://www.instagram.com/rokwilderscouting/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595232467176" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/rokwilderco" target="_blank" rel="noopener">X</a><br>Draw odds by state: <a href="find.html">Colorado</a> · <a href="utah/find.html">Utah</a> · <a href="arizona/find.html">Arizona</a> · <a href="wyoming/find.html">Wyoming</a><br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="feedback.html">Feedback</a><br>Contact: <a href="mailto:support@rokwilder.com">support@rokwilder.com</a></footer>
+<script src="member/rw.js"></script>
+<script>
+(()=>{const $=i=>document.getElementById(i),Q=new URLSearchParams(location.search),esc=RW.esc;
+const day=t=>new Date(t*1000).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+const kb=n=>n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+async function draw(tries){const a=await RW.account(true);
+ if(a.offline){$('box').innerHTML='<div class="closednote"><b>Checkout is not open.</b> The member service did not answer. Nothing was charged. Email <a href="mailto:support@rokwilder.com">support@rokwilder.com</a>.</div>';return}
+ if(!a.loggedIn){location.href='login.html?next='+encodeURIComponent('/account.html'+location.search);return}
+ const paid=Q.get('paid');
+ if(paid&&tries<12&&!a.fullpass.active&&!a.packages.length){$('box').innerHTML='<div class="banner">Payment received. Setting up your account…</div>';setTimeout(()=>draw(tries+1),1000);return}
+ const fp=a.fullpass||{active:false,states:[]};let h='<div class="closednote"><b>Checkout is not open.</b> Nothing on this page charges a card.</div>';
+ if(paid)h+=`<div class="banner" id="thanks"><b>Thank you!</b> Your payment went through.${fp.active?' Your Full Pass is on.':''}${a.packages.length?' Your package is listed below.':''}</div>`;
+ h+=`<h1>My account</h1><p class="fine2">Logged in as <b>${esc(a.email)}</b></p>`;
+ h+=`<h2>UnitIQ Full Pass</h2>`;
+ if(fp.graceUntil)h+=`<div class="closednote"><b>Renewal payment failed.</b> Your Full Pass stays on through ${day(fp.graceUntil)}. That date does not move. Update the card before then, or the subscription ends and the Founding Hunter price is lost. Email <a href="mailto:support@rokwilder.com">support@rokwilder.com</a>.</div>`;
+ if(fp.foundingEnded&&fp.active)h+=`<div class="closednote"><b>Founding price has ended.</b> Access you already paid for stays until ${fp.ends?day(fp.ends):'the paid date'}. Turning the old subscription back on does not restore $19.99. Email <a href="mailto:support@rokwilder.com">support@rokwilder.com</a> before a renewal so that charge can be stopped or changed. This page does not change the card charge. A Full Pass refund is requested by email, once per person, within 7 days. The site does not refund a card by itself.</div>`;
+ if(fp.foundingEnded&&!fp.active)h+=`<p>The Founding Hunter price has ended. A new Full Pass is $29.99 a year. Checkout is not open, so this page will not start one. A refund, if you still have one, is by email to <a href="mailto:support@rokwilder.com">support@rokwilder.com</a>, once per person, within 7 days.</p>`;
+ if(fp.active)h+=`<p><span class="pill ok">ON</span>${fp.founding?' <span class="pill ok">Founding Hunter</span>':''}</p><p>${fp.renews?'Renews':'Good until'} ${fp.ends?day(fp.ends):'(no end date)'}.</p><p>Exact draw odds for Colorado, Utah and Arizona show in Find Your Hunt while you are logged in. Exact Wyoming odds are not included. Wyoming stays a free verdict.</p><a class="bigbtn" href="find.html">Open Find Your Hunt</a>`;
+ else h+=`<p><span class="pill no">OFF</span></p><p>You see the verdict word and harvest band for each hunt. The Full Pass adds exact odds for Colorado, Utah and Arizona. Exact Wyoming odds are not included.</p><a class="bigbtn" href="pricing.html#fullpass">Full Pass pricing</a>`;
+ h+=`<h2 id="packages">My Packages</h2>`;
+ if(!a.packages.length)h+=`<p>No packages yet.</p><a class="bigbtn o" href="buy.html">Preview a scouting package</a>`;
+ for(const p of a.packages){h+=`<div class="pkg"><h3>${esc(p.label)}</h3><p>Bought ${day(p.bought)}</p>`+
+  (p.ready?p.files.map(f=>`<a class="bigbtn" href="${RW.API}/api/packages/download?e=${encodeURIComponent(p.id)}&f=${encodeURIComponent(f.name)}">Download ${esc(f.name)} <span class="fine2">(${kb(f.size)})</span></a>`).join('')
+   :`<p><b>Being prepared.</b> We email a delivery date for each order, then email you when the files are ready here. If something in the package is wrong, email <a href="mailto:support@rokwilder.com">support@rokwilder.com</a> within 30 days.</p>`)+`</div>`}
+ if(a.packages.length)h+=`<a class="bigbtn o" href="buy.html">Preview another package</a>`;
+ h+=`<h2>Account</h2>`+(a.canManageBilling?`<button class="bigbtn o" id="bill" type="button">Manage billing or cancel</button>`:'')+`<button class="bigbtn o" id="out" type="button">Log out</button><p class="say" id="m" role="status"></p>`;
+ $('box').innerHTML=h;
+ $('out').onclick=async()=>{try{await RW.api('/api/auth/logout',{})}catch(e){}location.href='login.html?out=1'};
+ if($('bill'))$('bill').onclick=async()=>{let r;try{r=await RW.api('/api/billing/portal',{})}catch(e){r={ok:false,j:{}}}
+  if(r.ok&&r.j.url&&RW.safePortalUrl(r.j.url,a.testMode)){location.href=r.j.url;return}
+  $('m').className='say err';$('m').textContent=(r.j&&r.j.error)||'Billing is not open. Nothing was charged. Email support@rokwilder.com.';}}
+draw(0)})();
+</script></body></html>

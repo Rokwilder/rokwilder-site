@@ -10,6 +10,10 @@ main{max-width:1100px;margin:auto;padding:1rem}
 h2{border-left:4px solid var(--acc);padding-left:.6rem;margin-top:2.2rem}h3{margin:.2rem 0 .4rem}
 .lead{font-size:1.1rem;color:var(--mute);max-width:46rem}
 .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.how{grid-template-columns:minmax(0,1fr)}
+.how .card{min-width:0;overflow-wrap:break-word}
+@media(min-width:800px){.how{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1040px){.how{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1rem}
 .card img{width:100%;border-radius:4px;border:1px solid var(--line)}
 .price{font-size:1.6rem;font-weight:800;color:var(--acc)}.tag{display:inline-block;font-size:.75rem;background:var(--green);padding:.1rem .5rem;border-radius:3px;text-transform:uppercase;letter-spacing:.05em}
