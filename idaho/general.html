@@ -8,17 +8,22 @@
 .oh>*{grid-column:2}.oh .rk{grid-column:1;grid-row:1/span 6;font-weight:800;color:var(--mute);font-size:1.1rem}
 .ov{font-size:1.25rem;font-weight:900}.fv{font-size:1.5rem;font-weight:900}.ft{font-size:1.15rem}.fd{color:var(--mute)}
 .qbox{width:100%;min-height:52px;font:inherit;padding:.6rem .8rem;border:2px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+.sec{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.5rem;margin:.2rem 0 1rem}.sec a{display:flex;align-items:center;justify-content:center;min-height:60px;padding:.55rem .7rem;text-align:center;font-weight:800;text-decoration:none;border:2px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}.sec a.on{background:var(--acc);color:#111;border-color:var(--acc)}
 .wyr li{margin:.45rem 0;line-height:1.45}.big2{display:block;width:100%;min-height:58px;font-size:1.2rem;margin:1rem 0}
 </style>
 <h1>Idaho general season</h1>
-<nav class="stp" aria-label="Choose a state"><a href="../find.html">Colorado</a><a href="../utah/find.html">Utah</a><a href="../arizona/find.html">Arizona</a><a href="../wyoming/find.html">Wyoming</a><a href="find.html">Idaho controlled</a><a class="on" aria-current="page" href="general.html">Idaho general</a></nav>
-<p class="note"><b>Draft preview for review.</b> This page is not the controlled-hunt tool. <a href="find.html">Controlled hunts stay on their own page.</a></p>
-<p class="lead">Three different lists. A season window is where a general tag is valid. A 2026 band is what already happened in the nonresident draw. A 2027 row is a choice you can apply for, with no result yet.</p>
+<nav class="stp" aria-label="Choose a state"><a href="../find.html">Colorado</a><a href="../utah/find.html">Utah</a><a href="../arizona/find.html">Arizona</a><a href="../wyoming/find.html">Wyoming</a><a href="find.html">Idaho</a></nav>
+<nav class="sec" aria-label="Idaho section"><a href="find.html">Controlled Hunts</a><a id="secSeasons" href="general.html?mode=seasons">General-Season Hunts</a><a id="secDraw" href="general.html?mode=draw">Nonresident Tag Draws</a></nav>
+<p class="note"><b>Draft preview for review.</b> These two sections are not published. Controlled hunts stay on their own button.</p>
+<p class="lead" id="lead">Pick a section. General-season hunts are dates and places. Nonresident tag draws are a separate drawing for deer and elk tags.</p>
 <div class="dox fy">
-<span class="lbl">1. Which list?</span><div class="seg"><button data-mode="seasons" class="on">2026 season windows</button><button data-mode="draw">2026 draw results</button><button data-mode="choices">2027 choices</button></div>
+<div id="yearBox" hidden>
+<span class="lbl">Which drawing year?</span><div class="seg"><button data-year="2026" class="on">2026 results</button><button data-year="2027">2027 results</button></div>
+<p class="dq" id="yearNote"></p>
+</div>
 <p class="dq" id="modeNote"></p>
-<span class="lbl">2. Elk or deer?</span><div class="seg"><button data-sp="elk" class="on">Elk</button><button data-sp="deer">Deer</button></div>
-<span class="lbl">3. Search a zone, unit, or hunt code</span>
+<span class="lbl" id="spLbl">Elk or deer?</span><div class="seg"><button data-sp="elk" class="on">Elk</button><button data-sp="deer">Deer</button></div>
+<span class="lbl">Search a zone, unit, or hunt code</span>
 <input class="qbox" id="q" type="search" placeholder="Try Panhandle, 39, or ELK30" aria-label="Search">
 <button class="btn go2" id="go">Show the list</button>
 </div>

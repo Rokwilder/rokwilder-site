@@ -52,7 +52,11 @@ ok(/not a forecast/i.test(html) && /not a harvest rate/i.test(html), 'season win
 ok(/no result yet|had not been held/i.test(html + js), '2027 is labeled as having no result');
 ok(/over the counter/i.test(html) && /random draw/i.test(html), 'OTC resident sales and the nonresident draw are both named');
 ok(!/pct\(/.test(js) && !/\d+%/.test(js), 'the page script does not print a success rate');
-ok(controlled.includes('general.html'), 'controlled page links to the general-season preview');
+const sections = ['Controlled Hunts', 'General-Season Hunts', 'Nonresident Tag Draws'];
+ok(sections.every(label => html.includes(label) && controlled.includes(label)), 'both Idaho pages have the three section buttons');
+ok(/2027 nonresident results are not released/.test(js), '2027 results are explained as unreleased');
+ok(/Nonresidents only/.test(js) && /residents over the counter/.test(js), 'resident and nonresident paths stay labeled');
+ok(controlled.includes('general.html?mode=seasons') && controlled.includes('general.html?mode=draw'), 'controlled page links each new section');
 ok(/checkout is not open/.test(pricing), 'checkout remains closed');
 ok(pricing.includes('$29.99') && pricing.includes('$19.99'), 'Full Pass and Founding prices are unchanged');
 
