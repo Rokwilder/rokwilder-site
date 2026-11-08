@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Boots-on-the-Ground request | Rokwilder Scouting</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="member/member.css"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
+<header><nav class="nav"><a class="brand" href="index.html"><picture><source media="(max-width:600px)" srcset="img/brand/logo-gw5-compact.svg"><img src="img/brand/logo-gw5.svg" alt="Rokwilder: Research, Scout, Hunt" width="252" height="84"></picture></a><a class="l" href="find.html">Find Your Hunt</a><a class="l" href="unitiq.html">UnitIQ</a><a class="l" href="samples.html">Sample packages</a><a class="l" href="pricing.html">Pricing</a><a class="l" href="packages.html">Packages</a><a class="l" href="about.html">About</a><a class="l" href="faq.html">FAQ</a></nav></header><main>
+<div class="mbox" id="f">
+<div class="closednote"><b>Checkout is not open.</b> Asking is free. This form does not take a payment.</div>
+<h1>Ask for Boots-on-the-Ground</h1>
+<p>We scout your Colorado unit in person before your season and send a field report with waypoints. From about $300. The total depends on the unit, travel and days, and we agree on it in writing before you pay. Spots are limited.</p>
+<label for="nm">Your name</label><input id="nm" autocomplete="name">
+<label for="em">Your email</label><input id="em" type="email" autocomplete="email" inputmode="email">
+<label for="ph">Phone (optional)</label><input id="ph" type="tel" autocomplete="tel" inputmode="tel">
+<label for="st">State</label><select id="st"><option value="CO">Colorado</option><option value="UT" disabled>Utah (coming once licensed)</option><option value="AZ" disabled>Arizona (coming once licensed)</option></select><p class="fine2" id="stnote">Colorado only for now. Utah and Arizona are coming once licensed, so this form will not send a request for them. Map Packs and Full Scouting Packages can still be for Utah and Arizona when checkout opens.</p>
+<label for="sp">Animal</label><select id="sp"><option value="elk">Elk</option><option value="deer">Deer</option><option value="pronghorn">Pronghorn</option></select>
+<label for="un">Unit or hunt area</label><input id="un">
+<label for="se">Season</label><input id="se" value="2027">
+<label for="dt">Your hunt dates</label><input id="dt" placeholder="for example: 2nd rifle season">
+<label for="nt">Anything else?</label><textarea id="nt" rows="3"></textarea>
+<button class="bigbtn" id="send" type="button">Send my request</button><p class="say" id="m" role="status"></p>
+<p class="fine2">A paid Boots scout can be refunded within 72 hours of purchase, and only before travel or scouting starts. After that there is no refund. If we cancel, you get a refund or a new date. If weather, fire or a closure hits after travel has started, you get a new date or the report for what was scouted, not cash back. See the <a href="refund.html">refund policy</a>. Scouting only. Not an outfitter or guide service. Game cameras only where state rules allow. Replies go to the address you type here; the public contact is <a href="mailto:support@rokwilder.com">support@rokwilder.com</a>.</p></div>
+</main>
+<footer>Rokwilder Scouting · UnitIQ · Family owned · Colorado<br>Zones are estimates from public data, not guarantees. Not an outfitter or guide service. Not affiliated with or endorsed by Colorado Parks and Wildlife, the Utah Division of Wildlife Resources, the Arizona Game and Fish Department or the Wyoming Game and Fish Department.<br>Follow: <a href="https://www.instagram.com/rokwilderscouting/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595232467176" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/rokwilderco" target="_blank" rel="noopener">X</a><br>Draw odds by state: <a href="find.html">Colorado</a> · <a href="utah/find.html">Utah</a> · <a href="arizona/find.html">Arizona</a> · <a href="wyoming/find.html">Wyoming</a><br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="feedback.html">Feedback</a><br>Contact: <a href="mailto:support@rokwilder.com">support@rokwilder.com</a></footer>
+<script src="member/rw.js"></script>
+<script>
+(()=>{const $=i=>document.getElementById(i);RW.account().then(a=>{if(a.loggedIn)$('em').value=a.email});
+$('send').onclick=async()=>{const st=String($('st').value||'').trim().toUpperCase();
+ if(st!=='CO'){$('m').className='say err';$('m').textContent='Boots-on-the-Ground is Colorado only for now. Utah and Arizona are coming once licensed.';return}
+ const b={name:$('nm').value,email:$('em').value,phone:$('ph').value,state:'CO',species:$('sp').value,unit:$('un').value,season:$('se').value,dates:$('dt').value,notes:$('nt').value};
+ $('send').disabled=true;let r;try{r=await RW.api('/api/boots/request',b)}catch(e){r={ok:false,j:{}}}
+ $('send').disabled=false;
+ if(r.ok)$('f').innerHTML='<h1>Thanks, we got it</h1><p>We will reply by email about dates and price. Nothing has been charged. Checkout is not open.</p><a class="bigbtn o" href="index.html">Back to the home page</a>';
+ else{$('m').className='say err';$('m').textContent=(r.j&&r.j.error)||'The request did not send. Nothing was charged. Email support@rokwilder.com.'}}})();
+</script></body></html>
