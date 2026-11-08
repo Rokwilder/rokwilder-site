@@ -48,7 +48,20 @@ ok(!hunts.some(h => h.sp === 'goat' && h.draw === 2), 'goat has no second drawin
 ok(hunts.some(h => h.youth === 1 && h.seg.some(s => /youth/i.test(s.s))), 'youth label comes from the 2026 season name');
 ok(hunts.some(h => h.extra === 1 && /X$/.test(h.area)) && hunts.every(h => h.extra === 0 || /X$/.test(h.area)), 'extra-tag flag follows an X suffix');
 
-ok(/noindex/.test(html), 'Idaho page is noindex until publication review');
+ok(!html.includes('noindex'), 'Idaho page is indexable');
+const pages = readFileSync(join(root, 'sitemap-pages.xml'), 'utf8');
+const index = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+const idahoSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
+ok(index.includes('sitemap-idaho.xml') && idahoSm.includes('https://rokwilder.com/idaho/find.html') && pages.includes('https://rokwilder.com/idaho/find.html'), 'sitemaps list the Idaho find page');
+const pricing = readFileSync(join(root, 'pricing.html'), 'utf8');
+const packages = readFileSync(join(root, 'packages.html'), 'utf8');
+const faq = readFileSync(join(root, 'faq.html'), 'utf8');
+ok(/checkout is not open/.test(pricing), 'pricing still says checkout is not open');
+ok(pricing.includes('$0') && pricing.includes('$29.99') && pricing.includes('$19.99'), 'free, Full Pass and Founding prices are unchanged');
+ok(!/buy\.stripe|stripe\.com\/checkout|checkout\.stripe/i.test(pricing + packages + html), 'no Stripe checkout was added');
+ok(/Join the waitlist/.test(pricing), 'pricing still ends at the waitlist');
+ok(/Boots-on-the-Ground requests are Colorado only/.test(faq), 'Boots stays Colorado only');
+ok(/Nothing is for sale yet/.test(packages) && /Checkout is not open/.test(packages), 'packages still say nothing is for sale and checkout is not open');
 ok(/historical|past result|not a forecast/i.test(html + find), 'page says the band is historical');
 ok(!/YES, you'll draw/.test(html + find), 'Idaho does not use the future-draw verdict words');
 ok(/exact Idaho odds are not in the Full Pass/i.test(html + find), 'exact Idaho odds are excluded from the Full Pass');

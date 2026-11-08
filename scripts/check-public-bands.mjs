@@ -104,8 +104,13 @@ for (const h of Object.values(idBox.IH || {})) {
 }
 ok(`${idOdds} Idaho residency cells, bands or null only`);
 const idHtml = readFileSync(join(root, 'idaho/find.html'), 'utf8');
-if (!/noindex/i.test(idHtml)) bad('idaho/find.html is indexable before publication review');
-else ok('Idaho page stays noindex for this draft');
+if (/noindex/i.test(idHtml)) bad('idaho/find.html is still noindex');
+else ok('idaho/find.html is indexable');
+const idSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
+if (!sm.includes('sitemap-idaho.xml')) bad('sitemap index missing Idaho');
+if (!idSm.includes('https://rokwilder.com/idaho/find.html')) bad('Idaho sitemap missing the find page');
+if (!sp.includes('https://rokwilder.com/idaho/find.html')) bad('pages sitemap missing Idaho');
+else ok('sitemaps list Idaho');
 if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho turns on exact figures');
 else ok('Idaho cannot be switched to exact figures');
 
