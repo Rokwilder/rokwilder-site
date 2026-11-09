@@ -64,8 +64,8 @@ function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span cla
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const r=ranked(),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
  const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`;
- if(!paid()){const samples=r.filter(x=>isSample(x.k));
-  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, so you can see a full result. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
+ if(!paid()){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>WH[x.k]&&WH[x.k].area);
+  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const ban=window.RWGate?RWGate.banner():'';
  o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2><p class="dq">${who()}. Best odds first. Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+

@@ -17,10 +17,10 @@ const fpLine=()=>FP?'':`<p class="fpl">Exact odds and harvest numbers for every 
 const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>units(k).map(String).some(u=>u==='12'||u==='2');
 function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
-function freeList(r,who){const samples=r.filter(x=>isSample(x.k)),o=$('out');
+function freeList(r,who){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>units(x.k).map(String).filter(u=>u==='12'||u==='2')),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'pricing.html',
-  sampleNote:'<b>Sample.</b> Units 12 and 2 only, so you can see a full result. This is not your whole list.',
+  sampleNote:'<b>Sample.</b> Units 12 and 2 only, up to 3 hunts from each. This is not your whole list.',
   samplesHtml:samples.length?`<ol class="fl">`+samples.map(huntCard).join('')+'</ol>':'',
   extra:`<p class="note">The count is hunts at about 5% or better with these choices${S.priv?'':', not counting private-land-only hunts'}.</p>`});
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k))}

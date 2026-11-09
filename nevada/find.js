@@ -48,8 +48,8 @@ function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;$('empty').hidden=true;
   const r=ranked(),nb=below(),nm=missing();
   const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Under one in twenty, and rows where none drew, stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p>`;
-  if(!paid()){const samples=r.filter(x=>isSample(x.k));
-    o.innerHTML=RWGate.freeShell({count:r.length,species:(SP[S.sp]||S.sp).toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 113 and 221 only, so you can see a full result. This is not your whole list. The count is the 2025 main draw at this point level, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
+  if(!paid()){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>NH[x.k]&&NH[x.k].units);
+    o.innerHTML=RWGate.freeShell({count:r.length,species:(SP[S.sp]||S.sp).toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 113 and 221 only, up to 3 hunts from each. This is not your whole list. The count is the 2025 main draw at this point level, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
     o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
   const ban=window.RWGate?RWGate.banner():'';
   o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2><p class="dq">${esc(whoLine())}. Strongest 2025 result first. Tap a hunt for the other point levels.</p>`+fpBox()+

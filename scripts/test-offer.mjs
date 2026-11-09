@@ -1,6 +1,7 @@
 // Offer preview: three paid tiers, no Hotspot Map Pack, and a soft Full Pass gate on Find Your Hunt.
 import {readFileSync, readdirSync, statSync} from 'node:fs';
 import {join, relative} from 'node:path';
+import vm from 'node:vm';
 
 const root = new URL('..', import.meta.url).pathname;
 let fails = 0;
@@ -71,7 +72,22 @@ const co = readFileSync(join(root, 'find/find.js'), 'utf8');
 ok(/FULLPASS_GATING/.test(gate) && /FULLPASS_GATING/.test(co), 'FULLPASS_GATING flag remains');
 ok(/preview['"]\)==='fullpass'|preview === 'fullpass'/.test(gate) || /preview'\)==='fullpass'/.test(gate), 'preview=fullpass opens the paid list');
 ok(/Unlock with Full Pass/.test(gate), 'unlock panel names the Full Pass');
+ok(/See Full Pass/.test(gate) && /#waitlist/.test(gate), 'unlock button reads See Full Pass and links to the waitlist');
 ok(/You could draw/.test(gate), 'free result leads with a count');
+ok(/up to 3 hunts from each sample unit/.test(gate), 'free copy caps the sample at 3 hunts per unit');
+const css = readFileSync(join(root, 'style.css'), 'utf8');
+ok(/\.fpbox a\.btn\{color:#111/.test(css), 'unlock button text stays dark on the orange button');
+const gateBox = {window:{}, location:{search:''}, URLSearchParams};
+vm.createContext(gateBox);
+vm.runInContext(gate, gateBox);
+const many = [];
+for (let i = 0; i < 8; i++) many.push({id:'a'+i, u:'12'});
+for (let i = 0; i < 8; i++) many.push({id:'b'+i, u:'2'});
+many.push({id:'both', u:['12','2']});
+const picked = gateBox.window.RWGate.takePerUnit(many, row => row.u);
+ok(picked.filter(row => row.u === '12').length === 3, 'unit 12 keeps 3 sample hunts');
+ok(picked.filter(row => row.u === '2').length === 3, 'unit 2 keeps 3 sample hunts');
+ok(picked.length === 6, 'a hunt in a full unit is not added once both units are full');
 
 if (fails) { console.error(fails + ' FAIL'); process.exit(1); }
 console.log('ALL PASS');

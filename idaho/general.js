@@ -56,9 +56,9 @@ function show(sc){
  const o=$('out');o.hidden=false;
  if(S.mode==='draw'&&!paid()){
   const all=S.year==='2026'?drawRows().filter(row=>row.band!=null&&row.band>=.05):choiceRows();
-  const samples=all.filter(row=>['Lolo','Pioneer','Bannock','55'].includes(row.place));
+  const samples=RWGate.takePerUnit(all.filter(row=>['Lolo','Pioneer','Bannock','55'].includes(row.place)),row=>row.place);
   const cards=S.year==='2026'?drawCard:choiceCard;
-  o.innerHTML=RWGate.freeShell({count:all.length,species:S.sp==='elk'?'elk':'deer',who:'Nonresident '+S.sp+' · '+(S.year==='2026'?'2026 first choice':'2027 choices, no result yet')+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Lolo, Pioneer, Bannock and unit 55, when they match these choices. This is not your whole list. Season dates stay on General-Season Hunts.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(cards).join('')+'</ol>':''});
+  o.innerHTML=RWGate.freeShell({count:all.length,species:S.sp==='elk'?'elk':'deer',who:'Nonresident '+S.sp+' · '+(S.year==='2026'?'2026 first choice':'2027 choices, no result yet')+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Lolo, Pioneer, Bannock and unit 55, up to 3 hunts from each, when they match these choices. This is not your whole list. Season dates stay on General-Season Hunts.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(cards).join('')+'</ol>':''});
   if(sc)o.scrollIntoView({behavior:'smooth'});
   return;
  }
