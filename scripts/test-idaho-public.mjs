@@ -64,7 +64,9 @@ ok(/Boots-on-the-Ground requests are Colorado only/.test(faq), 'Boots stays Colo
 ok(/Nothing is for sale yet/.test(packages) && /Checkout is not open/.test(packages), 'packages still say nothing is for sale and checkout is not open');
 ok(/historical|past result|not a forecast/i.test(html + find), 'page says the band is historical');
 ok(!/YES, you'll draw/.test(html + find), 'Idaho does not use the future-draw verdict words');
-ok(/exact Idaho odds are not in the Full Pass/i.test(html + find), 'exact Idaho odds are excluded from the Full Pass');
+const gate = readFileSync(join(root, 'find/gate.js'), 'utf8');
+ok(/Unlock with Full Pass/.test(gate) && /RWGate/.test(find) && /exact percentages are not in the public file/i.test(find), 'Idaho list is gated and the public file is not described as exact odds');
+ok(/gate\.js/.test(html), 'Idaho page loads the list gate');
 ok(!/Boots-on-the-Ground/.test(html), 'no Boots pitch');
 ok(!/goHUNT|Epic Outdoors|Huntin' Fool|onX Hunt/i.test(html + find), 'no competitor names');
 ok(/19 or fewer/.test(html) && /more than 20/.test(html) && /exactly 20/.test(html), 'nonresident cap is quoted with the 20-tag gap');

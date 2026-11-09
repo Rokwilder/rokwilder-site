@@ -1,0 +1,477 @@
+{
+  "state": "nevada",
+  "yearsAdded": [
+    2023,
+    2024,
+    2025
+  ],
+  "unavailable": [
+    {
+      "year": 2026,
+      "why": "NDOW's bonus-point page links 2025 main-draw tables. No 2026 hunt-level bonus-point table was linked there."
+    }
+  ],
+  "match": "Species, sex, weapon, residency, program (main, junior or guided) and unit list must match. If a unit has more than one season, the month and day must match too. A changed unit list is not history.",
+  "band": "drew",
+  "hunts": 911,
+  "currentWithoutHistory": 7,
+  "reparseMismatch2025": 0,
+  "sources": [
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 57
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 57
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Junior-Antlered-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 56
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 55
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 27
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 23
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 26
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 25
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 34
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 30
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 28
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 24
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Moose-Antlered-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 1
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 34
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 32
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 32
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 26
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 42
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Shorter-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 13
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/03/Antelope-Junior-Horns-Shorter-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 6
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 40
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 13
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 6
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ewe-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+      "hunts": 10
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Rocky-Mountain-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2025,
+      "url": "https://www.ndow.org/wp-content/uploads/2026/01/Black-Bear-Bonus-Point-and-Application-Trend-2025.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+      "hunts": 57
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+      "hunts": 57
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Junior-Hunt-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 56
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 26
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 25
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 62
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 28
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 24
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Spike-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 25
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Moose-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 1
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 68
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 58
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 42
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/02/Antelope-Horns-Shorter-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 12
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+      "hunts": 40
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+      "hunts": 13
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 5
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Management-Ram-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 5
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+      "hunts": 10
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Rocky-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2024,
+      "url": "https://www.ndow.org/wp-content/uploads/2025/01/Black-Bear-Bonus-Point-and-Application-Trend-2024.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 114
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 100
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 82
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 57
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlerless-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Junior-Hunt-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 50
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 26
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 25
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Depredation-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 16
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Spike-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 25
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 62
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 28
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 24
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Depredation-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 16
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 68
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 58
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-Muzzle-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 42
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Shorter-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 14
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+      "hunts": 41
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+      "hunts": 17
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+      "hunts": 7
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+      "hunts": 1
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Desert-Bighorn-Any-Ewe-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+      "hunts": 9
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/01/Rocky-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 2
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 4
+    },
+    {
+      "year": 2023,
+      "url": "https://www.ndow.org/wp-content/uploads/2024/02/Black-Bear-Bonus-Point-and-Application-Trend-2023.pdf",
+      "hunts": 2
+    }
+  ],
+  "page": "https://www.ndow.org/blog/bonus-point-data/"
+}

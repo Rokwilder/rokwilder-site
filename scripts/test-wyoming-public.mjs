@@ -24,8 +24,10 @@ ok(/have passed/.test(html) && /has not posted 2027/.test(html), '2026 dates mar
 ok(/October 31/.test(html) && /Nov\. 2/.test(html), 'both posted preference-point end dates are shown');
 ok(/at least 75%/.test(html) && /40%/.test(html) && /60%/.test(html), 'Chapter 44 split is stated');
 ok(/estimate/.test(html), 'page says the random portion is an estimate');
-ok(!/Exact Wyoming odds are in the Full Pass/.test(html + find), 'page does not claim exact Wyoming Full Pass figures are included');
-ok(/exact Wyoming and Idaho odds are not in the Full Pass/i.test(find), 'find.js says exact Wyoming and Idaho odds are not in the Full Pass');
+ok(!/Exact Wyoming odds are in the Full Pass/.test(html + find), 'page does not claim exact Wyoming figures are already in the public file');
+const gate = readFileSync(join(root, 'find/gate.js'), 'utf8');
+ok(/Unlock with Full Pass/.test(gate) && /RWGate/.test(find) && /exact percentages are not in the public file/i.test(find), 'Wyoming list is gated and stays on verdict bands in the public file');
+ok(/gate\.js/.test(html), 'Wyoming page loads the list gate');
 ok(!/goHUNT|Epic Outdoors|Huntin' Fool|onX Hunt/i.test(html + find), 'Wyoming page has no competitor names');
 ok(!/Boots-on-the-Ground/.test(html), 'no Boots pitch on the Wyoming draw page');
 

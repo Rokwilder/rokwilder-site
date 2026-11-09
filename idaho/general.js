@@ -31,7 +31,7 @@ function choiceRows(){
   .slice().sort((a,b)=>String(a.code).localeCompare(String(b.code),undefined,{numeric:true}));
 }
 function seasonCard(row,i){
- return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Season window</span><span class="ft">${esc(row.g)} · ${esc(row.area)}</span><span class="fd">${esc(row.season)} · ${esc(row.method)} · ${esc(row.sex)}</span><span class="fd">${fmtDate(row.o)} – ${fmtDate(row.c)} · ${esc(row.tag)}</span><span class="fo"><span class="fpn">Where a general-season tag is valid. Not a draw result and not a harvest rate.</span></span></div></li>`;
+ return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Season window</span><span class="ft">${esc(row.g)} · ${esc(row.area)}</span><span class="fd">${esc(row.season)} · ${esc(row.method)} · ${esc(row.sex)}</span><span class="fd">${fmtDate(row.o)} – ${fmtDate(row.c)} · ${esc(row.tag)}</span><span class="fo"><span class="fpn">Where a general-season tag is valid. Not a draw result and not a harvest rate.</span></span>${RWHyNone('History not available. A general-season window is not a draw result.')}</div></li>`;
 }
 function word(v){if(v==null)return 'Nobody put this first in 2026, so there is no first-choice result.';
  if(v===1)return 'Every person who put this first was drawn.';
@@ -44,15 +44,25 @@ function word(v){if(v==null)return 'Nobody put this first in 2026, so there is n
 function drawCard(row,i){
  const name=row.kind.startsWith('dav')?`${esc(row.place)} DAV ${row.sp}`:`${esc(row.place)} ${esc(row.tag)}`;
  const later=row.later?' <span class="fd">A later choice also received tags in 2026. That is a different result from this first-choice band.</span>':'';
- return `<li><div class="oh"><span class="rk">${i+1}</span><span class="fv">${row.band==null?'':vdot(row.band)}${VERD(row.band)}</span><span class="ft">${name}</span><span class="fd">2026 nonresident draw · first choice · not a forecast</span>${later}<span class="fo"><span class="fpn">${word(row.band)}</span></span></div></li>`;
+ return `<li><div class="oh"><span class="rk">${i+1}</span><span class="fv">${row.band==null?'':vdot(row.band)}${VERD(row.band)}</span><span class="ft">${name}</span><span class="fd">2026 nonresident draw · first choice · not a forecast</span>${later}<span class="fo"><span class="fpn">${word(row.band)}</span></span>${RWHy(row.k,'nr')}</div></li>`;
 }
 function choiceCard(row,i){
  const cap=row.capped?' · capped elk zone':'';
  const limit=row.limit==null?'DAV code, no separate tag limit in this table':`2027 nonresident tag limit ${row.limit.toLocaleString()}. This is how many tags are offered, not how many people drew.`;
  return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">No result yet</span><span class="ft">${esc(row.code)} · ${esc(row.place)} ${esc(row.tag)}</span><span class="fd">${esc(row.units||'')}${cap}</span><span class="fo"><span class="fpn">${limit} The 2027 drawing had not been held on November 8, 2026.</span></span></div></li>`;
 }
+const paid=()=>window.RWGate?RWGate.paid():false;
 function show(sc){
  const o=$('out');o.hidden=false;
+ if(S.mode==='draw'&&!paid()){
+  const all=S.year==='2026'?drawRows().filter(row=>row.band!=null&&row.band>=.05):choiceRows();
+  const samples=RWGate.takePerUnit(all.filter(row=>['Lolo','Pioneer','Bannock','55'].includes(row.place)),row=>row.place);
+  const cards=S.year==='2026'?drawCard:choiceCard;
+  o.innerHTML=RWGate.freeShell({count:all.length,species:S.sp==='elk'?'elk':'deer',who:'Nonresident '+S.sp+' · '+(S.year==='2026'?'2026 first choice':'2027 choices, no result yet')+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Lolo, Pioneer, Bannock and unit 55, up to 3 hunts from each, when they match these choices. This is not your whole list. Season dates stay on General-Season Hunts.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(cards).join('')+'</ol>':''});
+  if(sc)o.scrollIntoView({behavior:'smooth'});
+  return;
+ }
+ const ban=window.RWGate?RWGate.banner():'';
  let rows, cards, title, note;
  if(S.mode==='seasons'){
   rows=seasonRows(); cards=seasonCard;
@@ -74,12 +84,12 @@ function show(sc){
  const who=S.mode==='seasons'?(S.sp==='elk'?'Elk':'Deer')+' · 2026 general season · residents over the counter · nonresidents use the draw':
   S.year==='2026'?(S.sp==='elk'?'Elk':'Deer')+' · nonresidents · 2026 first choice · not a resident draw':
   (S.sp==='elk'?'Elk':'Deer')+' · nonresidents · 2027 choices · no result yet';
- o.innerHTML=`<h2 id="lt">${title}</h2><p class="dq">${esc(who)}${S.q?' · matching “'+esc(S.q)+'”':''}</p>`+
+ o.innerHTML=ban+`<h2 id="lt">${title}</h2><p class="dq">${esc(who)}${S.q?' · matching “'+esc(S.q)+'”':''}</p>`+
   `<ol class="fl">`+rows.slice(0,S.n).map(cards).join('')+`</ol>`+
   (rows.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,rows.length-S.n)} more (${rows.length-S.n} left)</button>`:'')+
   (rows.length?'':`<p class="dq">Nothing matches these choices.</p>`)+
   `<p class="note">${note}</p>`+
-  `<p class="fpl">Exact Idaho odds are not on this site and are not in the Full Pass. <a href="../pricing.html">See pricing</a></p>`;
+  `<p class="fpl">Exact percentages are not in this public file. Full Pass: $29.99 a year. Not on sale yet. <a href="../pricing.html">See pricing</a></p>`;
  if($('more'))$('more').onclick=()=>{S.n+=25;show()};
  if(sc)o.scrollIntoView({behavior:'smooth'});
 }

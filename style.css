@@ -63,8 +63,20 @@ footer{background:url(img/brand/topo.svg) repeat}
 .fpbox li{margin:.2rem 0}
 .fpbox .fpp{margin:0;color:var(--mute);font-size:.95rem}
 .fpbox a,.fpl a{color:var(--acc)}
+.vg[hidden],[hidden].tw{display:none !important}
+.fpbox a.btn{color:#111;background:var(--acc)}
+.fpbox a.btn:hover,.fpbox a.btn:focus{color:#111}
+.samp{display:inline-block;background:#c96f1e;color:#fff;border-radius:4px;padding:.05rem .45rem;font-size:.72rem;font-weight:800;letter-spacing:.04em;vertical-align:middle}
 .fpl{color:var(--mute);font-size:.92rem;margin:.8rem 0}
 .sum{margin:.35rem 0 0;font-size:1.02rem}
 .next{margin:.45rem 0 0;font-size:1rem}
 .next a{font-weight:600}
 .hsl{display:block;font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);margin-bottom:.1rem}
+.hy{display:block;margin:.45rem 0 0}
+.hy .yrs{display:flex;flex-wrap:wrap;gap:.35rem .75rem}
+.hy .yr{display:flex;flex-direction:column;min-width:5.4rem;font-size:.95rem;line-height:1.25}
+.hy .yr b{font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;color:var(--mute);font-weight:800}
+.hy .yr.avg b{color:var(--acc)}
+.hy .tr{margin-top:.2rem;font-weight:800}
+.hym{color:var(--mute);font-size:.92rem}
+.hynote{color:var(--mute);font-size:.92rem;margin:.35rem 0 .7rem}

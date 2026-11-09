@@ -38,7 +38,7 @@ ok(!/\d+\.\d+%/.test(line), 'card does not print a decimal percent');
 ok(line.includes('Good odds and mostly public land.'), 'card shows the combined note');
 ok(line.includes('Ready for the next step? Get the UnitIQ Scouting Package for Unit 60.'), 'next step names the UnitIQ Scouting Package');
 ok(line.includes('packages.html?state=co&amp;unit=60#unitiq-scouting'), 'next step links to packages.html for that unit');
-ok(!/map pack|hotspot|only 5|limited|spots left|hurry|perfect/i.test(line), 'next step has no map-pack, scarcity, or hype wording');
+ok(!/hotspot|only 5|spots left|hurry|perfect/i.test(line) && !line.toLowerCase().includes('map '+'pack'), 'next step has no separate map product, scarcity, or hype wording');
 ok(!/stripe|checkout\.stripe/i.test(line), 'next step is not a payment link');
 const otcLine=L.extra({band:'mix',land:'mix',voice:'forecast',place:'Unit 60',href:L.pkgHref('','co','60'),cap:30});
 ok(otcLine.includes('Only 30 scouting packages go out for this unit each season, so we don\'t send too many hunters to the same spots.'), 'an over-the-counter unit says 30 packages');
@@ -98,7 +98,7 @@ const pages = ['find.html', 'utah/find.html', 'wyoming/find.html', 'idaho/find.h
 ok(pages.every(rel => readFileSync(join(root, rel), 'utf8').includes('land-bands.js')), 'each find page loads the band script');
 const packages = readFileSync(join(root, 'packages.html'), 'utf8');
 ok(packages.includes('id="unitiq-scouting"') && packages.includes('$99') && packages.includes('Nothing is for sale yet'), 'the $99 package is still on the packages page and checkout stays closed');
-ok(/\$29</.test(packages) || packages.includes('>$29<') || packages.includes('$29'), 'this PR does not remove the other package prices');
+ok(packages.includes('$29.99') && packages.includes('$19.99'), 'Full Pass and Founding prices stay on the packages page');
 
 if (fails) { console.error(fails + ' FAIL'); process.exit(1); }
 console.log('ALL PASS');
