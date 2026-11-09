@@ -104,13 +104,45 @@ for (const h of Object.values(nvBox.NH || {})) {
 }
 ok(`${Object.keys(nvBox.NH || {}).length} Nevada hunts, ${nvCells} point-level bands`);
 const nvHtml = readFileSync(join(root, 'nevada/find.html'), 'utf8');
-if (!/noindex/i.test(nvHtml)) bad('nevada/find.html is indexable before publication review');
-else ok('Nevada page stays noindex for this draft');
+if (/noindex/i.test(nvHtml)) bad('nevada/find.html is still noindex');
+else ok('nevada/find.html is indexable');
 if (nvSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'nevada/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Nevada turns on exact figures');
 else ok('Nevada cannot be switched to exact figures');
-const smNv = readFileSync(join(root, 'sitemap.xml'), 'utf8') + readFileSync(join(root, 'sitemap-pages.xml'), 'utf8');
-if (/nevada\/find\.html/.test(smNv)) bad('Nevada preview is in the sitemap');
-else ok('Nevada preview is not in the sitemap');
+const nvSm = readFileSync(join(root, 'sitemap-nevada.xml'), 'utf8');
+if (!sm.includes('sitemap-nevada.xml')) bad('sitemap index missing Nevada');
+if (!nvSm.includes('https://rokwilder.com/nevada/find.html')) bad('Nevada sitemap missing the find page');
+if (!sp.includes('https://rokwilder.com/nevada/find.html')) bad('pages sitemap missing Nevada');
+else ok('sitemaps list Nevada');
+
+const idPath = join(root, 'idaho/data.js');
+const idSrc = readFileSync(idPath, 'utf8');
+if (/window\.RW_FP\s*=\s*true/.test(idSrc)) bad('idaho/data.js sets window.RW_FP');
+else ok('Idaho public file does not set window.RW_FP');
+if (/"raw"\s*:/.test(idSrc) || /\bquota\b/.test(idSrc) || /\bapplicants\b/.test(idSrc) || /%/.test(idSrc)) bad('idaho/data.js contains raw, quota, applicants or a percent sign');
+else ok('Idaho public file has no raw counts or percent signs');
+const idBox = {window: {}};
+vm.createContext(idBox);
+vm.runInContext(idSrc + '\nglobalThis.IH=IH; globalThis.ID_META=ID_META;', idBox);
+const idBands = new Set([0, 0.01, 0.05, 0.25, 0.75, 1, null]);
+let idOdds = 0;
+for (const h of Object.values(idBox.IH || {})) {
+  for (const v of [h.res, h.nr]) {
+    idOdds++;
+    if (!idBands.has(v)) bad('Idaho odds value not a verdict band or null: ' + v);
+  }
+}
+ok(`${idOdds} Idaho residency cells, bands or null only`);
+const idHtml = readFileSync(join(root, 'idaho/find.html'), 'utf8');
+if (/noindex/i.test(idHtml)) bad('idaho/find.html is still noindex');
+else ok('idaho/find.html is indexable');
+const idSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
+if (!sm.includes('sitemap-idaho.xml')) bad('sitemap index missing Idaho');
+if (!idSm.includes('https://rokwilder.com/idaho/find.html')) bad('Idaho sitemap missing the find page');
+if (!idSm.includes('https://rokwilder.com/idaho/general.html')) bad('Idaho sitemap missing the general page');
+if (!sp.includes('https://rokwilder.com/idaho/find.html')) bad('pages sitemap missing Idaho');
+else ok('sitemaps list Idaho');
+if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho turns on exact figures');
+else ok('Idaho cannot be switched to exact figures');
 
 if (fails) {
   console.error(fails + ' FAIL');

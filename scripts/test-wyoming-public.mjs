@@ -17,14 +17,15 @@ const html = readFileSync(join(root, 'wyoming/find.html'), 'utf8');
 ok(Object.keys(WH).length === 699, '699 hunt records');
 ok(WY_META.year === 2026 && !/2027/.test(JSON.stringify(WY_META)), 'data year is 2026 and meta invents no 2027 date');
 ok(!html.includes('noindex'), 'page is not noindex');
-ok(/More states to come: Idaho, New Mexico and Montana/.test(html), 'more states line keeps Idaho and drops Nevada');
-ok(/nevada\/find\.html">Nevada/.test(html), 'Wyoming state picker links to the Nevada preview');
+ok(/More states to come: New Mexico and Montana/.test(html), 'more states line');
+ok(/idaho\/find\.html">Idaho/.test(html), 'Wyoming state picker links to Idaho');
+ok(/nevada\/find\.html">Nevada/.test(html), 'Wyoming state picker links to Nevada');
 ok(/have passed/.test(html) && /has not posted 2027/.test(html), '2026 dates marked historical and 2027 not invented');
 ok(/October 31/.test(html) && /Nov\. 2/.test(html), 'both posted preference-point end dates are shown');
 ok(/at least 75%/.test(html) && /40%/.test(html) && /60%/.test(html), 'Chapter 44 split is stated');
 ok(/estimate/.test(html), 'page says the random portion is an estimate');
 ok(!/Exact Wyoming odds are in the Full Pass/.test(html + find), 'page does not claim exact Wyoming Full Pass figures are included');
-ok(/exact Wyoming odds are not in the Full Pass/i.test(find), 'find.js says exact Wyoming odds are not in the Full Pass');
+ok(/exact Wyoming and Idaho odds are not in the Full Pass/i.test(find), 'find.js says exact Wyoming and Idaho odds are not in the Full Pass');
 ok(!/goHUNT|Epic Outdoors|Huntin' Fool|onX Hunt/i.test(html + find), 'Wyoming page has no competitor names');
 ok(!/Boots-on-the-Ground/.test(html), 'no Boots pitch on the Wyoming draw page');
 
