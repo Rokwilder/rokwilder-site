@@ -1,0 +1,1820 @@
+{
+  "method": {
+    "bands": "Each official yearly draw rate is mapped to the same public band the page already uses. Colorado, Utah, Wyoming and Arizona use 1 at 99.5% and up, then 0.75, 0.25, 0.05, 0.01 and 0. Idaho and Nevada use 1 only when every applicant in that cell was drawn, then the same lower floors. A year with no official row is omitted. It is not stored as zero and it is not filled from another point level.",
+    "average": "The average is the arithmetic mean of the official yearly draw rates for the years that have a rate for that hunt and, where the draw uses points, for that exact point level. The mean is then mapped with the same band cutoffs. The mean itself is not published. The label is 3-yr average when three rates are averaged and 2-yr average when two are. One rate is not averaged. A missing year is left out of the mean.",
+    "trend": "The trend compares those same official rates in year order, after rounding each rate to six decimal places. Holding steady means the rates are equal. Getting harder means each later rate is lower or equal and the last is lower. Getting easier means each later rate is higher or equal and the last is higher. One year stood out means the first and last rates match and a middle rate does not. Anything else is Up and down. Fewer than two rates has no trend word."
+  },
+  "states": {
+    "arizona": {
+      "state": "arizona",
+      "yearsAdded": [],
+      "unavailable": [
+        {
+          "year": 2024,
+          "why": "History not available. AZGFD's bonus-point report counts permits at each point level for the bonus pass and the 1st-2nd choice pass together, so a first-choice rate cannot be separated. The draw-odds sheet is one figure for the whole hunt and is not split by residency. Neither table was used."
+        },
+        {
+          "year": 2025,
+          "why": "History not available. AZGFD's bonus-point report counts permits at each point level for the bonus pass and the 1st-2nd choice pass together, so a first-choice rate cannot be separated. The draw-odds sheet is one figure for the whole hunt and is not split by residency. Neither table was used."
+        },
+        {
+          "year": 2026,
+          "why": "History not available. AZGFD's bonus-point report counts permits at each point level for the bonus pass and the 1st-2nd choice pass together, so a first-choice rate cannot be separated. The draw-odds sheet is one figure for the whole hunt and is not split by residency. Neither table was used."
+        }
+      ],
+      "examined": [
+        {
+          "url": "https://azgfd-live-portal-wordpress-pantheon.s3.us-west-2.amazonaws.com/wp-content/uploads/2026/03/20152731/2026-M-Bonus-Point-Report.pdf",
+          "finding": "Permits issued in the bonus pass plus the 1-2 pass exceeded first-choice applicants at 495 point levels, and never exceeded first-plus-second-choice applicants. The column is not a first-choice rate."
+        },
+        {
+          "url": "https://azgfd-portal-wordpress-pantheon.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/08/22144539/2025-AZ-Elk-Draw-Odds.pdf",
+          "finding": "One first-choice odds figure per hunt. It is not split into resident and nonresident, so it is not the same result the page shows for each residency."
+        }
+      ],
+      "match": "No year was matched.",
+      "band": "yes",
+      "page": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/big-game-draw/bonus-point-process/"
+    },
+    "colorado": {
+      "state": "colorado",
+      "yearsAdded": [
+        2024,
+        2025,
+        2026
+      ],
+      "unavailable": [
+        {
+          "species": "sheep",
+          "year": 2024,
+          "why": "Two primary recaps (Rocky Mountain and desert) were linked. Both use the weighted-point grid described below, so neither was flattened into one point total.",
+          "links": [
+            "https://cpw.widen.net/s/vxbkdwwgzj/2024-primary-rm-bighorn-sheep-post-draw-report",
+            "https://cpw.widen.net/s/hclt8776gj/2024-primary-desert-sheep-post-draw-recap-report"
+          ]
+        },
+        {
+          "species": "sheep",
+          "year": 2025,
+          "why": "Two primary recaps (Rocky Mountain and desert) were linked. Both use the weighted-point grid described below, so neither was flattened into one point total.",
+          "links": [
+            "https://cpw.widen.net/s/v7c5wv87dp/postdrawrecapreport_sheep-25_04142025_1550",
+            "https://cpw.widen.net/s/zmdgsqxd5d/postdrawrecapreport_deser-25_04142025_1409"
+          ]
+        },
+        {
+          "species": "sheep",
+          "year": 2026,
+          "why": "Two primary recaps (Rocky Mountain and desert) were linked. Both use the weighted-point grid described below, so neither was flattened into one point total.",
+          "links": [
+            "https://cpw.widen.net/s/qwws66r5ps/postdrawrecapreport_sheep-26_04222026_1349_wcoversheet",
+            "https://cpw.widen.net/s/fm5vnxshp6/postdrawrecapreport_deser-26_04212026_1115"
+          ]
+        },
+        {
+          "species": "turkey",
+          "why": "No statistics page at https://cpw.state.co.us/activities/hunting/small-game/turkey/turkey-statistics (404 https://cpw.state.co.us/activities/hunting/small-game/turkey/turkey-statistics)."
+        },
+        {
+          "species": "moose",
+          "years": [
+            2024,
+            2025,
+            2026
+          ],
+          "why": "CPW publishes moose, bighorn sheep, desert bighorn and mountain goat results as a preference-point by weighted-point grid. This page asks for one combined point total, and the recap does not publish one rate for that total, so those species are left out rather than guessed."
+        },
+        {
+          "species": "goat",
+          "years": [
+            2024,
+            2025,
+            2026
+          ],
+          "why": "CPW publishes moose, bighorn sheep, desert bighorn and mountain goat results as a preference-point by weighted-point grid. This page asks for one combined point total, and the recap does not publish one rate for that total, so those species are left out rather than guessed."
+        },
+        {
+          "species": "sheep and desert bighorn",
+          "years": [
+            2024,
+            2025,
+            2026
+          ],
+          "why": "CPW publishes moose, bighorn sheep, desert bighorn and mountain goat results as a preference-point by weighted-point grid. This page asks for one combined point total, and the recap does not publish one rate for that total, so those species are left out rather than guessed.",
+          "note": "Both the Rocky Mountain and desert recaps were on the bighorn statistics page. Both use the weighted grid."
+        }
+      ],
+      "match": "The hunt code must be identical. A renamed or replaced code is not matched to an older code.",
+      "band": "yes",
+      "choice": "1st choice only. Adult resident, adult nonresident, youth resident and youth nonresident are separate. Landowner columns are not used.",
+      "hunts": 2366,
+      "sources": [
+        {
+          "year": 2024,
+          "species": "elk",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+          "viewer": "https://cpw.widen.net/s/gvtppdkdcr/2024-primary-elk-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/v8uftzwwry/original/2024-Primary-ELK-Post-Draw-Report.pdf",
+          "parsed": 904,
+          "matched": 904
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+          "viewer": "https://cpw.widen.net/s/qh6nqttnnz/postdrawrecapreport_elk-25_05172025_0612",
+          "pdf": "https://cpw.widen.net/content/v8vurwjjn6/original/PostDrawRecapReport_ELK-25_05172025_0612.pdf",
+          "parsed": 941,
+          "matched": 941
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+          "viewer": "https://cpw.widen.net/s/jzvr7hzzl8/postdrawrecapreport_elk-26_05142026_1426",
+          "pdf": "https://cpw.widen.net/content/tl5sj6pnkb/original/PostDrawRecapReport_ELK-26_05142026_1426.pdf",
+          "parsed": 961,
+          "matched": 961
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+          "viewer": "https://cpw.widen.net/s/drbww92qtk/2024-primary-deer-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/dmbkrapqzq/original/2024-Primary-DEER-Post-Draw-Report.pdf",
+          "parsed": 849,
+          "matched": 849
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+          "viewer": "https://cpw.widen.net/s/r9bjfnqlbc/postdrawrecapreport_deer-25_05102025_1540",
+          "pdf": "https://cpw.widen.net/content/vy2t2jygvr/original/PostDrawRecapReport_DEER-25_05102025_1540.pdf",
+          "parsed": 866,
+          "matched": 866
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+          "viewer": "https://cpw.widen.net/s/5j2x8x6fdd/postdrawrecapreport_deer-26_05112026_1505",
+          "pdf": "https://cpw.widen.net/content/mirgybedih/original/PostDrawRecapReport_DEER-26_05112026_1505.pdf",
+          "parsed": 867,
+          "matched": 867
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+          "viewer": "https://cpw.widen.net/s/vrpbwpdjb2/2024-primary-pronghorn-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/ltxj5zp37d/original/2024-Primary-PRONGHORN-Post-Draw-Report.pdf",
+          "parsed": 271,
+          "matched": 271
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+          "viewer": "https://cpw.widen.net/s/t6tnqjg55q/postdrawrecapreport_prong-25_05222025_0816",
+          "pdf": "https://cpw.widen.net/content/jsyu9ob6ci/original/PostDrawRecapReport_PRONG-25_05222025_0816.pdf",
+          "parsed": 275,
+          "matched": 275
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+          "viewer": "https://cpw.widen.net/s/vtght5qc8p/postdrawrecapreport_prong-26_05212026_1006",
+          "pdf": "https://cpw.widen.net/content/5facqkeb5y/original/PostDrawRecapReport_PRONG-26_05212026_1006.pdf",
+          "parsed": 275,
+          "matched": 275
+        },
+        {
+          "year": 2024,
+          "species": "bear",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+          "viewer": "https://cpw.widen.net/s/zjbcxkchlh/2024-primary-bear-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/nyn9eoj6jp/original/2024-Primary-BEAR-Post-Draw-Report.pdf",
+          "parsed": 113,
+          "matched": 113
+        },
+        {
+          "year": 2025,
+          "species": "bear",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+          "viewer": "https://cpw.widen.net/s/szwnfghlfp/postdrawrecapreport_bear-25_05072025_1542",
+          "pdf": "https://cpw.widen.net/content/sforuen1ne/original/PostDrawRecapReport_BEAR-25_05072025_1542.pdf",
+          "parsed": 119,
+          "matched": 119
+        },
+        {
+          "year": 2026,
+          "species": "bear",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+          "viewer": "https://cpw.widen.net/s/txgf2r8x9r/postdrawrecapreport_bear-26_05062026_1346",
+          "pdf": "https://cpw.widen.net/content/56phze0u6t/original/PostDrawRecapReport_BEAR-26_05062026_1346.pdf",
+          "parsed": 118,
+          "matched": 118
+        },
+        {
+          "year": 2024,
+          "species": "moose",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+          "viewer": "https://cpw.widen.net/s/lpffzbvzgc/2024-primary-moose-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/fe5aulnoge/original/2024-Primary-MOOSE-Post-Draw-Report.pdf",
+          "parsed": 0,
+          "matched": 0
+        },
+        {
+          "year": 2025,
+          "species": "moose",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+          "viewer": "https://cpw.widen.net/s/7qvlbxgdl7/postdrawrecapreport_moose-25_05072025_1354",
+          "pdf": "https://cpw.widen.net/content/qmlths4c2b/original/PostDrawRecapReport_MOOSE-25_05072025_1354.pdf",
+          "parsed": 0,
+          "matched": 0
+        },
+        {
+          "year": 2026,
+          "species": "moose",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+          "viewer": "https://cpw.widen.net/s/dkxmt8qrsd/postdrawrecapreport_moose-26_05062026_1222",
+          "pdf": "https://cpw.widen.net/content/ukdotas2vv/original/PostDrawRecapReport_MOOSE-26_05062026_1222.pdf",
+          "parsed": 0,
+          "matched": 0
+        },
+        {
+          "year": 2024,
+          "species": "goat",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+          "viewer": "https://cpw.widen.net/s/bqwxb5qdnw/2024-primary-goat-post-draw-report",
+          "pdf": "https://cpw.widen.net/content/9ow0vhvne0/original/2024-Primary-GOAT-Post-Draw-Report.pdf",
+          "parsed": 0,
+          "matched": 0
+        },
+        {
+          "year": 2025,
+          "species": "goat",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+          "viewer": "https://cpw.widen.net/s/hsljtqnxzv/postdrawrecapreport_goat-25_04142025_1712",
+          "pdf": "https://cpw.widen.net/content/i2sdhbjb2r/original/PostDrawRecapReport_GOAT-25_04142025_1712.pdf",
+          "parsed": 0,
+          "matched": 0
+        },
+        {
+          "year": 2026,
+          "species": "goat",
+          "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+          "viewer": "https://cpw.widen.net/s/wmsnf8w6tx/postdrawrecapreport_goat-26_04222026_1507",
+          "pdf": "https://cpw.widen.net/content/davzdef2ih/original/PostDrawRecapReport_GOAT-26_04222026_1507.pdf",
+          "parsed": 0,
+          "matched": 0
+        }
+      ]
+    },
+    "idaho-nr": {
+      "state": "idaho-nr",
+      "yearsAdded": [
+        2026
+      ],
+      "unavailable": [
+        {
+          "year": 2024,
+          "why": "No 2024 nonresident draw-data PDF was posted on the IDFG nonresident page, and the Internet Archive only has the 2026 file of that report."
+        },
+        {
+          "year": 2025,
+          "why": "No 2025 nonresident draw-data PDF was posted on the IDFG nonresident page, and the Internet Archive only has the 2026 file of that report."
+        },
+        {
+          "scope": "general-season windows",
+          "why": "Those rows are season dates for an over-the-counter tag. They are not draw results."
+        }
+      ],
+      "match": "2026 zone or unit and tag letter, the same key already on the page. No earlier year is attached.",
+      "band": "drew",
+      "sources": [
+        {
+          "year": 2026,
+          "url": "https://idfg.idaho.gov/sites/default/files/nonresident-draw-data-and-descriptions_2026-draw.pdf",
+          "archive": "https://web.archive.org/web/20260813085104/https://idfg.idaho.gov/sites/default/files/nonresident-draw-data-and-descriptions_2026-draw.pdf",
+          "note": "The band is copied from the public file already built from that PDF. It is not recomputed and the PDF is not re-banded here."
+        }
+      ]
+    },
+    "idaho": {
+      "state": "idaho",
+      "yearsAdded": [
+        2024,
+        2025,
+        2026
+      ],
+      "unavailable": [
+        {
+          "scope": "general season",
+          "why": "A general-season window is where a resident tag is valid. It is not a draw result, so it has no draw history."
+        },
+        {
+          "scope": "nonresident deer and elk tag draw, 2024 and 2025",
+          "why": "The 2026 nonresident draw PDF is the only file of that report on IDFG and in the Internet Archive capture of that URL. 2024 and 2025 were not published at a URL that could be retrieved."
+        }
+      ],
+      "match": "Species, controlled-hunt number, drawing (first or second) and area code must all match the 2026 hunt. A different area code is not history for that hunt.",
+      "band": "drew",
+      "hunts": 816,
+      "mismatch2026": 0,
+      "areaSkipped": 0,
+      "sources": [
+        {
+          "year": 2024,
+          "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+          "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+          "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+        },
+        {
+          "year": 2025,
+          "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+          "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+          "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+        },
+        {
+          "year": 2026,
+          "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+          "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+          "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+        }
+      ]
+    },
+    "nevada": {
+      "state": "nevada",
+      "yearsAdded": [
+        2023,
+        2024,
+        2025
+      ],
+      "unavailable": [
+        {
+          "year": 2026,
+          "why": "NDOW's bonus-point page links 2025 main-draw tables. No 2026 hunt-level bonus-point table was linked there."
+        }
+      ],
+      "match": "Species, sex, weapon, residency, program (main, junior or guided) and unit list must match. If a unit has more than one season, the month and day must match too. A changed unit list is not history.",
+      "band": "drew",
+      "hunts": 911,
+      "currentWithoutHistory": 7,
+      "reparseMismatch2025": 0,
+      "sources": [
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 57
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 57
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-Junior-Antlered-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 56
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 55
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 27
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 23
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 26
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 25
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 34
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 30
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 28
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 24
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Moose-Antlered-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 1
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 34
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 32
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 32
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 26
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Longer-Muzzleloader-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 42
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Antelope-Horns-Shorter-ALW-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 13
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/03/Antelope-Junior-Horns-Shorter-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 6
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 40
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 13
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 6
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Desert-Bighorn-Any-Ewe-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2025.pdf",
+          "hunts": 10
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2025.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Rocky-Mountain-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2025,
+          "url": "https://www.ndow.org/wp-content/uploads/2026/01/Black-Bear-Bonus-Point-and-Application-Trend-2025.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+          "hunts": 57
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+          "hunts": 57
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-Junior-Hunt-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 56
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 26
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 25
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 62
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 28
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 24
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/02/Elk-Spike-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 25
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Moose-Antlered-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 1
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 68
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 58
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Antelope-Horns-Longer-Muzzleloader-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 42
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/02/Antelope-Horns-Shorter-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 12
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+          "hunts": 40
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+          "hunts": 13
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 5
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Desert-Bighorn-Management-Ram-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 5
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2024.pdf",
+          "hunts": 10
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2024.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Rocky-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2024,
+          "url": "https://www.ndow.org/wp-content/uploads/2025/01/Black-Bear-Bonus-Point-and-Application-Trend-2024.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 114
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 100
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 82
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-NonResident-Guided-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 57
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Antlerless-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mule-Deer-Junior-Hunt-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 50
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 26
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 25
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlered-Depredation-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 16
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Spike-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 25
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 62
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 28
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Muzzleloader-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 24
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Elk-Antlerless-Depredation-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 16
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-ALW-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 68
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-Archery-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 58
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Longer-Muzzle-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 42
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Antelope-Horns-Shorter-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 14
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+          "hunts": 41
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-ALW-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+          "hunts": 17
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+          "hunts": 7
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/Desert-Bighorn-Any-Ram-Archery-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+          "hunts": 1
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Desert-Bighorn-Any-Ewe-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-Resident-2023.pdf",
+          "hunts": 9
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/California-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-NonResident-2023.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/01/Rocky-Bighorn-Any-Ram-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 2
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Mountain-Goat-Any-Goat-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 4
+        },
+        {
+          "year": 2023,
+          "url": "https://www.ndow.org/wp-content/uploads/2024/02/Black-Bear-Bonus-Point-and-Application-Trend-2023.pdf",
+          "hunts": 2
+        }
+      ],
+      "page": "https://www.ndow.org/blog/bonus-point-data/"
+    },
+    "utah": {
+      "state": "utah",
+      "yearsAdded": [
+        2023,
+        2024,
+        2025
+      ],
+      "unavailable": [
+        {
+          "year": 2026,
+          "why": "Utah DWR stopped publishing a full draw-odds PDF in 2026. The odds page sends 2026 results to the interactive draw site, and that site does not offer one hunt-level table that can be parsed without guessing."
+        }
+      ],
+      "match": "The hunt number must be identical, for example EB3000. A renamed hunt number is not matched. Youth PDFs are stored separately from the regular draw.",
+      "band": "yes",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "hunts": 916,
+      "sources": [
+        {
+          "year": 2023,
+          "name": "limited",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_bg-odds.pdf",
+          "parsed": 573,
+          "matched": 536
+        },
+        {
+          "year": 2023,
+          "name": "deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_deer_odds.pdf",
+          "parsed": 104,
+          "matched": 85
+        },
+        {
+          "year": 2023,
+          "name": "antlerless",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_antlerless_drawing_odds_report.pdf",
+          "parsed": 204,
+          "matched": 169
+        },
+        {
+          "year": 2023,
+          "name": "youth-elk",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_youth_elk.pdf",
+          "parsed": 1,
+          "matched": 1
+        },
+        {
+          "year": 2023,
+          "name": "youth-deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_youth_deer.pdf",
+          "parsed": 103,
+          "matched": 85
+        },
+        {
+          "year": 2023,
+          "name": "dedicated",
+          "url": "https://wildlife.utah.gov/pdf/bg/2023/23_dh_odds.pdf",
+          "parsed": 31,
+          "matched": 26
+        },
+        {
+          "year": 2024,
+          "name": "limited",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_bg-odds.pdf",
+          "parsed": 580,
+          "matched": 546
+        },
+        {
+          "year": 2024,
+          "name": "deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_deer_odds.pdf",
+          "parsed": 104,
+          "matched": 85
+        },
+        {
+          "year": 2024,
+          "name": "antlerless",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_antlerless_drawing_odds_report.pdf",
+          "parsed": 198,
+          "matched": 178
+        },
+        {
+          "year": 2024,
+          "name": "youth-elk",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_youth_elk.pdf",
+          "parsed": 1,
+          "matched": 1
+        },
+        {
+          "year": 2024,
+          "name": "youth-deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_youth_deer.pdf",
+          "parsed": 103,
+          "matched": 84
+        },
+        {
+          "year": 2024,
+          "name": "dedicated",
+          "url": "https://wildlife.utah.gov/pdf/bg/2024/24_dh_odds.pdf",
+          "parsed": 31,
+          "matched": 26
+        },
+        {
+          "year": 2025,
+          "name": "limited",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_bg-odds.pdf",
+          "parsed": 592,
+          "matched": 570
+        },
+        {
+          "year": 2025,
+          "name": "deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_deer_odds.pdf",
+          "parsed": 106,
+          "matched": 106
+        },
+        {
+          "year": 2025,
+          "name": "antlerless",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_antlerless_drawing_odds_report.pdf",
+          "parsed": 217,
+          "matched": 201
+        },
+        {
+          "year": 2025,
+          "name": "youth-elk",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_youth_elk.pdf",
+          "parsed": 1,
+          "matched": 1
+        },
+        {
+          "year": 2025,
+          "name": "youth-deer",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_youth_deer.pdf",
+          "parsed": 106,
+          "matched": 106
+        },
+        {
+          "year": 2025,
+          "name": "dedicated",
+          "url": "https://wildlife.utah.gov/pdf/bg/2025/25_dh_odds.pdf",
+          "parsed": 31,
+          "matched": 31
+        }
+      ]
+    },
+    "wyoming": {
+      "state": "wyoming",
+      "yearsAdded": [
+        2024,
+        2025,
+        2026
+      ],
+      "unavailable": [],
+      "match": "Species, hunt area and type must match, and the license description must be the same text or a shortened print of it. A different description is not history. Party-average rows between whole points (elk, deer, pronghorn) are not applied to a whole point total. Moose and bighorn \"< N\" rows are everyone under that point total, which is how WGFD uses that row when parties are not allowed.",
+      "band": "yes",
+      "hunts": 676,
+      "sources": [
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "rand_nr",
+          "title": "2026_DemandReport_Antelope_NR_Random",
+          "url": "https://wgfd.wyo.gov/media/33870/download?inline",
+          "hunts": 125
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "rand_nrs",
+          "title": "2026_DemandReport_Antelope_NR_Special_Random",
+          "url": "https://wgfd.wyo.gov/media/33872/download?inline",
+          "hunts": 125
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "res",
+          "title": "2026_DemandReport_Antelope_Resident",
+          "url": "https://wgfd.wyo.gov/media/33874/download?inline",
+          "hunts": 125
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "pp_nr",
+          "title": "2026_DemandReport_Antelope_NR_PP",
+          "url": "https://wgfd.wyo.gov/media/33869/download?inline",
+          "hunts": 125
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "pp_nrs",
+          "title": "2026_DemandReport_Antelope_NR_Special_PP",
+          "url": "https://wgfd.wyo.gov/media/33871/download?inline",
+          "hunts": 125
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "cc_nr",
+          "title": "2026_DemandReport_Antelope_DoeFawn_NR",
+          "url": "https://wgfd.wyo.gov/media/33864/download?inline",
+          "hunts": 79
+        },
+        {
+          "year": 2026,
+          "species": "pronghorn",
+          "kind": "cc_res",
+          "title": "2026_DemandReport_Antelope_DoeFawn_Resident",
+          "url": "https://wgfd.wyo.gov/media/33866/download?inline",
+          "hunts": 79
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "rand_nr",
+          "title": "2026_DemandReport_Deer_NR_Random",
+          "url": "https://wgfd.wyo.gov/media/33883/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "rand_nrs",
+          "title": "2026_DemandReport_Deer_NR_Special_Random",
+          "url": "https://wgfd.wyo.gov/media/33885/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "res",
+          "title": "2026_DemandReport_Deer_Resident",
+          "url": "https://wgfd.wyo.gov/media/33886/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "pp_nr",
+          "title": "2026_DemandReport_Deer_NR_PP",
+          "url": "https://wgfd.wyo.gov/media/33882/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "pp_nrs",
+          "title": "2026_DemandReport_Deer_NR_Special_PP",
+          "url": "https://wgfd.wyo.gov/media/33884/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "cc_nr",
+          "title": "2026_DemandReport_Deer_DoeFawn_NR",
+          "url": "https://wgfd.wyo.gov/media/33877/download?inline",
+          "hunts": 75
+        },
+        {
+          "year": 2026,
+          "species": "deer",
+          "kind": "cc_res",
+          "title": "2026_DemandReport_Deer_DoeFawn_Resident",
+          "url": "https://wgfd.wyo.gov/media/33879/download?inline",
+          "hunts": 75
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "rand_nr",
+          "title": "2026_DrawingOdds_Elk_Random_NR",
+          "url": "https://wgfd.wyo.gov/media/33779/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "rand_nrs",
+          "title": "2026_DrawingOdds_Elk_Random_NR_Special",
+          "url": "https://wgfd.wyo.gov/media/33778/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "res",
+          "title": "2026_DemandReport_Elk_Resident",
+          "url": "https://wgfd.wyo.gov/media/33894/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "pp_nr",
+          "title": "2026_DrawingOdds_Elk_PP_NR",
+          "url": "https://wgfd.wyo.gov/media/33777/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "pp_nrs",
+          "title": "2026_DrawingOdds_Elk_PP_NR_Special",
+          "url": "https://wgfd.wyo.gov/media/33776/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "cc_nr",
+          "title": "2026_DrawingOdds_Elk_CC_NR",
+          "url": "https://wgfd.wyo.gov/media/33772/download?inline",
+          "hunts": 111
+        },
+        {
+          "year": 2026,
+          "species": "elk",
+          "kind": "cc_res",
+          "title": "2026_DemandReport_Elk_CC_Resident",
+          "url": "https://wgfd.wyo.gov/media/33892/download?inline",
+          "hunts": 111
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "rand_nr",
+          "title": "2026_DrawingOdds_BS_Random_NR",
+          "url": "https://wgfd.wyo.gov/media/33784/download?inline",
+          "hunts": 22
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "res",
+          "title": "2026_DrawingOdds_BS_Random_R",
+          "url": "https://wgfd.wyo.gov/media/33785/download?inline",
+          "hunts": 23
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "pp_nr",
+          "title": "2026_DrawingOdds_BS_PP_NR",
+          "url": "https://wgfd.wyo.gov/media/33782/download?inline",
+          "hunts": 13
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "pp_res",
+          "title": "2026_DrawingOdds_BS_PP_R",
+          "url": "https://wgfd.wyo.gov/media/33783/download?inline",
+          "hunts": 22
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "f_nr",
+          "title": "2026_DrawingOdds_BS_EL_NR",
+          "url": "https://wgfd.wyo.gov/media/33781/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2026,
+          "species": "sheep",
+          "kind": "f_res",
+          "title": "2026_DrawingOdds_BS_EL_R",
+          "url": "https://wgfd.wyo.gov/media/33780/download?inline",
+          "hunts": 6
+        },
+        {
+          "year": 2026,
+          "species": "moose",
+          "kind": "rand_nr",
+          "title": "2026_DrawingOdds_Moose_Random_NR",
+          "url": "https://wgfd.wyo.gov/media/33790/download?inline",
+          "hunts": 23
+        },
+        {
+          "year": 2026,
+          "species": "moose",
+          "kind": "res",
+          "title": "2026_DrawingOdds_Moose_Random_R",
+          "url": "https://wgfd.wyo.gov/media/33791/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2026,
+          "species": "moose",
+          "kind": "pp_nr",
+          "title": "2026_DrawingOdds_Moose_PP_NR",
+          "url": "https://wgfd.wyo.gov/media/33788/download?inline",
+          "hunts": 22
+        },
+        {
+          "year": 2026,
+          "species": "moose",
+          "kind": "pp_res",
+          "title": "2026_DrawingOdds_Moose_PP_R",
+          "url": "https://wgfd.wyo.gov/media/33789/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2026,
+          "species": "goat",
+          "kind": "rand_nr",
+          "title": "2026_DrawingOdds_MG_NR",
+          "url": "https://wgfd.wyo.gov/media/33786/download?inline",
+          "hunts": 3
+        },
+        {
+          "year": 2026,
+          "species": "goat",
+          "kind": "res",
+          "title": "2026_DrawingOdds_MG_R",
+          "url": "https://wgfd.wyo.gov/media/33787/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2026,
+          "species": "bison",
+          "kind": "rand_nr",
+          "title": "2026_DrawingOdds_WB_NR",
+          "url": "https://wgfd.wyo.gov/media/33794/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2026,
+          "species": "bison",
+          "kind": "res",
+          "title": "2026_DrawingOdds_WB_R",
+          "url": "https://wgfd.wyo.gov/media/33795/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2026,
+          "species": "bison",
+          "kind": "f_nr",
+          "title": "2026_DrawingOdds_WB_Female_NR",
+          "url": "https://wgfd.wyo.gov/media/33792/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2026,
+          "species": "bison",
+          "kind": "f_res",
+          "title": "2026_DrawingOdds_WB_Female_R",
+          "url": "https://wgfd.wyo.gov/media/33793/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "rand_nr",
+          "title": "2025 Nonresident Antelope Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32690/download?inline",
+          "hunts": 121
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "rand_nrs",
+          "title": "2025 Nonresident Antelope Special Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32692/download?inline",
+          "hunts": 121
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "res",
+          "title": "2025 Resident Antelope Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32694/download?inline",
+          "hunts": 121
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "pp_nr",
+          "title": "2025 Nonresident Antelope Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32689/download?inline",
+          "hunts": 121
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "pp_nrs",
+          "title": "2025 Nonresident Antelope Special Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32691/download?inline",
+          "hunts": 121
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "cc_nr",
+          "title": "2025 Nonresident Doe Fawn Antelope Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32693/download?inline",
+          "hunts": 66
+        },
+        {
+          "year": 2025,
+          "species": "pronghorn",
+          "kind": "cc_res",
+          "title": "2025 Resident Doe Fawn Antelope Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32696/download?inline",
+          "hunts": 66
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "rand_nr",
+          "title": "2025 Nonresident Deer Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32699/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "rand_nrs",
+          "title": "2025 Nonresident Deer Special Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32701/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "res",
+          "title": "2025 Resident Deer Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32706/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "pp_nr",
+          "title": "2025 Nonresident Deer Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32698/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "pp_nrs",
+          "title": "2025 Nonresident Deer Special Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32700/download?inline",
+          "hunts": 73
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "cc_nr",
+          "title": "2025 Nonresident Doe Fawn Deer Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32702/download?inline",
+          "hunts": 77
+        },
+        {
+          "year": 2025,
+          "species": "deer",
+          "kind": "cc_res",
+          "title": "2025 Resident Doe Fawn Deer Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32707/download?inline",
+          "hunts": 77
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "rand_nr",
+          "title": "2025 Non-Resident Elk Random",
+          "url": "https://wgfd.wyo.gov/media/32449/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "rand_nrs",
+          "title": "2025 Non-Resident Elk Special Random ",
+          "url": "https://wgfd.wyo.gov/media/32450/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "res",
+          "title": "2025 Resident Elk Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32697/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "pp_nr",
+          "title": "2025 Non-Resident Elk Preference Point ",
+          "url": "https://wgfd.wyo.gov/media/32451/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "pp_nrs",
+          "title": "2025 Non-Resident Elk Special Preference Point",
+          "url": "https://wgfd.wyo.gov/media/32452/download?inline",
+          "hunts": 149
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "cc_nr",
+          "title": "2025 Non-Resident Cow/Calf Elk",
+          "url": "https://wgfd.wyo.gov/media/32453/download?inline",
+          "hunts": 111
+        },
+        {
+          "year": 2025,
+          "species": "elk",
+          "kind": "cc_res",
+          "title": "2025 Resident Cow Calf Elk Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/32695/download?inline",
+          "hunts": 111
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "rand_nr",
+          "title": "2025 Nonresident Bighorn Sheep Random",
+          "url": "https://wgfd.wyo.gov/media/32421/download?inline",
+          "hunts": 11
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "res",
+          "title": "2025 Resident Bighorn Sheep Random",
+          "url": "https://wgfd.wyo.gov/media/32423/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "pp_nr",
+          "title": "2025 Non-Resident Bighorn Sheep Nonresident Preference Point Demand Report ",
+          "url": "https://wgfd.wyo.gov/media/32411/download?inline",
+          "hunts": 11
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "pp_res",
+          "title": "2025 Demand Report - Resident Bighorn Sheep Resident Preference Point ",
+          "url": "https://wgfd.wyo.gov/media/32416/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "cc_nr",
+          "title": "2025 Demand Report - Non-Resident Ewe/Lamb Sheep ",
+          "url": "https://wgfd.wyo.gov/media/32412/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2025,
+          "species": "sheep",
+          "kind": "cc_res",
+          "title": "2025 Demand Report - Resident Ewe/Lamb Sheep ",
+          "url": "https://wgfd.wyo.gov/media/32417/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2025,
+          "species": "moose",
+          "kind": "rand_nr",
+          "title": "2025 Nonresident Moose Random",
+          "url": "https://wgfd.wyo.gov/media/32422/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2025,
+          "species": "moose",
+          "kind": "res",
+          "title": "2025 Resident Moose Random",
+          "url": "https://wgfd.wyo.gov/media/32424/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2025,
+          "species": "moose",
+          "kind": "pp_nr",
+          "title": "2025 Demand Report - Non-Resident Moose Nonresident Preference Point ",
+          "url": "https://wgfd.wyo.gov/media/32414/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2025,
+          "species": "moose",
+          "kind": "pp_res",
+          "title": "2025 Demand Report - Resident Moose Resident Preference Point ",
+          "url": "https://wgfd.wyo.gov/media/32419/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2025,
+          "species": "goat",
+          "kind": "rand_nr",
+          "title": "2025 Demand Report - Non-Resident Mountain Goat",
+          "url": "https://wgfd.wyo.gov/media/32413/download?inline",
+          "hunts": 2
+        },
+        {
+          "year": 2025,
+          "species": "goat",
+          "kind": "res",
+          "title": "2025 Demand Report - Resident Mountain Goat ",
+          "url": "https://wgfd.wyo.gov/media/32418/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2025,
+          "species": "bison",
+          "kind": "rand_nr",
+          "title": "2025 Demand Report - Non-Resident Wild Bison",
+          "url": "https://wgfd.wyo.gov/media/32415/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2025,
+          "species": "bison",
+          "kind": "res",
+          "title": "Demand Report - Resident Wild Bison ",
+          "url": "https://wgfd.wyo.gov/media/32420/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "rand_nr",
+          "title": "2024 Antelope Nonresident Random ",
+          "url": "https://wgfd.wyo.gov/media/30432/download?inline",
+          "hunts": 120
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "rand_nrs",
+          "title": "2024 Antelope Random Nonresident Special Draw",
+          "url": "https://wgfd.wyo.gov/media/30431/download?inline",
+          "hunts": 120
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "res",
+          "title": "2024 Resident Antelope",
+          "url": "https://wgfd.wyo.gov/media/30436/download?inline",
+          "hunts": 120
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "pp_nr",
+          "title": "Antelope Nonresident Preference Points",
+          "url": "https://wgfd.wyo.gov/media/30433/download?inline",
+          "hunts": 120
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "pp_nrs",
+          "title": "2024 Antelope Nonresident Special Preference Point",
+          "url": "https://wgfd.wyo.gov/media/30437/download?inline",
+          "hunts": 120
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "cc_nr",
+          "title": "Antelope NR Doe/Fawn",
+          "url": "https://wgfd.wyo.gov/media/30434/download?inline",
+          "hunts": 58
+        },
+        {
+          "year": 2024,
+          "species": "pronghorn",
+          "kind": "cc_res",
+          "title": " 2024 Resident Doe/Fawn Antelope",
+          "url": "https://wgfd.wyo.gov/media/30435/download?inline",
+          "hunts": 58
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "rand_nr",
+          "title": "2024 Deer Nonresident Random",
+          "url": "https://wgfd.wyo.gov/media/30443/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "rand_nrs",
+          "title": "2024 Deer Nonresident Special Random",
+          "url": "https://wgfd.wyo.gov/media/30439/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "res",
+          "title": "2024 Resident Deer",
+          "url": "https://wgfd.wyo.gov/media/30445/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "pp_nr",
+          "title": "2024 Deer Nonresident Preference Point",
+          "url": "https://wgfd.wyo.gov/media/30442/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "cc_nr",
+          "title": "2024 Non-Resident Doe/Fawn Deer",
+          "url": "https://wgfd.wyo.gov/media/30444/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "deer",
+          "kind": "cc_res",
+          "title": "2024 Resident Doe/Fawn Deer",
+          "url": "https://wgfd.wyo.gov/media/30449/download?inline",
+          "hunts": 72
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "rand_nr",
+          "title": "Nonresident Elk Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30129/download?inline",
+          "hunts": 145
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "rand_nrs",
+          "title": "Nonresident Elk Special Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30127/download?inline",
+          "hunts": 145
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "res",
+          "title": "Resident Elk",
+          "url": "https://wgfd.wyo.gov/media/30448/download?inline",
+          "hunts": 145
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "pp_nr",
+          "title": "Nonresident Elk Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30130/download?inline",
+          "hunts": 145
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "pp_nrs",
+          "title": "Nonresident Elk Special Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30128/download?inline",
+          "hunts": 145
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "cc_nr",
+          "title": "Nonresident Cow/Calf Elk Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30131/download?inline",
+          "hunts": 106
+        },
+        {
+          "year": 2024,
+          "species": "elk",
+          "kind": "cc_res",
+          "title": "2024 Resident Cow/Calf Elk",
+          "url": "https://wgfd.wyo.gov/media/30446/download?inline",
+          "hunts": 106
+        },
+        {
+          "year": 2024,
+          "species": "sheep",
+          "kind": "rand_nr",
+          "title": "Nonresident Bighorn Sheep Random Demand Report Summary ",
+          "url": "https://wgfd.wyo.gov/media/30109/download?inline",
+          "hunts": 10
+        },
+        {
+          "year": 2024,
+          "species": "sheep",
+          "kind": "res",
+          "title": "Resident Bighorn Sheep Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30101/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2024,
+          "species": "sheep",
+          "kind": "pp_nr",
+          "title": "Nonresident Bighorn Sheep Preference Point Demand Report Summary ",
+          "url": "https://wgfd.wyo.gov/media/30110/download?inline",
+          "hunts": 10
+        },
+        {
+          "year": 2024,
+          "species": "sheep",
+          "kind": "pp_res",
+          "title": "Resident Bighorn Sheep Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30102/download?inline",
+          "hunts": 21
+        },
+        {
+          "year": 2024,
+          "species": "moose",
+          "kind": "rand_nr",
+          "title": "Nonresident Moose Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30105/download?inline",
+          "hunts": 24
+        },
+        {
+          "year": 2024,
+          "species": "moose",
+          "kind": "res",
+          "title": "Resident Moose Random Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30099/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2024,
+          "species": "moose",
+          "kind": "pp_nr",
+          "title": "Nonresident Moose Preference Point Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30104/download?inline",
+          "hunts": 24
+        },
+        {
+          "year": 2024,
+          "species": "moose",
+          "kind": "pp_res",
+          "title": "Resident Moose Preference Point Demand Report",
+          "url": "https://wgfd.wyo.gov/media/30098/download?inline",
+          "hunts": 36
+        },
+        {
+          "year": 2024,
+          "species": "goat",
+          "kind": "rand_nr",
+          "title": "Nonresident Mountain Goat Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30106/download?inline",
+          "hunts": 3
+        },
+        {
+          "year": 2024,
+          "species": "goat",
+          "kind": "res",
+          "title": "Resident Mountain Goat Demand Report",
+          "url": "https://wgfd.wyo.gov/media/30108/download?inline",
+          "hunts": 4
+        },
+        {
+          "year": 2024,
+          "species": "bison",
+          "kind": "rand_nr",
+          "title": "Nonresident Wild Bison Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30103/download?inline",
+          "hunts": 1
+        },
+        {
+          "year": 2024,
+          "species": "bison",
+          "kind": "res",
+          "title": "Resident Wild Bison Demand Report Summary",
+          "url": "https://wgfd.wyo.gov/media/30097/download?inline",
+          "hunts": 1
+        }
+      ],
+      "page": "https://wgfd.wyo.gov/licenses-applications/draw-results-odds"
+    }
+  }
+}

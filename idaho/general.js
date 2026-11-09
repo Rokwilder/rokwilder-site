@@ -31,7 +31,7 @@ function choiceRows(){
   .slice().sort((a,b)=>String(a.code).localeCompare(String(b.code),undefined,{numeric:true}));
 }
 function seasonCard(row,i){
- return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Season window</span><span class="ft">${esc(row.g)} · ${esc(row.area)}</span><span class="fd">${esc(row.season)} · ${esc(row.method)} · ${esc(row.sex)}</span><span class="fd">${fmtDate(row.o)} – ${fmtDate(row.c)} · ${esc(row.tag)}</span><span class="fo"><span class="fpn">Where a general-season tag is valid. Not a draw result and not a harvest rate.</span></span></div></li>`;
+ return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Season window</span><span class="ft">${esc(row.g)} · ${esc(row.area)}</span><span class="fd">${esc(row.season)} · ${esc(row.method)} · ${esc(row.sex)}</span><span class="fd">${fmtDate(row.o)} – ${fmtDate(row.c)} · ${esc(row.tag)}</span><span class="fo"><span class="fpn">Where a general-season tag is valid. Not a draw result and not a harvest rate.</span></span>${RWHyNone('History not available. A general-season window is not a draw result.')}</div></li>`;
 }
 function word(v){if(v==null)return 'Nobody put this first in 2026, so there is no first-choice result.';
  if(v===1)return 'Every person who put this first was drawn.';
@@ -44,7 +44,7 @@ function word(v){if(v==null)return 'Nobody put this first in 2026, so there is n
 function drawCard(row,i){
  const name=row.kind.startsWith('dav')?`${esc(row.place)} DAV ${row.sp}`:`${esc(row.place)} ${esc(row.tag)}`;
  const later=row.later?' <span class="fd">A later choice also received tags in 2026. That is a different result from this first-choice band.</span>':'';
- return `<li><div class="oh"><span class="rk">${i+1}</span><span class="fv">${row.band==null?'':vdot(row.band)}${VERD(row.band)}</span><span class="ft">${name}</span><span class="fd">2026 nonresident draw · first choice · not a forecast</span>${later}<span class="fo"><span class="fpn">${word(row.band)}</span></span></div></li>`;
+ return `<li><div class="oh"><span class="rk">${i+1}</span><span class="fv">${row.band==null?'':vdot(row.band)}${VERD(row.band)}</span><span class="ft">${name}</span><span class="fd">2026 nonresident draw · first choice · not a forecast</span>${later}<span class="fo"><span class="fpn">${word(row.band)}</span></span>${RWHy(row.k,'nr')}</div></li>`;
 }
 function choiceCard(row,i){
  const cap=row.capped?' · capped elk zone':'';

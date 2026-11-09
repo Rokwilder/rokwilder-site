@@ -119,7 +119,7 @@ function showList(){const r=ranked(),oR=otcRows(),o=$('out');
   wireTabs(o);drawMap(r);return}
  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+otcTop(oR)+
-  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}</button></li>`).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':`<p class="dq">${WT(S.sp)?'No hunts you can draw with these choices.':'No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.'}</p>`)+otcSec(oR)+
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p>`+fpLine()+fbA('find');
@@ -242,7 +242,7 @@ function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true
  let sure='';if(WT(d[0]))sure=wtSure(d);else if(FP&&d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
  const bk=S.tab=='map'?'← Back to my map':'← Back to my list';if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=`<button class="btn big2" id="back">${bk}</button>
- <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdict(v)}</div>${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
+ <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdict(v)}</div>${RWHy(k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}
  <p class="dq">${landS(d[4])}</p>${d[10]?`<p class="dq">${d[10]}</p>`:''}</div>${lad}${feeHTML(d)}
  ${FP?'':`<p class="note fpx">Odds at every point level, points needed and past draw results (tags, applicants, points drawn at): coming with the Full Pass.</p>`}${FP&&d[6]&&d[6].length?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>${WT(d[0])?(S.res=='res'?'Residents':'Nonresidents')+': ':'Drew out at: '}${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
  <h3>Where this hunt is</h3><p class="dq">${uL(k,1)}, highlighted on the unit map.</p>${huntKey(v??0,.35,`This hunt's unit${units(k).length==1?'':'s'} (numbered)`,'Other units')}<div id="dmap" class="gmap dm" aria-label="Map of the units in this hunt"></div>

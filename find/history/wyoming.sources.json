@@ -1,0 +1,847 @@
+{
+  "state": "wyoming",
+  "yearsAdded": [
+    2024,
+    2025,
+    2026
+  ],
+  "unavailable": [],
+  "match": "Species, hunt area and type must match, and the license description must be the same text or a shortened print of it. A different description is not history. Party-average rows between whole points (elk, deer, pronghorn) are not applied to a whole point total. Moose and bighorn \"< N\" rows are everyone under that point total, which is how WGFD uses that row when parties are not allowed.",
+  "band": "yes",
+  "hunts": 676,
+  "sources": [
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "rand_nr",
+      "title": "2026_DemandReport_Antelope_NR_Random",
+      "url": "https://wgfd.wyo.gov/media/33870/download?inline",
+      "hunts": 125
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "rand_nrs",
+      "title": "2026_DemandReport_Antelope_NR_Special_Random",
+      "url": "https://wgfd.wyo.gov/media/33872/download?inline",
+      "hunts": 125
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "res",
+      "title": "2026_DemandReport_Antelope_Resident",
+      "url": "https://wgfd.wyo.gov/media/33874/download?inline",
+      "hunts": 125
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "pp_nr",
+      "title": "2026_DemandReport_Antelope_NR_PP",
+      "url": "https://wgfd.wyo.gov/media/33869/download?inline",
+      "hunts": 125
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "pp_nrs",
+      "title": "2026_DemandReport_Antelope_NR_Special_PP",
+      "url": "https://wgfd.wyo.gov/media/33871/download?inline",
+      "hunts": 125
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "cc_nr",
+      "title": "2026_DemandReport_Antelope_DoeFawn_NR",
+      "url": "https://wgfd.wyo.gov/media/33864/download?inline",
+      "hunts": 79
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "kind": "cc_res",
+      "title": "2026_DemandReport_Antelope_DoeFawn_Resident",
+      "url": "https://wgfd.wyo.gov/media/33866/download?inline",
+      "hunts": 79
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "rand_nr",
+      "title": "2026_DemandReport_Deer_NR_Random",
+      "url": "https://wgfd.wyo.gov/media/33883/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "rand_nrs",
+      "title": "2026_DemandReport_Deer_NR_Special_Random",
+      "url": "https://wgfd.wyo.gov/media/33885/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "res",
+      "title": "2026_DemandReport_Deer_Resident",
+      "url": "https://wgfd.wyo.gov/media/33886/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "pp_nr",
+      "title": "2026_DemandReport_Deer_NR_PP",
+      "url": "https://wgfd.wyo.gov/media/33882/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "pp_nrs",
+      "title": "2026_DemandReport_Deer_NR_Special_PP",
+      "url": "https://wgfd.wyo.gov/media/33884/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "cc_nr",
+      "title": "2026_DemandReport_Deer_DoeFawn_NR",
+      "url": "https://wgfd.wyo.gov/media/33877/download?inline",
+      "hunts": 75
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "kind": "cc_res",
+      "title": "2026_DemandReport_Deer_DoeFawn_Resident",
+      "url": "https://wgfd.wyo.gov/media/33879/download?inline",
+      "hunts": 75
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "rand_nr",
+      "title": "2026_DrawingOdds_Elk_Random_NR",
+      "url": "https://wgfd.wyo.gov/media/33779/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "rand_nrs",
+      "title": "2026_DrawingOdds_Elk_Random_NR_Special",
+      "url": "https://wgfd.wyo.gov/media/33778/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "res",
+      "title": "2026_DemandReport_Elk_Resident",
+      "url": "https://wgfd.wyo.gov/media/33894/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "pp_nr",
+      "title": "2026_DrawingOdds_Elk_PP_NR",
+      "url": "https://wgfd.wyo.gov/media/33777/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "pp_nrs",
+      "title": "2026_DrawingOdds_Elk_PP_NR_Special",
+      "url": "https://wgfd.wyo.gov/media/33776/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "cc_nr",
+      "title": "2026_DrawingOdds_Elk_CC_NR",
+      "url": "https://wgfd.wyo.gov/media/33772/download?inline",
+      "hunts": 111
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "kind": "cc_res",
+      "title": "2026_DemandReport_Elk_CC_Resident",
+      "url": "https://wgfd.wyo.gov/media/33892/download?inline",
+      "hunts": 111
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "rand_nr",
+      "title": "2026_DrawingOdds_BS_Random_NR",
+      "url": "https://wgfd.wyo.gov/media/33784/download?inline",
+      "hunts": 22
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "res",
+      "title": "2026_DrawingOdds_BS_Random_R",
+      "url": "https://wgfd.wyo.gov/media/33785/download?inline",
+      "hunts": 23
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "pp_nr",
+      "title": "2026_DrawingOdds_BS_PP_NR",
+      "url": "https://wgfd.wyo.gov/media/33782/download?inline",
+      "hunts": 13
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "pp_res",
+      "title": "2026_DrawingOdds_BS_PP_R",
+      "url": "https://wgfd.wyo.gov/media/33783/download?inline",
+      "hunts": 22
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "f_nr",
+      "title": "2026_DrawingOdds_BS_EL_NR",
+      "url": "https://wgfd.wyo.gov/media/33781/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "kind": "f_res",
+      "title": "2026_DrawingOdds_BS_EL_R",
+      "url": "https://wgfd.wyo.gov/media/33780/download?inline",
+      "hunts": 6
+    },
+    {
+      "year": 2026,
+      "species": "moose",
+      "kind": "rand_nr",
+      "title": "2026_DrawingOdds_Moose_Random_NR",
+      "url": "https://wgfd.wyo.gov/media/33790/download?inline",
+      "hunts": 23
+    },
+    {
+      "year": 2026,
+      "species": "moose",
+      "kind": "res",
+      "title": "2026_DrawingOdds_Moose_Random_R",
+      "url": "https://wgfd.wyo.gov/media/33791/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2026,
+      "species": "moose",
+      "kind": "pp_nr",
+      "title": "2026_DrawingOdds_Moose_PP_NR",
+      "url": "https://wgfd.wyo.gov/media/33788/download?inline",
+      "hunts": 22
+    },
+    {
+      "year": 2026,
+      "species": "moose",
+      "kind": "pp_res",
+      "title": "2026_DrawingOdds_Moose_PP_R",
+      "url": "https://wgfd.wyo.gov/media/33789/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2026,
+      "species": "goat",
+      "kind": "rand_nr",
+      "title": "2026_DrawingOdds_MG_NR",
+      "url": "https://wgfd.wyo.gov/media/33786/download?inline",
+      "hunts": 3
+    },
+    {
+      "year": 2026,
+      "species": "goat",
+      "kind": "res",
+      "title": "2026_DrawingOdds_MG_R",
+      "url": "https://wgfd.wyo.gov/media/33787/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2026,
+      "species": "bison",
+      "kind": "rand_nr",
+      "title": "2026_DrawingOdds_WB_NR",
+      "url": "https://wgfd.wyo.gov/media/33794/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2026,
+      "species": "bison",
+      "kind": "res",
+      "title": "2026_DrawingOdds_WB_R",
+      "url": "https://wgfd.wyo.gov/media/33795/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2026,
+      "species": "bison",
+      "kind": "f_nr",
+      "title": "2026_DrawingOdds_WB_Female_NR",
+      "url": "https://wgfd.wyo.gov/media/33792/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2026,
+      "species": "bison",
+      "kind": "f_res",
+      "title": "2026_DrawingOdds_WB_Female_R",
+      "url": "https://wgfd.wyo.gov/media/33793/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "rand_nr",
+      "title": "2025 Nonresident Antelope Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32690/download?inline",
+      "hunts": 121
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "rand_nrs",
+      "title": "2025 Nonresident Antelope Special Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32692/download?inline",
+      "hunts": 121
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "res",
+      "title": "2025 Resident Antelope Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32694/download?inline",
+      "hunts": 121
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "pp_nr",
+      "title": "2025 Nonresident Antelope Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32689/download?inline",
+      "hunts": 121
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "pp_nrs",
+      "title": "2025 Nonresident Antelope Special Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32691/download?inline",
+      "hunts": 121
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "cc_nr",
+      "title": "2025 Nonresident Doe Fawn Antelope Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32693/download?inline",
+      "hunts": 66
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "kind": "cc_res",
+      "title": "2025 Resident Doe Fawn Antelope Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32696/download?inline",
+      "hunts": 66
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "rand_nr",
+      "title": "2025 Nonresident Deer Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32699/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "rand_nrs",
+      "title": "2025 Nonresident Deer Special Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32701/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "res",
+      "title": "2025 Resident Deer Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32706/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "pp_nr",
+      "title": "2025 Nonresident Deer Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32698/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "pp_nrs",
+      "title": "2025 Nonresident Deer Special Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32700/download?inline",
+      "hunts": 73
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "cc_nr",
+      "title": "2025 Nonresident Doe Fawn Deer Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32702/download?inline",
+      "hunts": 77
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "kind": "cc_res",
+      "title": "2025 Resident Doe Fawn Deer Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32707/download?inline",
+      "hunts": 77
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "rand_nr",
+      "title": "2025 Non-Resident Elk Random",
+      "url": "https://wgfd.wyo.gov/media/32449/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "rand_nrs",
+      "title": "2025 Non-Resident Elk Special Random ",
+      "url": "https://wgfd.wyo.gov/media/32450/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "res",
+      "title": "2025 Resident Elk Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32697/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "pp_nr",
+      "title": "2025 Non-Resident Elk Preference Point ",
+      "url": "https://wgfd.wyo.gov/media/32451/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "pp_nrs",
+      "title": "2025 Non-Resident Elk Special Preference Point",
+      "url": "https://wgfd.wyo.gov/media/32452/download?inline",
+      "hunts": 149
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "cc_nr",
+      "title": "2025 Non-Resident Cow/Calf Elk",
+      "url": "https://wgfd.wyo.gov/media/32453/download?inline",
+      "hunts": 111
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "kind": "cc_res",
+      "title": "2025 Resident Cow Calf Elk Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/32695/download?inline",
+      "hunts": 111
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "rand_nr",
+      "title": "2025 Nonresident Bighorn Sheep Random",
+      "url": "https://wgfd.wyo.gov/media/32421/download?inline",
+      "hunts": 11
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "res",
+      "title": "2025 Resident Bighorn Sheep Random",
+      "url": "https://wgfd.wyo.gov/media/32423/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "pp_nr",
+      "title": "2025 Non-Resident Bighorn Sheep Nonresident Preference Point Demand Report ",
+      "url": "https://wgfd.wyo.gov/media/32411/download?inline",
+      "hunts": 11
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "pp_res",
+      "title": "2025 Demand Report - Resident Bighorn Sheep Resident Preference Point ",
+      "url": "https://wgfd.wyo.gov/media/32416/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "cc_nr",
+      "title": "2025 Demand Report - Non-Resident Ewe/Lamb Sheep ",
+      "url": "https://wgfd.wyo.gov/media/32412/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "kind": "cc_res",
+      "title": "2025 Demand Report - Resident Ewe/Lamb Sheep ",
+      "url": "https://wgfd.wyo.gov/media/32417/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2025,
+      "species": "moose",
+      "kind": "rand_nr",
+      "title": "2025 Nonresident Moose Random",
+      "url": "https://wgfd.wyo.gov/media/32422/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2025,
+      "species": "moose",
+      "kind": "res",
+      "title": "2025 Resident Moose Random",
+      "url": "https://wgfd.wyo.gov/media/32424/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2025,
+      "species": "moose",
+      "kind": "pp_nr",
+      "title": "2025 Demand Report - Non-Resident Moose Nonresident Preference Point ",
+      "url": "https://wgfd.wyo.gov/media/32414/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2025,
+      "species": "moose",
+      "kind": "pp_res",
+      "title": "2025 Demand Report - Resident Moose Resident Preference Point ",
+      "url": "https://wgfd.wyo.gov/media/32419/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2025,
+      "species": "goat",
+      "kind": "rand_nr",
+      "title": "2025 Demand Report - Non-Resident Mountain Goat",
+      "url": "https://wgfd.wyo.gov/media/32413/download?inline",
+      "hunts": 2
+    },
+    {
+      "year": 2025,
+      "species": "goat",
+      "kind": "res",
+      "title": "2025 Demand Report - Resident Mountain Goat ",
+      "url": "https://wgfd.wyo.gov/media/32418/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2025,
+      "species": "bison",
+      "kind": "rand_nr",
+      "title": "2025 Demand Report - Non-Resident Wild Bison",
+      "url": "https://wgfd.wyo.gov/media/32415/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2025,
+      "species": "bison",
+      "kind": "res",
+      "title": "Demand Report - Resident Wild Bison ",
+      "url": "https://wgfd.wyo.gov/media/32420/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "rand_nr",
+      "title": "2024 Antelope Nonresident Random ",
+      "url": "https://wgfd.wyo.gov/media/30432/download?inline",
+      "hunts": 120
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "rand_nrs",
+      "title": "2024 Antelope Random Nonresident Special Draw",
+      "url": "https://wgfd.wyo.gov/media/30431/download?inline",
+      "hunts": 120
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "res",
+      "title": "2024 Resident Antelope",
+      "url": "https://wgfd.wyo.gov/media/30436/download?inline",
+      "hunts": 120
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "pp_nr",
+      "title": "Antelope Nonresident Preference Points",
+      "url": "https://wgfd.wyo.gov/media/30433/download?inline",
+      "hunts": 120
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "pp_nrs",
+      "title": "2024 Antelope Nonresident Special Preference Point",
+      "url": "https://wgfd.wyo.gov/media/30437/download?inline",
+      "hunts": 120
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "cc_nr",
+      "title": "Antelope NR Doe/Fawn",
+      "url": "https://wgfd.wyo.gov/media/30434/download?inline",
+      "hunts": 58
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "kind": "cc_res",
+      "title": " 2024 Resident Doe/Fawn Antelope",
+      "url": "https://wgfd.wyo.gov/media/30435/download?inline",
+      "hunts": 58
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "rand_nr",
+      "title": "2024 Deer Nonresident Random",
+      "url": "https://wgfd.wyo.gov/media/30443/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "rand_nrs",
+      "title": "2024 Deer Nonresident Special Random",
+      "url": "https://wgfd.wyo.gov/media/30439/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "res",
+      "title": "2024 Resident Deer",
+      "url": "https://wgfd.wyo.gov/media/30445/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "pp_nr",
+      "title": "2024 Deer Nonresident Preference Point",
+      "url": "https://wgfd.wyo.gov/media/30442/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "cc_nr",
+      "title": "2024 Non-Resident Doe/Fawn Deer",
+      "url": "https://wgfd.wyo.gov/media/30444/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "kind": "cc_res",
+      "title": "2024 Resident Doe/Fawn Deer",
+      "url": "https://wgfd.wyo.gov/media/30449/download?inline",
+      "hunts": 72
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "rand_nr",
+      "title": "Nonresident Elk Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30129/download?inline",
+      "hunts": 145
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "rand_nrs",
+      "title": "Nonresident Elk Special Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30127/download?inline",
+      "hunts": 145
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "res",
+      "title": "Resident Elk",
+      "url": "https://wgfd.wyo.gov/media/30448/download?inline",
+      "hunts": 145
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "pp_nr",
+      "title": "Nonresident Elk Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30130/download?inline",
+      "hunts": 145
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "pp_nrs",
+      "title": "Nonresident Elk Special Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30128/download?inline",
+      "hunts": 145
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "cc_nr",
+      "title": "Nonresident Cow/Calf Elk Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30131/download?inline",
+      "hunts": 106
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "kind": "cc_res",
+      "title": "2024 Resident Cow/Calf Elk",
+      "url": "https://wgfd.wyo.gov/media/30446/download?inline",
+      "hunts": 106
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "kind": "rand_nr",
+      "title": "Nonresident Bighorn Sheep Random Demand Report Summary ",
+      "url": "https://wgfd.wyo.gov/media/30109/download?inline",
+      "hunts": 10
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "kind": "res",
+      "title": "Resident Bighorn Sheep Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30101/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "kind": "pp_nr",
+      "title": "Nonresident Bighorn Sheep Preference Point Demand Report Summary ",
+      "url": "https://wgfd.wyo.gov/media/30110/download?inline",
+      "hunts": 10
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "kind": "pp_res",
+      "title": "Resident Bighorn Sheep Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30102/download?inline",
+      "hunts": 21
+    },
+    {
+      "year": 2024,
+      "species": "moose",
+      "kind": "rand_nr",
+      "title": "Nonresident Moose Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30105/download?inline",
+      "hunts": 24
+    },
+    {
+      "year": 2024,
+      "species": "moose",
+      "kind": "res",
+      "title": "Resident Moose Random Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30099/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2024,
+      "species": "moose",
+      "kind": "pp_nr",
+      "title": "Nonresident Moose Preference Point Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30104/download?inline",
+      "hunts": 24
+    },
+    {
+      "year": 2024,
+      "species": "moose",
+      "kind": "pp_res",
+      "title": "Resident Moose Preference Point Demand Report",
+      "url": "https://wgfd.wyo.gov/media/30098/download?inline",
+      "hunts": 36
+    },
+    {
+      "year": 2024,
+      "species": "goat",
+      "kind": "rand_nr",
+      "title": "Nonresident Mountain Goat Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30106/download?inline",
+      "hunts": 3
+    },
+    {
+      "year": 2024,
+      "species": "goat",
+      "kind": "res",
+      "title": "Resident Mountain Goat Demand Report",
+      "url": "https://wgfd.wyo.gov/media/30108/download?inline",
+      "hunts": 4
+    },
+    {
+      "year": 2024,
+      "species": "bison",
+      "kind": "rand_nr",
+      "title": "Nonresident Wild Bison Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30103/download?inline",
+      "hunts": 1
+    },
+    {
+      "year": 2024,
+      "species": "bison",
+      "kind": "res",
+      "title": "Resident Wild Bison Demand Report Summary",
+      "url": "https://wgfd.wyo.gov/media/30097/download?inline",
+      "hunts": 1
+    }
+  ],
+  "page": "https://wgfd.wyo.gov/licenses-applications/draw-results-odds"
+}
