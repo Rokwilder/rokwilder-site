@@ -85,6 +85,35 @@ for (const p of walk(root)) {
 }
 ok('no private exact-data file in the repository');
 
+const nvPath = join(root, 'nevada/data.js');
+const nvSrc = readFileSync(nvPath, 'utf8');
+if (/window\.RW_FP\s*=\s*true/.test(nvSrc)) bad('nevada/data.js sets window.RW_FP');
+else ok('Nevada public file does not set window.RW_FP');
+if (/"raw"\s*:/.test(nvSrc) || /\bquota\b/.test(nvSrc) || /\bapplicants\b/.test(nvSrc) || /%/.test(nvSrc)) bad('nevada/data.js contains raw, quota, applicants or a percent sign');
+else ok('Nevada public file has no raw counts or percent signs');
+const nvBox = {window: {}};
+vm.createContext(nvBox);
+vm.runInContext(nvSrc + '\nglobalThis.NH=NH; globalThis.NV_META=NV_META;', nvBox);
+const nvBands = new Set([0, 0.01, 0.05, 0.25, 0.75, 1]);
+let nvCells = 0;
+for (const h of Object.values(nvBox.NH || {})) {
+  for (const v of Object.values(h.bp || {})) {
+    nvCells++;
+    if (!nvBands.has(v)) bad('Nevada band is not a verdict band: ' + v);
+  }
+}
+ok(`${Object.keys(nvBox.NH || {}).length} Nevada hunts, ${nvCells} point-level bands`);
+const nvHtml = readFileSync(join(root, 'nevada/find.html'), 'utf8');
+if (/noindex/i.test(nvHtml)) bad('nevada/find.html is still noindex');
+else ok('nevada/find.html is indexable');
+if (nvSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'nevada/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Nevada turns on exact figures');
+else ok('Nevada cannot be switched to exact figures');
+const nvSm = readFileSync(join(root, 'sitemap-nevada.xml'), 'utf8');
+if (!sm.includes('sitemap-nevada.xml')) bad('sitemap index missing Nevada');
+if (!nvSm.includes('https://rokwilder.com/nevada/find.html')) bad('Nevada sitemap missing the find page');
+if (!sp.includes('https://rokwilder.com/nevada/find.html')) bad('pages sitemap missing Nevada');
+else ok('sitemaps list Nevada');
+
 const idPath = join(root, 'idaho/data.js');
 const idSrc = readFileSync(idPath, 'utf8');
 if (/window\.RW_FP\s*=\s*true/.test(idSrc)) bad('idaho/data.js sets window.RW_FP');
@@ -109,6 +138,7 @@ else ok('idaho/find.html is indexable');
 const idSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
 if (!sm.includes('sitemap-idaho.xml')) bad('sitemap index missing Idaho');
 if (!idSm.includes('https://rokwilder.com/idaho/find.html')) bad('Idaho sitemap missing the find page');
+if (!idSm.includes('https://rokwilder.com/idaho/general.html')) bad('Idaho sitemap missing the general page');
 if (!sp.includes('https://rokwilder.com/idaho/find.html')) bad('pages sitemap missing Idaho');
 else ok('sitemaps list Idaho');
 if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho turns on exact figures');
