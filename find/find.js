@@ -12,8 +12,18 @@ const FP=window.RW_FP===true;
 const FPN='<span class="fpn">Exact odds and harvest %: Full Pass</span>';
 // What the Full Pass adds: shown on the free results only (hidden when Full Pass data is loaded). Every line is something the
 // Full Pass view of this page really shows (see the FP branches); prices match pricing.html.
-const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level</li><li>About how many points you need to be sure to draw</li><li>Past draw results: Colorado back to 2021; Utah 2026 by point level plus 2025 totals; Arizona 2026</li><li>Exact harvest success % and how many hunters it's based on</li><li>For Colorado, Utah and Arizona</li></ul><p class="fpp">Full Pass: $29.99 a year, for exact odds in Colorado, Utah and Arizona. Wyoming verdicts are free; exact Wyoming odds are not in the Full Pass yet. Exact Idaho odds are not in the Full Pass. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>FP?'':`<p class="fpl">Exact odds, past draws and harvest numbers for every hunt come with the Full Pass (not on sale yet). <a href="pricing.html">See pricing</a></p>`;
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds at every point level, for every state on the site, where we have published them</li><li>Past draws, and a multi-year look where we have the years</li><li>Exact harvest success % and how many hunters it's based on</li></ul><p class="fpp">This list is the Full Pass: verdicts and harvest bands. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact odds and harvest numbers for every hunt come with the Full Pass (not on sale yet). <a href="pricing.html">See pricing</a></p>`;
+const paid=()=>window.RWGate?RWGate.paid():FP;
+const isSample=k=>units(k).map(String).some(u=>u==='12'||u==='2');
+function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
+function freeList(r,who){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>units(x.k).map(String).filter(u=>u==='12'||u==='2')),o=$('out');
+ $('detail').hidden=true;o.hidden=false;if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
+ o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'pricing.html',
+  sampleNote:'<b>Sample.</b> Units 12 and 2 only, up to 3 hunts from each. This is not your whole list.',
+  samplesHtml:samples.length?`<ol class="fl">`+samples.map(huntCard).join('')+'</ol>':'',
+  extra:`<p class="note">The count is hunts at about 5% or better with these choices${S.priv?'':', not counting private-land-only hunts'}.</p>`});
+ o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k))}
 // =====================
 let S={sp:'elk',res:'res',pts:0,w:'',se:'',sx:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
@@ -108,8 +118,10 @@ function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}
 function showList(){const r=ranked(),oR=otcRows(),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
  const who=`${SP[S.sp]} · ${S.res=='res'?'Colorado resident':'Out of state'} · ${S.pts} point${S.pts==1?'':'s'} · ${S.sp=='turkey'?'any weapon':WN[S.w].toLowerCase()}${S.se?' · '+(S.se=='O'?'other rifle seasons':'SRP'.includes(S.se)?({S:'September rifle',R:'Oct.–Nov. rifle',P:'private-land-only rifle'})[S.se]:SEN[S.se].toLowerCase()+' rifle season'):''}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · kid 12–17':''}`;
+ if(!paid()){freeList(r,who);return}
+ const ban=window.RWGate?RWGate.banner():'';
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
- if(S.tab=='map'){o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter license (no draw).':''} Tap a unit to see its hunts.</p>`+
+ if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored units have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} in that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter license (no draw).':''} Tap a unit to see its hunts.</p>`+
   wtNote()+yxNote()+(S.sp=='turkey'?'<p class="note">Turkey hunts use the same unit numbers as big game, so they are shown on the same unit map.</p>':'')+
   (OIL(S.sp)?`<p class="note">${S.sp=='goat'?'Mountain goat':'Bighorn sheep'} units are not the big game units: CPW numbers them ${S.sp=='goat'?'G1, G2…':'S1, S2…'}, and this map shows those ${S.sp=='goat'?'goat':'sheep'} units.</p>`:'')+
   fpBox()+mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
@@ -117,7 +129,7 @@ function showList(){const r=ranked(),oR=otcRows(),o=$('out');
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>`+
   `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
   wireTabs(o);drawMap(r);return}
- o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+
+ o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
@@ -235,7 +247,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
  if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g).eachLayer(x=>x.eachLayer(y=>y.getElement&&y.getElement()&&y.getElement().classList.add('olh')));window.__FY.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:8})}
  if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&(bu[S.mu]||oo(S.mu)))pick(S.mu,bu[S.mu]||[],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
  M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
-function showDetail(k){const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;
+function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const d=D[k],v=odds(k),o=$('detail');$('out').hidden=true;o.hidden=false;
  let lad='';if(FP&&d[9]&&d[0]!='dsheep'){const L=[0,1,2,3,4,5,6,8,10,13,16,20,25,30];if(!L.includes(S.pts))L.push(S.pts);L.sort((a,b)=>a-b);
   lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+L.map(n=>{const z=wOdds(d,n);return `<div class="lr${n==S.pts?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
  else if(FP&&!WT(d[0])){const p=d[5][S.res],ks=Object.keys(p.o).map(Number);lad=`<p class="lh">Odds by points (Full Pass)</p><div class="lad">`+ks.map(n=>{const z=oAt(k,p,n)[0];return `<div class="lr${n==Math.min(S.pts,Math.max(...ks))?' on':''}"><span class="ln">${n} pts</span><span class="lb"><i style="width:${Math.max(Math.round(z*100),1)}%"></i></span><span class="lz">${pct(z)}</span></div>`}).join('')+'</div>'}
@@ -274,7 +286,7 @@ const fbA=about=>`<p class="fbk"><a class="fbl" href="feedback.html?about=${abou
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
 const st=(v,k)=>({v,k,sp:S.sp,res:S.res,pts:S.pts,w:S.w,se:S.se,sx:S.sx,so:S.so,mc:S.mc,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
 const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
-const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.se)u.set('se',S.se);if(S.sx)u.set('sx',S.sx);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const url=k=>{const u=new URLSearchParams({sp:S.sp,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.se)u.set('se',S.se);if(S.sx)u.set('sx',S.sx);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(window.RWGate)RWGate.stamp(u);else if(FULLPASS_GATING&&FP)u.set('preview','fullpass');return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
@@ -299,7 +311,7 @@ const step=x=>{S.pts=Math.max(0,Math.min(30,S.pts+x));$('pv').textContent=S.pts}
 $('go').onclick=()=>{S.n=25;S.on=25;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 // open straight from a shared/bookmarked link
 if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(30,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',se:'1234LOSRP'.includes(Q.get('se')||'-')?Q.get('se'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
- const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
+ const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={otcRows,OU:()=>OU,FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
 })();
