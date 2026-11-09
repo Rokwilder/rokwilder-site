@@ -6,7 +6,7 @@
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const M=ID_META;
-let S={sp:'elk',res:'res',draw:1,sx:'',youth:1,n:25};
+let S={sp:'elk',res:'res',draw:1,sx:'',youth:1,n:25,focus:''};
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
 const VERD=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'UNDER ONE IN TWENTY':v===0?'NONE DREW':'NO RESULT';
@@ -54,24 +54,33 @@ const fpBox=()=>`<aside class="fpbox" aria-label="What the Full Pass adds"><p cl
 const fpLine=()=>`<p class="fpl">Exact Idaho odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
 const paid=()=>window.RWGate?RWGate.paid():false;
 const isSample=k=>{const a=IH[k]&&IH[k].area;return a==='31'||a==='37'};
+function idBand(k){return RWLand.band('id',RWLand.idKey(IH[k].area))}
+function idExtra(k,v){if(!paid())return '';const h=IH[k],key=RWLand.idKey(h.area),b=idBand(k);
+ const cap=key&&window.RW_CAPS&&RW_CAPS.id?RW_CAPS.id[key]:null;
+ return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'Unit '+h.area,href:RWLand.pkgHref('../','id',String(h.area)),cap:Number.isInteger(cap)?cap:null})}
+function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
+function orderRows(list){if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
 function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span><span class="fo"><span class="fpn">Historical band, not an exact percentage and not your future chance</span></span>${RWHy(x.k,S.res)}</button></li>`}
+function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span><span class="fo"><span class="fpn">Historical band, not an exact percentage and not your future chance</span></span>${RWHy(x.k,S.res)}${bits.info}</button>${bits.next}</li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const {show,under,none,unlabeled}=split();
  const emptySpecies=!rows().length;
  const note=emptySpecies?`<p class="note">IDFG's 2026 drawing-odds table returned no ${esc(drawName())} hunts for ${esc(spName(S.sp))}.</p>`:
-  `<p class="note">Each band is the share of ${esc(resName().toLowerCase())} first-choice people who were drawn in IDFG's 2026 ${esc(drawName())}. It is a past result. It is not your chance in a later drawing, and it is not a second-choice result. Hunts under one in twenty aren't shown${under.length?` (${under.length} more with these choices)`:''}.${none.length?` ${none.length} hunt${none.length===1?'':'s'} had nobody of this residency putting them first, so they have no result.`:''}${unlabeled.length?` ${unlabeled.length} hunt${unlabeled.length===1?' is':'s are'} hidden because the 2026 hunt list did not label sex.`:''} Not a guarantee.</p>`;
+  `<p class="note">Each band is the share of ${esc(resName().toLowerCase())} first-choice people who were drawn in IDFG's 2026 ${esc(drawName())}. It is a past result. It is not your chance in a later drawing, and it is not a second-choice result. Hunts under one in twenty aren't shown${under.length?` (${under.length} more with these choices)`:''}.${none.length?` ${none.length} hunt${none.length===1?'':'s'} had nobody of this residency putting them first, so they have no result.`:''}${unlabeled.length?` ${unlabeled.length} hunt${unlabeled.length===1?' is':'s are'} hidden because the 2026 hunt list did not label sex.`:''} Not a guarantee.</p>`+(paid()?`<p class="note">${RWLand.pageNote('id')}</p>`:'');
  if(!paid()){const samples=RWGate.takePerUnit(show.filter(x=>isSample(x.k)),x=>IH[x.k]&&IH[x.k].area);
   o.innerHTML=RWGate.freeShell({count:show.length,species:spName(S.sp).toLowerCase(),who:esc(who())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Areas 31 and 37 only, up to 3 hunts from each. This is not your whole list. The count is 2026 first-choice results at one in twenty or better, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const ban=window.RWGate?RWGate.banner():'';
- o.innerHTML=ban+`<h2 id="lt">${show.length} hunt${show.length===1?'':'s'} at one in twenty or better</h2><p class="dq">${esc(who())}. Highest 2026 result first. Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
-  `<ol class="fl">`+show.slice(0,S.n).map(card).join('')+`</ol>`+(show.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,show.length-S.n)} more (${show.length-S.n} left)</button>`:'')+
+ const ordered=orderRows(show);
+ o.innerHTML=ban+`<h2 id="lt">${show.length} hunt${show.length===1?'':'s'} at one in twenty or better</h2>${focusBar()}<p class="dq">${esc(who())}. ${S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.'} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+  `<ol class="fl">`+ordered.slice(0,S.n).map(cardFull).join('')+`</ol>`+(show.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,show.length-S.n)} more (${show.length-S.n} left)</button>`:'')+
   (show.length||emptySpecies?'':`<p class="dq">No hunts at one in twenty or better with these choices.</p>`)+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+ o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
  if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  if(sc)o.scrollIntoView({behavior:'smooth'})}
 function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=IH[k];if(!h)return;S.sp=h.sp;S.draw=h.draw;paint();const v=S.res==='res'?h.res:h.nr;const o=$('detail');$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
-  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}<p class="how">${wordNote(v)} ${how()}</p>`+fpBox()+segHTML(h)+
+  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}<p class="how">${wordNote(v)} ${how()}</p>`+idExtra(k,v)+fpBox()+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
  $('back').onclick=()=>showList(1);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}
