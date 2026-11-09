@@ -16,6 +16,7 @@ const js = readFileSync(join(root, 'idaho/general.js'), 'utf8');
 const controlled = readFileSync(join(root, 'idaho/find.html'), 'utf8');
 const data = readFileSync(join(root, 'idaho/general-data.js'), 'utf8');
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+const pages = readFileSync(join(root, 'sitemap-pages.xml'), 'utf8');
 const pricing = readFileSync(join(root, 'pricing.html'), 'utf8');
 
 ok(IG.draw2026.length === 194, '194 rows in the 2026 nonresident draw, including two statewide DAV rows');
@@ -45,9 +46,11 @@ ok(elk1 && elk1.limit === 193 && elk1.band === null && elk1.place === 'Bannock',
 const rd55 = IG.draw2026.find(row => row.kind === 'deer-regular' && row.place === '55');
 ok(rd55 && rd55.band === 0.05, 'unit 55 follows the counts when the printed whole-number rate crosses a line');
 
-ok(/noindex/.test(html), 'general page stays noindex while it is a draft');
-ok(!controlled.includes('noindex'), 'the live controlled-hunt page stays indexable');
-ok(!sitemap.includes('general.html'), 'the draft page is not in the sitemap');
+ok(!html.includes('noindex'), 'general page is indexable');
+ok(!controlled.includes('noindex'), 'the controlled-hunt page stays indexable');
+ok(!/Draft preview/i.test(html + controlled), 'preview markings are removed');
+const idahoSm = readFileSync(join(root, 'sitemap-idaho.xml'), 'utf8');
+ok(sitemap.includes('sitemap-idaho.xml') && idahoSm.includes('https://rokwilder.com/idaho/general.html') && pages.includes('https://rokwilder.com/idaho/general.html'), 'sitemaps list the general page');
 ok(/not a forecast/i.test(html) && /not a harvest rate/i.test(html), 'season windows are not described as draw chances or harvest');
 ok(/no result yet|had not been held/i.test(html + js), '2027 is labeled as having no result');
 ok(/over the counter/i.test(html) && /random draw/i.test(html), 'OTC resident sales and the nonresident draw are both named');
