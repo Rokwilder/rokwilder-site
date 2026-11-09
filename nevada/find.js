@@ -23,7 +23,7 @@ const SX={
 const WPN={alw:'Any legal weapon',bow:'Archery',muz:'Muzzleloader',classic:'Classic',shotgun:'Shotgun or bow only',prim:'Primitive'};
 const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
-let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,n:25};
+let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,n:25,focus:''};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rows=()=>H.filter(([,h])=>h.sp===S.sp&&h.sx===S.sx&&h.live===S.live&&h.who===S.who);
 const weaponRows=()=>rows().filter(([,h])=>h.wpn===S.wpn);
@@ -37,19 +37,25 @@ const liveWord=()=>S.live==='res'?'Nevada resident':'Out of state';
 const sxWord=()=>(SX[S.sp]&&SX[S.sp][S.sx])||'';
 const whoLine=()=>`${SP[S.sp]} · ${sxWord()} · ${WPN[S.wpn]||S.wpn} · ${liveWord()} · ${whoWord()} · ${S.pts} bonus point${S.pts===1?'':'s'}`;
 function title(h){return `${esc(h.units)} · ${esc(h.wlab)}`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]}"></i>${WORD[x.v]}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span></button></li>`}
+function nvPlace(text){const key=RWLand.nvKey(text);if(!key)return String(text);const nums=key.split('+').map(n=>+n);
+ if(nums.length===1)return 'Unit '+nums[0];const run=nums.every((n,i)=>i===0||n===nums[i-1]+1);if(run)return 'Units '+nums[0]+'–'+nums[nums.length-1];return RWLand.human(nums.map(String),'Unit','Units')}
+function nvBand(h){return RWLand.band('nv',RWLand.nvKey(h.units))}
+function nvExtra(h,v){const b=nvBand(h),place=nvPlace(h.units);return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place,href:RWLand.pkgHref('../','nv',place)})}
+function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
+function card(x,i){const bits=RWLand.splitNext(nvExtra(x.h,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]}"></i>${WORD[x.v]}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${bits.info}</button>${bits.next}</li>`}
 function ladder(h){
   const pts=Object.keys(h.bp).map(Number).sort((a,b)=>a-b);
   return `<p class="lh">2025 1st-choice result by bonus-point level</p><table class="dt"><tr><th>Bonus points</th><th>Result</th></tr>`+pts.map(n=>{const v=h.bp[n];const word=WORD[v]||(v===0?'None drew':'Under one in twenty');return `<tr class="${n===S.pts?'on':''}"><td>${n}</td><td>${word}</td></tr>`}).join('')+'</table><p class="dq">Words only. A level is listed when that table had a 1st-choice row. A blank level is not a zero, and a higher level is not filled in from a lower one.</p>';
 }
 function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;$('empty').hidden=true;
-  const r=ranked(),nb=below(),nm=missing();
-  const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Under one in twenty, and rows where none drew, stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p>`;
-  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2><p class="dq">${esc(whoLine())}. Strongest 2025 result first. Tap a hunt for the other point levels.</p>`+fpBox()+
+  const r=(S.focus=='land'?ranked().slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true})):ranked()),nb=below(),nm=missing();
+  const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Under one in twenty, and rows where none drew, stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p><p class="note">${RWLand.pageNote('nv')}</p>`;
+  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2>${focusBar()}<p class="dq">${esc(whoLine())}. ${S.focus=='land'?'Mostly public land first.':'Strongest 2025 result first.'} Tap a hunt for the other point levels.</p>`+fpBox()+
     `<ol class="fl">`+r.slice(0,S.n).map(card).join('')+`</ol>`+(r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
     (r.length?'':`<p class="dq">No 2025 1st-choice row at this point level reached one in twenty. Try another weapon, another point level, or the other residency.</p>`)+note+fpLine();
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
   if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
   if(sc)o.scrollIntoView({behavior:'smooth'});
 }
@@ -57,7 +63,7 @@ function showDetail(k,sc){
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   const word=v===null?'No 1st-choice row at this point level':(WORD[v]||(v===0?'NONE DREW':'UNDER ONE IN TWENTY'));
   const src=NV_META.src[h.src];
-  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div><p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+
+  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div><p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvExtra(h,v)+
     (v===null?'':ladder(h))+fpBox()+
     `<p class="note">Season dates are the dates printed on the 2025 table: ${esc(h.season)}. They are not a 2026 or 2027 season. Source: <a href="${esc(src)}">NDOW 2025 bonus-point table</a>.</p>`;
   $('back').onclick=()=>showList(1);

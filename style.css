@@ -64,3 +64,7 @@ footer{background:url(img/brand/topo.svg) repeat}
 .fpbox .fpp{margin:0;color:var(--mute);font-size:.95rem}
 .fpbox a,.fpl a{color:var(--acc)}
 .fpl{color:var(--mute);font-size:.92rem;margin:.8rem 0}
+.sum{margin:.35rem 0 0;font-size:1.02rem}
+.next{margin:.45rem 0 0;font-size:1rem}
+.next a{font-weight:600}
+.hsl{display:block;font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);margin-bottom:.1rem}

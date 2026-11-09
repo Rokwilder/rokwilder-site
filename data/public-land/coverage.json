@@ -1,0 +1,45 @@
+{
+ "co": {
+  "computed": 489,
+  "skip_reasons": {
+   "uncertain land could move the band": 2
+  },
+  "skipped": 2
+ },
+ "id": {
+  "computed": 99,
+  "skip_reasons": {
+   "IDFG game-management-unit layer has no polygon for this hunt-area subunit": 143,
+   "area name is not in the IDFG GMU layer": 7
+  },
+  "skipped": 150
+ },
+ "nv": {
+  "computed": 124,
+  "skip_reasons": {
+   "uncertain land could move the band": 2,
+   "unit list could not be read": 19
+  },
+  "skipped": 21
+ },
+ "ut": {
+  "computed": 345,
+  "skip_reasons": {
+   "missing DWR hunt boundary: 829": 1,
+   "missing DWR hunt boundary: 901": 1,
+   "missing DWR hunt boundary: 902": 1,
+   "missing DWR hunt boundary: 928": 1,
+   "missing DWR hunt boundary: 929": 1,
+   "missing DWR hunt boundary: 955": 1
+  },
+  "skipped": 6
+ },
+ "wy": {
+  "computed": 347,
+  "skip_reasons": {
+   "not a single numbered hunt area": 22,
+   "uncertain land could move the band": 51
+  },
+  "skipped": 73
+ }
+}

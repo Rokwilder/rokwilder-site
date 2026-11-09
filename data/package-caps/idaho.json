@@ -1,0 +1,13 @@
+{
+ "retrieved": "2026-11-09",
+ "rule": "1 package per 25 official tags, minimum 3, maximum 30. floor(tags / 25), then clamp. Over-the-counter units with no per-unit quota use 30 and are not in this file.",
+ "source": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/?biggame={species}&yr=2026&draw=1",
+ "field": "PermitTotal on the 2026 first drawing. Second-drawing leftovers are not added. Subunit hunts such as 36A-1 are added to the parent unit.",
+ "omitted": "Units named in the Idaho general-season hunt list are omitted. Those seasons do not publish a per-unit tag total. Colorado OTC elk units and Utah general-season units with no permit cap use 30 in the page script, not in this file. Wyoming and Nevada public files do not include a unit tag total, so those hunts omit the sentence.",
+ "units": {
+  "54": {
+   "tags": 1359,
+   "cap": 30
+  }
+ }
+}
