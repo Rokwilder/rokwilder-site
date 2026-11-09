@@ -89,5 +89,35 @@ ok(picked.filter(row => row.u === '12').length === 3, 'unit 12 keeps 3 sample hu
 ok(picked.filter(row => row.u === '2').length === 3, 'unit 2 keeps 3 sample hunts');
 ok(picked.length === 6, 'a hunt in a full unit is not added once both units are full');
 
+const unitGate = readFileSync(join(root, 'find/unit-gate.js'), 'utf8');
+ok(/RWGate\.paid\(\)/.test(unitGate) && /\.vg/.test(unitGate) && /See Full Pass|RWGate\.unlock/.test(unitGate), 'unit gate hides verdict grids unless the Full Pass preview is on');
+ok(/dataset\.mode==='teaser'/.test(unitGate) && /Real CPW numbers/.test(unitGate), 'teaser gate targets the exact CPW number tables');
+let vgPages = 0, gatedPages = 0;
+for (const dir of ['colorado/units', 'utah/hunts', 'arizona/units']) {
+  for (const p of walk(join(root, dir))) {
+    if (!p.endsWith('.html')) continue;
+    const text = readFileSync(p, 'utf8');
+    if (!text.includes('class="vg"')) continue;
+    vgPages++;
+    if (text.includes('find/unit-gate.js') && text.includes('find/gate.js')) gatedPages++;
+  }
+}
+ok(vgPages > 900 && vgPages === gatedPages, `every older verdict page loads the gate (${gatedPages}/${vgPages})`);
+for (const name of ['samples/unit-a/teaser.html', 'samples/unit-b/teaser.html']) {
+  const text = readFileSync(join(root, name), 'utf8');
+  ok(text.includes('data-mode="teaser"') && text.includes('find/unit-gate.js'), name + ' locks the exact numbers');
+}
+const nvFind = readFileSync(join(root, 'nevada/find.js'), 'utf8');
+ok(/SAMPLE_UNITS=new Set\(\['231','075'\]\)/.test(nvFind), 'Nevada samples are units 231 and 075');
+ok(!/u==='113'\|\|u==='221'/.test(nvFind), 'Nevada no longer samples units 113 and 221');
+const nvBox = {window:{}};
+vm.createContext(nvBox);
+vm.runInContext(readFileSync(join(root, 'nevada/data.js'), 'utf8') + '\nglobalThis.NH=NH;', nvBox);
+const nvHits = { '231': 0, '075': 0 };
+for (const h of Object.values(nvBox.NH)) {
+  if (h.sp === 'elk' && h.sx === 'M' && h.live === 'res' && h.who === 'main' && h.wpn === 'alw' && h.bp && Object.prototype.hasOwnProperty.call(h.bp, '0') && nvHits[h.units] != null) nvHits[h.units]++;
+}
+ok(nvHits['231'] >= 1 && nvHits['231'] <= 3 && nvHits['075'] >= 1 && nvHits['075'] <= 3, 'default Nevada elk filters have 1 to 3 hunts in each sample unit');
+
 if (fails) { console.error(fails + ' FAIL'); process.exit(1); }
 console.log('ALL PASS');
