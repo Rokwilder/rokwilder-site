@@ -1,0 +1,43 @@
+{
+  "state": "idaho",
+  "yearsAdded": [
+    2024,
+    2025,
+    2026
+  ],
+  "unavailable": [
+    {
+      "scope": "general season",
+      "why": "A general-season window is where a resident tag is valid. It is not a draw result, so it has no draw history."
+    },
+    {
+      "scope": "nonresident deer and elk tag draw, 2024 and 2025",
+      "why": "The 2026 nonresident draw PDF is the only file of that report on IDFG and in the Internet Archive capture of that URL. 2024 and 2025 were not published at a URL that could be retrieved."
+    }
+  ],
+  "match": "Species, controlled-hunt number, drawing (first or second) and area code must all match the 2026 hunt. A different area code is not history for that hunt.",
+  "band": "drew",
+  "hunts": 816,
+  "mismatch2026": 0,
+  "areaSkipped": 0,
+  "sources": [
+    {
+      "year": 2024,
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+    },
+    {
+      "year": 2025,
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+    },
+    {
+      "year": 2026,
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/",
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "note": "Hunt Planner drawing-odds API, first choice, resident and nonresident counts. Band is drawn divided by applied, with 1 only when every applicant was drawn."
+    }
+  ]
+}

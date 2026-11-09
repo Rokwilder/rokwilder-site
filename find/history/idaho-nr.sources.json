@@ -1,0 +1,30 @@
+{
+  "state": "idaho-nr",
+  "yearsAdded": [
+    2026
+  ],
+  "unavailable": [
+    {
+      "year": 2024,
+      "why": "No 2024 nonresident draw-data PDF was posted on the IDFG nonresident page, and the Internet Archive only has the 2026 file of that report."
+    },
+    {
+      "year": 2025,
+      "why": "No 2025 nonresident draw-data PDF was posted on the IDFG nonresident page, and the Internet Archive only has the 2026 file of that report."
+    },
+    {
+      "scope": "general-season windows",
+      "why": "Those rows are season dates for an over-the-counter tag. They are not draw results."
+    }
+  ],
+  "match": "2026 zone or unit and tag letter, the same key already on the page. No earlier year is attached.",
+  "band": "drew",
+  "sources": [
+    {
+      "year": 2026,
+      "url": "https://idfg.idaho.gov/sites/default/files/nonresident-draw-data-and-descriptions_2026-draw.pdf",
+      "archive": "https://web.archive.org/web/20260813085104/https://idfg.idaho.gov/sites/default/files/nonresident-draw-data-and-descriptions_2026-draw.pdf",
+      "note": "The band is copied from the public file already built from that PDF. It is not recomputed and the PDF is not re-banded here."
+    }
+  ]
+}

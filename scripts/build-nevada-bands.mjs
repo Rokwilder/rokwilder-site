@@ -105,7 +105,7 @@ function parseTsv(tsv) {
   return lines;
 }
 
-function classify(title, weapon) {
+export function classify(title, weapon) {
   const live = /^NR\b/.test(title) ? 'nr' : 'res';
   let who = 'main';
   if (/Junior/i.test(title)) who = 'junior';
@@ -177,7 +177,7 @@ function assignRow(line, cols) {
   return {point, s: got.s.map(v => v ?? 0), a: got.a.map(v => v ?? 0)};
 }
 
-function parsePdf(tsv, srcId, url) {
+export function parsePdf(tsv, srcId, url) {
   const lines = parseTsv(tsv);
   const hunts = [];
   let title = '';
@@ -201,7 +201,7 @@ function parsePdf(tsv, srcId, url) {
 
   for (const line of lines) {
     const t = line.text;
-    if (!t || /Nevada Bonus Point and Application Choice Trends/.test(t) || t === '2025 Big Game Main Draw') continue;
+    if (!t || /Nevada Bonus Point and Application Choice Trends/.test(t) || /^\d{4} Big Game Main Draw$/.test(t)) continue;
     if (/^Page \d+ of \d+$/.test(t) || /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(t)) continue;
     if (/^Successful Applicants by Choice$/.test(t) || /^Total Applicants by Choice$/.test(t)) continue;
     if (line.words.length <= 2 && line.words[0].left > 470 && /^(Total|Applicants)$/.test(t)) continue;

@@ -58,7 +58,7 @@ function how(h,b){const pp=b&&b.pts;
  if(S.res=='res'&&!PTSP.has(S.sp)&&!['goat','bison'].includes(S.sp))return 'Wyoming residents draw elk, deer and pronghorn at random. Points are not used.'+EST;
  if(h.cls=='reduced')return 'Reduced-price cow/calf and doe/fawn licenses are drawn at random. Points are not used.'+EST;
  return 'This draw is random. Points are not used.'+EST}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}</button></li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const r=ranked(),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
  const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`;
@@ -75,7 +75,7 @@ function numbers(h){const raw=h.raw&&h.raw[pool()];if(!raw)return '';let t='';
  return t}
 function showDetail(k,sc){const h=WH[k],v=band(k),o=$('detail'),b=h.od[pool()];if(v==null||!b)return;$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
- `<div class="fv">${vdot(v)}${VERD(v)}</div>`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+
+ `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+
  `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):fpBox())+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
  `<p class="note">WGFD's printed description: "${esc(h.desc)}". Their reports cut long descriptions short; season dates, weapons and limitations are in the WGFD regulations for this hunt area. Sources: ${sourceHTML(h)}.</p>`;
