@@ -8,8 +8,10 @@
 // and the Full Pass does not serve Wyoming exact figures yet. window.RW_FP alone cannot turn exact numbers on unless a record has raw fields.
 (function(){
 const FP=window.RW_FP===true && typeof WH==='object' && Object.values(WH).some(h=>h&&h.raw);
-const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level, for Colorado, Utah and Arizona</li><li>About how many points you need to be sure to draw in those states</li><li>Past draw results: Colorado back to 2021; Utah 2026 by point level plus 2025 totals; Arizona 2026</li></ul><p class="fpp">This Wyoming page shows a verdict band, not an exact percentage. Exact Wyoming and Idaho odds are not in the Full Pass. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>FP?'':`<p class="fpl">Exact Wyoming odds are not on this site. The Full Pass (not on sale yet) is exact odds for Colorado, Utah and Arizona. <a href="../pricing.html">See pricing</a></p>`;
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This page shows a verdict band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact percentages are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
+const paid=()=>window.RWGate?RWGate.paid():FP;
+const isSample=k=>{const a=WH[k]&&WH[k].area;return a==='100'||a==='102'};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const M=WY_META;
 let S={sp:'elk',res:'res',dr:'nr',pts:0,sx:'',red:1,gen:1,n:25};
@@ -62,7 +64,11 @@ function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span cla
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const r=ranked(),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
  const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`;
- o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2><p class="dq">${who()}. Best odds first. Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
+ if(!paid()){const samples=r.filter(x=>isSample(x.k));
+  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, so you can see a full result. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
+  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
+ const ban=window.RWGate?RWGate.banner():'';
+ o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2><p class="dq">${who()}. Best odds first. Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
   `<ol class="fl">`+r.slice(0,S.n).map(card).join('')+`</ol>`+(r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another hunt type, or check back as you build points.</p>')+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
@@ -73,7 +79,7 @@ function numbers(h){const raw=h.raw&&h.raw[pool()];if(!raw)return '';let t='';
  if(raw.pp){t+=`<p class="lh">Preference point pool: ${raw.pp.quota} licenses</p><table class="dt"><tr><th>Points</th><th>Applicants</th><th>Printed odds</th></tr>`+raw.pp.lv.map(l=>`<tr><td>${l.le?'≤ ':l.lt?'< ':''}${l.pts}</td><td>${l.apps}</td><td>${pct(l.odds)}</td></tr>`).join('')+`</table><p class="dq">These point-pool odds are printed by WGFD. A "&lt; N" row is a party average between whole numbers for elk, deer and pronghorn. Moose and bighorn sheep do not allow parties, so "&lt; N" there means everyone under that point total. Source: ${rep(raw.ppsrc)}.</p>`}
  if(raw.rand){t+=`<p class="lh">${raw.pp?'Random pool':'Random draw'}: ${raw.rand.quota} licenses, ${raw.rand.first.toLocaleString()} 1st-choice applicants</p><p class="dq">Random odds are our estimate, about ${pct(raw.R)} (licenses ÷ 1st-choice applicants, capped at 100%). WGFD prints the counts, not this percentage. Source: ${rep(raw.rsrc)}.</p>`}
  return t}
-function showDetail(k,sc){const h=WH[k],v=band(k),o=$('detail'),b=h.od[pool()];if(v==null||!b)return;$('out').hidden=true;o.hidden=false;
+function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=WH[k],v=band(k),o=$('detail'),b=h.od[pool()];if(v==null||!b)return;$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
  `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+
  `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):fpBox())+

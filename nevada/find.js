@@ -3,8 +3,10 @@
 // A stored band is what happened at that exact point level. A missing level is not filled in.
 // There is no preference-point guarantee, and window.RW_FP cannot reveal a rate: this file has no counts.
 (function(){
-const fpBox=()=>`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds</p><ul><li>Exact draw odds at every point level, for Colorado, Utah and Arizona</li><li>About how many points you need to be sure to draw in those states</li><li>Past draw results: Colorado back to 2021; Utah 2026 by point level plus 2025 totals; Arizona 2026</li></ul><p class="fpp">This Nevada page is a 2025 result band, not an exact percentage. Exact Nevada odds are not in the Full Pass. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>`<p class="fpl">Exact Nevada odds are not on this site. The Full Pass (not on sale yet) is exact odds for Colorado, Utah and Arizona. <a href="../pricing.html">See pricing</a></p>`;
+const fpBox=()=>`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This Nevada page is a 2025 result band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>`<p class="fpl">Exact Nevada odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
+const paid=()=>window.RWGate?RWGate.paid():false;
+const isSample=k=>{const u=NH[k]&&NH[k].units;return u==='113'||u==='221'};
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const H=Object.entries(NH);
@@ -46,7 +48,11 @@ function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;$('empty').hidden=true;
   const r=ranked(),nb=below(),nm=missing();
   const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Under one in twenty, and rows where none drew, stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p>`;
-  o.innerHTML=`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2><p class="dq">${esc(whoLine())}. Strongest 2025 result first. Tap a hunt for the other point levels.</p>`+fpBox()+
+  if(!paid()){const samples=r.filter(x=>isSample(x.k));
+    o.innerHTML=RWGate.freeShell({count:r.length,species:(SP[S.sp]||S.sp).toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 113 and 221 only, so you can see a full result. This is not your whole list. The count is the 2025 main draw at this point level, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
+    o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
+  const ban=window.RWGate?RWGate.banner():'';
+  o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2><p class="dq">${esc(whoLine())}. Strongest 2025 result first. Tap a hunt for the other point levels.</p>`+fpBox()+
     `<ol class="fl">`+r.slice(0,S.n).map(card).join('')+`</ol>`+(r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
     (r.length?'':`<p class="dq">No 2025 1st-choice row at this point level reached one in twenty. Try another weapon, another point level, or the other residency.</p>`)+note+fpLine();
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
@@ -54,6 +60,7 @@ function showList(sc){
   if(sc)o.scrollIntoView({behavior:'smooth'});
 }
 function showDetail(k,sc){
+  if(!paid()&&!isSample(k)){showList(sc);return}
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   const word=v===null?'No 1st-choice row at this point level':(WORD[v]||(v===0?'NONE DREW':'UNDER ONE IN TWENTY'));
   const src=NV_META.src[h.src];
