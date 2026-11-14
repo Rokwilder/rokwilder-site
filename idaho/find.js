@@ -6,7 +6,8 @@
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const M=ID_META;
-let S={sp:'elk',res:'res',draw:1,sx:'',youth:1,n:25,focus:''};
+let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:''};
+let unitCtl=null;
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
 const VERD=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'UNDER ONE IN TWENTY':v===0?'NONE DREW':'NO RESULT';
@@ -27,12 +28,13 @@ function split(){const show=[],under=[],none=[],unlabeled=[];
  for(const [k,h] of rows()){
   if(S.sx&&!h.sex){unlabeled.push(k);continue}
   if(!S.youth&&h.youth)continue;
+  if(!RWUnit.hit([h.area,h.n],S.unit))continue;
   const v=S.res==='res'?h.res:h.nr;
   if(v==null)none.push(k);
   else if(v>=.05)show.push({k,v});
   else under.push(k);
  }
- show.sort((a,b)=>b.v-a.v||IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true})||IH[a.k].area.localeCompare(IH[b.k].area));
+ show.sort((a,b)=>b.v-a.v||RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area])||String((IH[a.k].seg[0]||{}).o||'').localeCompare(String((IH[b.k].seg[0]||{}).o||''))||IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true}));
  return {show,under,none,unlabeled}}
 function title(k){const h=IH[k];const bits=[`Hunt ${esc(h.n)}`,`Area ${esc(h.area)}`];
  if(h.sex)bits.push(SXN[h.sex]);
@@ -80,7 +82,7 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;co
  if(sc)o.scrollIntoView({behavior:'smooth'})}
 function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=IH[k];if(!h)return;S.sp=h.sp;S.draw=h.draw;paint();const v=S.res==='res'?h.res:h.nr;const o=$('detail');$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
-  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}<p class="how">${wordNote(v)} ${how()}</p>`+idExtra(k,v)+fpBox()+segHTML(h)+
+  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}<p class="how">${wordNote(v)} ${how()}</p>`+RWQuota.html('id',k,FP)+idExtra(k,v)+fpBox()+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
  $('back').onclick=()=>showList(1);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}
@@ -93,6 +95,7 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
  $('d2note').textContent=`IDFG's 2026 odds table has no second-drawing rows for ${missing.join(', ')}.`;
  $('d2note').hidden=has2||S.draw!==2;
  $('ptnote').textContent=`No preference points. The band does not change if you have applied before. ${spName(S.sp)} uses the same random drawing as the other controlled hunts on this page.`;
+ if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}
 }
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;paint()});
 document.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{S.res=b.dataset.res;paint()});
@@ -100,7 +103,9 @@ document.querySelectorAll('[data-draw]').forEach(b=>b.onclick=()=>{S.draw=+b.dat
 document.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;paint()});
 $('youth').onchange=e=>{S.youth=e.target.checked?1:0};
 $('go').onclick=()=>{S.n=25;showList(1)};
+unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const h of Object.values(IH)){if(h.sp!==S.sp)continue;const x=String(h.area);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
 if(Q.get('sp')&&M.species[Q.get('sp')])S.sp=Q.get('sp');
+if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('res')==='nr')S.res='nr';
 if(Q.get('draw')==='2')S.draw=2;
 if(Q.get('sx')&&SXN[Q.get('sx')])S.sx=Q.get('sx');

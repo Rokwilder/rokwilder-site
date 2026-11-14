@@ -27,12 +27,13 @@ const SX={
 const WPN={alw:'Any legal weapon',bow:'Archery',muz:'Muzzleloader',classic:'Classic',shotgun:'Shotgun or bow only',prim:'Primitive'};
 const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
-let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,n:25,focus:''};
+let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,unit:'',n:25,focus:''};
+let unitCtl=null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rows=()=>H.filter(([,h])=>h.sp===S.sp&&h.sx===S.sx&&h.live===S.live&&h.who===S.who);
 const weaponRows=()=>rows().filter(([,h])=>h.wpn===S.wpn);
 function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[S.pts]:null}
-function ranked(){return weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true})||a.h.season.localeCompare(b.h.season))}
+function ranked(){return weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units])||a.h.season.localeCompare(b.h.season)||a.k.localeCompare(b.k))}
 const below=()=>weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v<0.05}).length;
 const missing=()=>weaponRows().filter(([,h])=>bandAt(h)===null).length;
 const maxPts=()=>{let m=0;for(const [,h] of rows())for(const p of Object.keys(h.bp))m=Math.max(m,Number(p));return m};
@@ -75,7 +76,7 @@ function showDetail(k,sc){
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   const word=v===null?'No 1st-choice row at this point level':(WORD[v]||(v===0?'NONE DREW':'UNDER ONE IN TWENTY'));
   const src=NV_META.src[h.src];
-  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${RWHy(k,null,S.pts)}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvExtra(h,v)+
+  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${RWHy(k,null,S.pts)}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
     (v===null?'':ladder(h))+fpBox()+
     `<p class="note">Season dates are the dates printed on the 2025 table: ${esc(h.season)}. They are not a 2026 or 2027 season. Source: <a href="${esc(src)}">NDOW 2025 bonus-point table</a>.</p>`;
   $('back').onclick=()=>showList(1);
@@ -111,12 +112,15 @@ function paint(){
   $('ptnote').textContent=mx?`The stepper stops at ${mx}, the highest level in the 2025 tables for this category. A higher total is not treated as a draw.`:'This category has no 2025 table for these choices.';
   $('empty').hidden=rows().length>0;
   $('empty').textContent=rows().length?'':`The 2025 bonus-point page has no ${liveWord().toLowerCase()} table for this category. That is not a finding that the hunt was closed.`;
+ if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}
 }
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;S.who='main';S.pts=0;paint()});
 $('pm').onclick=()=>{S.pts=Math.max(0,S.pts-1);paint()};
 $('pp').onclick=()=>{S.pts=Math.min(maxPts(),S.pts+1);paint()};
 $('go').onclick=()=>{S.n=25;if(!rows().length){$('out').hidden=true;$('detail').hidden=true;$('empty').hidden=false;$('empty').scrollIntoView({behavior:'smooth'});return}showList(1)};
+unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const [,h] of H){if(h.sp!==S.sp)continue;const x=String(h.units);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
 if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');
+if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('sx'))S.sx=Q.get('sx');
 if(Q.get('live')==='nr'||Q.get('live')==='res')S.live=Q.get('live');
 if(Q.get('who'))S.who=Q.get('who');

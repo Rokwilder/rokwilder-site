@@ -17,7 +17,9 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const u=AH[k]&&AH[k].u||[];return u.includes('7')||u.includes('1')};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const MAXP=AZ_META.maxp;const SRC=AZ_META.src;
-let S={sp:'elk',pl:'elk-bull',res:'res',pts:0,w:'',sx:'',so:'',mc:'',yo:0,champ:0,n:25,tab:'list',mu:null};
+let S={sp:'elk',pl:'elk-bull',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',yo:0,champ:0,n:25,tab:'list',mu:null};
+let unitCtl=null;
+function azUnits(k){const h=AH[k];return [].concat(h.u||[], h.area||[])}
 const SP={elk:'Elk',pronghorn:'Pronghorn',deer:'Deer',turkey:'Turkey',javelina:'Javelina',sheep:'Bighorn sheep',bison:'Bison',crane:'Sandhill crane',bear:'Black bear'};
 const PL=AZ_META.pools;const poolsOf=sp=>Object.keys(PL).filter(k=>PL[k][0]==sp);
 const PSHORT={'elk-bull':'Bull','elk-cow':'Antlerless','elk-any':'Any elk','ph':'Buck pronghorn','deer-ad':'Any antlered deer','deer-mule':'Antlered mule deer','deer-wt':'Antlered whitetail','deer-al':'Antlerless or any deer','turkey-s':'Spring','turkey-f':'Fall','jav-s':'Spring','jav-f':'Fall','sheep-d':'Desert bighorn','sheep-rm':'Rocky Mountain bighorn','bison':'Bison','crane':'Sandhill crane'};
@@ -42,8 +44,8 @@ const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||AHk.some(k=>AH[k].pool==pl&&SX[k
 const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
-function ranked(){return AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k))return false;const v=odds(k);return v!=null&&v>=.05})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||((AH[b.k].hv||[])[3]??-1)-((AH[a.k].hv||[])[3]??-1)||a.k.localeCompare(b.k))}
+function ranked(){return AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
+ .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||RWUnit.sortNum(azUnits(a.k))-RWUnit.sortNum(azUnits(b.k))||String(AH[a.k].d||'').localeCompare(String(AH[b.k].d||''))||String(AH[a.k].n).localeCompare(String(AH[b.k].n),undefined,{numeric:true}))}
 const noHist=()=>AHk.filter(k=>{const h=AH[k];return plOK(h)&&avail(h)&&wOK(h)&&sxOK(k)&&!h.od});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const tag=h=>(h.t=='youth'?'<b class="yb">YOUTH ONLY</b> ':'')+(h.t=='champ'?'<b class="yb">CHAMP</b> ':'')+(h.t=='lo'?'<b class="sx">Limited opportunity</b> · ':'');
@@ -223,7 +225,7 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const h=AH[k]
   if(h.nrc)cap=`<p class="note"><b>Nonresident cap changes in 2027.</b> Under the amended Rule R12-4-114(E)(2), in effect July 1, 2026, nonresidents can get no more than ${h.nrc.new} of this hunt's ${h.T} tags. In the 2026 draw the limit was ${h.nrc.old}. Our estimate uses the new cap.</p>`}
  const f=fee(h);const bk2=S.tab=='map'?'← Back to my map':'← Back to my list';
  o.innerHTML=`<button class="btn big2" id="back">${bk2}</button>
- <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k)}</p><div class="vd">${vdot(v??0)}${v==null?'NO DATA':VERD(v)}</div>${RWHy(k,S.res,S.pts)}${v==null?`<p class="dq">${esc(h.why||'No 2026 draw record.')}</p>`:oddsHTML(v,'fo',k)}${sure}${succHTML(k,'fs')}${h.hv?`<p class="note hvn">Hunter success comes from AZGFD's <a href="${SRC.hv[h.hv[4]]}">${h.hv[0]} harvest summary</a> (hunt ${h.hv[5]} that year, same units and hunt type). ${FP?'Numbers are':'The rating is based on numbers'} from hunter questionnaires.</p>`:''}${h.t=='champ'?'<p class="dq">CHAMP hunts need a Challenged Hunter Access/Mobility Permit (Rule R12-4-217).</p>':''}</div>
+ <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k)}</p><div class="vd">${vdot(v??0)}${v==null?'NO DATA':VERD(v)}</div>${RWHy(k,S.res,S.pts)}${v==null?`<p class="dq">${esc(h.why||'No 2026 draw record.')}</p>`:oddsHTML(v,'fo',k)}${sure}${succHTML(k,'fs')}${RWQuota.html('az',k,FP)}${h.hv?`<p class="note hvn">Hunter success comes from AZGFD's <a href="${SRC.hv[h.hv[4]]}">${h.hv[0]} harvest summary</a> (hunt ${h.hv[5]} that year, same units and hunt type). ${FP?'Numbers are':'The rating is based on numbers'} from hunter questionnaires.</p>`:''}${h.t=='champ'?'<p class="dq">CHAMP hunts need a Challenged Hunter Access/Mobility Permit (Rule R12-4-217).</p>':''}</div>
  ${how(h)}${lad}${tbl}${cap}
  <h3>Season</h3><div class="yr"><b>${esc(h.d)}</b><span>${esc(h.sect)}</span></div>${h.nt?`<p class="note">Hunt notes ${esc(h.nt)} in the booklet apply (special restrictions, access, closures).</p>`:''}
  <h3>Tag fee</h3><div class="yr"><b>Resident</b><span>${money(f[0])}</span></div><div class="yr"><b>Nonresident</b><span>${money(f[1])}</span></div><p class="note">Includes the $13 resident / $15 nonresident application fee. You also need a hunting or combination license before you apply ($37 resident hunting, $57 resident combination, $160 nonresident combination, $5 youth combination). ${h.t=='youth'?'Youth-only price. ':''}Source: ${bk('F','PDF page 7')}.</p>
@@ -234,13 +236,13 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const h=AH[k]
  $('back').onclick=$('back2').onclick=goBack;$('vsm').onclick=()=>{S.tab='map';S.mu=h.u[0]||'SP';history.pushState(st('list'),'',url());showList();top2($('out'))};top2(o)}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,so:S.so,mc:S.mc,yo:S.yo,champ:S.champ,n:S.n,tab:S.tab,mu:S.mu,y:v=='list'?scrollY:0});
+const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,yo:S.yo,champ:S.champ,n:S.n,tab:S.tab,mu:S.mu,y:v=='list'?scrollY:0});
 const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
-const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.champ)u.set('champ',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(S.mu&&S.tab=='map')u.set('u',S.mu);if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.champ)u.set('champ',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(S.mu&&S.tab=='map')u.set('u',S.mu);if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
-function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',yo:+s.yo||0,champ:+s.champ||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mu:s.mu??null});sync()}
+function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',unit:s.unit||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',yo:+s.yo||0,champ:+s.champ||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mu:s.mu??null});sync()}
 const wsOf=pl=>[...new Set([...AHk.filter(k=>AH[k].pool==pl).map(k=>AH[k].w),...Object.keys(XP[pl]||{})])];
 function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(S.sp!='bear'&&(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl)))S.pl=sp2[0];
  const bear=S.sp=='bear';$('form2').hidden=bear;
@@ -252,7 +254,8 @@ function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const
   $('wseg').innerHTML=`<button data-w="" class="${S.w==''?'on':''}">Any</button>`+['R','A','M','H','S'].filter(w=>ws.includes(w)).map(w=>`<button data-w="${w}" class="${S.w==w?'on':''}">${{R:'General',A:'Archery',M:'Muzzleloader',H:'HAM',S:'Shotgun shooting shot'}[w]}</button>`).join('');
   $('wseg').querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{S.w=b.dataset.w;sync()})}
  document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
- document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('champ').checked=!!S.champ;if($('ynote'))$('ynote').hidden=!S.yo}
+ document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('champ').checked=!!S.champ;if($('ynote'))$('ynote').hidden=!S.yo;
+ if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}}
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.fbl');if(a)a.href='../feedback.html?about='+a.dataset.about+'&from='+encodeURIComponent(location.href)},true);
 addEventListener('popstate',e=>{const s=e.state;if(!s){$('out').hidden=true;$('detail').hidden=true;return}apply(s);
  if(s.v=='detail'){fromList=false;showDetail(s.k)}else{showList();requestAnimationFrame(()=>scrollTo(0,s.y||0))}});
@@ -262,8 +265,9 @@ document.querySelectorAll('[data-yo]').forEach(b=>b.onclick=()=>{S.yo=+b.dataset
 $('champ').onchange=()=>{S.champ=$('champ').checked?1:0};
 const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pts};$('pm').onclick=()=>step(-1);$('pp').onclick=()=>step(1);
 $('go').onclick=()=>{S.n=25;S.on=0;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
+unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k of AHk){if(AH[k].sp!=S.sp)continue;for(const u of azUnits(k)){const x=String(u);if(!x||seen.has(x)||x.length>24)continue;seen.add(x);s.push(x)}}return s}});
 if(Q.get('sp')){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=sp=='bear'?'':(PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0]);
- apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
+ apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&plOK(AH[h])&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__AZ={otcRows,OU:()=>OU,FP,oddsAt,hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
