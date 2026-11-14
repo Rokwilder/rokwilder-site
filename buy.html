@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>Scouting package preview | Rokwilder Scouting</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="member/member.css"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
+<title>Scouting package preview | Rokwilder Scouting</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="member/member.css?v=20261114"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
 <header><nav class="nav"><a class="brand" href="index.html"><picture><source media="(max-width:600px)" srcset="img/brand/logo-gw5-compact.svg"><img src="img/brand/logo-gw5.svg" alt="Rokwilder: Research, Scout, Hunt" width="252" height="84"></picture></a><a class="l" href="find.html">Find Your Hunt</a><a class="l" href="unitiq.html">UnitIQ</a><a class="l" href="samples.html">Sample packages</a><a class="l" href="pricing.html">Pricing</a><a class="l" href="packages.html">Packages</a><a class="l" href="about.html">About</a><a class="l" href="faq.html">FAQ</a></nav></header><main>
 <div class="mbox">
-<div class="closednote" id="closednote"><b>Checkout is not open.</b> This page is a preview of the package form. It cannot change the price, and it does not take a payment.</div>
+<p class="rw-calm" id="closednote" data-rw-state="buy">Checkout is not open.</p>
 <p class="step">Step 1 of 2</p><h1>Pick a package</h1>
 <label class="choice"><input type="radio" name="p" value="package"><b>UnitIQ Scouting Package · $99</b><span>Hotspot maps, glassing spots, GPX/KML waypoints and a written plan for one unit, one species, one season. Includes 1 year of the Full Pass.</span></label>
 <label class="choice"><input type="radio" name="p" value="extra_unit"><b>Extra unit · $39</b><span>Add one more unit to a UnitIQ Scouting Package you already bought for the same season.</span></label>
@@ -18,13 +18,13 @@
 </div>
 </main>
 <footer>Rokwilder Scouting · UnitIQ · Family owned · Colorado<br>Zones are estimates from public data, not guarantees. Not an outfitter or guide service. Not affiliated with or endorsed by Colorado Parks and Wildlife, the Utah Division of Wildlife Resources, the Arizona Game and Fish Department, the Wyoming Game and Fish Department, the Idaho Department of Fish and Game or the Nevada Department of Wildlife.<br>Follow: <a href="https://www.instagram.com/rokwilderscouting/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595232467176" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/rokwilderco" target="_blank" rel="noopener">X</a><br>Draw odds by state: <a href="find.html">Colorado</a> · <a href="utah/find.html">Utah</a> · <a href="arizona/find.html">Arizona</a> · <a href="wyoming/find.html">Wyoming</a> · <a href="idaho/find.html">Idaho</a> · <a href="nevada/find.html">Nevada</a><br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="feedback.html">Feedback</a><br>Contact: <a href="mailto:support@rokwilder.com">support@rokwilder.com</a></footer>
-<script src="member/rw.js"></script>
+<script src="member/rw.js?v=20261114"></script>
 <script>
 (async()=>{const $=i=>document.getElementById(i),Q=new URLSearchParams(location.search);
 const say=(t,c)=>{$('m').className='say '+(c||'');$('m').textContent=t};
-const [U,cat]=await Promise.all([fetch('member/units.json').then(r=>r.json()).catch(()=>({})),RW.catalog()]);
+const [U,cat]=await Promise.all([fetch('member/units.json?v=20261114').then(r=>r.json()).catch(()=>({})),RW.catalog()]);
 const open=!!(cat&&cat.checkoutOpen===true);
-if(open)$('closednote').innerHTML='<b>Checkout is open.</b> The price is set by the server. If you have a promo code, you will enter it on the next page, in Stripe Checkout.';
+try{sessionStorage.setItem('rw-buy',JSON.stringify({product:Q.get('p')||'package',href:location.pathname+location.search}))}catch(e){}
 $('se').innerHTML=((cat&&cat.seasons)||['2027']).map(s=>`<option value="${s}">${s} season</option>`).join('');
 const pick=Q.get('p')||'package';document.querySelectorAll('input[name=p]').forEach(r=>r.checked=r.value==pick);
 if(Q.get('state')&&['CO','UT','AZ'].indexOf(Q.get('state'))!==-1)$('st').value=Q.get('state');if(Q.get('species'))$('sp').value=Q.get('species');if(Q.get('season'))$('se').value=Q.get('season');
@@ -32,7 +32,7 @@ function units(){const st=$('st').value,l=(U[st]||{})[$('sp').value]||[];$('unl'
  $('un').innerHTML=l.map(u=>`<option value="${RW.esc(u)}">${st=='UT'?'':'Unit '}${RW.esc(u)}</option>`).join('');spots()}
 const SN={CO:'Colorado',UT:'Utah',AZ:'Arizona'};
 async function spots(){const st=$('st').value,p=(document.querySelector('input[name=p]:checked')||{}).value;
- if(!open){$('spots').className='say';$('spots').textContent='Checkout is not open, so package spots are not being sold.';return}
+ if(!open){$('spots').className='say';$('spots').textContent='';return}
  const q=new URLSearchParams({state:st,season:$('se').value,species:$('sp').value,unit:$('un').value});
  const r=await fetch(RW.API+'/api/spots?'+q,{credentials:'include'}).then(r=>r.json()).catch(()=>null);if(!r||r.cap==null){$('spots').textContent='';return}
  $('spots').className='say '+(r.left?'ok':'err');
@@ -40,7 +40,6 @@ async function spots(){const st=$('st').value,p=(document.querySelector('input[n
 $('st').onchange=units;$('sp').onchange=units;$('se').onchange=spots;$('un').onchange=spots;document.querySelectorAll('input[name=p]').forEach(r=>r.onchange=spots);units();
 if(Q.get('unit'))$('un').value=Q.get('unit');
 if(Q.get('canceled'))say('Checkout canceled. Nothing was charged.','ok');
-else if(!open)say('Checkout is not open. Nothing was charged.','');
 $('buy').onclick=async()=>{const p=(document.querySelector('input[name=p]:checked')||{}).value;if(!p){say('Pick a package first.','err');return}
  if($('st').value!=='CO'&&$('st').value!=='UT'&&$('st').value!=='AZ'){say('Pick Colorado, Utah or Arizona.','err');return}
  const b={product:p,state:$('st').value,species:$('sp').value,unit:$('un').value,season:$('se').value};
