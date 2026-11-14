@@ -1,6 +1,8 @@
 // Rokwilder member helper (UnitIQ). Login state, the Full Pass check, and the Find Your Hunt data loader.
 // Wired to https://api.rokwilder.com. Checkout stays closed until the API reports checkoutOpen.
-// This file never loads exact Wyoming odds. Public buy buttons stay waitlist / not on sale unless checkout is open.
+// An active Full Pass loads /api/fullpass/data/{co,ut,az,wy,id,nv}.js. If that file is missing, the member
+// still gets the full public hunt list for that state. Exact counts stay off when the file does not load.
+// Public buy buttons stay waitlist / not on sale unless checkout is open.
 //
 // A tap on a buy button used to follow the waitlist link, or a login link that did not continue,
 // so /api/checkout never ran. The tap now asks the server itself and posts when checkout is open.
@@ -11,9 +13,9 @@
 const me_=document.currentScript;
 const ROOT=me_.src.replace(/member\/rw\.js(\?.*)?$/,'');
 const API=window.RW_API!=null?window.RW_API:'https://api.rokwilder.com';
-const EXACT=new Set(['co','ut','az']); // Wyoming stays a free verdict band. Do not request /api/fullpass/data/wy.js.
-const BAND=(me_.getAttribute('data-band-only')||'').toLowerCase();
-const VER='20261114';
+const EXACT=new Set(['co','ut','az','wy','id','nv']);
+const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada'};
+const VER='20261114b';
 const BUY_KEY='rw-buy';
 let acct=null;
 let buying=false;
@@ -288,15 +290,19 @@ async function maybeBuyFullPass(){
   }finally{buying=false}
 }
 async function boot(o){const st=String(o.state||'').toLowerCase();
- if(BAND==='wy'||st==='wy'||!EXACT.has(st)){window.RW_FP=false;for(const s of [].concat(o.free||[]))await load(s);for(const s of o.after||[])await load(s);nav();return false}
- const a=await account();let fp=hasFullPass(a,st);const free=[].concat(o.free||[]);
- if(fp){try{await load(API+'/api/fullpass/data/'+st+'.js')}catch(e){fp=false}}
- if(!fp)for(const s of free)await load(s);
- window.RW_FP=fp;for(const s of o.after||[])await load(s);
- const m=document.querySelector('main');if(m&&(fp||a.loggedIn)&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar '+(fp?'on':'off');
-  b.innerHTML=fp?'<b>Full Pass:</b> exact draw odds are on for Colorado, Utah and Arizona. Exact Wyoming odds are not included.':'<b>Free view:</b> you see the verdict word and harvest band. Exact Wyoming odds are not in the Full Pass. <a href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
+ const free=[].concat(o.free||[]);
+ const want=o.exact!==false&&EXACT.has(st);
+ if(!want){window.RW_FP=false;for(const s of free)await load(s);for(const s of o.after||[])await load(s);nav();return false}
+ const a=await account();const entitled=hasFullPass(a,st);let exact=false;
+ if(entitled){try{await load(API+'/api/fullpass/data/'+st+'.js');exact=window.RW_FP===true}catch(e){exact=false}}
+ if(!exact){window.RW_FP=false;for(const s of free)await load(s)}
+ window.RW_FP=entitled;
+ const m=document.querySelector('main');if(m&&(entitled||(a&&a.loggedIn))&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar '+(entitled?'on':'off');
+  const name=esc(STATE_NAME[st]||'this state');
+  b.innerHTML=entitled&&exact?'<b>Full Pass:</b> exact draw odds are on for '+name+'.':entitled?'<b>Full Pass:</b> the full '+name+' hunt list is on. Exact odds for '+name+' did not load, so this page shows verdict bands.':'<b>Free view:</b> you see the verdict word and harvest band. Exact '+name+' odds come with the Full Pass. <a href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
   const out=document.getElementById('out');if(out&&out.parentNode)out.parentNode.insertBefore(b,out);else m.prepend(b)}
- nav();return fp}
+ for(const s of o.after||[])await load(s);
+ nav();return entitled}
 document.addEventListener('click',function(ev){
   const el=ev.target&&ev.target.closest&&ev.target.closest('[data-rw-sale]');
   if(!el)return;

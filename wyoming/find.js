@@ -4,8 +4,8 @@
 // A point holder's chance is printed point-pool odds + (1 - those odds) x the random estimate.
 // One point above the highest printed total is treated as a draw when that top group still had licenses left. That step is an estimate.
 // Resident elk, deer and pronghorn, cow/calf, doe/fawn, mountain goat and bison are the random estimate only.
-// The public file stores verdict bands only (1, .75, .25, .05, .01, 0). Exact quotas, applicant counts and unrounded odds are not in it,
-// and the Full Pass does not serve Wyoming exact figures yet. window.RW_FP alone cannot turn exact numbers on unless a record has raw fields.
+// The public file stores verdict bands only (1, .75, .25, .05, .01, 0). Exact quotas, applicant counts and unrounded odds are not in it.
+// window.RW_FP shows the stored chance and the raw table when a Full Pass record has raw fields.
 (function(){
 const FP=window.RW_FP===true && typeof WH==='object' && Object.values(WH).some(h=>h&&h.raw);
 const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This page shows a verdict band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;

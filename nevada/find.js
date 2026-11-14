@@ -1,11 +1,21 @@
-// Nevada Find Your Hunt. 2025 Big Game Main Draw, 1st choice, result bands only.
+// Nevada Find Your Hunt. 2025 Big Game Main Draw, 1st choice.
 // Bonus points are squared and the application is added, then the draw is random.
 // A stored band is what happened at that exact point level. A missing level is not filled in.
-// There is no preference-point guarantee, and window.RW_FP cannot reveal a rate: this file has no counts.
+// The public file has no counts. Exact percents render only when a Full Pass file adds raw.lv[points].rate1
+// (2025 1st choice) and window.RW_FP is set by that file. rate1 is from 0 to 1.
 (function(){
-const fpBox=()=>`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This Nevada page is a 2025 result band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>`<p class="fpl">Exact Nevada odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
-const paid=()=>window.RWGate?RWGate.paid():false;
+const FP=window.RW_FP===true && typeof NH==='object' && Object.values(NH).some(h=>h&&h.raw&&h.raw.lv);
+const pct=v=>{const r=Math.round(v*100);return v>0&&r===0?'under 1%':v<1&&r===100?'over 99%':r+'%'};
+function lvRaw(h){const lv=h&&h.raw&&h.raw.lv;if(!lv)return null;return lv[S.pts]!=null?lv[S.pts]:lv[String(S.pts)]}
+function oddsHTML(h){
+ if(!FP)return '';
+ const row=lvRaw(h);
+ if(!row||typeof row.rate1!=='number'||!(row.rate1>=0)||row.rate1>1)return `<span class="fo"><span class="fpn">No 2025 1st-choice count at this point level</span></span>`;
+ const n=(typeof row.s1==='number'&&typeof row.a1==='number'&&row.a1>0)?`, ${row.s1.toLocaleString()} drawn of ${row.a1.toLocaleString()}`:'';
+ return `<div class="fo"><b>${pct(row.rate1)}</b> <span>2025 1st-choice result${n}</span></div>`}
+const paid=()=>window.RWGate?RWGate.paid():FP;
+const fpBox=()=>(FP||paid())?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This Nevada page is a 2025 result band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>(FP||paid())?'':`<p class="fpl">Exact Nevada odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
 const SAMPLE_UNITS=new Set(['231','075']);
 const isSample=k=>{const u=NH[k]&&NH[k].units;return SAMPLE_UNITS.has(u)};
 const bandWord=v=>WORD[v]||(v===0?'NONE DREW':v>0?'UNDER ONE IN TWENTY':'');
@@ -46,10 +56,20 @@ function nvPlace(text){const key=RWLand.nvKey(text);if(!key)return String(text);
 function nvBand(h){return RWLand.band('nv',RWLand.nvKey(h.units))}
 function nvExtra(h,v){if(!paid())return '';const b=nvBand(h),place=nvPlace(h.units);return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place,href:RWLand.pkgHref('../','nv',place)})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${RWHy(x.k,null,S.pts)}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(nvExtra(x.h,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${RWHy(x.k,null,S.pts)}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}</button></li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(nvExtra(x.h,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}${bits.info}</button>${bits.next}</li>`}
 function sampleRows(){return weaponRows().filter(([k,h])=>isSample(k)&&bandAt(h)!=null).map(([k,h])=>({k,h,v:bandAt(h)}))}
 function ladder(h){
+  if(FP&&h.raw&&h.raw.lv){
+    const pts=Object.keys(h.raw.lv).map(Number).filter(n=>!Number.isNaN(n)).sort((a,b)=>a-b);
+    const quota=(typeof h.raw.quota==='number')?`<p class="dq">Quota printed on the 2025 table: ${h.raw.quota.toLocaleString()}.</p>`:'';
+    return `<p class="lh">2025 1st-choice result by bonus-point level</p>${quota}<table class="dt"><tr><th>Bonus points</th><th>1st choice</th><th>All choices</th></tr>`+pts.map(n=>{
+      const row=h.raw.lv[n]!=null?h.raw.lv[n]:h.raw.lv[String(n)];
+      const first=row&&typeof row.rate1==='number'?`${pct(row.rate1)}${typeof row.s1==='number'&&typeof row.a1==='number'?` (${row.s1.toLocaleString()} of ${row.a1.toLocaleString()})`:''}`:'';
+      const all=row&&typeof row.s==='number'&&typeof row.a==='number'?`${row.s.toLocaleString()} of ${row.a.toLocaleString()}`:'';
+      return `<tr class="${n===S.pts?'on':''}"><td>${n}</td><td>${first}</td><td>${all}</td></tr>`;
+    }).join('')+'</table><p class="dq">1st choice is the percent on this page. All choices adds the other choices on that 2025 row. A level is listed when the file has a row. This is not a forecast.</p>';
+  }
   const pts=Object.keys(h.bp).map(Number).sort((a,b)=>a-b);
   return `<p class="lh">2025 1st-choice result by bonus-point level</p><table class="dt"><tr><th>Bonus points</th><th>Result</th></tr>`+pts.map(n=>{const v=h.bp[n];const word=WORD[v]||(v===0?'None drew':'Under one in twenty');return `<tr class="${n===S.pts?'on':''}"><td>${n}</td><td>${word}</td></tr>`}).join('')+'</table><p class="dq">Words only. A level is listed when that table had a 1st-choice row. A blank level is not a zero, and a higher level is not filled in from a lower one.</p>';
 }
@@ -75,7 +95,7 @@ function showDetail(k,sc){
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   const word=v===null?'No 1st-choice row at this point level':(WORD[v]||(v===0?'NONE DREW':'UNDER ONE IN TWENTY'));
   const src=NV_META.src[h.src];
-  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${RWHy(k,null,S.pts)}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvExtra(h,v)+
+  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvExtra(h,v)+
     (v===null?'':ladder(h))+fpBox()+
     `<p class="note">Season dates are the dates printed on the 2025 table: ${esc(h.season)}. They are not a 2026 or 2027 season. Source: <a href="${esc(src)}">NDOW 2025 bonus-point table</a>.</p>`;
   $('back').onclick=()=>showList(1);
