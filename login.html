@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Log in | Rokwilder Scouting</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="member/member.css"><link rel="icon" href="img/brand/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="img/brand/icon-g1.svg"><link rel="apple-touch-icon" href="img/brand/icon-g1-180.png"></head><body>
+<header><nav class="nav"><a class="brand" href="index.html"><picture><source media="(max-width:600px)" srcset="img/brand/logo-gw5-compact.svg"><img src="img/brand/logo-gw5.svg" alt="Rokwilder: Research, Scout, Hunt" width="252" height="84"></picture></a><a class="l" href="find.html">Find Your Hunt</a><a class="l" href="unitiq.html">UnitIQ</a><a class="l" href="samples.html">Sample packages</a><a class="l" href="pricing.html">Pricing</a><a class="l" href="packages.html">Packages</a><a class="l" href="about.html">About</a><a class="l" href="faq.html">FAQ</a></nav></header><main>
+<div class="mbox" id="s1">
+<p class="closednote"><b>Checkout is not open.</b> Logging in does not start a payment and nothing is charged.</p>
+<p class="step">Step 1 of 2</p><h1>Log in or sign up</h1>
+<p>No password to remember. We email you a 6-digit code. If it doesn't arrive, come back to this step and ask for another one.</p>
+<label for="em">Your email</label><input id="em" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+<button class="bigbtn" id="send" type="button">Email me a code</button>
+<p class="say" id="m1" role="status"></p>
+<p class="fine2">New here? These same two steps make your free account. Questions: <a href="mailto:support@rokwilder.com">support@rokwilder.com</a>.</p></div>
+<div class="mbox" id="s2" hidden>
+<p class="step">Step 2 of 2</p><h1>Enter your code</h1>
+<p>We sent a 6-digit code to <b id="emshow"></b>. It works for 10 minutes.</p>
+<div class="devcode" id="dev" hidden>TEST MODE: no email was sent. Your code is <b id="devc"></b></div>
+<label for="cd">6-digit code</label><input id="cd" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="······">
+<button class="bigbtn" id="go" type="button">Log in</button>
+<button class="bigbtn o" id="back" type="button">Use a different email</button>
+<p class="say" id="m2" role="status"></p></div>
+</main>
+<footer>Rokwilder Scouting · UnitIQ · Family owned · Colorado<br>Zones are estimates from public data, not guarantees. Not an outfitter or guide service. Not affiliated with or endorsed by Colorado Parks and Wildlife, the Utah Division of Wildlife Resources, the Arizona Game and Fish Department, the Wyoming Game and Fish Department, the Idaho Department of Fish and Game or the Nevada Department of Wildlife.<br>Follow: <a href="https://www.instagram.com/rokwilderscouting/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595232467176" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/rokwilderco" target="_blank" rel="noopener">X</a><br>Draw odds by state: <a href="find.html">Colorado</a> · <a href="utah/find.html">Utah</a> · <a href="arizona/find.html">Arizona</a> · <a href="wyoming/find.html">Wyoming</a> · <a href="idaho/find.html">Idaho</a> · <a href="nevada/find.html">Nevada</a><br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="feedback.html">Feedback</a><br>Contact: <a href="mailto:support@rokwilder.com">support@rokwilder.com</a></footer>
+<script src="member/rw.js"></script>
+<script>
+(()=>{const $=i=>document.getElementById(i),Q=new URLSearchParams(location.search);
+function safeNext(n){if(!n||n[0]!=='/'||n[1]==='/'||/[\\:@]/.test(n))return 'account.html';return n}
+const next=safeNext(Q.get('next'));
+const say=(id,t,c)=>{$(id).className='say '+(c||'');$(id).textContent=t};
+if(Q.get('out'))say('m1','You are logged out.','ok');
+async function send(){const em=$('em').value.trim();if(!em){say('m1','Please type your email.','err');return}
+ $('send').disabled=true;say('m1','Sending…');let r;try{r=await RW.api('/api/auth/request',{email:em})}catch(e){r={ok:false,j:{}}}
+ $('send').disabled=false;
+ if(!r.ok){say('m1',(r.j&&r.j.error)||'We could not send a code. Check the address, or email support@rokwilder.com.','err');return}
+ $('s1').hidden=true;$('s2').hidden=false;$('emshow').textContent=em;say('m2','');
+ if(r.j.devCode){$('dev').hidden=false;$('devc').textContent=r.j.devCode}$('cd').focus()}
+async function go(){const code=$('cd').value.replace(/\D/g,'');if(code.length!=6){say('m2','The code is 6 numbers.','err');return}
+ $('go').disabled=true;say('m2','Checking…');let r;try{r=await RW.api('/api/auth/verify',{email:$('em').value.trim(),code})}catch(e){r={ok:false,j:{}}}
+ $('go').disabled=false;
+ if(r.ok){say('m2','You are in.','ok');location.href=next}else say('m2',(r.j&&r.j.error)||'That code did not work. Ask for a new one.','err')}
+$('send').onclick=send;$('em').onkeydown=e=>{if(e.key=='Enter')send()};$('go').onclick=go;$('cd').onkeydown=e=>{if(e.key=='Enter')go()};
+$('back').onclick=()=>{$('s1').hidden=false;$('s2').hidden=true;$('dev').hidden=true;$('cd').value=''};
+RW.account().then(a=>{if(a.loggedIn&&!Q.get('out'))say('m1','You are already logged in as '+a.email+'.','ok')});})();
+</script></body></html>

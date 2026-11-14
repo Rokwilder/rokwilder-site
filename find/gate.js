@@ -1,4 +1,4 @@
-// Soft front-end gate. There is no member login yet, so this only hides the hunt list in the page.
+// Soft front-end gate. Member login is on this page via member/rw.js. This still hides the hunt list unless window.RW_FP is set or ?preview=fullpass is used.
 // FULLPASS_GATING stays on. ?preview=fullpass, or window.RW_FP from a member data file, shows the paid list.
 // Checkout stays closed. The public files are still verdict bands; exact percentages need the member file.
 (function(){

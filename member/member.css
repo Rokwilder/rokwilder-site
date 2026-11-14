@@ -1,0 +1,26 @@
+/* Member pages (UnitIQ): phone first, big type, one step at a time. Uses the site colors from style.css. */
+.rw-test{background:#5a2b12;color:#ffd9b8;text-align:center;font-size:.85rem;font-weight:700;padding:.3rem;letter-spacing:.04em}
+.rwbar{max-width:46rem;margin:.2rem 0 1rem;padding:.7rem 1rem;border-radius:6px;font-size:1.05rem;background:var(--panel);border:1px solid var(--line)}
+.rwbar.on{border-color:#6f7f4f;background:#263e2c}.rwbar a{font-weight:700}
+.lockbox{background:var(--panel);border:1px dashed var(--acc);border-radius:6px;padding:1rem;margin:1rem 0;font-size:1.05rem}.lockbox .btn{margin-top:.4rem}
+.mbox{max-width:34rem;margin:1rem auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem}
+.mbox h1{font-size:1.9rem;margin:.1rem 0 .5rem}.mbox h2{font-size:1.35rem;border:0;padding:0;margin:1.2rem 0 .4rem}
+.mbox p,.mbox li{font-size:1.1rem}.mbox .step{color:var(--mute);font-size:.95rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin:0}
+.mbox label{display:block;font-size:1.1rem;font-weight:700;margin-top:.8rem}
+.mbox input,.mbox select,.mbox textarea{font-size:1.25rem;padding:.8rem;min-height:3.2rem;margin:.35rem 0 .2rem;width:100%;background:#141612;color:var(--ink);border:1px solid var(--line);border-radius:6px}
+.mbox input.code{font-size:2rem;letter-spacing:.4em;text-align:center;font-weight:800}
+.bigbtn{display:block;width:100%;text-align:center;font-size:1.25rem;font-weight:800;padding:1rem;margin-top:.9rem;border-radius:8px;border:0;background:var(--acc);color:#111;text-decoration:none;cursor:pointer}
+.bigbtn.o{background:none;color:var(--ink);border:1px solid var(--line)}.bigbtn[disabled]{opacity:.5;cursor:wait}
+.say{font-size:1.1rem;margin-top:.8rem;min-height:1.5rem}.say.ok{color:#9fd65f}.say.err{color:#f0a070}
+.devcode{background:#141612;border:1px dashed #9fd65f;border-radius:6px;padding:.6rem;margin-top:.8rem;font-size:1rem}
+.pill{display:inline-block;padding:.15rem .6rem;border-radius:999px;font-weight:800;font-size:.95rem}.pill.ok{background:#263e2c;color:#cfe8b8}.pill.no{background:#3a2a20;color:#f0c09a}
+.pkg{border:1px solid var(--line);border-radius:8px;padding:.9rem;margin:.7rem 0;background:#23261f}.pkg h3{font-size:1.2rem;margin:0 0 .3rem}.pkg p{margin:.2rem 0;color:var(--mute)}
+.pkg .bigbtn{font-size:1.1rem;padding:.8rem}
+.mbox label.choice{display:block;border:2px solid var(--line);border-radius:8px;padding:.9rem;margin:.6rem 0;cursor:pointer;font-weight:400}
+.choice input{width:auto;min-height:0;margin:0 .6rem 0 0;transform:scale(1.4)}.choice b{font-size:1.2rem}.choice span{display:block;color:var(--mute);margin-left:2rem}
+.choice:has(input:checked){border-color:var(--acc)}
+.banner{background:#263e2c;border:1px solid #6f7f4f;border-radius:8px;padding:1rem;font-size:1.15rem;margin-bottom:1rem}
+.closednote{background:#3a2a20;border:1px solid #c96f1e;border-radius:8px;padding:.8rem 1rem;margin:0 0 1rem;font-size:1.05rem}
+.mbox select option:disabled{color:#7a7d72}
+.spots{font-weight:800}.fine2{font-size:.9rem;color:var(--mute)}
+@media(min-width:900px){.mbox{padding:1.8rem}}
