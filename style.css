@@ -80,3 +80,33 @@ footer{background:url(img/brand/topo.svg) repeat}
 .hy .tr{margin-top:.2rem;font-weight:800}
 .hym{color:var(--mute);font-size:.92rem}
 .hynote{color:var(--mute);font-size:.92rem;margin:.35rem 0 .7rem}
+/* Full Pass preview tools: compare, planner, alerts */
+.cmp-cols{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));margin:.4rem 0 1rem}
+.cell{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:.75rem .8rem}
+.cell.win{border-color:var(--acc);background:rgba(200,121,47,.16)}
+.cell .k{display:block;font-size:.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);font-weight:800;margin-bottom:.2rem}
+.cell .v{font-size:1.12rem;font-weight:800;line-height:1.3}
+.verdict{font-size:1.25rem;font-weight:800;line-height:1.35;border-left:4px solid var(--acc);padding:.7rem .9rem;background:var(--panel);border-radius:6px}
+.flag{border:2px solid var(--acc);background:rgba(200,121,47,.16);border-radius:8px;padding:.75rem .9rem;font-weight:800;font-size:1.05rem}
+.slot{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.4rem 0}
+.slot label{font-weight:700}
+.slot input,.slot select{margin:.2rem 0 .4rem}
+@media(max-width:520px){.slot{grid-template-columns:1fr}}
+.tl{margin:.6rem 0 1rem}
+.tl-months{display:flex;gap:.4rem;overflow:auto;color:var(--mute);font-size:.85rem;font-weight:700}
+.tl-months span{flex:1 0 4.2rem}
+.bar{position:relative;height:2.4rem;margin:.4rem 0;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.bar span{position:relative;z-index:1;display:block;padding:.45rem .6rem;font-size:.85rem;font-weight:800;pointer-events:none}
+.bar i{position:absolute;top:.45rem;height:1.45rem;border-radius:4px;opacity:.85}
+.huntcard h3{margin-top:0}
+.al{list-style:none;padding:0;margin:0}
+.al li{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:.75rem .85rem;margin:.55rem 0}
+.al li.soon{border-color:var(--acc)}
+.al li.wait{border-style:dashed}
+.al .k{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#111;background:var(--acc);border-radius:4px;padding:.05rem .4rem;margin-right:.4rem}
+.al li.past .k{background:var(--line);color:var(--ink)}
+.al li.wait .k{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.al b{display:block;margin:.25rem 0 .1rem}
+.al .when{display:block;font-weight:700}
+.pick{display:block;width:100%;text-align:left;margin:.35rem 0;padding:.7rem .8rem;font:inherit;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:8px;cursor:pointer}
+.pick:hover,.pick:focus{border-color:var(--acc)}
