@@ -34,6 +34,12 @@ footer{background:url(img/brand/topo.svg) repeat}
 /* phones: 2 per row so labels like "Muzzleloader" never clip */
 @media(max-width:480px){.seg{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .dox input,.dox select{width:100%;min-height:52px;font-size:1.15rem;padding:.5rem .8rem;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:8px}
+.ubox .urow{display:flex;gap:.5rem;align-items:stretch}
+.ubox .urow input{flex:1 1 auto;min-width:0;width:auto}
+.ubox .clr{flex:0 0 auto;min-height:52px;padding:0 .9rem;font:inherit;font-weight:700;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:8px;cursor:pointer}
+.qhist{margin:.7rem 0}
+.qhist .qtr{font-weight:800;margin:.45rem 0 .2rem}
+@media(max-width:480px){.ubox .clr{padding:0 .7rem}}
 .step{display:flex;align-items:center;gap:1rem}.step button{width:64px;font-size:1.6rem}.step output{font-size:2rem;font-weight:800;min-width:2.5rem;text-align:center}
 #ans{margin-top:1.4rem;padding:1.2rem;border:2px solid var(--acc);border-radius:10px;background:url(img/brand/topo.svg),var(--panel)}
 #ans .big{font-size:1.9rem;font-weight:800;line-height:1.2;color:var(--acc)}#ans .dq{font-size:1.1rem;margin:.5rem 0 0}

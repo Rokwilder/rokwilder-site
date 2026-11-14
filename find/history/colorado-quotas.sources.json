@@ -1,0 +1,432 @@
+{
+  "state": "colorado",
+  "years": [
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "counts": "not in this file",
+  "huntersAfield": "not available in this build",
+  "note": "Tags are the total quota in the CPW primary draw recap. Drawn is how many of those licenses the draw issued. Hunters afield are not in this file. CPW links 2024 and 2025 harvest reports from the species statistics page, and those links did not return a file this build could read. The 2026 harvest survey was still open. A year that says not available was not in the recap we read. These figures are not estimates.",
+  "huntsWithAYear": 2812,
+  "sources": [
+    {
+      "year": 2023,
+      "species": "elk",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+      "viewer": "https://cpw.widen.net/s/slgqfqbwtl/2023elkdrawrecap",
+      "pdf": "https://cpw.widen.net/content/lb27c1naq6/original/2023ElkDrawRecap.pdf",
+      "huntPages": 1003,
+      "matched": 1003,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "elk",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+      "viewer": "https://cpw.widen.net/s/gvtppdkdcr/2024-primary-elk-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/v8uftzwwry/original/2024-Primary-ELK-Post-Draw-Report.pdf",
+      "huntPages": 990,
+      "matched": 990,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "elk",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+      "viewer": "https://cpw.widen.net/s/qh6nqttnnz/postdrawrecapreport_elk-25_05172025_0612",
+      "pdf": "https://cpw.widen.net/content/v8vurwjjn6/original/PostDrawRecapReport_ELK-25_05172025_0612.pdf",
+      "huntPages": 1023,
+      "matched": 1023,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "elk",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+      "viewer": "https://cpw.widen.net/s/jzvr7hzzl8/postdrawrecapreport_elk-26_05142026_1426",
+      "pdf": "https://cpw.widen.net/content/tl5sj6pnkb/original/PostDrawRecapReport_ELK-26_05142026_1426.pdf",
+      "huntPages": 1039,
+      "matched": 1039,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "deer",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+      "viewer": "https://cpw.widen.net/s/7bcmqkddrn/2023deerdrawrecap",
+      "pdf": "https://cpw.widen.net/content/rpwnifzpgc/original/2023DeerDrawRecap.pdf",
+      "huntPages": 960,
+      "matched": 960,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "deer",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+      "viewer": "https://cpw.widen.net/s/drbww92qtk/2024-primary-deer-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/dmbkrapqzq/original/2024-Primary-DEER-Post-Draw-Report.pdf",
+      "huntPages": 966,
+      "matched": 966,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "deer",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+      "viewer": "https://cpw.widen.net/s/r9bjfnqlbc/postdrawrecapreport_deer-25_05102025_1540",
+      "pdf": "https://cpw.widen.net/content/vy2t2jygvr/original/PostDrawRecapReport_DEER-25_05102025_1540.pdf",
+      "huntPages": 985,
+      "matched": 985,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "deer",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+      "viewer": "https://cpw.widen.net/s/5j2x8x6fdd/postdrawrecapreport_deer-26_05112026_1505",
+      "pdf": "https://cpw.widen.net/content/mirgybedih/original/PostDrawRecapReport_DEER-26_05112026_1505.pdf",
+      "huntPages": 991,
+      "matched": 991,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "pronghorn",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+      "viewer": "https://cpw.widen.net/s/fhjrczc2bk/2023pronghorndrawrecap",
+      "pdf": "https://cpw.widen.net/content/pvcxz46tey/original/2023PronghornDrawRecap.pdf",
+      "huntPages": 317,
+      "matched": 316,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "pronghorn",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+      "viewer": "https://cpw.widen.net/s/vrpbwpdjb2/2024-primary-pronghorn-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/ltxj5zp37d/original/2024-Primary-PRONGHORN-Post-Draw-Report.pdf",
+      "huntPages": 293,
+      "matched": 293,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "pronghorn",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+      "viewer": "https://cpw.widen.net/s/t6tnqjg55q/postdrawrecapreport_prong-25_05222025_0816",
+      "pdf": "https://cpw.widen.net/content/jsyu9ob6ci/original/PostDrawRecapReport_PRONG-25_05222025_0816.pdf",
+      "huntPages": 295,
+      "matched": 295,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "pronghorn",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-pronghorn/pronghorn-statistics",
+      "viewer": "https://cpw.widen.net/s/vtght5qc8p/postdrawrecapreport_prong-26_05212026_1006",
+      "pdf": "https://cpw.widen.net/content/5facqkeb5y/original/PostDrawRecapReport_PRONG-26_05212026_1006.pdf",
+      "huntPages": 302,
+      "matched": 302,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "bear",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+      "viewer": "https://cpw.widen.net/s/dvwvpclrd5/2023beardrawrecap",
+      "pdf": "https://cpw.widen.net/content/q7c9asgmr0/original/2023BearDrawRecap.pdf",
+      "huntPages": 127,
+      "matched": 127,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "bear",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+      "viewer": "https://cpw.widen.net/s/zjbcxkchlh/2024-primary-bear-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/nyn9eoj6jp/original/2024-Primary-BEAR-Post-Draw-Report.pdf",
+      "huntPages": 129,
+      "matched": 129,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "bear",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+      "viewer": "https://cpw.widen.net/s/szwnfghlfp/postdrawrecapreport_bear-25_05072025_1542",
+      "pdf": "https://cpw.widen.net/content/sforuen1ne/original/PostDrawRecapReport_BEAR-25_05072025_1542.pdf",
+      "huntPages": 129,
+      "matched": 129,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "bear",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bear/bear-statistics",
+      "viewer": "https://cpw.widen.net/s/txgf2r8x9r/postdrawrecapreport_bear-26_05062026_1346",
+      "pdf": "https://cpw.widen.net/content/56phze0u6t/original/PostDrawRecapReport_BEAR-26_05062026_1346.pdf",
+      "huntPages": 130,
+      "matched": 130,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "moose",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+      "viewer": "https://cpw.widen.net/s/mhzqtxkszs/2023moosedrawrecap",
+      "pdf": "https://cpw.widen.net/content/8dignpd42w/original/2023MooseDrawRecap.pdf",
+      "huntPages": 80,
+      "matched": 80,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "moose",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+      "viewer": "https://cpw.widen.net/s/lpffzbvzgc/2024-primary-moose-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/fe5aulnoge/original/2024-Primary-MOOSE-Post-Draw-Report.pdf",
+      "huntPages": 86,
+      "matched": 86,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "moose",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+      "viewer": "https://cpw.widen.net/s/7qvlbxgdl7/postdrawrecapreport_moose-25_05072025_1354",
+      "pdf": "https://cpw.widen.net/content/qmlths4c2b/original/PostDrawRecapReport_MOOSE-25_05072025_1354.pdf",
+      "huntPages": 98,
+      "matched": 98,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "moose",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-moose/moose-statistics",
+      "viewer": "https://cpw.widen.net/s/dkxmt8qrsd/postdrawrecapreport_moose-26_05062026_1222",
+      "pdf": "https://cpw.widen.net/content/ukdotas2vv/original/PostDrawRecapReport_MOOSE-26_05062026_1222.pdf",
+      "huntPages": 108,
+      "matched": 107,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/8p9f9wpphz/2023goatdrawrecap",
+      "pdf": "https://cpw.widen.net/content/vlexb96pbr/original/2023GoatDrawRecap.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/bqwxb5qdnw/2024-primary-goat-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/9ow0vhvne0/original/2024-Primary-GOAT-Post-Draw-Report.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/hsljtqnxzv/postdrawrecapreport_goat-25_04142025_1712",
+      "pdf": "https://cpw.widen.net/content/i2sdhbjb2r/original/PostDrawRecapReport_GOAT-25_04142025_1712.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/wmsnf8w6tx/postdrawrecapreport_goat-26_04222026_1507",
+      "pdf": "https://cpw.widen.net/content/davzdef2ih/original/PostDrawRecapReport_GOAT-26_04222026_1507.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/s98zwwxqqr/2023rmsheepdrawrecap",
+      "pdf": "https://cpw.widen.net/content/djjberu8zn/original/2023RMSheepDrawRecap.pdf",
+      "huntPages": 122,
+      "matched": 112,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/wsgxt2rvs8/2023-primary-desert-sheep-post-draw-recap-report",
+      "pdf": "https://cpw.widen.net/content/eb8lwahqbb/original/2023-Primary-Desert-Sheep-Post-Draw-Recap-Report.pdf",
+      "huntPages": 4,
+      "matched": 4,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/vxbkdwwgzj/2024-primary-rm-bighorn-sheep-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/w5je4orlck/original/2024-Primary-RM-Bighorn-Sheep-Post-Draw-Report.pdf",
+      "huntPages": 129,
+      "matched": 114,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/hclt8776gj/2024-primary-desert-sheep-post-draw-recap-report",
+      "pdf": "https://cpw.widen.net/content/wsfigr9v4q/original/2024-Primary-Desert-Sheep-Post-Draw-Recap-Report.pdf",
+      "huntPages": 4,
+      "matched": 4,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/v7c5wv87dp/postdrawrecapreport_sheep-25_04142025_1550",
+      "pdf": "https://cpw.widen.net/content/b0f9hfz6bq/original/PostDrawRecapReport_SHEEP-25_04142025_1550.pdf",
+      "huntPages": 124,
+      "matched": 114,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/zmdgsqxd5d/postdrawrecapreport_deser-25_04142025_1409",
+      "pdf": "https://cpw.widen.net/content/ag8zwajgte/original/PostDrawRecapReport_DESER-25_04142025_1409.pdf",
+      "huntPages": 4,
+      "matched": 4,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/qwws66r5ps/postdrawrecapreport_sheep-26_04222026_1349_wcoversheet",
+      "pdf": "https://cpw.widen.net/content/jj2jizo65j/original/PostDrawRecapReport_SHEEP-26_04222026_1349_wCoverSheet.pdf",
+      "huntPages": 125,
+      "matched": 123,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "sheep",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
+      "viewer": "https://cpw.widen.net/s/fm5vnxshp6/postdrawrecapreport_deser-26_04212026_1115",
+      "pdf": "https://cpw.widen.net/content/8hcqwargph/original/PostDrawRecapReport_DESER-26_04212026_1115.pdf",
+      "huntPages": 4,
+      "matched": 4,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    }
+  ],
+  "unavailable": []
+}
