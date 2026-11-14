@@ -198,7 +198,7 @@ async function run(browser, browserName) {
       ok((await page.locator('.rw-cart').getAttribute('href')) === '/pricing.html', label + ' checkout goes to pricing');
       const src = await page.locator('script[src*="rw.js"]').getAttribute('src');
       const css = await page.locator('link[href*="member.css"]').getAttribute('href');
-      ok(src.includes('?v=20261114'), label + ' rw.js is cache-busted (' + src + ')');
+      ok(src.includes('?v=20261114b'), label + ' rw.js is cache-busted (' + src + ')');
       ok(css.includes('?v=20261114'), label + ' member.css is cache-busted');
       if (browserName === 'webkit' && vname === 'phone') await shot(page, 'phone-header-logged-out');
       if (browserName === 'chromium' && vname === 'desktop') await shot(page, 'desktop-header-logged-out');
