@@ -15,7 +15,7 @@ const ROOT=me_.src.replace(/member\/rw\.js(\?.*)?$/,'');
 const API=window.RW_API!=null?window.RW_API:'https://api.rokwilder.com';
 const EXACT=new Set(['co','ut','az','wy','id','nv']);
 const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada'};
-const VER='20261114b';
+const VER='20261114c';
 const BUY_KEY='rw-buy';
 let acct=null;
 let buying=false;
@@ -296,6 +296,7 @@ async function boot(o){const st=String(o.state||'').toLowerCase();
  const a=await account();const entitled=hasFullPass(a,st);let exact=false;
  if(entitled){try{await load(API+'/api/fullpass/data/'+st+'.js');exact=window.RW_FP===true}catch(e){exact=false}}
  if(!exact){window.RW_FP=false;for(const s of free)await load(s)}
+ window.RW_EXACT=exact;
  window.RW_FP=entitled;
  const m=document.querySelector('main');if(m&&(entitled||(a&&a.loggedIn))&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar '+(entitled?'on':'off');
   const name=esc(STATE_NAME[st]||'this state');

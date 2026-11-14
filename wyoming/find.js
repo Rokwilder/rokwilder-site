@@ -14,7 +14,8 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const a=WH[k]&&WH[k].area;return a==='100'||a==='102'};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const M=WY_META;
-let S={sp:'elk',res:'res',dr:'nr',pts:0,sx:'',red:1,gen:1,n:25,focus:''};
+let S={sp:'elk',res:'res',dr:'nr',pts:0,sx:'',unit:'',red:1,gen:1,n:25,focus:''};
+let unitCtl=null;
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',sheep:'Bighorn sheep',goat:'Mountain goat',bison:'Bison'};
 const PTSP=new Set(['moose','sheep']);   // residents use points too
 const NRPTS=new Set(['elk','deer','pronghorn','moose','sheep']);
@@ -32,9 +33,9 @@ const usesPts=()=>S.res=='res'?PTSP.has(S.sp):NRPTS.has(S.sp);
 const MAXP=()=>M.maxp[S.sp]||0;
 function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!b)return null;return b.o[Math.min(S.pts,b.o.length-1)]}
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
-function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
+function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function ranked(){return WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}))
- .sort((a,b)=>b.v-a.v||a.k.localeCompare(b.k,undefined,{numeric:true}))}
+ .sort((a,b)=>b.v-a.v||RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area])||String(WH[a.k].type).localeCompare(String(WH[b.k].type))||a.k.localeCompare(b.k))}
 const below=()=>WK.filter(k=>ok(k)&&band(k)!=null&&band(k)<.05).length;
 const TN={1:'Type 1',2:'Type 2',3:'Type 3',4:'Type 4',5:'Type 5',6:'Type 6',7:'Type 7',8:'Type 8',9:'Type 9',0:'Type 0'};
 const cap=s=>s.toLowerCase().replace(/(^|[\s,;(])([a-z])/g,(m,a,b)=>a+b.toUpperCase()).replace(/[;,]\s*$/,'');
@@ -89,7 +90,7 @@ function numbers(h){const raw=h.raw&&h.raw[pool()];if(!raw)return '';let t='';
  return t}
 function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=WH[k],v=band(k),o=$('detail'),b=h.od[pool()];if(v==null||!b)return;$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
- `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+wyExtra(k,v)+
+ `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
  `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):fpBox())+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
  `<p class="note">WGFD's printed description: "${esc(h.desc)}". Their reports cut long descriptions short; season dates, weapons and limitations are in the WGFD regulations for this hunt area. Sources: ${sourceHTML(h)}.</p>`;
@@ -105,13 +106,15 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
  $('drawbox').hidden=!(S.res=='nr'&&HAS_SPECIAL.has(S.sp));
  const up=usesPts();$('ptsbox').hidden=!up;if(!up)S.pts=0;S.pts=Math.min(S.pts,MAXP());$('pv').textContent=S.pts;
  const np=$('nopts');np.hidden=up;np.textContent=['goat','bison'].includes(S.sp)?`${SP[S.sp]} is a random draw in Wyoming for everyone. No preference points.`:"Wyoming residents don't use preference points for elk, deer or pronghorn. The resident draw is random, and the verdict is an estimate from the quota and 1st-choice applicants.";
- $('plbl').textContent=`${HAS_SPECIAL.has(S.sp)&&S.res=='nr'?'5':'4'}. How many ${SP[S.sp].toLowerCase()} preference points do you have?`}
+ $('plbl').textContent=`${HAS_SPECIAL.has(S.sp)&&S.res=='nr'?'5':'4'}. How many ${SP[S.sp].toLowerCase()} preference points do you have?`;
+ if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}}
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;paint()});
 document.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{S.res=b.dataset.res;paint()});
 document.querySelectorAll('[data-dr]').forEach(b=>b.onclick=()=>{S.dr=b.dataset.dr;paint()});
 $('pm').onclick=()=>{S.pts=Math.max(0,S.pts-1);paint()};$('pp').onclick=()=>{S.pts=Math.min(MAXP(),S.pts+1);paint()};
 $('redp').onchange=e=>S.red=e.target.checked?1:0;$('genl').onchange=e=>S.gen=e.target.checked?1:0;
 $('go').onclick=()=>{S.n=25;showList(1)};
-if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');
+unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k of WK){if(WH[k].sp!=S.sp)continue;const x=String(WH[k].area);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
+if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('unit'))S.unit=Q.get('unit');
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
 })();

@@ -313,7 +313,7 @@ async function run(browser, browserName, viewport, vname) {
     await page.waitForTimeout(500);
     ok(hits.length === 0, browserName + ' Idaho general page does not request the controlled-hunt file');
     const src = await page.locator('script[src*="rw.js"]').getAttribute('src');
-    ok(src && src.includes('?v=20261114b'), browserName + ' general page loads the new rw.js');
+    ok(src && src.includes('?v=20261114c'), browserName + ' general page loads the new rw.js');
     await context.close();
   }
 }
