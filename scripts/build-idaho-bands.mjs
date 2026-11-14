@@ -168,7 +168,7 @@ const header = `// Idaho controlled-hunt draw results for Rokwilder Find Your Hu
 // .75 / .25 / .05 are the floors three-in-four, one-in-four and one-in-twenty. .01 is below one-in-twenty but not zero. 0 means people applied and none were drawn.
 // null means IDFG recorded nobody of that residency putting the hunt first, so there is no rate.
 // Bands use drawn and applied counts, not IDFG's rounded whole-number rate.
-// Exact rates, tag counts and application counts are not in this file. The Full Pass does not serve Idaho exact figures.
+// Exact rates, tag counts and application counts are not in this file. The Full Pass file is separate and is not in this public file.
 // This is the 2026 historical result. It is not a personal chance in a future drawing.
 `;
 const body = header + 'const ID_META=' + JSON.stringify(meta) + ';\nconst IH=' + JSON.stringify(IH) + ';\n';

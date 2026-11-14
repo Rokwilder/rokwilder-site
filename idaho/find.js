@@ -1,7 +1,8 @@
 // Find Your Hunt: Idaho controlled hunts.
 // Bands are the 2026 historical first-choice result for one residency, from IDFG's drawing-odds table.
-// They are not a prediction, not a preference-point ladder, and not an exact percentage.
-// The public file has no raw counts. window.RW_FP cannot turn exact Idaho numbers on, and the Full Pass does not include them.
+// They are not a prediction and not a preference-point ladder.
+// The public file has no raw counts. Exact percents render only when a Full Pass file adds raw.res and raw.nr,
+// each {apps, drawn, rate}, and window.RW_FP is set by that file. rate is drawn divided by apps, from 0 to 1.
 (function(){
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
@@ -50,9 +51,28 @@ function wordNote(v){if(v===1)return 'Every first-choice person of this residenc
  if(v>0)return 'Somebody was drawn, and the share was under one in twenty. This hunt is left off the main list.';
  if(v===0)return 'People of this residency put the hunt first, and none of them were drawn.';
  return 'IDFG recorded nobody of this residency putting the hunt first, so there is no result to show.'}
-const fpBox=()=>`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This Idaho page is a 2026 historical result band, not an exact percentage and not a forecast. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>`<p class="fpl">Exact Idaho odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
-const paid=()=>window.RWGate?RWGate.paid():false;
+const FP=window.RW_FP===true && typeof IH==='object' && Object.values(IH).some(h=>h&&h.raw&&(h.raw.res||h.raw.nr));
+const pct=v=>{const r=Math.round(v*100);return v>0&&r===0?'under 1%':v<1&&r===100?'over 99%':r+'%'};
+function sideRaw(h){const raw=h&&h.raw;if(!raw)return null;return S.res==='res'?raw.res:raw.nr}
+function exactRate(raw){if(!raw||typeof raw.rate!=='number'||!(raw.rate>=0)||raw.rate>1)return null;return raw.rate}
+function oddsHTML(h){
+ if(!FP)return `<span class="fo"><span class="fpn">Historical band, not an exact percentage and not your future chance</span></span>`;
+ const raw=sideRaw(h),rate=exactRate(raw);
+ if(rate==null)return `<span class="fo"><span class="fpn">No exact 2026 count for this residency</span></span>`;
+ const n=(typeof raw.drawn==='number'&&typeof raw.apps==='number'&&raw.apps>0)?`, ${raw.drawn.toLocaleString()} drawn of ${raw.apps.toLocaleString()}`:'';
+ return `<div class="fo"><b>${pct(rate)}</b> <span>2026 first-choice result${n}</span></div>`}
+function countsHTML(h){
+ if(!FP||!h.raw)return '';
+ const rows=['res','nr'].filter(k=>exactRate(h.raw[k])!=null);
+ if(!rows.length)return '';
+ const label={res:'Idaho resident',nr:'Out of state'};
+ const cur=S.res==='res'?'res':'nr';
+ return `<p class="lh">2026 first-choice counts</p><table class="dt"><tr><th>Residency</th><th>Drawn</th><th>Applied</th><th>Result</th></tr>`+
+  rows.map(k=>{const raw=h.raw[k];const drawn=typeof raw.drawn==='number'?raw.drawn.toLocaleString():'';const apps=typeof raw.apps==='number'?raw.apps.toLocaleString():'';return `<tr class="${k===cur?'on':''}"><td>${label[k]}</td><td>${drawn}</td><td>${apps}</td><td>${pct(raw.rate)}</td></tr>`}).join('')+
+  `</table><p class="dq">The percent is first-choice people drawn divided by first-choice applicants of that residency in the 2026 drawing. It is a past result, not a forecast.</p>`}
+const paid=()=>window.RWGate?RWGate.paid():FP;
+const fpBox=()=>(FP||paid())?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This Idaho page is a 2026 historical result band, not an exact percentage and not a forecast. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
+const fpLine=()=>(FP||paid())?'':`<p class="fpl">Exact Idaho odds are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
 const isSample=k=>{const a=IH[k]&&IH[k].area;return a==='31'||a==='37'};
 function idBand(k){return RWLand.band('id',RWLand.idKey(IH[k].area))}
 function idExtra(k,v){if(!paid())return '';const h=IH[k],key=RWLand.idKey(h.area),b=idBand(k);
@@ -60,8 +80,8 @@ function idExtra(k,v){if(!paid())return '';const h=IH[k],key=RWLand.idKey(h.area
  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'Unit '+h.area,href:RWLand.pkgHref('../','id',String(h.area)),cap:Number.isInteger(cap)?cap:null})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
 function orderRows(list){if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
-function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span><span class="fo"><span class="fpn">Historical band, not an exact percentage and not your future chance</span></span>${RWHy(x.k,S.res)}</button></li>`}
-function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span><span class="fo"><span class="fpn">Historical band, not an exact percentage and not your future chance</span></span>${RWHy(x.k,S.res)}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
+function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${bits.info}</button>${bits.next}</li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const {show,under,none,unlabeled}=split();
  const emptySpecies=!rows().length;
  const note=emptySpecies?`<p class="note">IDFG's 2026 drawing-odds table returned no ${esc(drawName())} hunts for ${esc(spName(S.sp))}.</p>`:
@@ -80,7 +100,7 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;co
  if(sc)o.scrollIntoView({behavior:'smooth'})}
 function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=IH[k];if(!h)return;S.sp=h.sp;S.draw=h.draw;paint();const v=S.res==='res'?h.res:h.nr;const o=$('detail');$('out').hidden=true;o.hidden=false;
  o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
-  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}<p class="how">${wordNote(v)} ${how()}</p>`+idExtra(k,v)+fpBox()+segHTML(h)+
+  `<div class="fv">${v==null?'':vdot(v)}${VERD(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+idExtra(k,v)+fpBox()+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
  $('back').onclick=()=>showList(1);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}
