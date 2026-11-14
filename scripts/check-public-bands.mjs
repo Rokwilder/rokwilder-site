@@ -106,8 +106,8 @@ ok(`${Object.keys(nvBox.NH || {}).length} Nevada hunts, ${nvCells} point-level b
 const nvHtml = readFileSync(join(root, 'nevada/find.html'), 'utf8');
 if (/noindex/i.test(nvHtml)) bad('nevada/find.html is still noindex');
 else ok('nevada/find.html is indexable');
-if (nvSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'nevada/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Nevada turns on exact figures');
-else ok('Nevada cannot be switched to exact figures');
+if (nvSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'nevada/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Nevada public files assign the member flag');
+else ok('Nevada public files do not assign the member flag');
 const nvSm = readFileSync(join(root, 'sitemap-nevada.xml'), 'utf8');
 if (!sm.includes('sitemap-nevada.xml')) bad('sitemap index missing Nevada');
 if (!nvSm.includes('https://rokwilder.com/nevada/find.html')) bad('Nevada sitemap missing the find page');
@@ -141,8 +141,8 @@ if (!idSm.includes('https://rokwilder.com/idaho/find.html')) bad('Idaho sitemap 
 if (!idSm.includes('https://rokwilder.com/idaho/general.html')) bad('Idaho sitemap missing the general page');
 if (!sp.includes('https://rokwilder.com/idaho/find.html')) bad('pages sitemap missing Idaho');
 else ok('sitemaps list Idaho');
-if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho turns on exact figures');
-else ok('Idaho cannot be switched to exact figures');
+if (idSrc.includes('window.RW_FP=true') || readFileSync(join(root, 'idaho/find.js'), 'utf8').includes('window.RW_FP=true')) bad('Idaho public files assign the member flag');
+else ok('Idaho public files do not assign the member flag');
 
 if (fails) {
   console.error(fails + ' FAIL');

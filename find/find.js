@@ -9,7 +9,7 @@ const Q=new URLSearchParams(location.search);
 // The public data files are band-only, so there are no exact numbers to show here. FP turns on the exact-number views
 // only when a Full Pass data file has been loaded (window.RW_FP, set by the member loader; not on the site yet).
 const FULLPASS_GATING=true;
-const FP=window.RW_FP===true;
+const FP=window.RW_EXACT===true;
 const FPN='<span class="fpn">Exact odds and harvest %: Full Pass</span>';
 // What the Full Pass adds: shown on the free results only (hidden when Full Pass data is loaded). Every line is something the
 // Full Pass view of this page really shows (see the FP branches); prices match pricing.html.

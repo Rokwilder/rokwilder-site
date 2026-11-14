@@ -273,58 +273,6 @@
     },
     {
       "year": 2023,
-      "species": "goat",
-      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
-      "viewer": "https://cpw.widen.net/s/8p9f9wpphz/2023goatdrawrecap",
-      "pdf": "https://cpw.widen.net/content/vlexb96pbr/original/2023GoatDrawRecap.pdf",
-      "huntPages": 48,
-      "matched": 48,
-      "fields": [
-        "total quota",
-        "licenses drawn"
-      ]
-    },
-    {
-      "year": 2024,
-      "species": "goat",
-      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
-      "viewer": "https://cpw.widen.net/s/bqwxb5qdnw/2024-primary-goat-post-draw-report",
-      "pdf": "https://cpw.widen.net/content/9ow0vhvne0/original/2024-Primary-GOAT-Post-Draw-Report.pdf",
-      "huntPages": 48,
-      "matched": 48,
-      "fields": [
-        "total quota",
-        "licenses drawn"
-      ]
-    },
-    {
-      "year": 2025,
-      "species": "goat",
-      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
-      "viewer": "https://cpw.widen.net/s/hsljtqnxzv/postdrawrecapreport_goat-25_04142025_1712",
-      "pdf": "https://cpw.widen.net/content/i2sdhbjb2r/original/PostDrawRecapReport_GOAT-25_04142025_1712.pdf",
-      "huntPages": 48,
-      "matched": 48,
-      "fields": [
-        "total quota",
-        "licenses drawn"
-      ]
-    },
-    {
-      "year": 2026,
-      "species": "goat",
-      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
-      "viewer": "https://cpw.widen.net/s/wmsnf8w6tx/postdrawrecapreport_goat-26_04222026_1507",
-      "pdf": "https://cpw.widen.net/content/davzdef2ih/original/PostDrawRecapReport_GOAT-26_04222026_1507.pdf",
-      "huntPages": 48,
-      "matched": 48,
-      "fields": [
-        "total quota",
-        "licenses drawn"
-      ]
-    },
-    {
-      "year": 2023,
       "species": "sheep",
       "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-bighorn-sheep/bighorn-sheep-statistics",
       "viewer": "https://cpw.widen.net/s/s98zwwxqqr/2023rmsheepdrawrecap",
@@ -422,6 +370,58 @@
       "pdf": "https://cpw.widen.net/content/8hcqwargph/original/PostDrawRecapReport_DESER-26_04212026_1115.pdf",
       "huntPages": 4,
       "matched": 4,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2023,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/8p9f9wpphz/2023goatdrawrecap",
+      "pdf": "https://cpw.widen.net/content/vlexb96pbr/original/2023GoatDrawRecap.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2024,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/bqwxb5qdnw/2024-primary-goat-post-draw-report",
+      "pdf": "https://cpw.widen.net/content/9ow0vhvne0/original/2024-Primary-GOAT-Post-Draw-Report.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2025,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/hsljtqnxzv/postdrawrecapreport_goat-25_04142025_1712",
+      "pdf": "https://cpw.widen.net/content/i2sdhbjb2r/original/PostDrawRecapReport_GOAT-25_04142025_1712.pdf",
+      "huntPages": 48,
+      "matched": 48,
+      "fields": [
+        "total quota",
+        "licenses drawn"
+      ]
+    },
+    {
+      "year": 2026,
+      "species": "goat",
+      "page": "https://cpw.state.co.us/activities/hunting/big-game/hunting-mountain-goat/mountain-goat-statistics",
+      "viewer": "https://cpw.widen.net/s/wmsnf8w6tx/postdrawrecapreport_goat-26_04222026_1507",
+      "pdf": "https://cpw.widen.net/content/davzdef2ih/original/PostDrawRecapReport_GOAT-26_04222026_1507.pdf",
+      "huntPages": 48,
+      "matched": 48,
       "fields": [
         "total quota",
         "licenses drawn"

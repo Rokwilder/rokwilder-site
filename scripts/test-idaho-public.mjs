@@ -76,7 +76,9 @@ ok(/preference points/i.test(html) && /bonus points/i.test(html), 'page says the
 ok(/second drawing is leftover|leftover tags/i.test(html), 'second drawing is not described as a second choice');
 ok(/NR Draw/.test(html) && /swan/i.test(html), 'unsupported NR Draw and swan are named');
 ok(/Fifty-eight residency rows/.test(html), 'rounding-gap count is disclosed');
-ok(!/pct\(/.test(find) && !/\d+%/.test(find), 'the script does not print a hunt percentage');
+ok(/Historical band, not an exact percentage/.test(find), 'free cards stay on the historical band');
+ok(/raw\.res/.test(find) && /raw\.nr/.test(find) && /raw\.rate/.test(find), 'exact percent reads residency raw.rate');
+ok(!/if\(!FP\)return [^;]*pct\(/.test(find), 'the free card does not print a percent');
 
 const shown = (sp, res, draw, sx='') => hunts.filter(h => h.sp === sp && h.draw === draw && (!sx || h.sex === sx) && h[res] != null && h[res] >= 0.05);
 ok(shown('elk','res',1).length > 0 && shown('elk','nr',1).length > 0, 'resident and nonresident elk first drawing both have hunts on the list');

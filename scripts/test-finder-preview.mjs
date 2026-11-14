@@ -15,7 +15,9 @@ const outDir = '/opt/cursor/artifacts';
 mkdirSync(outDir, {recursive:true});
 const types = {'.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml', '.png':'image/png', '.ico':'image/x-icon'};
 const quota = readFileSync(join(root, 'private/fullpass/co-quotas.js'));
+const memberFlag = 'window.RW_' + 'FP=true;\n';
 const coJs = Buffer.concat([
+  Buffer.from(memberFlag),
   readFileSync(join(root, 'drawodds/lite.js')), Buffer.from('\n'),
   readFileSync(join(root, 'drawodds/youth.js')), Buffer.from('\n'),
   readFileSync(join(root, 'find/labels.js')), Buffer.from('\n'),
@@ -43,7 +45,8 @@ function start(){
   });
 }
 
-function stub(page, pass){
+function stub(page, mode){
+  const pass = mode === true || mode === 'pass' || mode === 'missing';
   const account = pass
     ? {loggedIn:true, fullpass:{active:true, states:['ALL']}}
     : {loggedIn:false};
@@ -51,9 +54,9 @@ function stub(page, pass){
   page.route('**/api/catalog**', route => route.fulfill({json:{checkoutOpen:false}}));
   page.route('**/api/health**', route => route.fulfill({json:{checkoutOpen:false}}));
   page.route('**/api/fullpass/data/co.js**', route => route.fulfill({
-    status: pass ? 200 : 404,
+    status: mode === 'missing' || !pass ? 404 : 200,
     contentType: 'text/javascript',
-    body: pass ? coJs : ' '
+    body: mode === 'missing' || !pass ? ' ' : coJs
   }));
 }
 
@@ -121,6 +124,18 @@ try {
   ok(tags.includes('Hunters afield: not available'), 'missing hunters afield say not available');
   await reveal(pp, '.qhist');
   await shot(pp, 'phone-unit-60-tags.png');
+  const miss = await phone.newContext({viewport:{width:390, height:844}});
+  const mp = await miss.newPage();
+  await stub(mp, 'missing');
+  await mp.goto(base + '?' + deer, {waitUntil:'domcontentloaded'});
+  await mp.waitForSelector('#out .fh', {timeout:20000});
+  const missBar = await mp.locator('#rwbar').innerText();
+  const missCards = await mp.locator('#out .fh').count();
+  const missText = await mp.locator('#out').innerText();
+  ok(/did not load/.test(missBar) && /Colorado/.test(missBar), 'Colorado member fallback says the exact file did not load');
+  ok(missCards > 3 && !/SAMPLE/.test(missText), 'Colorado member fallback shows the public list');
+  ok(!missText.includes('120 tags'), 'Colorado member fallback does not show tag counts');
+  await miss.close();
 
   const fctx = await phone.newContext({viewport:{width:390, height:844}});
   const fp = await fctx.newPage();
