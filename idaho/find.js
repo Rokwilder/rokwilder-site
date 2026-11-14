@@ -7,7 +7,7 @@
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const M=ID_META;
-let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:''};
+let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:'',ord:''};
 let unitCtl=null;
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
@@ -81,7 +81,9 @@ function idExtra(k,v){if(!paid())return '';const h=IH[k],key=RWLand.idKey(h.area
  const cap=key&&window.RW_CAPS&&RW_CAPS.id?RW_CAPS.id[key]:null;
  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'Unit '+h.area,href:RWLand.pkgHref('../','id',String(h.area)),cap:Number.isInteger(cap)?cap:null})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function orderRows(list){if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
+function tie(a,b){const d=RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area]);if(d)return d;const oa=String((IH[a.k].seg[0]||{}).o||''),ob=String((IH[b.k].seg[0]||{}).o||'');if(oa!==ob)return oa<ob?-1:1;return IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true})}
+function idChance(k){const h=IH[k];if(FP){const r=exactRate(sideRaw(h));if(r!=null)return r}return S.res==='res'?h.res:h.nr}
+function orderRows(list){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(list,S.ord,x=>RWDraw.measure(()=>idChance(x.k),0),tie);if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
 function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
 function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${bits.info}</button>${bits.next}</li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const {show,under,none,unlabeled}=split();
@@ -93,10 +95,12 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;co
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const ban=window.RWGate?RWGate.banner():'';
  const ordered=orderRows(show);
- o.innerHTML=ban+`<h2 id="lt">${show.length} hunt${show.length===1?'':'s'} at one in twenty or better</h2>${focusBar()}<p class="dq">${esc(who())}. ${S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.'} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+ const lead=S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.');
+ o.innerHTML=ban+`<h2 id="lt">${show.length} hunt${show.length===1?'':'s'} at one in twenty or better</h2>${focusBar()}${RWDraw.bar(S.ord,false)}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
   `<ol class="fl">`+ordered.slice(0,S.n).map(cardFull).join('')+`</ol>`+(show.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,show.length-S.n)} more (${show.length-S.n} left)</button>`:'')+
   (show.length||emptySpecies?'':`<p class="dq">No hunts at one in twenty or better with these choices.</p>`)+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+ RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
  if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  if(sc)o.scrollIntoView({behavior:'smooth'})}
@@ -131,6 +135,8 @@ if(Q.get('draw')==='2')S.draw=2;
 if(Q.get('sx')&&SXN[Q.get('sx')])S.sx=Q.get('sx');
 if(Q.get('youth')==='0'){$('youth').checked=false;S.youth=0}
 paint();
+if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 if(Q.get('go'))showList();
 if(Q.get('k')&&IH[Q.get('k')])showDetail(Q.get('k'));
+window.__DRAW={max:0,pointsMatter:()=>false,contexts(){const out=[];for(const sp of ORDER)for(const draw of [1,2])for(const res of ['res','nr'])out.push({id:sp+' '+draw+' '+res,apply(){Object.assign(S,{sp,draw,res,sx:'',unit:'',youth:1,focus:'',ord:''})}});return out},setPts(){S.pts=0},list(){return split().show},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(split().show)}finally{S.ord=prev}},measure(x){return RWDraw.measure(()=>idChance(x.k),0)},tie};
 })();

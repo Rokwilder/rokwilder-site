@@ -17,7 +17,7 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const u=AH[k]&&AH[k].u||[];return u.includes('7')||u.includes('1')};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const MAXP=AZ_META.maxp;const SRC=AZ_META.src;
-let S={sp:'elk',pl:'elk-bull',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',yo:0,champ:0,n:25,tab:'list',mu:null};
+let S={sp:'elk',pl:'elk-bull',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',ord:'',yo:0,champ:0,n:25,tab:'list',mu:null};
 let unitCtl=null;
 function azUnits(k){const h=AH[k];return [].concat(h.u||[], h.area||[])}
 const SP={elk:'Elk',pronghorn:'Pronghorn',deer:'Deer',turkey:'Turkey',javelina:'Javelina',sheep:'Bighorn sheep',bison:'Bison',crane:'Sandhill crane',bear:'Black bear'};
@@ -44,8 +44,14 @@ const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||AHk.some(k=>AH[k].pool==pl&&SX[k
 const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
+function tie(a,b){const d=RWUnit.sortNum(azUnits(a.k))-RWUnit.sortNum(azUnits(b.k));if(d)return d;const da=String(AH[a.k].d||''),db=String(AH[b.k].d||'');if(da!==db)return da<db?-1:1;return String(AH[a.k].n).localeCompare(String(AH[b.k].n),undefined,{numeric:true})}
 function ranked(){return AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||RWUnit.sortNum(azUnits(a.k))-RWUnit.sortNum(azUnits(b.k))||String(AH[a.k].d||'').localeCompare(String(AH[b.k].d||''))||String(AH[a.k].n).localeCompare(String(AH[b.k].n),undefined,{numeric:true}))}
+ .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
+function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
+function rowsInOrder(r){if(S.ord!=='hard'&&S.ord!=='easy')return lsort(r);return RWDraw.order(r,S.ord,rowMeasure,tie)}
+const pointsMatter=()=>true;
+const orderLine=fallback=>S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':fallback;
 const noHist=()=>AHk.filter(k=>{const h=AH[k];return plOK(h)&&avail(h)&&wOK(h)&&sxOK(k)&&!h.od});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const tag=h=>(h.t=='youth'?'<b class="yb">YOUTH ONLY</b> ':'')+(h.t=='champ'?'<b class="yb">CHAMP</b> ':'')+(h.t=='lo'?'<b class="sx">Limited opportunity</b> · ':'');
@@ -130,11 +136,11 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter nonpermit-tag (no draw).':''} Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fpLine()+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
- o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
-  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.res,S.pts)}</button></li>`).join('')+`</ol>`+
+ o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}<p class="dq">${who}. ${orderLine(sortTxt())} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
+  fpBox()+`<ol class="fl">`+rowsInOrder(r).slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.res,S.pts)}</button></li>`).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+otcSec(oR)+note+fpLine()+fbA('find');
- wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
  if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
 // ===== Map key (same as Colorado and Utah, for unit tiles) =====
@@ -236,13 +242,13 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const h=AH[k]
  $('back').onclick=$('back2').onclick=goBack;$('vsm').onclick=()=>{S.tab='map';S.mu=h.u[0]||'SP';history.pushState(st('list'),'',url());showList();top2($('out'))};top2(o)}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,yo:S.yo,champ:S.champ,n:S.n,tab:S.tab,mu:S.mu,y:v=='list'?scrollY:0});
+const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,ord:S.ord,yo:S.yo,champ:S.champ,n:S.n,tab:S.tab,mu:S.mu,y:v=='list'?scrollY:0});
 const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
-const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.champ)u.set('champ',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(S.mu&&S.tab=='map')u.set('u',S.mu);if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.ord)u.set('ord',S.ord);if(S.yo)u.set('kid',1);if(S.champ)u.set('champ',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(S.mu&&S.tab=='map')u.set('u',S.mu);if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
-function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',unit:s.unit||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',yo:+s.yo||0,champ:+s.champ||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mu:s.mu??null});sync()}
+function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',unit:s.unit||'',so:s.so=='h'?'h':'',mc:s.mc=='h'?'h':'',ord:RWDraw.ordOf(s.ord),yo:+s.yo||0,champ:+s.champ||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mu:s.mu??null});sync()}
 const wsOf=pl=>[...new Set([...AHk.filter(k=>AH[k].pool==pl).map(k=>AH[k].w),...Object.keys(XP[pl]||{})])];
 function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(S.sp!='bear'&&(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl)))S.pl=sp2[0];
  const bear=S.sp=='bear';$('form2').hidden=bear;
@@ -267,8 +273,9 @@ const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pt
 $('go').onclick=()=>{S.n=25;S.on=0;S.mu=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k of AHk){if(AH[k].sp!=S.sp)continue;for(const u of azUnits(k)){const x=String(u);if(!x||seen.has(x)||x.length>24)continue;seen.add(x);s.push(x)}}return s}});
 if(Q.get('sp')){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=sp=='bear'?'':(PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0]);
- apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
+ apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'RAMHS'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:Q.get('so')=='h'?'h':'',mc:Q.get('mc')=='h'?'h':'',ord:RWDraw.ordOf(Q.get('ord')),yo:Q.get('kid')?1:0,champ:Q.get('champ')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list',mu:Q.get('u')});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&plOK(AH[h])&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__AZ={otcRows,OU:()=>OU,FP,oddsAt,hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
+window.__DRAW={max:MAXP,pointsMatter,contexts(){const out=[];for(const pl of Object.keys(PL))for(const res of ['res','nonres'])out.push({id:pl+' '+res,apply(){Object.assign(S,{sp:PL[pl][0],pl,res,w:'',sx:'',unit:'',so:'',ord:'',yo:0,champ:0})}});out.push({id:'bear res',apply(){Object.assign(S,{sp:'bear',pl:'',res:'res',w:'',sx:'',unit:'',so:'',ord:'',yo:0,champ:0})}});return out},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();
