@@ -14,8 +14,9 @@ const me_=document.currentScript;
 const ROOT=me_.src.replace(/member\/rw\.js(\?.*)?$/,'');
 const API=window.RW_API!=null?window.RW_API:'https://api.rokwilder.com';
 const EXACT=new Set(['co','ut','az','wy','id','nv']);
+const TROPHY=new Set(['co','ut','az','wy','id','nv']);
 const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada'};
-const VER='20261114c';
+const VER='20261115a';
 const BUY_KEY='rw-buy';
 let acct=null;
 let buying=false;
@@ -289,12 +290,13 @@ async function maybeBuyFullPass(){
     await goStripe(r,el,'fullpass');
   }finally{buying=false}
 }
+async function loadTrophy(st){if(!TROPHY.has(st))return;try{await load(API+'/api/fullpass/data/trophy-'+st+'.js')}catch(e){}}
 async function boot(o){const st=String(o.state||'').toLowerCase();
  const free=[].concat(o.free||[]);
  const want=o.exact!==false&&EXACT.has(st);
  if(!want){window.RW_FP=false;for(const s of free)await load(s);for(const s of o.after||[])await load(s);nav();return false}
  const a=await account();const entitled=hasFullPass(a,st);let exact=false;
- if(entitled){try{await load(API+'/api/fullpass/data/'+st+'.js');exact=window.RW_FP===true}catch(e){exact=false}}
+ if(entitled){try{await load(API+'/api/fullpass/data/'+st+'.js');exact=window.RW_FP===true}catch(e){exact=false}await loadTrophy(st)}
  if(!exact){window.RW_FP=false;for(const s of free)await load(s)}
  window.RW_EXACT=exact;
  window.RW_FP=entitled;

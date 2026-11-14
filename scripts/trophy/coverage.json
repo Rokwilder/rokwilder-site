@@ -1,0 +1,845 @@
+{
+  "gaps": [
+    {
+      "state": "co",
+      "species": "bear",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "dsheep",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "goat",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "moose",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "pronghorn",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "sheep",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "turkey",
+      "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+    },
+    {
+      "state": "co",
+      "species": "elk",
+      "gap": "Tooth ages on the elk statistics page are Larimer County files. A GMU table for units 7, 8, 9, 19, 191 and 20 was not confirmed, so tooth age is not shown."
+    },
+    {
+      "state": "co",
+      "species": "pronghorn",
+      "gap": "No pronghorn sex-ratio file was confirmed on the statistics pages used here."
+    },
+    {
+      "state": "co",
+      "species": "elk",
+      "gap": "Some GMUs appear in more than one 2025 elk DAU, so those units are Not enough data: 64, 65"
+    },
+    {
+      "state": "ut",
+      "species": "elk",
+      "gap": "The age table does not list how many bulls were aged, so the under-10 thin-data rule could not be applied. Hunts that are not limited-entry bull hunts stay Not enough data."
+    },
+    {
+      "state": "ut",
+      "species": "bear",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "bison",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "crane",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "goat",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "moose",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "pronghorn",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "sgrouse",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "stgrouse",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "swan",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "ut",
+      "species": "turkey",
+      "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+    },
+    {
+      "state": "nv",
+      "species": "bear",
+      "gap": "The 2025 hunt summary has harvest for this species and no age, point, horn, or score field that was confirmed here."
+    },
+    {
+      "state": "nv",
+      "species": "moose",
+      "gap": "The 2025 hunt summary has harvest for this species and no age, point, horn, or score field that was confirmed here."
+    },
+    {
+      "state": "nv",
+      "species": "elk",
+      "gap": "Elk ages in Preliminary-Elk-2025-Age-by-Unit-Group.pdf are labeled preliminary and were not used for the level. The level uses the 2025 share of bulls with 50 inch beams."
+    },
+    {
+      "state": "id",
+      "species": "bear",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "goat",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "moose",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "pronghorn",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "sheep-ca",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "sheep-rm",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "id",
+      "species": "turkey",
+      "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "elk",
+      "gap": "Figures are survey estimates. The report does not publish a checked-animal sample by hunt area, so the under-10 rule was not applied. Special-management badge only for hunt areas 30, 32, and 100, named on the elk hunting guide."
+    },
+    {
+      "state": "wy",
+      "species": "deer",
+      "gap": "The downloaded mule deer file at the plan URL is the 2018 Mule Deer Initiative. It does not list current special versus recreational herds, and a deer harvest report with buck:doe or point class was not confirmed. Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "bison",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "deer",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "goat",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "moose",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "pronghorn",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "wy",
+      "species": "sheep",
+      "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+    },
+    {
+      "state": "az",
+      "species": "all",
+      "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+    }
+  ],
+  "states": {
+    "co": {
+      "file": "trophy-co.js",
+      "hunts": 3101,
+      "species": {
+        "bear": {
+          "levels": {
+            "none": 134
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "deer": {
+          "levels": {
+            "below": 288,
+            "typical": 133,
+            "top": 53,
+            "above": 171,
+            "none": 416
+          },
+          "field": "2025 post-season bucks per 100 does, herd-wide by DAU",
+          "years": "2025",
+          "source": "CPW",
+          "sourceUrl": "https://cpw.state.co.us/activities/hunting/big-game/hunting-deer/deer-statistics",
+          "gap": ""
+        },
+        "dsheep": {
+          "levels": {
+            "none": 4
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "elk": {
+          "levels": {
+            "none": 661,
+            "top": 23,
+            "below": 263,
+            "above": 110,
+            "typical": 59
+          },
+          "field": "2025 post-season bulls per 100 cows, herd-wide by DAU",
+          "years": "2025",
+          "source": "CPW",
+          "sourceUrl": "https://cpw.state.co.us/activities/hunting/big-game/hunting-elk/elk-statistics",
+          "gap": "GMUs listed in more than one DAU were left as Not enough data: 64, 65."
+        },
+        "goat": {
+          "levels": {
+            "none": 48
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "moose": {
+          "levels": {
+            "none": 210
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "pronghorn": {
+          "levels": {
+            "none": 339
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "sheep": {
+          "levels": {
+            "none": 123
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        },
+        "turkey": {
+          "levels": {
+            "none": 66
+          },
+          "field": "",
+          "years": "",
+          "source": "CPW",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, point, or sex-ratio field for this species. Marked Not enough data."
+        }
+      }
+    },
+    "ut": {
+      "file": "trophy-ut.js",
+      "hunts": 1053,
+      "species": {
+        "bear": {
+          "levels": {
+            "none": 90
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "bison": {
+          "levels": {
+            "none": 16
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "crane": {
+          "levels": {
+            "none": 6
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "deer": {
+          "levels": {
+            "none": 176,
+            "above": 41,
+            "typical": 27,
+            "below": 84,
+            "top": 22
+          },
+          "field": "Observed bucks per 100 does, 3-year average, from the statewide mule deer plan tables",
+          "years": "2021 to 2023",
+          "source": "Utah DWR",
+          "sourceUrl": "https://wildlife.utah.gov/pdf/bg/plans/mule_deer_plan.pdf",
+          "gap": "Classified-deer sample size is not in the plan tables, so the under-10 rule was not applied. Premium badge: Henry Mountains, Paunsaugunt, and Antelope Island. Antelope Island has a badge and no ratio in Table 2."
+        },
+        "elk": {
+          "levels": {
+            "top": 17,
+            "none": 245,
+            "below": 61,
+            "typical": 25,
+            "above": 35
+          },
+          "field": "Limited-entry average age of harvested bulls, 3-year average when the table prints one",
+          "years": "2023 to 2025",
+          "source": "Utah DWR",
+          "sourceUrl": "https://wildlife.utah.gov/pdf/meetings/rac/table-2026-04-01-bull-elk-tables.pdf",
+          "gap": "The age table does not list how many bulls were aged, so the under-10 thin-data rule could not be applied. Hunts that are not limited-entry bull hunts stay Not enough data."
+        },
+        "goat": {
+          "levels": {
+            "none": 17
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "moose": {
+          "levels": {
+            "none": 31
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "pronghorn": {
+          "levels": {
+            "none": 112
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "sgrouse": {
+          "levels": {
+            "none": 4
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "sheep": {
+          "levels": {
+            "thin": 30,
+            "none": 4
+          },
+          "field": "Average horn length from the 2025 bighorn harvest record, by hunt number",
+          "years": "2025",
+          "source": "Utah DWR",
+          "sourceUrl": "https://wildlife.utah.gov/pdf/sheep/2025_sheep/2025-harvest-data.pdf",
+          "gap": "Desert and Rocky Mountain rams are ranked separately. Hunts with fewer than 10 measured rams are Thin data."
+        },
+        "stgrouse": {
+          "levels": {
+            "none": 2
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "swan": {
+          "levels": {
+            "none": 1
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        },
+        "turkey": {
+          "levels": {
+            "none": 7
+          },
+          "field": "",
+          "years": "",
+          "source": "Utah DWR",
+          "sourceUrl": "",
+          "gap": "No confirmed official age, horn, or sex-ratio field for this species in the files used here."
+        }
+      }
+    },
+    "nv": {
+      "file": "trophy-nv.js",
+      "hunts": 918,
+      "species": {
+        "antelope": {
+          "levels": {
+            "below": 29,
+            "above": 18,
+            "typical": 18,
+            "none": 33,
+            "top": 12,
+            "thin": 75
+          },
+          "field": "Share of harvested bucks with horns 15 inches or longer, by unit group and weapon",
+          "years": "2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/03/2025-Nevada-Big-Game-Hunt-Data.xlsx",
+          "gap": ""
+        },
+        "bear": {
+          "levels": {
+            "none": 2
+          },
+          "field": "",
+          "years": "",
+          "source": "NDOW",
+          "sourceUrl": "",
+          "gap": "The 2025 hunt summary has harvest for this species and no age, point, horn, or score field that was confirmed here."
+        },
+        "csheep": {
+          "levels": {
+            "none": 12,
+            "thin": 2
+          },
+          "field": "Average B&C score at check-in, last two years, by unit group",
+          "years": "2024 to 2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/04/California-Bighorn-Ram-Hunt-Trends-Stats-2005-2025.pdf",
+          "gap": ""
+        },
+        "deer": {
+          "levels": {
+            "top": 23,
+            "thin": 168,
+            "typical": 31,
+            "below": 76,
+            "above": 43,
+            "none": 66
+          },
+          "field": "Share of harvested bucks with 4 or more points, by unit group and weapon",
+          "years": "2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/03/2025-Nevada-Big-Game-Hunt-Data.xlsx",
+          "gap": ""
+        },
+        "dsheep": {
+          "levels": {
+            "below": 13,
+            "thin": 22,
+            "none": 12,
+            "above": 4,
+            "typical": 7,
+            "top": 3
+          },
+          "field": "Average B&C score at check-in, last two years, by unit group",
+          "years": "2024 to 2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/04/Desert-Bighorn-Ram-Hunt-Trends-Comparative-Stats-2005-2025-003.pdf",
+          "gap": ""
+        },
+        "elk": {
+          "levels": {
+            "thin": 37,
+            "below": 22,
+            "typical": 10,
+            "above": 8,
+            "none": 157,
+            "top": 8
+          },
+          "field": "Share of harvested bulls with 50 inch main beams, from the 2025 hunt summary, by unit group and weapon",
+          "years": "2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/03/2025-Nevada-Big-Game-Hunt-Data.xlsx",
+          "gap": "2025 elk ages in the preliminary age PDF are not the ranking field. Spike and antlerless elk are Not enough data on this measure."
+        },
+        "goat": {
+          "levels": {
+            "thin": 2,
+            "none": 2
+          },
+          "field": "Average age at check-in, by unit",
+          "years": "2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/04/2025-Mountain-Goat-Hunt-Summary-FINAL-4-17-26.pdf",
+          "gap": "Most units have fewer than 10 checked goats, so they show Thin data."
+        },
+        "moose": {
+          "levels": {
+            "none": 1
+          },
+          "field": "",
+          "years": "",
+          "source": "NDOW",
+          "sourceUrl": "",
+          "gap": "The 2025 hunt summary has harvest for this species and no age, point, horn, or score field that was confirmed here."
+        },
+        "rsheep": {
+          "levels": {
+            "thin": 1,
+            "none": 1
+          },
+          "field": "Average B&C score at check-in, last two years, by unit group",
+          "years": "2024 to 2025",
+          "source": "NDOW",
+          "sourceUrl": "https://www.ndow.org/wp-content/uploads/2026/04/Rocky-Mtn-Ram-Hunt-Trends-Stats-2005-2025-1.pdf",
+          "gap": ""
+        }
+      }
+    },
+    "id": {
+      "file": "trophy-id.js",
+      "hunts": 816,
+      "species": {
+        "bear": {
+          "levels": {
+            "none": 10
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "deer": {
+          "levels": {
+            "typical": 26,
+            "top": 16,
+            "above": 33,
+            "below": 57,
+            "thin": 6,
+            "none": 112
+          },
+          "field": "Share of the antlered harvest with 4+ points, controlled hunts, weighted across the years on the Hunt Planner",
+          "years": "2023 to 2025",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/stats/?game=deer&season=controlled",
+          "gap": "Matched by hunt number on the controlled-hunt harvest table. General-season rows were not mixed in. Female hunts are Not enough data on this measure."
+        },
+        "elk": {
+          "levels": {
+            "above": 21,
+            "below": 38,
+            "thin": 8,
+            "typical": 17,
+            "top": 11,
+            "none": 224
+          },
+          "field": "Share of the antlered harvest with 6+ points, controlled hunts, weighted across the years on the Hunt Planner",
+          "years": "2023 to 2025",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/stats/?game=elk&season=controlled",
+          "gap": "Matched by hunt number on the controlled-hunt harvest table. General-season rows were not mixed in. Female hunts are Not enough data on this measure."
+        },
+        "goat": {
+          "levels": {
+            "none": 19
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "moose": {
+          "levels": {
+            "none": 94
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "pronghorn": {
+          "levels": {
+            "none": 78
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "sheep-ca": {
+          "levels": {
+            "none": 2
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "sheep-rm": {
+          "levels": {
+            "none": 28
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        },
+        "turkey": {
+          "levels": {
+            "none": 16
+          },
+          "field": "",
+          "years": "",
+          "source": "IDFG",
+          "sourceUrl": "https://idfg.idaho.gov/ifwis/huntplanner/harvestfinder.aspx",
+          "gap": "No confirmed point-class or age table for this species was parsed. Marked Not enough data."
+        }
+      }
+    },
+    "wy": {
+      "file": "trophy-wy.js",
+      "hunts": 699,
+      "species": {
+        "bison": {
+          "levels": {
+            "none": 2
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        },
+        "deer": {
+          "levels": {
+            "none": 166
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        },
+        "elk": {
+          "levels": {
+            "below": 37,
+            "none": 168,
+            "above": 39,
+            "typical": 20
+          },
+          "field": "Share of the male harvest that is branch-antlered (bulls, not spikes), from the 2025 elk harvest report, by hunt area",
+          "years": "2025",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/media/33482/download?inline=",
+          "gap": "Figures are survey estimates. The report does not publish a checked-animal sample by hunt area, so the under-10 rule was not applied. Special-management badge only for hunt areas 30, 32, and 100, named on the elk hunting guide."
+        },
+        "goat": {
+          "levels": {
+            "none": 4
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        },
+        "moose": {
+          "levels": {
+            "none": 36
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        },
+        "pronghorn": {
+          "levels": {
+            "none": 204
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        },
+        "sheep": {
+          "levels": {
+            "none": 23
+          },
+          "field": "",
+          "years": "",
+          "source": "WGFD",
+          "sourceUrl": "https://wgfd.wyo.gov/hunting-trapping/job-completion-reports",
+          "gap": "No confirmed herd-unit age or sex-ratio table was parsed for this species. Job Completion Reports were not mapped hunt area by hunt area. Marked Not enough data."
+        }
+      }
+    },
+    "az": {
+      "file": "trophy-az.js",
+      "hunts": 741,
+      "species": {
+        "bison": {
+          "levels": {
+            "none": 23
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "crane": {
+          "levels": {
+            "none": 21
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "deer": {
+          "levels": {
+            "none": 209
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "elk": {
+          "levels": {
+            "none": 162
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "javelina": {
+          "levels": {
+            "none": 117
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "pronghorn": {
+          "levels": {
+            "none": 61
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "sheep": {
+          "levels": {
+            "none": 68
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        },
+        "turkey": {
+          "levels": {
+            "none": 80
+          },
+          "field": "",
+          "years": "",
+          "source": "AZGFD",
+          "sourceUrl": "https://www.azgfd.com/hunting/hunt-draw-and-licenses/harvest-reporting/",
+          "gap": "azgfd.com returned 403 to this script, so the 2025 survey summary was not confirmed. No ratio or management label was guessed. Every hunt is Not enough data."
+        }
+      }
+    }
+  }
+}
