@@ -121,8 +121,20 @@ function showList(sc){
   if(!paid()){
     const samples=RWGate.takePerUnit(all.filter(x=>(x.h.units||[]).some(u=>SAMPLES.has(u))), x=>(x.h.units||[]).filter(u=>SAMPLES.has(u)));
     const who=`Units ${[...SAMPLES].join(' and ')}`;
+    const tabs=mapTabs();
+    const wire=()=>o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
+    if(S.tab==='map'){
+      o.innerHTML=`<h2 id="lt">You could draw ${all.length} ${(SP[S.sp]||'hunt').toLowerCase()} hunt${all.length===1?'':'s'}</h2>`+tabs+`<p class="dq">${esc(whoLine())}. This map colors only sample units ${[...SAMPLES].join(' and ')}. The full map is the Full Pass.</p>`+(usesRate()?mapKey():'')+`<div id="map" class="gmap" aria-label="Map of New Mexico game management units"></div>`+mapCred()+note;
+      wire();
+      drawMap(samples);
+      if(sc)o.scrollIntoView({behavior:'smooth'});
+      return;
+    }
     const lead=usesRate()?null:`The 2026 report did not publish a first-choice drawn count for ${SP[S.sp].toLowerCase()}, so these hunts are not given a result word.`;
     o.innerHTML=RWGate.freeShell({count:all.length,species:(SP[S.sp]||'hunt').toLowerCase()+(usesRate()?'':' draw'),who:esc(whoLine())+'.'+(lead?' '+lead:''),pricing:'../pricing.html',sampleNote:`<b>Sample.</b> ${who} only, up to 3 hunts from each. This is not your whole list.`,samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>card(x,i,false)).join('')+'</ol>':''});
+    const head=o.querySelector('h2');
+    if(head)head.insertAdjacentHTML('afterend', tabs);
+    wire();
     o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
     if(sc)o.scrollIntoView({behavior:'smooth'});
     return;
