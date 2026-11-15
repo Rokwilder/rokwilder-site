@@ -81,6 +81,13 @@ function nvKey(text){
   if(!nums.length) return null;
   return [...new Set(nums)].sort((a,b)=>a-b).map(n=>String(n).padStart(3,'0')).join('+');
 }
+function mtKey(sp, area){
+  const s=String(area==null?'':area).trim();
+  if(!/^\d+$/.test(s)) return null;
+  const name=String(sp||'').toLowerCase();
+  if(!name) return null;
+  return name+':'+String(+s);
+}
 function utKey(ids){
   const n=(ids||[]).map(x=>+x).filter(x=>Number.isInteger(x)&&x>0).sort((a,b)=>a-b);
   return n.length?n.join('+'):null;
@@ -147,10 +154,11 @@ function pageNote(state){
     wy:'Counted: BLM and U.S. Forest Service. Wyoming state trust land is open to hunting except cultivated cropland, when you can reach it legally. A band is shown only when that state land could not move the unit into another band. National parks, wildlife refuges, and tribal land are not counted.',
     id:'Counted: BLM, U.S. Forest Service, and Idaho endowment land the Department of Lands marks as publicly accessible. Hunt areas that are only part of a unit are left blank. National parks, wildlife refuges, and tribal land are not counted.',
     nv:'Counted: BLM and U.S. Forest Service. A band is shown when other federal or state land could not move the unit into another band. National parks and tribal land are not counted.',
-    ut:'Counted: BLM and U.S. Forest Service inside the official hunt boundary. Utah trust land is not counted. A hunt with no matching boundary is left blank.'
+    ut:'Counted: BLM and U.S. Forest Service inside the official hunt boundary. Utah trust land is not counted. A hunt with no matching boundary is left blank.',
+    mt:'Counted: Bureau of Land Management, U.S. Forest Service, Montana state trust land, and Montana Fish, Wildlife and Parks land, from the 2026-2027 FWP ownership workbook. National parks, wildlife refuges, defense land, and tribal land are not counted. A license that is not one hunting district is left blank.'
   };
   return lead+' '+(by[state]||'')+' Landlocked public land is not flagged. Exact percentages are not shown.';
 }
 function splitNext(html){const i=String(html).indexOf('<p class="next">');return i<0?{info:html,next:''}:{info:html.slice(0,i),next:html.slice(i)}}
-window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,band,combined,packageCap,pkgHref,extra,splitNext,pageNote,human,esc,sg};
+window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,mtKey,band,combined,packageCap,pkgHref,extra,splitNext,pageNote,human,esc,sg};
 })();

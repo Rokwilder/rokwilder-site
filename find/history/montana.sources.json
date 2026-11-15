@@ -1,0 +1,283 @@
+{
+ "state": "montana",
+ "years": [
+  2024,
+  2025,
+  2026
+ ],
+ "retrieved": "2026-11-15",
+ "sources": [
+  {
+   "objectID": "111141",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Antelope 900-20 Archery Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=111141",
+   "species": "antelope"
+  },
+  {
+   "objectID": "111317",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Antelope Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=111317",
+   "species": "antelope"
+  },
+  {
+   "objectID": "111319",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Antelope B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=111319",
+   "species": "antelope"
+  },
+  {
+   "objectID": "113232",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Antelope 900-20 Archery Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113232",
+   "species": "antelope"
+  },
+  {
+   "objectID": "113583",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Antelope B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113583",
+   "species": "antelope"
+  },
+  {
+   "objectID": "113585",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Antelope Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113585",
+   "species": "antelope"
+  },
+  {
+   "objectID": "116773",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Antelope Archery Only Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116773",
+   "species": "antelope"
+  },
+  {
+   "objectID": "117232",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Antelope B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=117232",
+   "species": "antelope"
+  },
+  {
+   "objectID": "117234",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Antelope Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=117234",
+   "species": "antelope"
+  },
+  {
+   "objectID": "110883",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Deer Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110883",
+   "species": "deer"
+  },
+  {
+   "objectID": "111143",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Deer B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=111143",
+   "species": "deer"
+  },
+  {
+   "objectID": "112968",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Deer Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=112968",
+   "species": "deer"
+  },
+  {
+   "objectID": "113234",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Deer B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113234",
+   "species": "deer"
+  },
+  {
+   "objectID": "116128",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Deer Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116128",
+   "species": "deer"
+  },
+  {
+   "objectID": "116774",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Deer B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116774",
+   "species": "deer"
+  },
+  {
+   "objectID": "110885",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Elk Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110885",
+   "species": "elk"
+  },
+  {
+   "objectID": "111145",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Elk B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=111145",
+   "species": "elk"
+  },
+  {
+   "objectID": "112970",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Elk Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=112970",
+   "species": "elk"
+  },
+  {
+   "objectID": "113236",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Elk B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113236",
+   "species": "elk"
+  },
+  {
+   "objectID": "116130",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Elk Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116130",
+   "species": "elk"
+  },
+  {
+   "objectID": "116776",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Elk B Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116776",
+   "species": "elk"
+  },
+  {
+   "objectID": "110964",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Goat Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110964",
+   "species": "goat"
+  },
+  {
+   "objectID": "113053",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Mountain Goat Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113053",
+   "species": "goat"
+  },
+  {
+   "objectID": "116352",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Mountain Goat Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116352",
+   "species": "goat"
+  },
+  {
+   "objectID": "110966",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Moose Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110966",
+   "species": "moose"
+  },
+  {
+   "objectID": "113051",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Moose Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113051",
+   "species": "moose"
+  },
+  {
+   "objectID": "116359",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Moose Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116359",
+   "species": "moose"
+  },
+  {
+   "objectID": "110887",
+   "year": 2024,
+   "kind": "nr_pref",
+   "title": "2024 NR Combination Preference Point Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110887",
+   "species": null
+  },
+  {
+   "objectID": "112967",
+   "year": 2025,
+   "kind": "nr_pref",
+   "title": "2025 NR Combination Preference Point Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=112967",
+   "species": null
+  },
+  {
+   "objectID": "116132",
+   "year": 2026,
+   "kind": "nr_pref",
+   "title": "2026 NR Combination Preference Point Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116132",
+   "species": null
+  },
+  {
+   "objectID": "116049",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Black Bear Permit Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116049",
+   "species": "bear"
+  },
+  {
+   "objectID": "110968",
+   "year": 2024,
+   "kind": "bonus_point",
+   "title": "2024 Sheep Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=110968",
+   "species": "sheep"
+  },
+  {
+   "objectID": "113048",
+   "year": 2025,
+   "kind": "bonus_point",
+   "title": "2025 Bighorn Sheep Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=113048",
+   "species": "sheep"
+  },
+  {
+   "objectID": "116345",
+   "year": 2026,
+   "kind": "bonus_point",
+   "title": "2026 Bighorn Sheep Detailed Bonus Point Drawing Statistics",
+   "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116345",
+   "species": "sheep"
+  }
+ ]
+}

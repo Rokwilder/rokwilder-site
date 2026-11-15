@@ -1815,6 +1815,88 @@
         }
       ],
       "page": "https://wgfd.wyo.gov/licenses-applications/draw-results-odds"
+    },
+    "montana": {
+      "state": "montana",
+      "yearsAdded": [
+        2024,
+        2025,
+        2026
+      ],
+      "unavailable": [
+        {
+          "year": 2026,
+          "species": "bison",
+          "why": "FWP published 2026 bison drawing statistics and did not publish a 2026 bison detailed bonus-point report. Bison is on the finder as a first-choice result with no point ladder, and it is not in this point-level history."
+        },
+        {
+          "year": 2026,
+          "species": "harvest",
+          "why": "2026 harvest estimates were header-only on November 15, 2026. The seasons were still open. No 2026 harvest number is shown."
+        },
+        {
+          "species": "mountain lion",
+          "why": "No 2026 limited mountain lion bonus-point report was in the FWP catalog used for this build."
+        }
+      ],
+      "examined": [],
+      "match": "2024, 2025 and 2026 first-choice bonus-point rows, and the nonresident combination preference-point reports for those years.",
+      "band": "drew",
+      "page": "https://fwp.mt.gov/buyandapply/hunting-licenses/drawing-statistics",
+      "sources": [
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116130",
+          "title": "2026 Elk Permit Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116776",
+          "title": "2026 Elk B Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116128",
+          "title": "2026 Deer Permit Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116774",
+          "title": "2026 Deer B Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=117234",
+          "title": "2026 Antelope Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=117232",
+          "title": "2026 Antelope B Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116773",
+          "title": "2026 Antelope Archery Only Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116359",
+          "title": "2026 Moose Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116345",
+          "title": "2026 Bighorn Sheep Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116352",
+          "title": "2026 Mountain Goat Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116049",
+          "title": "2026 Black Bear Permit Detailed Bonus Point Drawing Statistics"
+        },
+        {
+          "url": "https://myfwp.mt.gov/getRepositoryFile?objectID=116132",
+          "title": "2026 NR Combination Preference Point Statistics"
+        },
+        {
+          "url": "https://fwp.mt.gov/buyandapply/hunting-licenses/drawing-statistics",
+          "title": "FWP drawing statistics catalog, 2024 and 2025 reports with the same names"
+        }
+      ]
     }
   }
 }

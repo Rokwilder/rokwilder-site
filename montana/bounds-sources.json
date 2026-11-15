@@ -1,0 +1,51 @@
+{
+ "retrieved": "2026-11-15",
+ "credit": "Hunting district boundaries: Montana Fish, Wildlife and Parks.",
+ "legal": "https://fwp.mt.gov/binaries/content/assets/fwp/hunt/regulations/2026/2026-2027-legal-descriptions-finalfor-web.pdf",
+ "note": "Boundaries adopted for the 2026 and 2027 seasons. Lines are simplified. The written legal description is the one that counts.",
+ "species": {
+  "deer": {
+   "service": "ADMBND_HD_DEERELKLION",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_DEERELKLION/FeatureServer/0",
+   "districts": 139,
+   "file": "deer.json"
+  },
+  "antelope": {
+   "service": "ADMBND_HD_ANTELOPE",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_ANTELOPE/FeatureServer/0",
+   "districts": 61,
+   "file": "antelope.json"
+  },
+  "moose": {
+   "service": "ADMBND_HD_MOOSE",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_MOOSE/FeatureServer/0",
+   "districts": 74,
+   "file": "moose.json"
+  },
+  "sheep": {
+   "service": "ADMBND_HD_SHEEP",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_SHEEP/FeatureServer/0",
+   "districts": 37,
+   "file": "sheep.json"
+  },
+  "goat": {
+   "service": "ADMBND_HD_GOAT",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_GOAT/FeatureServer/0",
+   "districts": 37,
+   "file": "goat.json"
+  },
+  "bison": {
+   "service": "ADMBND_HD_BISON",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_BISON/FeatureServer/0",
+   "districts": 2,
+   "file": "bison.json"
+  },
+  "elk": {
+   "service": "ADMBND_HD_DEERELKLION",
+   "url": "https://services3.arcgis.com/Cdxz8r11hT0MGzg1/arcgis/rest/services/ADMBND_HD_DEERELKLION/FeatureServer/0",
+   "districts": 139,
+   "file": "elk.json",
+   "note": "Same 2026-2027 deer and elk hunting district layer."
+  }
+ }
+}

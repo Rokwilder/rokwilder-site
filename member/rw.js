@@ -1,6 +1,6 @@
 // Rokwilder member helper (UnitIQ). Login state, the Full Pass check, and the Find Your Hunt data loader.
 // Wired to https://api.rokwilder.com. Checkout stays closed until the API reports checkoutOpen.
-// An active Full Pass loads /api/fullpass/data/{co,ut,az,wy,id,nv}.js. If that file is missing, the member
+// An active Full Pass loads /api/fullpass/data/{co,ut,az,wy,id,nv,mt}.js. If that file is missing, the member
 // still gets the full public hunt list for that state. Exact counts stay off when the file does not load.
 // Public buy buttons stay waitlist / not on sale unless checkout is open.
 //
@@ -13,9 +13,9 @@
 const me_=document.currentScript;
 const ROOT=me_.src.replace(/member\/rw\.js(\?.*)?$/,'');
 const API=window.RW_API!=null?window.RW_API:'https://api.rokwilder.com';
-const EXACT=new Set(['co','ut','az','wy','id','nv']);
-const TROPHY=new Set(['co','ut','az','wy','id','nv']);
-const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada'};
+const EXACT=new Set(['co','ut','az','wy','id','nv','mt']);
+const TROPHY=new Set(['co','ut','az','wy','id','nv','mt']);
+const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada',mt:'Montana'};
 const VER='20261115a';
 const BUY_KEY='rw-buy';
 let acct=null;

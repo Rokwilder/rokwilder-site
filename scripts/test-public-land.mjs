@@ -51,6 +51,7 @@ ok(L.nvKey('East portion of 181 (see CR 25-07)') === null, 'a portion of a unit 
 ok(L.coKey('elk', [60, 61]) === 'gmu:60+61' && L.coKey('sheep', ['S01']) === 'sheep:S1', 'Colorado keys');
 ok(L.wyKey('elk', '001') === 'elk:1' && L.wyKey('elk', 'GEN') === null, 'Wyoming general licenses are not one hunt area');
 ok(L.utKey([685, 33]) === '33+685', 'Utah boundary ids sort into one key');
+ok(L.mtKey('elk', '217') === 'elk:217' && L.mtKey('deer', '007') === 'deer:7' && L.mtKey('elk', 'HD') === null, 'Montana keys are species plus a district number');
 
 const exactPath = join(root, 'data/public-land/exact.json');
 const provPath = join(root, 'data/public-land/provenance.json');
@@ -94,7 +95,7 @@ if (existsSync(exactPath) && existsSync(dataPath)) {
   ok(bandsOnly, 'the browser file stores only band codes');
 }
 
-const pages = ['find.html', 'utah/find.html', 'wyoming/find.html', 'idaho/find.html', 'nevada/find.html'];
+const pages = ['find.html', 'utah/find.html', 'wyoming/find.html', 'idaho/find.html', 'nevada/find.html', 'montana/find.html'];
 ok(pages.every(rel => readFileSync(join(root, rel), 'utf8').includes('land-bands.js')), 'each find page loads the band script');
 const packages = readFileSync(join(root, 'packages.html'), 'utf8');
 ok(packages.includes('id="unitiq-scouting"') && packages.includes('$99') && packages.includes('Nothing is for sale yet'), 'the $99 package is still on the packages page and checkout stays closed');
