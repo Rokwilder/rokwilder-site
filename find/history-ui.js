@@ -48,7 +48,7 @@ function htmlFor(el){
   const years=Object.keys(row.years);
   if(!years.length)return `<span class="hym">${row.pointed&&row.missing?'History not available':'History not available at this point level'}</span>`;
   const cells=years.sort().map(yr=>`<span class="yr"><b>${esc(yr)}</b><span>${dot(row.years[yr])}${esc(word(row.years[yr]))}</span></span>`).join('');
-  const avg=row.n===3||row.n===2?`<span class="yr avg"><b>${row.n}-yr average</b><span>${dot(row.avg)}${esc(word(row.avg))}</span></span>`:'';
+  const avg=(row.n===4||row.n===3||row.n===2)?`<span class="yr avg"><b>${row.n}-yr average</b><span>${dot(row.avg)}${esc(word(row.avg))}</span></span>`:'';
   const trend=row.trend?`<div class="tr">${esc(row.trend)}</div>`:'';
   return `<span class="yrs">${cells}${avg}</span>${trend}`;
 }

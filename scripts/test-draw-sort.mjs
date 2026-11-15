@@ -109,6 +109,7 @@ const states = [
   ['Idaho', ['idaho/data.js','find/unit-filter.js','find/gate.js','find/draw-sort.js','idaho/find.js'], D => D.max],
   ['Nevada', ['nevada/data.js','find/unit-filter.js','find/gate.js','find/draw-sort.js','nevada/find.js'], D => D.maxFor()],
   ['Montana', ['montana/data.js','find/land-bands.js','find/unit-filter.js','find/gate.js','find/draw-sort.js','montana/find.js'], D => D.maxFor()],
+  ['New Mexico', ['newmexico/data.js','find/land-bands.js','find/unit-filter.js','find/gate.js','find/draw-sort.js','newmexico/find.js'], D => D.maxFor()],
 ];
 
 for (const [name, files, maxOf] of states) {

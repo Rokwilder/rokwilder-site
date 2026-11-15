@@ -41,6 +41,11 @@
    "state": "MT",
    "rule": "Counted land is BLM, U.S. Forest Service, Montana state trust land, and Montana Fish, Wildlife and Parks, from FWP's 2026-2027 ownership workbook. National parks, wildlife refuges, defense land, Bureau of Reclamation, and tribal land are not counted. The workbook is one figure, so there is no second uncertain share.",
    "url": "https://fwp.mt.gov/gis/maps/huntPlanner"
+  },
+  {
+   "state": "NM",
+   "rule": "Counted land is BLM, U.S. Forest Service, New Mexico state trust land (owner code S), and Department or State Game Commission land (SGF), from the NMDGF surface-ownership layer current as of August 17, 2026. National parks, wildlife refuges, defense land, state parks, and tribal land are not counted. GMU 6B treats National Park Service land as uncertain because Valles Caldera is closed except for elk and turkey draw hunts. The band is omitted when that uncertain share would change it.",
+   "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/BLM_NM_Surface_Ownership/FeatureServer/1"
   }
  ],
  "sources": {
@@ -339,6 +344,19 @@
     "title": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
     "url": "https://fwp.mt.gov/gis/maps/huntPlanner",
     "sheet": "Own"
+   }
+  ],
+  "nm": [
+   {
+    "name": "NMDGF Game Management Units",
+    "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/NMDGF_Game_Management_Units_I_E__v2_WFL1/FeatureServer/0",
+    "updated": "2026-08-31"
+   },
+   {
+    "name": "BLM NM Surface Ownership",
+    "description": "Hosted by the New Mexico Department of Wildlife. Current as of August 17, 2026.",
+    "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/BLM_NM_Surface_Ownership/FeatureServer/1",
+    "updated": "2026-08-17"
    }
   ]
  },

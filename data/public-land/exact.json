@@ -17962,5 +17962,610 @@
    "pct": null,
    "status": "computed"
   }
+ },
+ "nm": {
+  "1": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.000402,
+   "low": 0.000402,
+   "high": 0.000402
+  },
+  "2A": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.649302,
+   "low": 0.649302,
+   "high": 0.649302
+  },
+  "2B": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.796475,
+   "low": 0.796475,
+   "high": 0.796475
+  },
+  "2C": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.897755,
+   "low": 0.897755,
+   "high": 0.897755
+  },
+  "3": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.000447,
+   "low": 0.000447,
+   "high": 0.000447
+  },
+  "4": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.117156,
+   "low": 0.117156,
+   "high": 0.117156
+  },
+  "5A": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.163587,
+   "low": 0.163587,
+   "high": 0.163587
+  },
+  "5B": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.809595,
+   "low": 0.809595,
+   "high": 0.809595
+  },
+  "6A": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.478537,
+   "low": 0.478537,
+   "high": 0.478537
+  },
+  "6B": {
+   "status": "skipped",
+   "reason": "uncertain land could move the band",
+   "band": null,
+   "pct": null,
+   "low": 0.000699,
+   "high": 0.999368
+  },
+  "6C": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.534395,
+   "low": 0.534395,
+   "high": 0.534395
+  },
+  "7": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.360199,
+   "low": 0.360199,
+   "high": 0.360199
+  },
+  "8": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.161196,
+   "low": 0.161196,
+   "high": 0.161196
+  },
+  "9": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.266315,
+   "low": 0.266315,
+   "high": 0.266315
+  },
+  "10": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.311578,
+   "low": 0.311578,
+   "high": 0.311578
+  },
+  "11": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.000362,
+   "low": 0.000362,
+   "high": 0.000362
+  },
+  "12": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.387845,
+   "low": 0.387845,
+   "high": 0.387845
+  },
+  "13": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.385357,
+   "low": 0.385357,
+   "high": 0.385357
+  },
+  "14": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.17019,
+   "low": 0.17019,
+   "high": 0.17019
+  },
+  "15": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.775755,
+   "low": 0.775755,
+   "high": 0.775755
+  },
+  "16A": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.970138,
+   "low": 0.970138,
+   "high": 0.970138
+  },
+  "16B": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.995457,
+   "low": 0.995457,
+   "high": 0.995457
+  },
+  "16C": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.832637,
+   "low": 0.832637,
+   "high": 0.832637
+  },
+  "16D": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.88333,
+   "low": 0.88333,
+   "high": 0.88333
+  },
+  "16E": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.627461,
+   "low": 0.627461,
+   "high": 0.627461
+  },
+  "17": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.731842,
+   "low": 0.731842,
+   "high": 0.731842
+  },
+  "18": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.569295,
+   "low": 0.569295,
+   "high": 0.569295
+  },
+  "19": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.046172,
+   "low": 0.046172,
+   "high": 0.046172
+  },
+  "20": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.54807,
+   "low": 0.54807,
+   "high": 0.54807
+  },
+  "21A": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.978684,
+   "low": 0.978684,
+   "high": 0.978684
+  },
+  "21B": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.618495,
+   "low": 0.618495,
+   "high": 0.618495
+  },
+  "22": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.692499,
+   "low": 0.692499,
+   "high": 0.692499
+  },
+  "23": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.631224,
+   "low": 0.631224,
+   "high": 0.631224
+  },
+  "24": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.630727,
+   "low": 0.630727,
+   "high": 0.630727
+  },
+  "25": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.705348,
+   "low": 0.705348,
+   "high": 0.705348
+  },
+  "26": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.51468,
+   "low": 0.51468,
+   "high": 0.51468
+  },
+  "27": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.674729,
+   "low": 0.674729,
+   "high": 0.674729
+  },
+  "28": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.894184,
+   "low": 0.894184,
+   "high": 0.894184
+  },
+  "29": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.839712,
+   "low": 0.839712,
+   "high": 0.839712
+  },
+  "30": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.753541,
+   "low": 0.753541,
+   "high": 0.753541
+  },
+  "31": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.475455,
+   "low": 0.475455,
+   "high": 0.475455
+  },
+  "32": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.328024,
+   "low": 0.328024,
+   "high": 0.328024
+  },
+  "33": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.577402,
+   "low": 0.577402,
+   "high": 0.577402
+  },
+  "34": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.674802,
+   "low": 0.674802,
+   "high": 0.674802
+  },
+  "37": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.388153,
+   "low": 0.388153,
+   "high": 0.388153
+  },
+  "38": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.319237,
+   "low": 0.319237,
+   "high": 0.319237
+  },
+  "39": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.175093,
+   "low": 0.175093,
+   "high": 0.175093
+  },
+  "40": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.10361,
+   "low": 0.10361,
+   "high": 0.10361
+  },
+  "41": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.20482,
+   "low": 0.20482,
+   "high": 0.20482
+  },
+  "42": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.085653,
+   "low": 0.085653,
+   "high": 0.085653
+  },
+  "43": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.262543,
+   "low": 0.262543,
+   "high": 0.262543
+  },
+  "45": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.743663,
+   "low": 0.743663,
+   "high": 0.743663
+  },
+  "46": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.001946,
+   "low": 0.001946,
+   "high": 0.001946
+  },
+  "47": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.236682,
+   "low": 0.236682,
+   "high": 0.236682
+  },
+  "48": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.290679,
+   "low": 0.290679,
+   "high": 0.290679
+  },
+  "49": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.798874,
+   "low": 0.798874,
+   "high": 0.798874
+  },
+  "50": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.679906,
+   "low": 0.679906,
+   "high": 0.679906
+  },
+  "51A": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.863755,
+   "low": 0.863755,
+   "high": 0.863755
+  },
+  "51B": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.66049,
+   "low": 0.66049,
+   "high": 0.66049
+  },
+  "52": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.920669,
+   "low": 0.920669,
+   "high": 0.920669
+  },
+  "53": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.476006,
+   "low": 0.476006,
+   "high": 0.476006
+  },
+  "54": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.106524,
+   "low": 0.106524,
+   "high": 0.106524
+  },
+  "55A": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.132029,
+   "low": 0.132029,
+   "high": 0.132029
+  },
+  "55B": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.001843,
+   "low": 0.001843,
+   "high": 0.001843
+  },
+  "56": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.216711,
+   "low": 0.216711,
+   "high": 0.216711
+  },
+  "57": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.155394,
+   "low": 0.155394,
+   "high": 0.155394
+  },
+  "58": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.207572,
+   "low": 0.207572,
+   "high": 0.207572
+  },
+  "59": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.245445,
+   "low": 0.245445,
+   "high": 0.245445
+  },
+  "35": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.000771,
+   "low": 0.000771,
+   "high": 0.000771
+  },
+  "36": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.531318,
+   "low": 0.531318,
+   "high": 0.531318
+  },
+  "22+23": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.638465,
+   "low": 0.638465,
+   "high": 0.638465
+  },
+  "25+26+27": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.633119,
+   "low": 0.633119,
+   "high": 0.633119
+  },
+  "36+37": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.441981,
+   "low": 0.441981,
+   "high": 0.441981
+  },
+  "8+43": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.229473,
+   "low": 0.229473,
+   "high": 0.229473
+  },
+  "50+52": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.75523,
+   "low": 0.75523,
+   "high": 0.75523
+  },
+  "32+36+37": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.362545,
+   "low": 0.362545,
+   "high": 0.362545
+  },
+  "29+30": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.778229,
+   "low": 0.778229,
+   "high": 0.778229
+  },
+  "54+55A": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.127455,
+   "low": 0.127455,
+   "high": 0.127455
+  },
+  "6A+6C": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.505299,
+   "low": 0.505299,
+   "high": 0.505299
+  },
+  "16B+22": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.906411,
+   "low": 0.906411,
+   "high": 0.906411
+  },
+  "39+43": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.211749,
+   "low": 0.211749,
+   "high": 0.211749
+  },
+  "42+47+59": {
+   "status": "computed",
+   "band": "priv",
+   "pct": 0.151154,
+   "low": 0.151154,
+   "high": 0.151154
+  },
+  "19+23+24+25+26+27": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.468592,
+   "low": 0.468592,
+   "high": 0.468592
+  },
+  "2B+2C": {
+   "status": "computed",
+   "band": "pub",
+   "pct": 0.849094,
+   "low": 0.849094,
+   "high": 0.849094
+  },
+  "26+27": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.564321,
+   "low": 0.564321,
+   "high": 0.564321
+  },
+  "15+30+55A": {
+   "status": "computed",
+   "band": "mix",
+   "pct": 0.600441,
+   "low": 0.600441,
+   "high": 0.600441
+  }
  }
 }

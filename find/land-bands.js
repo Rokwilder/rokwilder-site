@@ -1,7 +1,7 @@
 // Public-land bands for the find pages. Exact shares stay in data/public-land/ and are not loaded here.
 // Bands: Mostly public (70%+), Mixed public/private (40–70%), Mostly private (under 40%).
 (function(){
-const D=window.RW_LAND_DATA||{co:{},wy:{},id:{},nv:{},ut:{}};
+const D=window.RW_LAND_DATA||{co:{},wy:{},id:{},nv:{},ut:{},mt:{},nm:{}};
 const LABEL={
   pub:'Mostly public (70%+)',
   mix:'Mixed public/private (40–70%)',
@@ -88,6 +88,16 @@ function mtKey(sp, area){
   if(!name) return null;
   return name+':'+String(+s);
 }
+function nmKey(units){
+  const ids=[...new Set((units||[]).map(x=>String(x).trim().toUpperCase()).filter(Boolean))];
+  ids.sort((a,b)=>{
+    const pa=a.match(/^(\d+)([A-Z]?)$/), pb=b.match(/^(\d+)([A-Z]?)$/);
+    if(!pa||!pb) return a.localeCompare(b);
+    if(+pa[1]!==+pb[1]) return +pa[1]-+pb[1];
+    return pa[2].localeCompare(pb[2]);
+  });
+  return ids.length?ids.join('+'):null;
+}
 function utKey(ids){
   const n=(ids||[]).map(x=>+x).filter(x=>Number.isInteger(x)&&x>0).sort((a,b)=>a-b);
   return n.length?n.join('+'):null;
@@ -155,10 +165,11 @@ function pageNote(state){
     id:'Counted: BLM, U.S. Forest Service, and Idaho endowment land the Department of Lands marks as publicly accessible. Hunt areas that are only part of a unit are left blank. National parks, wildlife refuges, and tribal land are not counted.',
     nv:'Counted: BLM and U.S. Forest Service. A band is shown when other federal or state land could not move the unit into another band. National parks and tribal land are not counted.',
     ut:'Counted: BLM and U.S. Forest Service inside the official hunt boundary. Utah trust land is not counted. A hunt with no matching boundary is left blank.',
-    mt:'Counted: Bureau of Land Management, U.S. Forest Service, Montana state trust land, and Montana Fish, Wildlife and Parks land, from the 2026-2027 FWP ownership workbook. National parks, wildlife refuges, defense land, and tribal land are not counted. A license that is not one hunting district is left blank.'
+    mt:'Counted: Bureau of Land Management, U.S. Forest Service, Montana state trust land, and Montana Fish, Wildlife and Parks land, from the 2026-2027 FWP ownership workbook. National parks, wildlife refuges, defense land, and tribal land are not counted. A license that is not one hunting district is left blank.',
+    nm:'Counted: Bureau of Land Management, U.S. Forest Service, New Mexico state trust land, and New Mexico Department of Wildlife or State Game Commission land, from the Department surface-ownership layer current as of August 17, 2026. National parks, wildlife refuges, defense land, state parks, and tribal land are not counted. A hunt that is only part of a unit, only on a wildlife management area, or only on private land is left blank. Game management unit 6B adds Valles Caldera to an uncertain share, and the band is omitted when that share would change it.'
   };
   return lead+' '+(by[state]||'')+' Landlocked public land is not flagged. Exact percentages are not shown.';
 }
 function splitNext(html){const i=String(html).indexOf('<p class="next">');return i<0?{info:html,next:''}:{info:html.slice(0,i),next:html.slice(i)}}
-window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,mtKey,band,combined,packageCap,pkgHref,extra,splitNext,pageNote,human,esc,sg};
+window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,mtKey,nmKey,band,combined,packageCap,pkgHref,extra,splitNext,pageNote,human,esc,sg};
 })();

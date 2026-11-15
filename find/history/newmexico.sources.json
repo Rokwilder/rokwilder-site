@@ -1,0 +1,49 @@
+{
+ "state": "newmexico",
+ "years": [
+  2023,
+  2024,
+  2025,
+  2026
+ ],
+ "retrieved": "2026-11-15",
+ "match": "A prior year is used only when the hunt code, the unit description, and the bag match the 2026 report. A changed description is left out.",
+ "sources": [
+  {
+   "year": 2026,
+   "kind": "big game complete",
+   "url": "https://wildlife.dgf.nm.gov/download/2026-big-game-drawing-odds-complete-report/?wpdmdl=56113",
+   "title": "2026 Big Game Drawing Odds Complete Report"
+  },
+  {
+   "year": 2025,
+   "kind": "big game complete",
+   "url": "https://wildlife.dgf.nm.gov/download/2025-drawing-odds-complete-report/?wpdmdl=52046",
+   "title": "2025 Drawing Odds Complete Report"
+  },
+  {
+   "year": 2024,
+   "kind": "big game complete",
+   "url": "https://wildlife.dgf.nm.gov/download/2024-drawing-odds-complete-report/?wpdmdl=48997",
+   "title": "2024 Drawing Odds Complete Report"
+  },
+  {
+   "year": 2023,
+   "kind": "big game complete",
+   "url": "https://wildlife.dgf.nm.gov/download/2023-big-game-draw-odds-complete-report/?wpdmdl=48734",
+   "title": "2023 Big Game Draw Odds Complete Report"
+  },
+  {
+   "year": 2026,
+   "kind": "bear and turkey",
+   "url": "https://wildlife.dgf.nm.gov/download/2026-bear-and-turkey-draw-odds-report/?wpdmdl=55353",
+   "title": "2026 Bear and Turkey Draw Odds Report"
+  },
+  {
+   "year": 2025,
+   "kind": "bear and turkey",
+   "url": "https://wildlife.dgf.nm.gov/download/2025-bear-and-turkey-draw-odds-report/?wpdmdl=50810",
+   "title": "2025 Bear and Turkey Draw Odds Report"
+  }
+ ]
+}

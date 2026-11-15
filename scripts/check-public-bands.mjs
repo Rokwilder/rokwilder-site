@@ -6,6 +6,7 @@
 // wyoming/data.js may contain only verdict bands, and the repo must not contain the
 // private exact file.
 import {readFileSync, readdirSync, statSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
 import {join, relative} from 'node:path';
 import vm from 'node:vm';
 
@@ -75,8 +76,17 @@ function walk(dir, out=[]) {
 }
 const privateName = /wy_full\.(js|json)$/i;
 const privateMarker = 'FULL (' + 'Full Pass / private';
+function gitIgnored(rel) {
+  try {
+    execFileSync('git', ['check-ignore', '-q', '--', rel], {cwd: root});
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 for (const p of walk(root)) {
   const rel = relative(root, p);
+  if (gitIgnored(rel)) continue;
   if (privateName.test(rel)) bad('private path committed: ' + rel);
   if (!/\.(js|mjs|html|json)$/.test(p)) continue;
   if (rel === 'scripts/check-public-bands.mjs') continue;

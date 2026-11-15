@@ -1,0 +1,9 @@
+{
+ "retrieved": "2026-11-15",
+ "credit": "Game management unit boundaries: New Mexico Department of Wildlife.",
+ "url": "https://services2.arcgis.com/CjbW1bVhK4dB3WOa/arcgis/rest/services/NMDGF_Game_Management_Units_I_E__v2_WFL1/FeatureServer/0",
+ "item": "https://www.arcgis.com/home/item.html?id=192f3a7b478f4cee83741d7f5b5c7379",
+ "updated": "2026-08-31",
+ "units": 70,
+ "note": "Lines are simplified. The written boundary in 19.30.4 NMAC is the one that counts. A parent unit such as 2, 5, 6, 16, 21, 51, or 55 is not a polygon in this 2026 layer."
+}
