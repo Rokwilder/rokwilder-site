@@ -1,0 +1,76 @@
+{
+ "retrieved": "2026-11-14",
+ "species": {
+  "elk": {
+   "service": "ElkHuntAreas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/ElkHuntAreas/FeatureServer/0",
+   "gis_described_as": "2025",
+   "pdf": "https://wgfd.wyo.gov/media/33717/download?inline",
+   "pdf_label": "WGFD elk hunt area map",
+   "areas": 105,
+   "features_read": 105,
+   "features_without_area_number": 0
+  },
+  "deer": {
+   "service": "2026_Deer_Hunt_Areas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/2026_Deer_Hunt_Areas/FeatureServer/0",
+   "gis_described_as": "2026",
+   "pdf": "https://wgfd.wyo.gov/media/33716/download?inline",
+   "pdf_label": "WGFD deer hunt area map",
+   "areas": 126,
+   "features_read": 126,
+   "features_without_area_number": 0
+  },
+  "pronghorn": {
+   "service": "AntelopeHuntAreas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/AntelopeHuntAreas/FeatureServer/0",
+   "gis_described_as": "2025",
+   "pdf": "https://wgfd.wyo.gov/media/33715/download?inline",
+   "pdf_label": "WGFD antelope hunt area map",
+   "areas": 102,
+   "features_read": 102,
+   "features_without_area_number": 0
+  },
+  "moose": {
+   "service": "2026_Moose_Hunt_Areas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/2026_Moose_Hunt_Areas/FeatureServer/0",
+   "gis_described_as": "2023",
+   "pdf": "https://wgfd.wyo.gov/media/33718/download?inline",
+   "pdf_label": "WGFD moose hunt area map",
+   "areas": 38,
+   "features_read": 38,
+   "features_without_area_number": 0
+  },
+  "sheep": {
+   "service": "BighornSheepHuntAreas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/BighornSheepHuntAreas/FeatureServer/0",
+   "gis_described_as": "2023",
+   "pdf": "https://wgfd.wyo.gov/media/33719/download?inline",
+   "pdf_label": "WGFD bighorn sheep hunt area map",
+   "areas": 19,
+   "features_read": 19,
+   "features_without_area_number": 0
+  },
+  "goat": {
+   "service": "RockyMountainGoatHuntAreas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/RockyMountainGoatHuntAreas/FeatureServer/0",
+   "gis_described_as": "2021",
+   "pdf": "https://wgfd.wyo.gov/media/33720/download?inline",
+   "pdf_label": "WGFD mountain goat hunt area map",
+   "areas": 5,
+   "features_read": 5,
+   "features_without_area_number": 0
+  },
+  "bison": {
+   "service": "BisonHuntAreas",
+   "url": "https://services6.arcgis.com/cWzdqIyxbijuhPLw/arcgis/rest/services/BisonHuntAreas/FeatureServer/0",
+   "gis_described_as": "2016",
+   "pdf": "https://wgfd.wyo.gov/media/33721/download?inline",
+   "pdf_label": "WGFD wild bison hunt area map",
+   "areas": 3,
+   "features_read": 3,
+   "features_without_area_number": 0
+  }
+ },
+ "note": "Polygons are the WGFD feature service dissolved on HUNTAREA, then simplified for the screen. A numbered hunt area in the 2026 draw that is missing from the layer is omitted. General and region licenses are not given a shape."
+}

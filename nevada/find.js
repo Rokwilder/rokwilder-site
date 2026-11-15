@@ -37,13 +37,17 @@ const SX={
 const WPN={alw:'Any legal weapon',bow:'Archery',muz:'Muzzleloader',classic:'Classic',shotgun:'Shotgun or bow only',prim:'Primitive'};
 const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
-let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,unit:'',n:25,focus:''};
+let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,unit:'',n:25,focus:'',ord:''};
 let unitCtl=null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rows=()=>H.filter(([,h])=>h.sp===S.sp&&h.sx===S.sx&&h.live===S.live&&h.who===S.who);
 const weaponRows=()=>rows().filter(([,h])=>h.wpn===S.wpn);
 function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[S.pts]:null}
-function ranked(){return weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units])||a.h.season.localeCompare(b.h.season)||a.k.localeCompare(b.k))}
+function tie(a,b){const d=RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units]);if(d)return d;const s=a.h.season.localeCompare(b.h.season);return s||a.k.localeCompare(b.k)}
+function nvChance(h,pts){const prev=S.pts;S.pts=pts;try{if(FP){const row=lvRaw(h);if(row&&typeof row.rate1==='number'&&row.rate1>=0&&row.rate1<=1)return row.rate1}return bandAt(h)}finally{S.pts=prev}}
+function rowMeasure(x){return RWDraw.measure(p=>nvChance(x.h,p),S.pts)}
+function ranked(){return weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function rowsInOrder(all){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);if(S.focus=='land')return all.slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true}));return all}
 const below=()=>weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v<0.05}).length;
 const missing=()=>weaponRows().filter(([,h])=>bandAt(h)===null).length;
 const maxPts=()=>{let m=0;for(const [,h] of rows())for(const p of Object.keys(h.bp))m=Math.max(m,Number(p));return m};
@@ -81,12 +85,14 @@ function showList(sc){
   if(!paid()){const samples=RWGate.takePerUnit(sampleRows(),x=>x.h.units);
     o.innerHTML=RWGate.freeShell({count:all.length,species:(SP[S.sp]||S.sp).toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 231 and 075 only, up to 3 hunts from each. These are the default elk filters: antlered, resident, any legal weapon, main draw, 0 bonus points. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
     o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
-  const r=(S.focus=='land'?all.slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true})):all);
+  const r=rowsInOrder(all);
   const ban=window.RWGate?RWGate.banner():'';
-  o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2>${focusBar()}<p class="dq">${esc(whoLine())}. ${S.focus=='land'?'Mostly public land first.':'Strongest 2025 result first.'} Tap a hunt for the other point levels.</p>`+fpBox()+
+  const lead=S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Strongest 2025 result first.');
+  o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length===1?'':'s'} at this point level</h2>${focusBar()}${RWDraw.bar(S.ord,true)}<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p>`+fpBox()+
     `<ol class="fl">`+r.slice(0,S.n).map(cardFull).join('')+`</ol>`+(r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
     (r.length?'':`<p class="dq">No 2025 1st-choice row at this point level reached one in twenty. Try another weapon, another point level, or the other residency.</p>`)+note+fpLine();
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
   if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
   if(sc)o.scrollIntoView({behavior:'smooth'});
@@ -146,7 +152,9 @@ if(Q.get('live')==='nr'||Q.get('live')==='res')S.live=Q.get('live');
 if(Q.get('who'))S.who=Q.get('who');
 if(Q.get('wpn'))S.wpn=Q.get('wpn');
 if(Q.get('pts'))S.pts=+Q.get('pts')||0;
+if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.sx=h.sx;S.live=h.live;S.who=h.who;S.wpn=h.wpn;if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
+window.__DRAW={pointsMatter:()=>true,contexts(){const out=[];const seen=new Set();for(const [,h] of H){const id=[h.sp,h.sx,h.live,h.who,h.wpn].join(' ');if(seen.has(id))continue;seen.add(id);out.push({id,apply(){Object.assign(S,{sp:h.sp,sx:h.sx,live:h.live,who:h.who,wpn:h.wpn,unit:'',focus:'',ord:''})}})}return out},maxFor(){return maxPts()},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

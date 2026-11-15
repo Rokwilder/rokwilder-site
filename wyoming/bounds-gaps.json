@@ -1,0 +1,160 @@
+{
+ "elk": {
+  "draw_areas": 95,
+  "gis_areas": 105,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "70",
+   "71",
+   "72",
+   "79",
+   "81",
+   "83",
+   "89",
+   "127",
+   "128",
+   "130"
+  ],
+  "no_single_hunt_area": [
+   "E",
+   "GEN",
+   "S",
+   "W"
+  ]
+ },
+ "deer": {
+  "draw_areas": 74,
+  "gis_areas": 126,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "2",
+   "3",
+   "5",
+   "6",
+   "7",
+   "9",
+   "12",
+   "13",
+   "14",
+   "25",
+   "26",
+   "28",
+   "31",
+   "32",
+   "33",
+   "35",
+   "39",
+   "46",
+   "50",
+   "53",
+   "61",
+   "67",
+   "74",
+   "76",
+   "77",
+   "94",
+   "96",
+   "97",
+   "98",
+   "100",
+   "111",
+   "114",
+   "115",
+   "133",
+   "134",
+   "135",
+   "139",
+   "140",
+   "142",
+   "143",
+   "144",
+   "150",
+   "151",
+   "152",
+   "153",
+   "154",
+   "155",
+   "156",
+   "160",
+   "163",
+   "168",
+   "169"
+  ],
+  "no_single_hunt_area": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "GEN",
+   "H",
+   "J",
+   "K",
+   "L",
+   "M",
+   "Q",
+   "R",
+   "T",
+   "W",
+   "X",
+   "Y"
+  ]
+ },
+ "pronghorn": {
+  "draw_areas": 100,
+  "gis_areas": 102,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "85",
+   "117"
+  ],
+  "no_single_hunt_area": []
+ },
+ "moose": {
+  "draw_areas": 27,
+  "gis_areas": 38,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "7",
+   "8",
+   "14",
+   "15",
+   "19",
+   "28",
+   "30",
+   "32",
+   "33",
+   "37",
+   "44"
+  ],
+  "no_single_hunt_area": []
+ },
+ "sheep": {
+  "draw_areas": 19,
+  "gis_areas": 19,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [],
+  "no_single_hunt_area": []
+ },
+ "goat": {
+  "draw_areas": 3,
+  "gis_areas": 5,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "4",
+   "5"
+  ],
+  "no_single_hunt_area": []
+ },
+ "bison": {
+  "draw_areas": 1,
+  "gis_areas": 3,
+  "numbered_missing_from_gis": [],
+  "gis_not_in_2026_draw": [
+   "1",
+   "3"
+  ],
+  "no_single_hunt_area": []
+ }
+}

@@ -22,7 +22,7 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const n=UH[k]&&UH[k].name;return n==='Manti'||n==='La Sal Mtns'};
 const yOK=y=>y.ok!=null?!!y.ok:sumN(y.raw)>=10;   // band-only files carry an ok flag (10+ youth applied) instead of the counts
 const MAXP=33;
-let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
+let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',ord:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 let unitCtl=null;
 function utUnits(k){const h=UH[k];return [h.name].concat(h.b||[])}
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',bison:'Bison',sheep:'Bighorn sheep',goat:'Mountain goat',bear:'Black bear',turkey:'Turkey',crane:'Sandhill crane',swan:'Tundra swan',sgrouse:'Greater sage-grouse',stgrouse:'Sharp-tailed grouse'};
@@ -58,8 +58,14 @@ function odds(k){const h=UH[k],b=h.d[S.res];if(!b)return null;
  return v??null}
 const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
+function tie(a,b){const d=RWUnit.sortNum(utUnits(a.k))-RWUnit.sortNum(utUnits(b.k));if(d)return d;const sa=String((UH[a.k].seas[0]||[])[0]||''),sb=String((UH[b.k].seas[0]||[])[0]||'');if(sa!==sb)return sa<sb?-1:1;return a.k.localeCompare(b.k)}
 function ranked(){return Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k)||!RWUnit.hit(utUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||RWUnit.sortNum(utUnits(a.k))-RWUnit.sortNum(utUnits(b.k))||String((UH[a.k].seas[0]||[])[0]||'').localeCompare(String((UH[b.k].seas[0]||[])[0]||''))||a.k.localeCompare(b.k))}
+ .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
+function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
+function rowsInOrder(r){if(S.ord!=='hard'&&S.ord!=='easy')return lsort(r);return RWDraw.order(r,S.ord,rowMeasure,tie)}
+const pointsMatter=()=>PL[S.pl]&&PL[S.pl][1]!=='lottery';
+const orderLine=fallback=>S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':fallback;
 const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const dt=s=>{const [y,m,d]=s.split('-');return `${MO[+m-1]} ${+d}, ${y}`};
 const wL=h=>{if(BIRD.has(h.pool))return (h.seas[0]?`${dt(h.seas[0][0]).replace(/, \d{4}$/,'')}–${dt(h.seas[0][1])} · `:'')+BW[h.pool];if(h.pool=='deer-dh')return 'All general deer seasons (archery, muzzleloader, any legal weapon)';const wn=[...new Set(h.wn.filter(x=>x!='No Weapon'))];
@@ -114,13 +120,13 @@ function showList(){const r=ranked(),oR=otcRows(),o=$('out');$('detail').hidden=
   fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   CRED+note+fpLine()+fbA('maps');wireTabs(o);drawMap(r);return}
- o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}<p class="dq">${who}. ${sortTxt()} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
+ o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}<p class="dq">${who}. ${orderLine(sortTxt())} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
   (S.sp=='elk'&&!hasOTC()?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:otcTop(oR))+
-  fpBox()+`<ol class="fl">`+lsort(r).slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(utExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+rowsInOrder(r).slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(utExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
   (r.length||yoOnly?'':'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+otcSec(oR)+note+`<p class="note">${RWLand.pageNote('ut')}</p>`+fpLine()+fbA('find');
- wireTabs(o);o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  o.querySelectorAll('a.ygo').forEach(a=>a.onclick=e=>{e.preventDefault();S.pl=a.dataset.pl;S.sp=PL[S.pl][0];S.yo=1;S.n=25;sync();history.pushState(st('list'),'',url());showList();top2(o)});
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
  if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
@@ -308,14 +314,14 @@ async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e
  window.__UT.dlab=on.map(l=>String(l.feature.properties.u));const all=L.geoJSON(GJ);if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});else DM.fitBounds(all.getBounds())}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
-const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
+const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,ord:S.ord,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
 const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
-const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.ord)u.set('ord',S.ord);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(window.RWGate)RWGate.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
 const soOf=v=>v=='h'?'h':v=='land'?'land':'';
-function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',unit:s.unit||'',so:soOf(s.so),mc:s.mc=='h'?'h':'',yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
+function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'',sx:s.sx||'',unit:s.unit||'',so:soOf(s.so),mc:s.mc=='h'?'h':'',ord:RWDraw.ordOf(s.ord),yo:+s.yo||0,priv:+s.priv||0,n:+s.n||25,tab:s.tab=='map'?'map':'list',mv:s.mv||null,mu:s.mu??null,ol:s.ol||null});sync()}
 function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl))S.pl=sp2[0];
  $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
  $('pools').innerHTML=sp2.map(k=>`<button data-pl="${k}" class="${k==S.pl?'on':''}">${PSHORT[k]}<br><span class="ptl">${PT[PL[k][1]]}</span></button>`).join('');
@@ -339,8 +345,9 @@ const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pt
 $('go').onclick=()=>{S.n=25;S.on=0;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k in UH){if(UH[k].sp!=S.sp)continue;for(const u of utUnits(k)){const x=String(u);if(!x||seen.has(x))continue;seen.add(x);s.push(x)}}return s}});
 if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0];
- apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:soOf(Q.get('so')),mc:Q.get('mc')=='h'?'h':'',yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
+ apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:soOf(Q.get('so')),mc:Q.get('mc')=='h'?'h':'',ord:RWDraw.ordOf(Q.get('ord')),yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__UT={otcRows,OU:()=>OU,FP,oddsAt,hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
+window.__DRAW={max:MAXP,pointsMatter,contexts(){const out=[];for(const pl of Object.keys(PL))for(const res of ['res','nonres'])out.push({id:pl+' '+res,apply(){Object.assign(S,{sp:PL[pl][0],pl,res,w:'',sx:'',unit:'',so:'',ord:'',yo:0,priv:0})}});return out},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();
