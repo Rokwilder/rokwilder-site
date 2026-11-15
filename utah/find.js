@@ -117,7 +117,7 @@ function showList(){const r=ranked(),oR=otcRows(),o=$('out');$('detail').hidden=
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
  const ban=window.RWGate?RWGate.banner():'';
  if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there.${hasOTC()?' Purple areas have no hunt to draw with your choices but sell an over-the-counter general-season bull elk permit (no draw).':''} Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
-  fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.25)+
+  fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.9)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   CRED+note+fpLine()+fbA('maps');wireTabs(o);drawMap(r);return}
  const rawList=rowsInOrder(r), list=window.RWTrophy?RWTrophy.refine(rawList):rawList;
@@ -206,6 +206,7 @@ function ucol(h){return S.mc=='h'?hcol(hBest(h)):vcol(h[0].v)}
 function ubk(h){return S.mc=='h'?hbk(hBest(h)):bucket(h[0].v)}
 function hKey(noneW,noneOp){const it=HB().map(([b,w,d,c])=>({b,w,d,st:fillSt(c,1)}));it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped`,ring:1,st:`background:${MC.bg}`});
+ it.push(...overlayKey());
  return keyHTML('mkey',`Map key: the color is the best harvest success (`+'Utah DWR 2025 harvest reports'+`) among the hunts you can draw in that ${KU}`,it)}
 // Harvest map colors: their own blue family so a harvest map can't be mistaken for draw odds (greens/tan/orange).
 // Sequential light-to-dark blues stay ordered for red-green color blindness; Low is pale blue-gray, not the tan "no hunt" fill.
@@ -225,20 +226,22 @@ function wireSM(o){o.querySelectorAll('[data-so]').forEach(b=>b.onclick=()=>{S.s
 const vword=v=>({yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot',none:'Under 5%'})[bucket(v)];
 const fillSt=(c,op)=>{const n=parseInt(c.slice(1),16),rgb=[n>>16,n>>8&255,n&255].join(',');return op>=1?`background:${c}`:`background:linear-gradient(rgba(${rgb},${op}),rgba(${rgb},${op})),${MC.bg}`};
 function keyHTML(id,title,items){return `<div class="mkey" id="${id}" role="group" aria-label="${title}"><p class="mkh">${title}</p><ul>`+
- items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
+ items.map(x=>`<li${x.b?` data-b="${x.b}"`:''}${x.cls?` class="${x.cls}"`:''}><i class="sw${x.ring?' ring':''}${x.dash?' dash':''}" style="${x.st||''}" aria-hidden="true"></i><span class="mkt"><b>${x.w}</b>${x.d?` <span class="mkd">${x.d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
 // Statewide map key. noneW: what the light color means on this map; noneOp: its fill opacity there.
 function mapKey(noneW,noneOp){if(S.mc=='h')return hKey(noneW,noneOp);const it=KEYB.map(([b,w,d])=>({b,w,d,st:fillSt(MC[b],1)}));
  it.push(...otcKey());it.push({b:'none',w:noneW[0],d:noneW[1],st:fillSt(MC.none,noneOp)});
  it.push({w:'Cream outline',d:`the ${KU} you tapped${S.ol?`, and the ${KU}s of the hunt you came from`:''}`,ring:1,st:`background:${MC.bg}`});
+ it.push(...overlayKey());
  return keyHTML('mkey',`Map key: the color is your best odds in that ${KU}`,it)}
 // After the map draws: how many units are in each color. A color with none says so, so a missing color isn't a mystery.
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');
  li.classList.toggle('zero',!n);s.textContent=n?` · ${n} ${KU}${n==1?'':'s'}`:li.dataset.b=='none'?` · none`:` · none on this map with your choices`});
  window.__KEY=cnt}
 // Selected-hunt map: this hunt's units in its color (cream border), every other unit dimmed.
-function huntKey(v,dimOp,thisW,other){return keyHTML('hkey','Map key',[
+function huntKey(v,dimOp,thisW,other,dash){return keyHTML('hkey','Map key',[
  {w:thisW,d:v>=.05?`your odds: ${vword(v)}`:'your odds: under 5% (shown in the light color)',st:fillSt(v>=.05?vcol(v):MC.none,1)+`;border:3px solid ${MC.sel}`},
- {w:other,d:'dimmed: not part of this hunt',st:fillSt(MC.none,dimOp)}])}
+ {w:other,d:'dimmed: not part of this hunt',st:fillSt(MC.none,dimOp)},
+ ...(dash?[{w:'Dashed line',d:'extended archery area. It does not change the unit color.',dash:1}]:[])])}
 
 const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 function halo(m,ls){const g=L.layerGroup().addTo(m);ls.forEach(l=>{g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.line,weight:7}}));g.addLayer(L.geoJSON(l.feature,{interactive:false,style:{fill:false,color:MC.sel,weight:3}}))});return g}
@@ -248,6 +251,23 @@ const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script')
 async function ensureMap(){if(!window.L){const c=document.createElement('link');c.rel='stylesheet';c.href='../find/vendor/leaflet.css';document.head.appendChild(c);await loadJS('../find/vendor/leaflet.js')}
  if(!window.topojson)await loadJS('../find/vendor/topojson-client.min.js');if(!GJ){const t=await(await fetch('bnd.json')).json();GJ=topojson.feature(t,t.objects[Object.keys(t.objects)[0]]);GJ.features.sort((a,b)=>b.properties.a-a.properties.a)}}
 const bname=u=>{const f=GJ&&GJ.features.find(f=>f.properties.u==u);return f?f.properties.n:'Hunt area'};
+// An extended-archery boundary sits inside a regular unit and used to paint a second color on top.
+// It is not a fill. A dashed line is drawn when Archery is selected, or when that hunt is the one you opened.
+function isExtendedHunt(h){return /extended archery/i.test(h&&h.name||'')}
+function overlayIds(){
+  const ids=new Set(), plain=new Set();
+  for(const h of Object.values(UH)){
+    if(h.pool!==S.pl||(h.cw&&!S.priv))continue;
+    const dest=isExtendedHunt(h)?ids:plain;
+    (h.b||[]).forEach(u=>dest.add(String(u)));
+  }
+  for(const u of plain)ids.delete(u);
+  return ids;
+}
+function showDash(){const ov=overlayIds();if(!ov.size)return false;if(S.w==='A')return true;return !!(S.ol&&S.ol.some(id=>ov.has(String(id))))}
+function overlayKey(){if(!overlayIds().size)return [];
+ return [{w:'Dashed line', d:showDash()?'extended archery area. It does not change the unit color.':'extended archery area. Choose Archery to see it. It does not change the unit color.', dash:1}];
+}
 function byUnit(r){const m={};r.forEach(x=>UH[x.k].b.forEach(u=>{u=String(u);(m[u]=m[u]||[]).push(x)}));return m}
 const poolB=()=>{const s=new Set();Object.values(UH).forEach(h=>{if(h.pool==S.pl&&(!h.cw||S.priv))h.b.forEach(u=>s.add(String(u)))});return s};
 function otcPop(u,oh){return oh&&oh.length?`<p class="mps">Over the counter here (no draw): ${oh.length} permit${oh.length==1?'':'s'}</p><ul>`+oh.map(x=>`<li><div class="mh mo">${otcDot()}<b>Over the counter</b> · ${oSea(x.r)} · ${oAni(x.r,x.a)}<span>Season ${x.a.d||x.r.d} · hunt number ${x.r.k}</span></div></li>`).join('')+'</ul>':''}
@@ -261,17 +281,20 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
  if(!el.isConnected)return;if(M){M.remove();M=null}
  M=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,tap:true});window.__UT.map=M;hCtl(M);
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunt boundaries: Utah Division of Wildlife Resources');
- const bu=byUnit(r),pb=poolB(),cnt={hl:0,otc:0};OU={};otcRows().forEach(x=>{(OU[x.u]=OU[x.u]||[]).push(x)});
+ const bu=byUnit(r),pb=poolB(),ov=overlayIds(),cnt={hl:0,otc:0};OU={};otcRows().forEach(x=>{(OU[x.u]=OU[x.u]||[]).push(x)});
  const oo=u=>!bu[u]&&OU[String(u)];   // OTC color only where there is no hunt to draw with these choices
- const fc={type:'FeatureCollection',features:GJ.features.filter(f=>pb.has(String(f.properties.u))||OU[String(f.properties.u)])};
- const ly=L.geoJSON(fc,{style:f=>{const u=f.properties.u,h=bu[u];return{color:MC.sel,opacity:.55,weight:.8,fillColor:h?ucol(h):oo(u)?MC.otc:MC.none,fillOpacity:h||oo(u)?1:.25}},
+ const fc={type:'FeatureCollection',features:GJ.features.filter(f=>{const u=String(f.properties.u);if(ov.has(u))return false;return pb.has(u)||OU[u]})};
+ const ly=L.geoJSON(fc,{style:f=>{const u=f.properties.u,h=bu[u];return RWMap.fillStyle({hunt:h,otc:!!oo(u),fill:h?ucol(h):null,otcColor:MC.otc,none:MC.none,line:MC.sel,harvest:S.mc=='h',odds:h?h[0].v:null})},
   onEachFeature:(f,l)=>{const u=f.properties.u,h=bu[u];if(!h&&!oo(u)){l.options.interactive=false;return}if(h)cnt.hl++;else cnt.otc++;
    l.bindTooltip(f.properties.n,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
  ly.eachLayer(l=>{if(oo(l.feature.properties.u))l.bringToFront()});ly.eachLayer(l=>{if(bu[l.feature.properties.u])l.bringToFront()});
+ let dashLy=null;
+ if(showDash()){const of={type:'FeatureCollection',features:GJ.features.filter(f=>ov.has(String(f.properties.u)))};
+  dashLy=L.geoJSON(of,{style:()=>RWMap.overlayStyle(MC.sel), onEachFeature:(f,l)=>{const u=String(f.properties.u),h=bu[u];l.bindTooltip(f.properties.n,{sticky:true,direction:'top'});if(h)l.on('click',()=>{pick(u,h,l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M)}
  {const kc={},seen=new Set();fc.features.forEach(f=>{const u=String(f.properties.u);if(seen.has(u))return;seen.add(u);const h=bu[f.properties.u];const b=h?ubk(h):oo(f.properties.u)?'otc':'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
  window.__UT.hl=cnt.hl;window.__UT.otcU=cnt.otc;const all=L.geoJSON(GJ);M.setMaxBounds(all.getBounds().pad(.3));
  if(S.mv)M.setView([S.mv[0],S.mv[1]],S.mv[2]);else M.fitBounds(all.getBounds(),{padding:[4,4]});
- if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g);window.__UT.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:9})}
+ if(S.ol){const g=[];ly.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});if(dashLy)dashLy.eachLayer(l=>{if(S.ol.includes(String(l.feature.properties.u)))g.push(l)});halo(M,g);window.__UT.ol=g.length;if(g.length&&!S.mv)M.fitBounds(L.featureGroup(g).getBounds().pad(.6),{maxZoom:9})}
  if(S.mu!=null)ly.eachLayer(l=>{if(String(l.feature.properties.u)==String(S.mu)&&(bu[S.mu]||OU[S.mu]))pick(S.mu,bu[S.mu],l)});if(PY!=null){const y=PY;PY=null;requestAnimationFrame(()=>scrollTo(0,y))}
  M.on('moveend',()=>{const c=M.getCenter();S.mv=[+c.lat.toFixed(4),+c.lng.toFixed(4),M.getZoom()];const s0=history.state;if(s0&&s0.v=='list')history.replaceState(st('list'),'',url())})}
 function qy(h){const y=(h.yq||[0,0])[S.res=='res'?0:1];return y>0?`, ${y.toLocaleString()} of them set aside for youth`:''}
@@ -300,19 +323,22 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const h=UH[k]
  ${FP&&h.h25?`<h3>2025 draw (1st choice, Utah DWR)</h3><div class="yr"><b>Residents</b><span>${h.h25[1]} drew of ${h.h25[0].toLocaleString()} applied</span></div><div class="yr"><b>Nonresidents</b><span>${h.h25[3]} drew of ${h.h25[2].toLocaleString()} applied</span></div><p class="note">Source: Utah DWR 2025 drawing odds reports (<a href="https://wildlife.utah.gov/biggame/odds">wildlife.utah.gov/biggame/odds</a>).</p>`:''}
  <h3>2026 season</h3>${ss||'<p class="dq">See the Utah DWR guidebook.</p>'}
  ${f&&BIRD.has(h.pool)&&!f[0]&&!f[1]?`<h3>Permit fee (2026–27)</h3><p class="dq">No permit fee ($0). You pay only the $${h.af[0]} resident / $${h.af[1]} nonresident application fee, plus a hunting license. Source: ${gl('tk','page 8')}.</p>`:f?`<h3>Permit fee (${h.fs=='tk'||h.fs=='wf'?'2026–27':'2026'})</h3><div class="yr"><b>Resident</b><span>${money(f[0])}</span></div><div class="yr"><b>Nonresident</b><span>${f[1]==null&&h.cw?"CWMU operator only":money(f[1])}</span></div><p class="note">Plus a $10 resident / $21 nonresident application fee and a hunting license.${h.cw&&h.pool=='deer-le'?' Premium CWMU buck deer permits are $185 resident / $1,398 nonresident.':''}${h.cw&&f[1]==null?' Nonresidents can get CWMU permits only through the CWMU operator.':''} ${h.fy?` Youth: ${money(h.fy[0])} resident, ${money(h.fy[1])} nonresident.`:''} Source: ${h.fs=='al'?gl('al','hunt tables'):h.fs=='tk'||h.fs=='wf'?gl('tk','page 8'):h.fs=='br'?gl('br','hunt tables'):h.pool=='deer-dh'?gl('bg','page 47'):gl('bg','pages 15–16')}.</p>`:''}
- <h3>Where this hunt is</h3>${huntKey(v??0,.25,`This hunt's area${(h.b||[]).length>1?'s':''} (named on the map)`,`Other ${PSHORT[h.pool].toLowerCase()} hunt areas`)}<div id="dmap" class="gmap dm" aria-label="Map of this hunt's boundary"></div>${CRED}
+ <h3>Where this hunt is</h3>${huntKey(v??0,.35,`This hunt's area${(h.b||[]).length>1?'s':''} (named on the map)`,`Other ${PSHORT[h.pool].toLowerCase()} hunt areas`,isExtendedHunt(h))}<div id="dmap" class="gmap dm" aria-label="Map of this hunt's boundary"></div>${CRED}
  <p><button class="btn o" id="vsm">View on statewide map</button> <a class="btn o" href="${h.map}" target="_blank" rel="noopener">Official boundary (Utah Hunt Planner)</a></p>
  <p class="note">Hunt number <b>${k}</b>. Estimates from Utah DWR's past draw and harvest reports, not a guarantee. Check the Utah DWR guidebook before you apply.</p>
  ${fbA('find')}<button class="btn o big2" id="back2">${bk}</button>`;
  $('back').onclick=$('back2').onclick=goBack;$('vsm').onclick=()=>{S.tab='map';S.mv=null;S.mu=null;S.ol=h.b.map(String);history.pushState(st('list'),'',url());showList();top2($('out'))};
  drawDetailMap(k);top2(o)}
 async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load.</p>';return}if(!el.isConnected)return;if(DM){DM.remove();DM=null}
- const us=new Set(UH[k].b.map(String)),pb=poolB();DM=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false});window.__UT.dmap=DM;
+ const us=new Set(UH[k].b.map(String)),pb=poolB(),ov=overlayIds(),extended=isExtendedHunt(UH[k]);DM=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false});window.__UT.dmap=DM;
  DM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunt boundaries: Utah Division of Wildlife Resources');
- const on=[],v=odds(k)??0;const fc={type:'FeatureCollection',features:GJ.features.filter(f=>pb.has(String(f.properties.u))||us.has(String(f.properties.u)))};
- L.geoJSON(fc,{interactive:false,style:f=>us.has(String(f.properties.u))?{color:MC.sel,weight:2.5,fillColor:vcol(v),fillOpacity:1}:{color:MC.sel,opacity:.3,weight:.5,fillColor:MC.none,fillOpacity:.25},
+ const on=[],v=odds(k)??0;const fc={type:'FeatureCollection',features:GJ.features.filter(f=>{const u=String(f.properties.u);if(ov.has(u))return false;return pb.has(u)||us.has(u)})};
+ L.geoJSON(fc,{interactive:false,style:f=>RWMap.detailStyle(us.has(String(f.properties.u)),us.has(String(f.properties.u))?vcol(v):MC.none,MC.sel),
   onEachFeature:(f,l)=>{if(us.has(String(f.properties.u))){on.push(l)}}}).addTo(DM);
- on.forEach(l=>{l.bringToFront();l.bindTooltip(l.feature.properties.n,{permanent:true,direction:'center',className:'ulab'})});
+ let dash=null;
+ if(extended){const of={type:'FeatureCollection',features:GJ.features.filter(f=>us.has(String(f.properties.u)))};
+  dash=L.geoJSON(of,{interactive:false,style:()=>RWMap.overlayStyle(MC.sel), onEachFeature:(f,l)=>{on.push(l);l.bindTooltip(f.properties.n,{permanent:true,direction:'center',className:'ulab'})}}).addTo(DM)}
+ on.forEach(l=>{if(!extended){l.bringToFront();l.bindTooltip(l.feature.properties.n,{permanent:true,direction:'center',className:'ulab'})}});
  window.__UT.dlab=on.map(l=>String(l.feature.properties.u));const all=L.geoJSON(GJ);if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});else DM.fitBounds(all.getBounds())}
 const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${about}" data-about="${about}">Something off? Tell us</a></p>`;
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
