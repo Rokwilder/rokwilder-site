@@ -265,7 +265,7 @@ async function drawMap(r){SEL=null;const el=$('map');if(!el)return;try{await ens
  M.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Unit boundaries: Colorado Parks and Wildlife');hCtl(M);
  const bu=byUnit(r),cnt={hl:0,otc:0};OU={};otcRows().forEach(x=>{const a=OU[x.u]=OU[x.u]||[];if(!a.includes(x.r))a.push(x.r)});
  const oo=u=>u!=null&&!bu[u]&&OU[String(u)];   // OTC color only where there is no hunt to draw with these choices
- const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?ucol(h):oo(u)?MC.otc:MC.none,fillOpacity:(h&&(S.mc=='h'||h[0].v>=.05))||oo(u)?1:.9}},
+ const ly=L.geoJSON(GJ,{style:f=>{const u=f.properties.u,h=u!=null&&bu[u];return RWMap.fillStyle({hunt:h,otc:!!oo(u),fill:h?ucol(h):null,otcColor:MC.otc,none:MC.none,line:MC.sel,harvest:S.mc=='h',odds:h?h[0].v:null})},
   onEachFeature:(f,l)=>{const u=f.properties.u,h=u!=null&&bu[u];if(!h&&!oo(u)){l.options.interactive=false;return}if(h&&h[0].v>=.05)cnt.hl++;if(!h)cnt.otc++;
    l.bindTooltip('Unit '+u,{sticky:true,direction:'top'});l.on('click',()=>{pick(u,h||[],l);const pn=$('mpanel'),b=pn.getBoundingClientRect();if(b.top>innerHeight-80)scrollBy({top:b.top-innerHeight*.45,behavior:'instant'})})}}).addTo(M);
  {const kc={},seen=new Set();GJ.features.forEach(f=>{const u=f.properties.u;if(u==null||seen.has(String(u)))return;seen.add(String(u));const h=bu[u];const b=h?ubk(h):oo(u)?'otc':'none';kc[b]=(kc[b]||0)+1});fillKey(kc)}
@@ -295,7 +295,7 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const d=D[k],
 async function drawDetailMap(k){const el=$('dmap');try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load.</p>';return}if(!el.isConnected)return;if(DM){DM.remove();DM=null}
  const us=new Set(units(k).map(String));DM=L.map(el,{zoomSnap:.25,minZoom:5.5,maxZoom:11,scrollWheelZoom:false,dragging:!L.Browser.mobile,tap:false});window.__FY.dmap=DM;
  DM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Unit boundaries: Colorado Parks and Wildlife');
- const on=[];L.geoJSON(GJ,{interactive:false,style:f=>{const h=f.properties.u!=null&&us.has(String(f.properties.u));return h?{color:MC.sel,weight:2.5,fillColor:vcol(odds(k)),fillOpacity:1}:{color:MC.sel,opacity:.3,weight:.5,fillColor:MC.none,fillOpacity:.35}},
+ const on=[];L.geoJSON(GJ,{interactive:false,style:f=>{const h=f.properties.u!=null&&us.has(String(f.properties.u));return RWMap.detailStyle(h,h?vcol(odds(k)):MC.none,MC.sel)},
   onEachFeature:(f,l)=>{if(f.properties.u!=null&&us.has(String(f.properties.u))){on.push(l);l.bindTooltip(String(f.properties.u),{permanent:true,direction:'center',className:'ulab'})}}}).addTo(DM);
  window.__FY.dlab=on.map(l=>String(l.feature.properties.u));if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9})}
 const yxNote=()=>S.yo&&['elk','deer','pronghorn'].includes(S.sp)?'<p class="note"><b>Youth extended season:</b> if a youth\'s elk, deer or pronghorn license goes unfilled, CPW\'s youth extended season may let them keep hunting in a later season. It\'s separate from the draw odds above. <a href="youth-extended.html">See where a youth license can extend</a>.</p>':'';
