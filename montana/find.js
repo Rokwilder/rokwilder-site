@@ -221,7 +221,7 @@ async function showDetail(k,sc){
   }
   o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.res,usesPts()?S.pts:null)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${esc(h.desc)}. ${esc(h.season)}${h.note&&h.note.split(/\s+/).length>=8?` ${esc(h.note)}.` :''} ${h.firstOnly?'The 2026 report says this is first choice only.':''} This is a 2026 result, not a forecast.</p>${chances}${harvestHTML(h)}${landExtra(h,v)}${where}${ladder(h)}${loHTML(h)}<p class="note">Source: <a href="${esc(MT_META.pages.stats)}">FWP 2026 drawing statistics</a>. Regulations: <a href="${esc(h.sp==='moose'||h.sp==='sheep'||h.sp==='goat'||h.sp==='bison'?MT_META.pages.msgb:MT_META.pages.regs)}">2026 FWP regulations</a>. Harvest: <a href="${esc(MT_META.pages.harvest)}">FWP harvest estimates</a>.</p>`;
   $('back').onclick=()=>showList(1);
-  if($('dmap'))drawDetailMap(k);
+  if($('dmap'))drawDetailMap(v);
   if(sc)o.scrollIntoView({behavior:'smooth'});
 }
 function seg(id,attr,cur,pairs){
@@ -294,20 +294,21 @@ async function drawMap(rows){
   LM=L.map(el,{zoomSnap:.25,minZoom:5,maxZoom:11,scrollWheelZoom:false,tap:true});
   LM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunting districts: Montana Fish, Wildlife and Parks');
   const bu=byArea(rows),cnt={};
-  const ly=L.geoJSON(GJ,{style:f=>{const a=String(f.properties.u),h=bu[a];return{color:MC.sel,opacity:.45,weight:.7,fillColor:h?COL[h[0].v]||MC.few:MC.none,fillOpacity:h?1:.9}},
+  const ly=L.geoJSON(GJ,{style:f=>{const a=String(f.properties.u),h=bu[a];return RWMap.fillStyle({hunt:h,fill:h?(COL[h[0].v]||MC.few):null,none:MC.none,line:MC.sel,odds:h?h[0].v:null})},
     onEachFeature:(f,l)=>{const a=String(f.properties.u),h=bu[a];if(!h){l.options.interactive=false;return}l.bindTooltip('HD '+a,{sticky:true,direction:'top'});l.on('click',()=>{S.unit=a;if(unitCtl)unitCtl.set(a);S.tab='list';showList(1)})}}).addTo(LM);
   const seen=new Set();GJ.features.forEach(f=>{const a=String(f.properties.u);if(seen.has(a))return;seen.add(a);const h=bu[a];const b=h?bucket(h[0].v):'none';cnt[b]=(cnt[b]||0)+1});
   fillKey(cnt);LM.fitBounds(ly.getBounds(),{padding:[4,4]});
 }
-async function drawDetailMap(){
+async function drawDetailMap(v){
   const el=$('dmap');if(!el)return;
   try{await ensureMap()}catch(e){return}
   if(!el.isConnected)return;if(DM){DM.remove();DM=null}
   const id=String(el.dataset.area);
+  const fill=COL[v]||MC.few;
   DM=L.map(el,{zoomSnap:.25,minZoom:5,maxZoom:11,scrollWheelZoom:false,dragging:true,tap:false});
   DM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Hunting districts: Montana Fish, Wildlife and Parks');
   const on=[];
-  L.geoJSON(GJ,{interactive:false,style:f=>String(f.properties.u)===id?{color:MC.sel,weight:2.5,fillColor:MC.most,fillOpacity:.85}:{color:MC.sel,opacity:.3,weight:.5,fillColor:MC.none,fillOpacity:.35},
+  L.geoJSON(GJ,{interactive:false,style:f=>RWMap.detailStyle(String(f.properties.u)===id,fill,MC.sel),
     onEachFeature:(f,l)=>{if(String(f.properties.u)===id)on.push(l)}}).addTo(DM);
   on.forEach(l=>l.bindTooltip(id,{permanent:true,direction:'center',className:'ulab'}));
   if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});
