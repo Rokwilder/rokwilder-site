@@ -70,7 +70,7 @@ function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+
  return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',h.sp+'-'+String(+h.area)):''})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
 function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${bits.info}</button>${bits.next}</li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const all=ranked(),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
  const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('wy')}</p>`:'');
@@ -78,16 +78,19 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
   o.innerHTML=RWGate.freeShell({count:all.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const r=orderRows(all);
+ const list=window.RWTrophy?RWTrophy.refine(r):r;
  const ban=window.RWGate?RWGate.banner():'';
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
- const lead=S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Best odds first.');
+ const tNote=window.RWTrophy?RWTrophy.sortNote():'';
+ const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Best odds first.'));
  if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who()}. Colored hunt areas have at least one hunt you can draw. The color is the best odds in that area. Tap an area to see its hunts.</p>`+fpBox()+mapKey()+`<div id="map" class="gmap" aria-label="Map of Wyoming hunt areas"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+mapCred()+`<p class="note">A general or region license has no single hunt area in this layer, so it is left off the map. A numbered area that is missing from the layer is left off too.</p>`+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList();o.scrollIntoView({behavior:'smooth'})});drawMap(r);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
-  `<ol class="fl">`+r.slice(0,S.n).map(cardFull).join('')+`</ol>`+(r.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,r.length-S.n)} more (${r.length-S.n} left)</button>`:'')+
-  (r.length?'':'<p class="dq">No hunts at 5% or better with these choices. Try another hunt type, or check back as you build points.</p>')+note+fpLine();
+ o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length==1?'':'s'} you can draw</h2>${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
+  `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
+  (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||'<p class="dq">No hunts at 5% or better with these choices. Try another hunt type, or check back as you build points.</p>')+note+fpLine();
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
+ if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
  if(sc)o.scrollIntoView({behavior:'smooth'})}
@@ -102,7 +105,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  if(aid){try{await ensureMap();if(GJ.features.some(f=>String(f.properties.u)===aid))where=`<h3>Where this hunt is</h3><p class="dq">Hunt area ${esc(h.area)}, highlighted on the hunt area map.</p><div id="dmap" class="gmap dm" data-area="${aid}" aria-label="Map of this hunt area"></div>${mapCred()}<p><button class="btn o" id="vsm">View on statewide map</button></p>`}catch(e){where=''}}
  const bk=S.tab=='map'?'← Back to the map':'← Back to the list';
  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
- `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
+ `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+(window.RWTrophy?RWTrophy.block(k):'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
  `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):fpBox())+where+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
  `<p class="note">WGFD's printed description: "${esc(h.desc)}". Their reports cut long descriptions short; season dates, weapons and limitations are in the WGFD regulations for this hunt area. Sources: ${sourceHTML(h)}.</p>`;
