@@ -1,7 +1,7 @@
 {
   "method": {
     "bands": "Each official yearly draw rate is mapped to the same public band the page already uses. Colorado, Utah, Wyoming and Arizona use 1 at 99.5% and up, then 0.75, 0.25, 0.05, 0.01 and 0. Idaho and Nevada use 1 only when every applicant in that cell was drawn, then the same lower floors. A year with no official row is omitted. It is not stored as zero and it is not filled from another point level.",
-    "average": "The average is the arithmetic mean of the official yearly draw rates for the years that have a rate for that hunt and, where the draw uses points, for that exact point level. The mean is then mapped with the same band cutoffs. The mean itself is not published. The label is 3-yr average when three rates are averaged and 2-yr average when two are. One rate is not averaged. A missing year is left out of the mean.",
+    "average": "The average is the arithmetic mean of the official yearly draw rates for the years that have a rate for that hunt and, where the draw uses points, for that exact point level. The mean is then mapped with the same band cutoffs. The mean itself is not published. The label is 4-yr average when four rates are averaged, 3-yr average when three rates are averaged, and 2-yr average when two are. One rate is not averaged. Five or more rates are not averaged. A missing year is left out of the mean.",
     "trend": "The trend compares those same official rates in year order, after rounding each rate to six decimal places. Holding steady means the rates are equal. Getting harder means each later rate is lower or equal and the last is lower. Getting easier means each later rate is higher or equal and the last is higher. One year stood out means the first and last rates match and a middle rate does not. Anything else is Up and down. Fewer than two rates has no trend word."
   },
   "states": {
@@ -1895,6 +1895,105 @@
         {
           "url": "https://fwp.mt.gov/buyandapply/hunting-licenses/drawing-statistics",
           "title": "FWP drawing statistics catalog, 2024 and 2025 reports with the same names"
+        }
+      ]
+    },
+    "newmexico": {
+      "state": "newmexico",
+      "yearsAdded": [
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "unavailable": [
+        {
+          "year": 2027,
+          "why": "The 2027-28 hunting rules booklet was not on the publications page on November 15, 2026. Hunt codes change format that year. No 2027-28 table was built."
+        },
+        {
+          "species": "bear and turkey",
+          "why": "The 2026 and 2025 bear and turkey workbooks publish applicants by choice and licenses issued. They do not publish how many were drawn on the first choice, so those hunts have no history band."
+        },
+        {
+          "species": "bear and turkey",
+          "years": [
+            2023,
+            2024
+          ],
+          "why": "The download set used here has bear and turkey draw workbooks for 2025 and 2026. Earlier bear and turkey draw odds were not in that set."
+        },
+        {
+          "year": "2026-27",
+          "species": "harvest",
+          "why": "2026-27 harvest reports were not published on November 15, 2026. The season was still underway."
+        }
+      ],
+      "examined": [
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2026-big-game-drawing-odds-complete-report/?wpdmdl=56113",
+          "title": "2026 Big Game Drawing Odds Complete Report"
+        },
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2025-drawing-odds-complete-report/?wpdmdl=52046",
+          "title": "2025 Drawing Odds Complete Report"
+        },
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2024-drawing-odds-complete-report/?wpdmdl=48997",
+          "title": "2024 Drawing Odds Complete Report"
+        },
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2023-big-game-draw-odds-complete-report/?wpdmdl=48734",
+          "title": "2023 Big Game Draw Odds Complete Report"
+        },
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2026-bear-and-turkey-draw-odds-report/?wpdmdl=55353",
+          "title": "2026 Bear and Turkey Draw Odds Report"
+        },
+        {
+          "url": "https://wildlife.dgf.nm.gov/download/2025-bear-and-turkey-draw-odds-report/?wpdmdl=50810",
+          "title": "2025 Bear and Turkey Draw Odds Report"
+        }
+      ],
+      "match": "2023 through 2026 first-choice drawn divided by first-choice applicants in the same pool. The unit description and bag must match the 2026 row.",
+      "band": "drew",
+      "page": "https://wildlife.dgf.nm.gov/hunting/applications-and-draw-information/how-new-mexico-draw-works/",
+      "sources": [
+        {
+          "year": 2026,
+          "kind": "big game complete",
+          "url": "https://wildlife.dgf.nm.gov/download/2026-big-game-drawing-odds-complete-report/?wpdmdl=56113",
+          "title": "2026 Big Game Drawing Odds Complete Report"
+        },
+        {
+          "year": 2025,
+          "kind": "big game complete",
+          "url": "https://wildlife.dgf.nm.gov/download/2025-drawing-odds-complete-report/?wpdmdl=52046",
+          "title": "2025 Drawing Odds Complete Report"
+        },
+        {
+          "year": 2024,
+          "kind": "big game complete",
+          "url": "https://wildlife.dgf.nm.gov/download/2024-drawing-odds-complete-report/?wpdmdl=48997",
+          "title": "2024 Drawing Odds Complete Report"
+        },
+        {
+          "year": 2023,
+          "kind": "big game complete",
+          "url": "https://wildlife.dgf.nm.gov/download/2023-big-game-draw-odds-complete-report/?wpdmdl=48734",
+          "title": "2023 Big Game Draw Odds Complete Report"
+        },
+        {
+          "year": 2026,
+          "kind": "bear and turkey",
+          "url": "https://wildlife.dgf.nm.gov/download/2026-bear-and-turkey-draw-odds-report/?wpdmdl=55353",
+          "title": "2026 Bear and Turkey Draw Odds Report"
+        },
+        {
+          "year": 2025,
+          "kind": "bear and turkey",
+          "url": "https://wildlife.dgf.nm.gov/download/2025-bear-and-turkey-draw-odds-report/?wpdmdl=50810",
+          "title": "2025 Bear and Turkey Draw Odds Report"
         }
       ]
     }

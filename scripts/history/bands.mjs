@@ -48,14 +48,16 @@ export function trendOf(rates) {
 }
 
 // Simple mean of the official rates, then the same public band. No average for 1 rate.
-// A 4th rate is refused rather than labeled as a 3-year average.
+// Two, three, or four rates keep that count in the label. Five or more are refused
+// rather than dropped and called a shorter average.
 export function averageOf(rates, style) {
   const vals = rates.filter(v => v != null && Number.isFinite(v));
-  if (vals.length < 2 || vals.length > 3) return null;
+  if (vals.length < 2 || vals.length > 4) return null;
   const mean = vals.reduce((sum, v) => sum + v, 0) / vals.length;
   const band = bandOf(Math.min(1, mean), style);
   if (band == null) return null;
-  return {band, n: vals.length, label: vals.length === 3 ? '3-yr average' : '2-yr average'};
+  const label = vals.length === 4 ? '4-yr average' : vals.length === 3 ? '3-yr average' : '2-yr average';
+  return {band, n: vals.length, label};
 }
 
 export function packScalar(yearRates, years, style) {

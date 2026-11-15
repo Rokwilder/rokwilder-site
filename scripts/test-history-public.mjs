@@ -14,7 +14,9 @@ const three = averageOf([1, 0.5, 0], 'yes');
 ok(three && three.n === 3 && three.label === '3-yr average' && three.band === bandYes(0.5), 'three rates average to the band of their mean');
 const two = averageOf([0.8, 0.2], 'yes');
 ok(two && two.n === 2 && two.label === '2-yr average' && two.band === 0.25, 'two rates are a 2-yr average');
-ok(averageOf([0.4], 'yes') === null && averageOf([0.2, 0.2, 0.2, 0.2], 'yes') === null, 'one rate and four rates are not averaged');
+ok(averageOf([0.4], 'yes') === null && averageOf([0.2, 0.2, 0.2, 0.2, 0.2], 'yes') === null, 'one rate and five rates are not averaged');
+const four = averageOf([0.2, 0.2, 0.2, 0.2], 'yes');
+ok(four && four.n === 4 && four.label === '4-yr average' && four.band === bandYes(0.2), 'four rates are a 4-yr average');
 ok(trendOf([0.8, 0.76, 0.74]) === 'Getting harder', 'a falling rate is getting harder even inside one band');
 ok(trendOf([0.2, 0.2, 0.2]) === 'Holding steady', 'equal rates hold steady');
 ok(trendOf([0.1, 0.9, 0.1]) === 'One year stood out', 'a middle spike is one year that stood out');
@@ -69,7 +71,7 @@ for (const name of files) {
     const pointed = Object.values(rec.y).some(v => v && typeof v === 'object');
     if (!pointed) {
       if (rec.n != null) {
-        if ((rec.n !== 2 && rec.n !== 3) || !bands.has(rec.a)) avgBad++;
+        if ((rec.n !== 2 && rec.n !== 3 && rec.n !== 4) || !bands.has(rec.a)) avgBad++;
         else avgOk++;
         const count = Object.keys(rec.y).length;
         if (rec.n !== count) avgBad++;
@@ -79,7 +81,7 @@ for (const name of files) {
     } else {
       const ns = rec.n || {};
       for (const [point, n] of Object.entries(ns)) {
-        if ((n !== 2 && n !== 3) || !bands.has(rec.a[point])) avgBad++;
+        if ((n !== 2 && n !== 3 && n !== 4) || !bands.has(rec.a[point])) avgBad++;
         else avgOk++;
         const count = data.years.filter(year => rec.y[year] && rec.y[year][point] != null).length;
         if (n !== count) avgBad++;

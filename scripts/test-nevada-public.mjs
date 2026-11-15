@@ -22,7 +22,8 @@ ok(!/May 13, 2027|March 23, 2027|June 15, 2027/.test(html + JSON.stringify(NV_ME
 ok(/January 25, 2027/.test(html) && /February 12, 2027/.test(html), 'posted 2027 spring turkey dates are cited from CR 26-01');
 ok(!/noindex/i.test(html), 'page is indexable');
 ok(!/Preview for review/i.test(html), 'preview banner is removed');
-ok(/More states to come: New Mexico\./.test(html), 'coming-states line');
+ok(/newmexico\/find\.html">New Mexico/.test(html), 'Nevada page links to New Mexico');
+ok(!/More states to come: New Mexico/.test(html), 'New Mexico is in the state list');
 ok(/montana\/find\.html">Montana/.test(html), 'Nevada page links to Montana');
 ok(/idaho\/find\.html/.test(html), 'Nevada page links to Idaho');
 const gate = readFileSync(join(root, 'find/gate.js'), 'utf8');

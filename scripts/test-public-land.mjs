@@ -95,7 +95,7 @@ if (existsSync(exactPath) && existsSync(dataPath)) {
   ok(bandsOnly, 'the browser file stores only band codes');
 }
 
-const pages = ['find.html', 'utah/find.html', 'wyoming/find.html', 'idaho/find.html', 'nevada/find.html', 'montana/find.html'];
+const pages = ['find.html', 'utah/find.html', 'wyoming/find.html', 'idaho/find.html', 'nevada/find.html', 'montana/find.html', 'newmexico/find.html'];
 ok(pages.every(rel => readFileSync(join(root, rel), 'utf8').includes('land-bands.js')), 'each find page loads the band script');
 const packages = readFileSync(join(root, 'packages.html'), 'utf8');
 ok(packages.includes('id="unitiq-scouting"') && packages.includes('$99') && packages.includes('Nothing is for sale yet'), 'the $99 package is still on the packages page and checkout stays closed');
