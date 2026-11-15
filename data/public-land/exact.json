@@ -5475,6 +5475,5248 @@
    "status": "skipped"
   }
  },
+ "mt": {
+  "antelope:215": {
+   "band": "mix",
+   "counted_percent": 49.39,
+   "high": 0.4939,
+   "low": 0.4939,
+   "pct": 0.4939,
+   "public_all_percent": 51.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:291": {
+   "band": "priv",
+   "counted_percent": 20.11,
+   "high": 0.2011,
+   "low": 0.2011,
+   "pct": 0.2011,
+   "public_all_percent": 20.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:300": {
+   "band": "pub",
+   "counted_percent": 76.02,
+   "high": 0.7602,
+   "low": 0.7602,
+   "pct": 0.7602,
+   "public_all_percent": 76.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:301": {
+   "band": "pub",
+   "counted_percent": 70.02,
+   "high": 0.7002,
+   "low": 0.7002,
+   "pct": 0.7002,
+   "public_all_percent": 70.08,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:310": {
+   "band": "pub",
+   "counted_percent": 79.13,
+   "high": 0.7913,
+   "low": 0.7913,
+   "pct": 0.7913,
+   "public_all_percent": 79.32,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:311": {
+   "band": "priv",
+   "counted_percent": 33.44,
+   "high": 0.3344,
+   "low": 0.3344,
+   "pct": 0.3344,
+   "public_all_percent": 35.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:313": {
+   "band": "mix",
+   "counted_percent": 41.94,
+   "high": 0.4194,
+   "low": 0.4194,
+   "pct": 0.4194,
+   "public_all_percent": 41.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:317": {
+   "band": "priv",
+   "counted_percent": 9.78,
+   "high": 0.0978,
+   "low": 0.0978,
+   "pct": 0.0978,
+   "public_all_percent": 10.77,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:318": {
+   "band": "pub",
+   "counted_percent": 72.43,
+   "high": 0.7243,
+   "low": 0.7243,
+   "pct": 0.7243,
+   "public_all_percent": 72.52,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:319": {
+   "band": "pub",
+   "counted_percent": 75.04,
+   "high": 0.7504,
+   "low": 0.7504,
+   "pct": 0.7504,
+   "public_all_percent": 76.43,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:320": {
+   "band": "mix",
+   "counted_percent": 47.1,
+   "high": 0.471,
+   "low": 0.471,
+   "pct": 0.471,
+   "public_all_percent": 47.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:322": {
+   "band": "mix",
+   "counted_percent": 56.86,
+   "high": 0.5686,
+   "low": 0.5686,
+   "pct": 0.5686,
+   "public_all_percent": 60.54,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:329": {
+   "band": "mix",
+   "counted_percent": 64.79,
+   "high": 0.6479,
+   "low": 0.6479,
+   "pct": 0.6479,
+   "public_all_percent": 65.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:338": {
+   "band": "priv",
+   "counted_percent": 17.1,
+   "high": 0.171,
+   "low": 0.171,
+   "pct": 0.171,
+   "public_all_percent": 17.25,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:339": {
+   "band": "priv",
+   "counted_percent": 15.3,
+   "high": 0.153,
+   "low": 0.153,
+   "pct": 0.153,
+   "public_all_percent": 15.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:340": {
+   "band": "mix",
+   "counted_percent": 48.3,
+   "high": 0.483,
+   "low": 0.483,
+   "pct": 0.483,
+   "public_all_percent": 48.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:350": {
+   "band": "pub",
+   "counted_percent": 76.91,
+   "high": 0.7691,
+   "low": 0.7691,
+   "pct": 0.7691,
+   "public_all_percent": 77.79,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:360": {
+   "band": "mix",
+   "counted_percent": 68.16,
+   "high": 0.6816,
+   "low": 0.6816,
+   "pct": 0.6816,
+   "public_all_percent": 68.32,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:370": {
+   "band": "priv",
+   "counted_percent": 26.63,
+   "high": 0.2663,
+   "low": 0.2663,
+   "pct": 0.2663,
+   "public_all_percent": 27.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:371": {
+   "band": "priv",
+   "counted_percent": 32.31,
+   "high": 0.3231,
+   "low": 0.3231,
+   "pct": 0.3231,
+   "public_all_percent": 32.58,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:380": {
+   "band": "mix",
+   "counted_percent": 50.45,
+   "high": 0.5045,
+   "low": 0.5045,
+   "pct": 0.5045,
+   "public_all_percent": 52.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:381": {
+   "band": "priv",
+   "counted_percent": 39.41,
+   "high": 0.3941,
+   "low": 0.3941,
+   "pct": 0.3941,
+   "public_all_percent": 40.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:388": {
+   "band": "priv",
+   "counted_percent": 8.42,
+   "high": 0.0842,
+   "low": 0.0842,
+   "pct": 0.0842,
+   "public_all_percent": 13.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:390": {
+   "band": "priv",
+   "counted_percent": 36.42,
+   "high": 0.3642,
+   "low": 0.3642,
+   "pct": 0.3642,
+   "public_all_percent": 37.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:401": {
+   "band": "priv",
+   "counted_percent": 9.56,
+   "high": 0.0956,
+   "low": 0.0956,
+   "pct": 0.0956,
+   "public_all_percent": 10.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:404": {
+   "band": "priv",
+   "counted_percent": 8.35,
+   "high": 0.0835,
+   "low": 0.0835,
+   "pct": 0.0835,
+   "public_all_percent": 10.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:413": {
+   "band": "priv",
+   "counted_percent": 27.63,
+   "high": 0.2763,
+   "low": 0.2763,
+   "pct": 0.2763,
+   "public_all_percent": 27.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:420": {
+   "band": "priv",
+   "counted_percent": 20.44,
+   "high": 0.2044,
+   "low": 0.2044,
+   "pct": 0.2044,
+   "public_all_percent": 21.17,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:430": {
+   "band": "mix",
+   "counted_percent": 45.54,
+   "high": 0.4554,
+   "low": 0.4554,
+   "pct": 0.4554,
+   "public_all_percent": 45.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:440": {
+   "band": "priv",
+   "counted_percent": 10.99,
+   "high": 0.1099,
+   "low": 0.1099,
+   "pct": 0.1099,
+   "public_all_percent": 11.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:441": {
+   "band": "priv",
+   "counted_percent": 37.08,
+   "high": 0.3708,
+   "low": 0.3708,
+   "pct": 0.3708,
+   "public_all_percent": 37.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:444": {
+   "band": "priv",
+   "counted_percent": 18.16,
+   "high": 0.1816,
+   "low": 0.1816,
+   "pct": 0.1816,
+   "public_all_percent": 20.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:450": {
+   "band": "priv",
+   "counted_percent": 13.08,
+   "high": 0.1308,
+   "low": 0.1308,
+   "pct": 0.1308,
+   "public_all_percent": 13.16,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:455": {
+   "band": "mix",
+   "counted_percent": 42.03,
+   "high": 0.4203,
+   "low": 0.4203,
+   "pct": 0.4203,
+   "public_all_percent": 42.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:471": {
+   "band": "priv",
+   "counted_percent": 17.27,
+   "high": 0.1727,
+   "low": 0.1727,
+   "pct": 0.1727,
+   "public_all_percent": 17.67,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:480": {
+   "band": "priv",
+   "counted_percent": 13.71,
+   "high": 0.1371,
+   "low": 0.1371,
+   "pct": 0.1371,
+   "public_all_percent": 13.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:481": {
+   "band": "priv",
+   "counted_percent": 38.36,
+   "high": 0.3836,
+   "low": 0.3836,
+   "pct": 0.3836,
+   "public_all_percent": 46.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:485": {
+   "band": "priv",
+   "counted_percent": 29.11,
+   "high": 0.2911,
+   "low": 0.2911,
+   "pct": 0.2911,
+   "public_all_percent": 31.45,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:490": {
+   "band": "priv",
+   "counted_percent": 38.28,
+   "high": 0.3828,
+   "low": 0.3828,
+   "pct": 0.3828,
+   "public_all_percent": 38.31,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:506": {
+   "band": "priv",
+   "counted_percent": 12.93,
+   "high": 0.1293,
+   "low": 0.1293,
+   "pct": 0.1293,
+   "public_all_percent": 12.97,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:516": {
+   "band": "priv",
+   "counted_percent": 16.23,
+   "high": 0.1623,
+   "low": 0.1623,
+   "pct": 0.1623,
+   "public_all_percent": 17.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:526": {
+   "band": "priv",
+   "counted_percent": 4.19,
+   "high": 0.0419,
+   "low": 0.0419,
+   "pct": 0.0419,
+   "public_all_percent": 4.41,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:536": {
+   "band": "priv",
+   "counted_percent": 17.69,
+   "high": 0.1769,
+   "low": 0.1769,
+   "pct": 0.1769,
+   "public_all_percent": 17.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:546": {
+   "band": "priv",
+   "counted_percent": 33.42,
+   "high": 0.3342,
+   "low": 0.3342,
+   "pct": 0.3342,
+   "public_all_percent": 33.63,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:556": {
+   "band": "mix",
+   "counted_percent": 45.95,
+   "high": 0.4595,
+   "low": 0.4595,
+   "pct": 0.4595,
+   "public_all_percent": 47.22,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:576": {
+   "band": "priv",
+   "counted_percent": 7.48,
+   "high": 0.0748,
+   "low": 0.0748,
+   "pct": 0.0748,
+   "public_all_percent": 8.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:586": {
+   "band": "priv",
+   "counted_percent": 24.92,
+   "high": 0.2492,
+   "low": 0.2492,
+   "pct": 0.2492,
+   "public_all_percent": 24.96,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:596": {
+   "band": "priv",
+   "counted_percent": 12.5,
+   "high": 0.125,
+   "low": 0.125,
+   "pct": 0.125,
+   "public_all_percent": 12.81,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:600": {
+   "band": "priv",
+   "counted_percent": 18.5,
+   "high": 0.185,
+   "low": 0.185,
+   "pct": 0.185,
+   "public_all_percent": 20.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:620": {
+   "band": "mix",
+   "counted_percent": 43.05,
+   "high": 0.4305,
+   "low": 0.4305,
+   "pct": 0.4305,
+   "public_all_percent": 57.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:630": {
+   "band": "mix",
+   "counted_percent": 55.45,
+   "high": 0.5545,
+   "low": 0.5545,
+   "pct": 0.5545,
+   "public_all_percent": 67.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:640": {
+   "band": "priv",
+   "counted_percent": 13.19,
+   "high": 0.1319,
+   "low": 0.1319,
+   "pct": 0.1319,
+   "public_all_percent": 14.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:650": {
+   "band": "priv",
+   "counted_percent": 15.45,
+   "high": 0.1545,
+   "low": 0.1545,
+   "pct": 0.1545,
+   "public_all_percent": 18.03,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:670": {
+   "band": "mix",
+   "counted_percent": 42.91,
+   "high": 0.4291,
+   "low": 0.4291,
+   "pct": 0.4291,
+   "public_all_percent": 44.12,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:690": {
+   "band": "priv",
+   "counted_percent": 17.84,
+   "high": 0.1784,
+   "low": 0.1784,
+   "pct": 0.1784,
+   "public_all_percent": 19.25,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:700": {
+   "band": "priv",
+   "counted_percent": 24.12,
+   "high": 0.2412,
+   "low": 0.2412,
+   "pct": 0.2412,
+   "public_all_percent": 36.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:701": {
+   "band": "priv",
+   "counted_percent": 18.08,
+   "high": 0.1808,
+   "low": 0.1808,
+   "pct": 0.1808,
+   "public_all_percent": 18.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:702": {
+   "band": "priv",
+   "counted_percent": 9.69,
+   "high": 0.0969,
+   "low": 0.0969,
+   "pct": 0.0969,
+   "public_all_percent": 11.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:703": {
+   "band": "priv",
+   "counted_percent": 15.9,
+   "high": 0.159,
+   "low": 0.159,
+   "pct": 0.159,
+   "public_all_percent": 16.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:704": {
+   "band": "priv",
+   "counted_percent": 30.2,
+   "high": 0.302,
+   "low": 0.302,
+   "pct": 0.302,
+   "public_all_percent": 30.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "antelope:705": {
+   "band": "priv",
+   "counted_percent": 30.18,
+   "high": 0.3018,
+   "low": 0.3018,
+   "pct": 0.3018,
+   "public_all_percent": 30.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:100": {
+   "band": "pub",
+   "counted_percent": 88.94,
+   "high": 0.8894,
+   "low": 0.8894,
+   "pct": 0.8894,
+   "public_all_percent": 89.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:101": {
+   "band": "pub",
+   "counted_percent": 78.89,
+   "high": 0.7889,
+   "low": 0.7889,
+   "pct": 0.7889,
+   "public_all_percent": 79.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:103": {
+   "band": "mix",
+   "counted_percent": 49.91,
+   "high": 0.4991,
+   "low": 0.4991,
+   "pct": 0.4991,
+   "public_all_percent": 51.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:104": {
+   "band": "pub",
+   "counted_percent": 77.27,
+   "high": 0.7727,
+   "low": 0.7727,
+   "pct": 0.7727,
+   "public_all_percent": 77.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:110": {
+   "band": "pub",
+   "counted_percent": 85.69,
+   "high": 0.8569,
+   "low": 0.8569,
+   "pct": 0.8569,
+   "public_all_percent": 85.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:120": {
+   "band": "priv",
+   "counted_percent": 25.63,
+   "high": 0.2563,
+   "low": 0.2563,
+   "pct": 0.2563,
+   "public_all_percent": 26.72,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:121": {
+   "band": "pub",
+   "counted_percent": 82.23,
+   "high": 0.8223,
+   "low": 0.8223,
+   "pct": 0.8223,
+   "public_all_percent": 82.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:122": {
+   "band": "mix",
+   "counted_percent": 53.74,
+   "high": 0.5374,
+   "low": 0.5374,
+   "pct": 0.5374,
+   "public_all_percent": 53.89,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:123": {
+   "band": "pub",
+   "counted_percent": 82.17,
+   "high": 0.8217,
+   "low": 0.8217,
+   "pct": 0.8217,
+   "public_all_percent": 82.26,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:130": {
+   "band": "pub",
+   "counted_percent": 89.37,
+   "high": 0.8937,
+   "low": 0.8937,
+   "pct": 0.8937,
+   "public_all_percent": 89.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:140": {
+   "band": "pub",
+   "counted_percent": 93.02,
+   "high": 0.9302,
+   "low": 0.9302,
+   "pct": 0.9302,
+   "public_all_percent": 93.08,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:141": {
+   "band": "pub",
+   "counted_percent": 98.11,
+   "high": 0.9811,
+   "low": 0.9811,
+   "pct": 0.9811,
+   "public_all_percent": 98.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:150": {
+   "band": "pub",
+   "counted_percent": 99.83,
+   "high": 0.9983,
+   "low": 0.9983,
+   "pct": 0.9983,
+   "public_all_percent": 99.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:170": {
+   "band": "priv",
+   "counted_percent": 7.37,
+   "high": 0.0737,
+   "low": 0.0737,
+   "pct": 0.0737,
+   "public_all_percent": 10.21,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:200": {
+   "band": "pub",
+   "counted_percent": 86.95,
+   "high": 0.8695,
+   "low": 0.8695,
+   "pct": 0.8695,
+   "public_all_percent": 87.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:216": {
+   "band": "mix",
+   "counted_percent": 60.18,
+   "high": 0.6018,
+   "low": 0.6018,
+   "pct": 0.6018,
+   "public_all_percent": 62.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:240": {
+   "band": "pub",
+   "counted_percent": 86.68,
+   "high": 0.8668,
+   "low": 0.8668,
+   "pct": 0.8668,
+   "public_all_percent": 86.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:280": {
+   "band": "pub",
+   "counted_percent": 74.68,
+   "high": 0.7468,
+   "low": 0.7468,
+   "pct": 0.7468,
+   "public_all_percent": 75.26,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:290": {
+   "band": "mix",
+   "counted_percent": 45.07,
+   "high": 0.4507,
+   "low": 0.4507,
+   "pct": 0.4507,
+   "public_all_percent": 47.89,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:300": {
+   "band": "priv",
+   "counted_percent": 32.38,
+   "high": 0.3238,
+   "low": 0.3238,
+   "pct": 0.3238,
+   "public_all_percent": 34.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:301": {
+   "band": "mix",
+   "counted_percent": 51.26,
+   "high": 0.5126,
+   "low": 0.5126,
+   "pct": 0.5126,
+   "public_all_percent": 52.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:309": {
+   "band": "priv",
+   "counted_percent": 2.37,
+   "high": 0.0237,
+   "low": 0.0237,
+   "pct": 0.0237,
+   "public_all_percent": 8.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:316": {
+   "band": "pub",
+   "counted_percent": 73.39,
+   "high": 0.7339,
+   "low": 0.7339,
+   "pct": 0.7339,
+   "public_all_percent": 73.73,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:317": {
+   "band": "mix",
+   "counted_percent": 53.68,
+   "high": 0.5368,
+   "low": 0.5368,
+   "pct": 0.5368,
+   "public_all_percent": 55.78,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:319": {
+   "band": "priv",
+   "counted_percent": 29.63,
+   "high": 0.2963,
+   "low": 0.2963,
+   "pct": 0.2963,
+   "public_all_percent": 30.35,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:341": {
+   "band": "mix",
+   "counted_percent": 62.42,
+   "high": 0.6242,
+   "low": 0.6242,
+   "pct": 0.6242,
+   "public_all_percent": 63.16,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:411": {
+   "band": "priv",
+   "counted_percent": 25.81,
+   "high": 0.2581,
+   "low": 0.2581,
+   "pct": 0.2581,
+   "public_all_percent": 29.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:420": {
+   "band": "priv",
+   "counted_percent": 28.91,
+   "high": 0.2891,
+   "low": 0.2891,
+   "pct": 0.2891,
+   "public_all_percent": 29.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:440": {
+   "band": "priv",
+   "counted_percent": 20.64,
+   "high": 0.2064,
+   "low": 0.2064,
+   "pct": 0.2064,
+   "public_all_percent": 20.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:450": {
+   "band": "priv",
+   "counted_percent": 19.28,
+   "high": 0.1928,
+   "low": 0.1928,
+   "pct": 0.1928,
+   "public_all_percent": 20.55,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:510": {
+   "band": "mix",
+   "counted_percent": 64.15,
+   "high": 0.6415,
+   "low": 0.6415,
+   "pct": 0.6415,
+   "public_all_percent": 70.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:520": {
+   "band": "mix",
+   "counted_percent": 49.01,
+   "high": 0.4901,
+   "low": 0.4901,
+   "pct": 0.4901,
+   "public_all_percent": 49.18,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:580": {
+   "band": "priv",
+   "counted_percent": 13.69,
+   "high": 0.1369,
+   "low": 0.1369,
+   "pct": 0.1369,
+   "public_all_percent": 14.21,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:600": {
+   "band": "priv",
+   "counted_percent": 27.14,
+   "high": 0.2714,
+   "low": 0.2714,
+   "pct": 0.2714,
+   "public_all_percent": 31.22,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bear:700": {
+   "band": "priv",
+   "counted_percent": 22.17,
+   "high": 0.2217,
+   "low": 0.2217,
+   "pct": 0.2217,
+   "public_all_percent": 23.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bison:385": {
+   "band": "pub",
+   "counted_percent": 93.11,
+   "high": 0.9311,
+   "low": 0.9311,
+   "pct": 0.9311,
+   "public_all_percent": 93.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "bison:395": {
+   "band": "pub",
+   "counted_percent": 92.35,
+   "high": 0.9235,
+   "low": 0.9235,
+   "pct": 0.9235,
+   "public_all_percent": 92.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:100": {
+   "band": "pub",
+   "counted_percent": 88.94,
+   "high": 0.8894,
+   "low": 0.8894,
+   "pct": 0.8894,
+   "public_all_percent": 89.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:101": {
+   "band": "pub",
+   "counted_percent": 78.88,
+   "high": 0.7888,
+   "low": 0.7888,
+   "pct": 0.7888,
+   "public_all_percent": 79.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:103": {
+   "band": "mix",
+   "counted_percent": 49.91,
+   "high": 0.4991,
+   "low": 0.4991,
+   "pct": 0.4991,
+   "public_all_percent": 51.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:104": {
+   "band": "pub",
+   "counted_percent": 77.27,
+   "high": 0.7727,
+   "low": 0.7727,
+   "pct": 0.7727,
+   "public_all_percent": 77.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:110": {
+   "band": "pub",
+   "counted_percent": 85.72,
+   "high": 0.8572,
+   "low": 0.8572,
+   "pct": 0.8572,
+   "public_all_percent": 85.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:120": {
+   "band": "priv",
+   "counted_percent": 25.63,
+   "high": 0.2563,
+   "low": 0.2563,
+   "pct": 0.2563,
+   "public_all_percent": 26.72,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:121": {
+   "band": "pub",
+   "counted_percent": 82.23,
+   "high": 0.8223,
+   "low": 0.8223,
+   "pct": 0.8223,
+   "public_all_percent": 82.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:122": {
+   "band": "mix",
+   "counted_percent": 53.74,
+   "high": 0.5374,
+   "low": 0.5374,
+   "pct": 0.5374,
+   "public_all_percent": 53.89,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:123": {
+   "band": "pub",
+   "counted_percent": 91.16,
+   "high": 0.9116,
+   "low": 0.9116,
+   "pct": 0.9116,
+   "public_all_percent": 91.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:124": {
+   "band": "mix",
+   "counted_percent": 65.56,
+   "high": 0.6556,
+   "low": 0.6556,
+   "pct": 0.6556,
+   "public_all_percent": 65.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:130": {
+   "band": "pub",
+   "counted_percent": 89.37,
+   "high": 0.8937,
+   "low": 0.8937,
+   "pct": 0.8937,
+   "public_all_percent": 89.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:140": {
+   "band": "pub",
+   "counted_percent": 93.0,
+   "high": 0.93,
+   "low": 0.93,
+   "pct": 0.93,
+   "public_all_percent": 93.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:141": {
+   "band": "pub",
+   "counted_percent": 98.11,
+   "high": 0.9811,
+   "low": 0.9811,
+   "pct": 0.9811,
+   "public_all_percent": 98.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:150": {
+   "band": "pub",
+   "counted_percent": 99.83,
+   "high": 0.9983,
+   "low": 0.9983,
+   "pct": 0.9983,
+   "public_all_percent": 99.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:170": {
+   "band": "priv",
+   "counted_percent": 7.37,
+   "high": 0.0737,
+   "low": 0.0737,
+   "pct": 0.0737,
+   "public_all_percent": 10.21,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:200": {
+   "band": "pub",
+   "counted_percent": 88.92,
+   "high": 0.8892,
+   "low": 0.8892,
+   "pct": 0.8892,
+   "public_all_percent": 89.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:201": {
+   "band": "pub",
+   "counted_percent": 76.38,
+   "high": 0.7638,
+   "low": 0.7638,
+   "pct": 0.7638,
+   "public_all_percent": 77.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:202": {
+   "band": "pub",
+   "counted_percent": 94.46,
+   "high": 0.9446,
+   "low": 0.9446,
+   "pct": 0.9446,
+   "public_all_percent": 94.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:204": {
+   "band": "mix",
+   "counted_percent": 62.92,
+   "high": 0.6292,
+   "low": 0.6292,
+   "pct": 0.6292,
+   "public_all_percent": 64.01,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:210": {
+   "band": "mix",
+   "counted_percent": 43.32,
+   "high": 0.4332,
+   "low": 0.4332,
+   "pct": 0.4332,
+   "public_all_percent": 43.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:211": {
+   "band": "pub",
+   "counted_percent": 82.25,
+   "high": 0.8225,
+   "low": 0.8225,
+   "pct": 0.8225,
+   "public_all_percent": 82.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:212": {
+   "band": "pub",
+   "counted_percent": 77.53,
+   "high": 0.7753,
+   "low": 0.7753,
+   "pct": 0.7753,
+   "public_all_percent": 78.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:213": {
+   "band": "mix",
+   "counted_percent": 46.19,
+   "high": 0.4619,
+   "low": 0.4619,
+   "pct": 0.4619,
+   "public_all_percent": 58.52,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:214": {
+   "band": "mix",
+   "counted_percent": 54.23,
+   "high": 0.5423,
+   "low": 0.5423,
+   "pct": 0.5423,
+   "public_all_percent": 58.76,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:215": {
+   "band": "mix",
+   "counted_percent": 49.39,
+   "high": 0.4939,
+   "low": 0.4939,
+   "pct": 0.4939,
+   "public_all_percent": 51.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:216": {
+   "band": "pub",
+   "counted_percent": 89.82,
+   "high": 0.8982,
+   "low": 0.8982,
+   "pct": 0.8982,
+   "public_all_percent": 89.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:217": {
+   "band": "priv",
+   "counted_percent": 29.21,
+   "high": 0.2921,
+   "low": 0.2921,
+   "pct": 0.2921,
+   "public_all_percent": 29.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:240": {
+   "band": "pub",
+   "counted_percent": 79.66,
+   "high": 0.7966,
+   "low": 0.7966,
+   "pct": 0.7966,
+   "public_all_percent": 79.73,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:250": {
+   "band": "pub",
+   "counted_percent": 97.07,
+   "high": 0.9707,
+   "low": 0.9707,
+   "pct": 0.9707,
+   "public_all_percent": 97.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:260": {
+   "band": "priv",
+   "counted_percent": 4.83,
+   "high": 0.0483,
+   "low": 0.0483,
+   "pct": 0.0483,
+   "public_all_percent": 13.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:261": {
+   "band": "mix",
+   "counted_percent": 62.18,
+   "high": 0.6218,
+   "low": 0.6218,
+   "pct": 0.6218,
+   "public_all_percent": 62.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:262": {
+   "band": "priv",
+   "counted_percent": 2.05,
+   "high": 0.0205,
+   "low": 0.0205,
+   "pct": 0.0205,
+   "public_all_percent": 3.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:270": {
+   "band": "pub",
+   "counted_percent": 84.57,
+   "high": 0.8457,
+   "low": 0.8457,
+   "pct": 0.8457,
+   "public_all_percent": 84.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:280": {
+   "band": "pub",
+   "counted_percent": 99.99,
+   "high": 0.9999,
+   "low": 0.9999,
+   "pct": 0.9999,
+   "public_all_percent": 99.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:281": {
+   "band": "pub",
+   "counted_percent": 74.64,
+   "high": 0.7464,
+   "low": 0.7464,
+   "pct": 0.7464,
+   "public_all_percent": 74.92,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:282": {
+   "band": "pub",
+   "counted_percent": 85.97,
+   "high": 0.8597,
+   "low": 0.8597,
+   "pct": 0.8597,
+   "public_all_percent": 87.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:284": {
+   "band": "priv",
+   "counted_percent": 12.72,
+   "high": 0.1272,
+   "low": 0.1272,
+   "pct": 0.1272,
+   "public_all_percent": 14.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:285": {
+   "band": "pub",
+   "counted_percent": 73.38,
+   "high": 0.7338,
+   "low": 0.7338,
+   "pct": 0.7338,
+   "public_all_percent": 76.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:290": {
+   "band": "priv",
+   "counted_percent": 5.61,
+   "high": 0.0561,
+   "low": 0.0561,
+   "pct": 0.0561,
+   "public_all_percent": 17.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:291": {
+   "band": "priv",
+   "counted_percent": 20.11,
+   "high": 0.2011,
+   "low": 0.2011,
+   "pct": 0.2011,
+   "public_all_percent": 20.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:292": {
+   "band": "mix",
+   "counted_percent": 48.12,
+   "high": 0.4812,
+   "low": 0.4812,
+   "pct": 0.4812,
+   "public_all_percent": 51.9,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:293": {
+   "band": "mix",
+   "counted_percent": 56.06,
+   "high": 0.5606,
+   "low": 0.5606,
+   "pct": 0.5606,
+   "public_all_percent": 56.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:298": {
+   "band": "priv",
+   "counted_percent": 6.8,
+   "high": 0.068,
+   "low": 0.068,
+   "pct": 0.068,
+   "public_all_percent": 6.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:301": {
+   "band": "pub",
+   "counted_percent": 84.96,
+   "high": 0.8496,
+   "low": 0.8496,
+   "pct": 0.8496,
+   "public_all_percent": 86.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:302": {
+   "band": "pub",
+   "counted_percent": 75.17,
+   "high": 0.7517,
+   "low": 0.7517,
+   "pct": 0.7517,
+   "public_all_percent": 75.96,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:303": {
+   "band": "pub",
+   "counted_percent": 73.96,
+   "high": 0.7396,
+   "low": 0.7396,
+   "pct": 0.7396,
+   "public_all_percent": 73.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:304": {
+   "band": "mix",
+   "counted_percent": 42.33,
+   "high": 0.4233,
+   "low": 0.4233,
+   "pct": 0.4233,
+   "public_all_percent": 44.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:309": {
+   "band": "priv",
+   "counted_percent": 2.37,
+   "high": 0.0237,
+   "low": 0.0237,
+   "pct": 0.0237,
+   "public_all_percent": 8.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:310": {
+   "band": "pub",
+   "counted_percent": 90.76,
+   "high": 0.9076,
+   "low": 0.9076,
+   "pct": 0.9076,
+   "public_all_percent": 90.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:311": {
+   "band": "priv",
+   "counted_percent": 13.46,
+   "high": 0.1346,
+   "low": 0.1346,
+   "pct": 0.1346,
+   "public_all_percent": 14.56,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:312": {
+   "band": "priv",
+   "counted_percent": 22.97,
+   "high": 0.2297,
+   "low": 0.2297,
+   "pct": 0.2297,
+   "public_all_percent": 23.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:313": {
+   "band": "pub",
+   "counted_percent": 85.84,
+   "high": 0.8584,
+   "low": 0.8584,
+   "pct": 0.8584,
+   "public_all_percent": 85.95,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:314": {
+   "band": "mix",
+   "counted_percent": 41.76,
+   "high": 0.4176,
+   "low": 0.4176,
+   "pct": 0.4176,
+   "public_all_percent": 41.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:315": {
+   "band": "priv",
+   "counted_percent": 20.45,
+   "high": 0.2045,
+   "low": 0.2045,
+   "pct": 0.2045,
+   "public_all_percent": 20.48,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:316": {
+   "band": "pub",
+   "counted_percent": 98.66,
+   "high": 0.9866,
+   "low": 0.9866,
+   "pct": 0.9866,
+   "public_all_percent": 98.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:317": {
+   "band": "mix",
+   "counted_percent": 66.3,
+   "high": 0.663,
+   "low": 0.663,
+   "pct": 0.663,
+   "public_all_percent": 66.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:318": {
+   "band": "pub",
+   "counted_percent": 81.47,
+   "high": 0.8147,
+   "low": 0.8147,
+   "pct": 0.8147,
+   "public_all_percent": 81.67,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:319": {
+   "band": "pub",
+   "counted_percent": 77.39,
+   "high": 0.7739,
+   "low": 0.7739,
+   "pct": 0.7739,
+   "public_all_percent": 78.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:320": {
+   "band": "mix",
+   "counted_percent": 45.25,
+   "high": 0.4525,
+   "low": 0.4525,
+   "pct": 0.4525,
+   "public_all_percent": 45.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:321": {
+   "band": "mix",
+   "counted_percent": 62.95,
+   "high": 0.6295,
+   "low": 0.6295,
+   "pct": 0.6295,
+   "public_all_percent": 63.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:322": {
+   "band": "priv",
+   "counted_percent": 25.5,
+   "high": 0.255,
+   "low": 0.255,
+   "pct": 0.255,
+   "public_all_percent": 25.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:323": {
+   "band": "pub",
+   "counted_percent": 70.0,
+   "high": 0.7,
+   "low": 0.7,
+   "pct": 0.7,
+   "public_all_percent": 74.52,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:324": {
+   "band": "mix",
+   "counted_percent": 48.0,
+   "high": 0.48,
+   "low": 0.48,
+   "pct": 0.48,
+   "public_all_percent": 48.27,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:329": {
+   "band": "mix",
+   "counted_percent": 66.03,
+   "high": 0.6603,
+   "low": 0.6603,
+   "pct": 0.6603,
+   "public_all_percent": 66.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:331": {
+   "band": "pub",
+   "counted_percent": 80.98,
+   "high": 0.8098,
+   "low": 0.8098,
+   "pct": 0.8098,
+   "public_all_percent": 81.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:335": {
+   "band": "mix",
+   "counted_percent": 54.35,
+   "high": 0.5435,
+   "low": 0.5435,
+   "pct": 0.5435,
+   "public_all_percent": 55.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:339": {
+   "band": "priv",
+   "counted_percent": 28.63,
+   "high": 0.2863,
+   "low": 0.2863,
+   "pct": 0.2863,
+   "public_all_percent": 28.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:340": {
+   "band": "mix",
+   "counted_percent": 48.3,
+   "high": 0.483,
+   "low": 0.483,
+   "pct": 0.483,
+   "public_all_percent": 48.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:343": {
+   "band": "mix",
+   "counted_percent": 52.76,
+   "high": 0.5276,
+   "low": 0.5276,
+   "pct": 0.5276,
+   "public_all_percent": 53.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:350": {
+   "band": "pub",
+   "counted_percent": 81.48,
+   "high": 0.8148,
+   "low": 0.8148,
+   "pct": 0.8148,
+   "public_all_percent": 82.44,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:360": {
+   "band": "mix",
+   "counted_percent": 54.53,
+   "high": 0.5453,
+   "low": 0.5453,
+   "pct": 0.5453,
+   "public_all_percent": 54.59,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:361": {
+   "band": "pub",
+   "counted_percent": 79.52,
+   "high": 0.7952,
+   "low": 0.7952,
+   "pct": 0.7952,
+   "public_all_percent": 80.14,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:370": {
+   "band": "priv",
+   "counted_percent": 37.14,
+   "high": 0.3714,
+   "low": 0.3714,
+   "pct": 0.3714,
+   "public_all_percent": 37.57,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:380": {
+   "band": "mix",
+   "counted_percent": 41.41,
+   "high": 0.4141,
+   "low": 0.4141,
+   "pct": 0.4141,
+   "public_all_percent": 42.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:388": {
+   "band": "priv",
+   "counted_percent": 8.33,
+   "high": 0.0833,
+   "low": 0.0833,
+   "pct": 0.0833,
+   "public_all_percent": 15.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:390": {
+   "band": "priv",
+   "counted_percent": 9.58,
+   "high": 0.0958,
+   "low": 0.0958,
+   "pct": 0.0958,
+   "public_all_percent": 9.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:391": {
+   "band": "priv",
+   "counted_percent": 37.5,
+   "high": 0.375,
+   "low": 0.375,
+   "pct": 0.375,
+   "public_all_percent": 39.55,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:392": {
+   "band": "pub",
+   "counted_percent": 90.62,
+   "high": 0.9062,
+   "low": 0.9062,
+   "pct": 0.9062,
+   "public_all_percent": 91.16,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:393": {
+   "band": "priv",
+   "counted_percent": 12.59,
+   "high": 0.1259,
+   "low": 0.1259,
+   "pct": 0.1259,
+   "public_all_percent": 12.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:400": {
+   "band": "priv",
+   "counted_percent": 10.13,
+   "high": 0.1013,
+   "low": 0.1013,
+   "pct": 0.1013,
+   "public_all_percent": 13.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:401": {
+   "band": "priv",
+   "counted_percent": 8.97,
+   "high": 0.0897,
+   "low": 0.0897,
+   "pct": 0.0897,
+   "public_all_percent": 9.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:403": {
+   "band": "priv",
+   "counted_percent": 11.16,
+   "high": 0.1116,
+   "low": 0.1116,
+   "pct": 0.1116,
+   "public_all_percent": 11.45,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:404": {
+   "band": "priv",
+   "counted_percent": 6.25,
+   "high": 0.0625,
+   "low": 0.0625,
+   "pct": 0.0625,
+   "public_all_percent": 7.63,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:405": {
+   "band": "priv",
+   "counted_percent": 6.95,
+   "high": 0.0695,
+   "low": 0.0695,
+   "pct": 0.0695,
+   "public_all_percent": 8.7,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:406": {
+   "band": "priv",
+   "counted_percent": 9.01,
+   "high": 0.0901,
+   "low": 0.0901,
+   "pct": 0.0901,
+   "public_all_percent": 9.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:410": {
+   "band": "priv",
+   "counted_percent": 38.41,
+   "high": 0.3841,
+   "low": 0.3841,
+   "pct": 0.3841,
+   "public_all_percent": 46.76,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:411": {
+   "band": "priv",
+   "counted_percent": 20.44,
+   "high": 0.2044,
+   "low": 0.2044,
+   "pct": 0.2044,
+   "public_all_percent": 21.17,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:412": {
+   "band": "priv",
+   "counted_percent": 15.63,
+   "high": 0.1563,
+   "low": 0.1563,
+   "pct": 0.1563,
+   "public_all_percent": 15.68,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:413": {
+   "band": "priv",
+   "counted_percent": 34.33,
+   "high": 0.3433,
+   "low": 0.3433,
+   "pct": 0.3433,
+   "public_all_percent": 34.47,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:415": {
+   "band": "pub",
+   "counted_percent": 97.67,
+   "high": 0.9767,
+   "low": 0.9767,
+   "pct": 0.9767,
+   "public_all_percent": 97.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:416": {
+   "band": "mix",
+   "counted_percent": 47.4,
+   "high": 0.474,
+   "low": 0.474,
+   "pct": 0.474,
+   "public_all_percent": 47.43,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:417": {
+   "band": "priv",
+   "counted_percent": 34.09,
+   "high": 0.3409,
+   "low": 0.3409,
+   "pct": 0.3409,
+   "public_all_percent": 37.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:418": {
+   "band": "priv",
+   "counted_percent": 21.01,
+   "high": 0.2101,
+   "low": 0.2101,
+   "pct": 0.2101,
+   "public_all_percent": 21.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:419": {
+   "band": "priv",
+   "counted_percent": 10.36,
+   "high": 0.1036,
+   "low": 0.1036,
+   "pct": 0.1036,
+   "public_all_percent": 10.55,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:420": {
+   "band": "mix",
+   "counted_percent": 53.03,
+   "high": 0.5303,
+   "low": 0.5303,
+   "pct": 0.5303,
+   "public_all_percent": 53.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:421": {
+   "band": "priv",
+   "counted_percent": 11.31,
+   "high": 0.1131,
+   "low": 0.1131,
+   "pct": 0.1131,
+   "public_all_percent": 11.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:422": {
+   "band": "mix",
+   "counted_percent": 45.04,
+   "high": 0.4504,
+   "low": 0.4504,
+   "pct": 0.4504,
+   "public_all_percent": 45.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:424": {
+   "band": "pub",
+   "counted_percent": 98.16,
+   "high": 0.9816,
+   "low": 0.9816,
+   "pct": 0.9816,
+   "public_all_percent": 98.17,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:425": {
+   "band": "priv",
+   "counted_percent": 36.92,
+   "high": 0.3692,
+   "low": 0.3692,
+   "pct": 0.3692,
+   "public_all_percent": 40.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:426": {
+   "band": "priv",
+   "counted_percent": 20.77,
+   "high": 0.2077,
+   "low": 0.2077,
+   "pct": 0.2077,
+   "public_all_percent": 20.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:432": {
+   "band": "mix",
+   "counted_percent": 46.76,
+   "high": 0.4676,
+   "low": 0.4676,
+   "pct": 0.4676,
+   "public_all_percent": 46.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:441": {
+   "band": "priv",
+   "counted_percent": 37.08,
+   "high": 0.3708,
+   "low": 0.3708,
+   "pct": 0.3708,
+   "public_all_percent": 37.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:442": {
+   "band": "pub",
+   "counted_percent": 98.84,
+   "high": 0.9884,
+   "low": 0.9884,
+   "pct": 0.9884,
+   "public_all_percent": 98.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:444": {
+   "band": "priv",
+   "counted_percent": 11.56,
+   "high": 0.1156,
+   "low": 0.1156,
+   "pct": 0.1156,
+   "public_all_percent": 15.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:445": {
+   "band": "priv",
+   "counted_percent": 11.89,
+   "high": 0.1189,
+   "low": 0.1189,
+   "pct": 0.1189,
+   "public_all_percent": 11.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:446": {
+   "band": "priv",
+   "counted_percent": 23.05,
+   "high": 0.2305,
+   "low": 0.2305,
+   "pct": 0.2305,
+   "public_all_percent": 23.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:447": {
+   "band": "priv",
+   "counted_percent": 20.88,
+   "high": 0.2088,
+   "low": 0.2088,
+   "pct": 0.2088,
+   "public_all_percent": 21.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:448": {
+   "band": "pub",
+   "counted_percent": 73.81,
+   "high": 0.7381,
+   "low": 0.7381,
+   "pct": 0.7381,
+   "public_all_percent": 73.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:450": {
+   "band": "priv",
+   "counted_percent": 21.61,
+   "high": 0.2161,
+   "low": 0.2161,
+   "pct": 0.2161,
+   "public_all_percent": 23.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:451": {
+   "band": "priv",
+   "counted_percent": 17.32,
+   "high": 0.1732,
+   "low": 0.1732,
+   "pct": 0.1732,
+   "public_all_percent": 17.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:452": {
+   "band": "priv",
+   "counted_percent": 38.63,
+   "high": 0.3863,
+   "low": 0.3863,
+   "pct": 0.3863,
+   "public_all_percent": 38.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:455": {
+   "band": "pub",
+   "counted_percent": 99.42,
+   "high": 0.9942,
+   "low": 0.9942,
+   "pct": 0.9942,
+   "public_all_percent": 99.44,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:471": {
+   "band": "priv",
+   "counted_percent": 19.11,
+   "high": 0.1911,
+   "low": 0.1911,
+   "pct": 0.1911,
+   "public_all_percent": 19.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:502": {
+   "band": "priv",
+   "counted_percent": 10.36,
+   "high": 0.1036,
+   "low": 0.1036,
+   "pct": 0.1036,
+   "public_all_percent": 10.95,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:515": {
+   "band": "priv",
+   "counted_percent": 6.79,
+   "high": 0.0679,
+   "low": 0.0679,
+   "pct": 0.0679,
+   "public_all_percent": 7.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:525": {
+   "band": "mix",
+   "counted_percent": 63.92,
+   "high": 0.6392,
+   "low": 0.6392,
+   "pct": 0.6392,
+   "public_all_percent": 64.03,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:535": {
+   "band": "priv",
+   "counted_percent": 16.77,
+   "high": 0.1677,
+   "low": 0.1677,
+   "pct": 0.1677,
+   "public_all_percent": 17.51,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:540": {
+   "band": "priv",
+   "counted_percent": 33.52,
+   "high": 0.3352,
+   "low": 0.3352,
+   "pct": 0.3352,
+   "public_all_percent": 33.72,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:555": {
+   "band": "mix",
+   "counted_percent": 63.02,
+   "high": 0.6302,
+   "low": 0.6302,
+   "pct": 0.6302,
+   "public_all_percent": 68.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:565": {
+   "band": "pub",
+   "counted_percent": 98.6,
+   "high": 0.986,
+   "low": 0.986,
+   "pct": 0.986,
+   "public_all_percent": 98.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:575": {
+   "band": "priv",
+   "counted_percent": 4.0,
+   "high": 0.04,
+   "low": 0.04,
+   "pct": 0.04,
+   "public_all_percent": 4.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:580": {
+   "band": "priv",
+   "counted_percent": 21.75,
+   "high": 0.2175,
+   "low": 0.2175,
+   "pct": 0.2175,
+   "public_all_percent": 21.79,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:590": {
+   "band": "priv",
+   "counted_percent": 9.61,
+   "high": 0.0961,
+   "low": 0.0961,
+   "pct": 0.0961,
+   "public_all_percent": 10.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:600": {
+   "band": "priv",
+   "counted_percent": 18.51,
+   "high": 0.1851,
+   "low": 0.1851,
+   "pct": 0.1851,
+   "public_all_percent": 20.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:620": {
+   "band": "priv",
+   "counted_percent": 37.63,
+   "high": 0.3763,
+   "low": 0.3763,
+   "pct": 0.3763,
+   "public_all_percent": 41.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:621": {
+   "band": "mix",
+   "counted_percent": 49.24,
+   "high": 0.4924,
+   "low": 0.4924,
+   "pct": 0.4924,
+   "public_all_percent": 77.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:622": {
+   "band": "mix",
+   "counted_percent": 49.18,
+   "high": 0.4918,
+   "low": 0.4918,
+   "pct": 0.4918,
+   "public_all_percent": 74.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:630": {
+   "band": "mix",
+   "counted_percent": 55.32,
+   "high": 0.5532,
+   "low": 0.5532,
+   "pct": 0.5532,
+   "public_all_percent": 67.47,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:640": {
+   "band": "priv",
+   "counted_percent": 13.19,
+   "high": 0.1319,
+   "low": 0.1319,
+   "pct": 0.1319,
+   "public_all_percent": 14.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:650": {
+   "band": "priv",
+   "counted_percent": 13.96,
+   "high": 0.1396,
+   "low": 0.1396,
+   "pct": 0.1396,
+   "public_all_percent": 14.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:652": {
+   "band": "priv",
+   "counted_percent": 33.38,
+   "high": 0.3338,
+   "low": 0.3338,
+   "pct": 0.3338,
+   "public_all_percent": 62.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:670": {
+   "band": "mix",
+   "counted_percent": 42.9,
+   "high": 0.429,
+   "low": 0.429,
+   "pct": 0.429,
+   "public_all_percent": 44.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:690": {
+   "band": "priv",
+   "counted_percent": 17.84,
+   "high": 0.1784,
+   "low": 0.1784,
+   "pct": 0.1784,
+   "public_all_percent": 19.25,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:700": {
+   "band": "priv",
+   "counted_percent": 24.11,
+   "high": 0.2411,
+   "low": 0.2411,
+   "pct": 0.2411,
+   "public_all_percent": 36.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:701": {
+   "band": "priv",
+   "counted_percent": 18.08,
+   "high": 0.1808,
+   "low": 0.1808,
+   "pct": 0.1808,
+   "public_all_percent": 18.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:702": {
+   "band": "priv",
+   "counted_percent": 9.69,
+   "high": 0.0969,
+   "low": 0.0969,
+   "pct": 0.0969,
+   "public_all_percent": 11.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:703": {
+   "band": "priv",
+   "counted_percent": 15.9,
+   "high": 0.159,
+   "low": 0.159,
+   "pct": 0.159,
+   "public_all_percent": 16.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:704": {
+   "band": "priv",
+   "counted_percent": 30.2,
+   "high": 0.302,
+   "low": 0.302,
+   "pct": 0.302,
+   "public_all_percent": 30.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "deer:705": {
+   "band": "priv",
+   "counted_percent": 30.18,
+   "high": 0.3018,
+   "low": 0.3018,
+   "pct": 0.3018,
+   "public_all_percent": 30.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:100": {
+   "band": "pub",
+   "counted_percent": 88.94,
+   "high": 0.8894,
+   "low": 0.8894,
+   "pct": 0.8894,
+   "public_all_percent": 89.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:101": {
+   "band": "pub",
+   "counted_percent": 78.88,
+   "high": 0.7888,
+   "low": 0.7888,
+   "pct": 0.7888,
+   "public_all_percent": 79.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:103": {
+   "band": "mix",
+   "counted_percent": 49.91,
+   "high": 0.4991,
+   "low": 0.4991,
+   "pct": 0.4991,
+   "public_all_percent": 51.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:104": {
+   "band": "pub",
+   "counted_percent": 77.27,
+   "high": 0.7727,
+   "low": 0.7727,
+   "pct": 0.7727,
+   "public_all_percent": 77.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:110": {
+   "band": "pub",
+   "counted_percent": 85.72,
+   "high": 0.8572,
+   "low": 0.8572,
+   "pct": 0.8572,
+   "public_all_percent": 85.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:120": {
+   "band": "priv",
+   "counted_percent": 25.63,
+   "high": 0.2563,
+   "low": 0.2563,
+   "pct": 0.2563,
+   "public_all_percent": 26.72,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:121": {
+   "band": "pub",
+   "counted_percent": 82.23,
+   "high": 0.8223,
+   "low": 0.8223,
+   "pct": 0.8223,
+   "public_all_percent": 82.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:122": {
+   "band": "mix",
+   "counted_percent": 53.74,
+   "high": 0.5374,
+   "low": 0.5374,
+   "pct": 0.5374,
+   "public_all_percent": 53.89,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:123": {
+   "band": "pub",
+   "counted_percent": 91.16,
+   "high": 0.9116,
+   "low": 0.9116,
+   "pct": 0.9116,
+   "public_all_percent": 91.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:124": {
+   "band": "mix",
+   "counted_percent": 65.56,
+   "high": 0.6556,
+   "low": 0.6556,
+   "pct": 0.6556,
+   "public_all_percent": 65.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:130": {
+   "band": "pub",
+   "counted_percent": 89.37,
+   "high": 0.8937,
+   "low": 0.8937,
+   "pct": 0.8937,
+   "public_all_percent": 89.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:140": {
+   "band": "pub",
+   "counted_percent": 93.0,
+   "high": 0.93,
+   "low": 0.93,
+   "pct": 0.93,
+   "public_all_percent": 93.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:141": {
+   "band": "pub",
+   "counted_percent": 98.11,
+   "high": 0.9811,
+   "low": 0.9811,
+   "pct": 0.9811,
+   "public_all_percent": 98.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:150": {
+   "band": "pub",
+   "counted_percent": 99.83,
+   "high": 0.9983,
+   "low": 0.9983,
+   "pct": 0.9983,
+   "public_all_percent": 99.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:170": {
+   "band": "priv",
+   "counted_percent": 7.37,
+   "high": 0.0737,
+   "low": 0.0737,
+   "pct": 0.0737,
+   "public_all_percent": 10.21,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:200": {
+   "band": "pub",
+   "counted_percent": 88.92,
+   "high": 0.8892,
+   "low": 0.8892,
+   "pct": 0.8892,
+   "public_all_percent": 89.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:201": {
+   "band": "pub",
+   "counted_percent": 76.38,
+   "high": 0.7638,
+   "low": 0.7638,
+   "pct": 0.7638,
+   "public_all_percent": 77.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:202": {
+   "band": "pub",
+   "counted_percent": 94.46,
+   "high": 0.9446,
+   "low": 0.9446,
+   "pct": 0.9446,
+   "public_all_percent": 94.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:204": {
+   "band": "mix",
+   "counted_percent": 62.92,
+   "high": 0.6292,
+   "low": 0.6292,
+   "pct": 0.6292,
+   "public_all_percent": 64.01,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:210": {
+   "band": "mix",
+   "counted_percent": 43.32,
+   "high": 0.4332,
+   "low": 0.4332,
+   "pct": 0.4332,
+   "public_all_percent": 43.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:211": {
+   "band": "pub",
+   "counted_percent": 82.25,
+   "high": 0.8225,
+   "low": 0.8225,
+   "pct": 0.8225,
+   "public_all_percent": 82.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:212": {
+   "band": "pub",
+   "counted_percent": 77.53,
+   "high": 0.7753,
+   "low": 0.7753,
+   "pct": 0.7753,
+   "public_all_percent": 78.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:213": {
+   "band": "mix",
+   "counted_percent": 46.19,
+   "high": 0.4619,
+   "low": 0.4619,
+   "pct": 0.4619,
+   "public_all_percent": 58.52,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:214": {
+   "band": "mix",
+   "counted_percent": 54.23,
+   "high": 0.5423,
+   "low": 0.5423,
+   "pct": 0.5423,
+   "public_all_percent": 58.76,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:215": {
+   "band": "mix",
+   "counted_percent": 49.39,
+   "high": 0.4939,
+   "low": 0.4939,
+   "pct": 0.4939,
+   "public_all_percent": 51.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:216": {
+   "band": "pub",
+   "counted_percent": 89.82,
+   "high": 0.8982,
+   "low": 0.8982,
+   "pct": 0.8982,
+   "public_all_percent": 89.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:217": {
+   "band": "priv",
+   "counted_percent": 29.21,
+   "high": 0.2921,
+   "low": 0.2921,
+   "pct": 0.2921,
+   "public_all_percent": 29.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:240": {
+   "band": "pub",
+   "counted_percent": 79.66,
+   "high": 0.7966,
+   "low": 0.7966,
+   "pct": 0.7966,
+   "public_all_percent": 79.73,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:250": {
+   "band": "pub",
+   "counted_percent": 97.07,
+   "high": 0.9707,
+   "low": 0.9707,
+   "pct": 0.9707,
+   "public_all_percent": 97.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:260": {
+   "band": "priv",
+   "counted_percent": 4.83,
+   "high": 0.0483,
+   "low": 0.0483,
+   "pct": 0.0483,
+   "public_all_percent": 13.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:261": {
+   "band": "mix",
+   "counted_percent": 62.18,
+   "high": 0.6218,
+   "low": 0.6218,
+   "pct": 0.6218,
+   "public_all_percent": 62.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:262": {
+   "band": "priv",
+   "counted_percent": 2.05,
+   "high": 0.0205,
+   "low": 0.0205,
+   "pct": 0.0205,
+   "public_all_percent": 3.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:270": {
+   "band": "pub",
+   "counted_percent": 84.57,
+   "high": 0.8457,
+   "low": 0.8457,
+   "pct": 0.8457,
+   "public_all_percent": 84.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:280": {
+   "band": "pub",
+   "counted_percent": 99.99,
+   "high": 0.9999,
+   "low": 0.9999,
+   "pct": 0.9999,
+   "public_all_percent": 99.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:281": {
+   "band": "pub",
+   "counted_percent": 74.64,
+   "high": 0.7464,
+   "low": 0.7464,
+   "pct": 0.7464,
+   "public_all_percent": 74.92,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:282": {
+   "band": "pub",
+   "counted_percent": 85.97,
+   "high": 0.8597,
+   "low": 0.8597,
+   "pct": 0.8597,
+   "public_all_percent": 87.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:284": {
+   "band": "priv",
+   "counted_percent": 12.72,
+   "high": 0.1272,
+   "low": 0.1272,
+   "pct": 0.1272,
+   "public_all_percent": 14.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:285": {
+   "band": "pub",
+   "counted_percent": 73.38,
+   "high": 0.7338,
+   "low": 0.7338,
+   "pct": 0.7338,
+   "public_all_percent": 76.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:290": {
+   "band": "priv",
+   "counted_percent": 5.61,
+   "high": 0.0561,
+   "low": 0.0561,
+   "pct": 0.0561,
+   "public_all_percent": 17.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:291": {
+   "band": "priv",
+   "counted_percent": 20.11,
+   "high": 0.2011,
+   "low": 0.2011,
+   "pct": 0.2011,
+   "public_all_percent": 20.2,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:292": {
+   "band": "mix",
+   "counted_percent": 48.12,
+   "high": 0.4812,
+   "low": 0.4812,
+   "pct": 0.4812,
+   "public_all_percent": 51.9,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:293": {
+   "band": "mix",
+   "counted_percent": 56.06,
+   "high": 0.5606,
+   "low": 0.5606,
+   "pct": 0.5606,
+   "public_all_percent": 56.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:298": {
+   "band": "priv",
+   "counted_percent": 6.8,
+   "high": 0.068,
+   "low": 0.068,
+   "pct": 0.068,
+   "public_all_percent": 6.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:301": {
+   "band": "pub",
+   "counted_percent": 84.96,
+   "high": 0.8496,
+   "low": 0.8496,
+   "pct": 0.8496,
+   "public_all_percent": 86.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:302": {
+   "band": "pub",
+   "counted_percent": 75.17,
+   "high": 0.7517,
+   "low": 0.7517,
+   "pct": 0.7517,
+   "public_all_percent": 75.96,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:303": {
+   "band": "pub",
+   "counted_percent": 73.96,
+   "high": 0.7396,
+   "low": 0.7396,
+   "pct": 0.7396,
+   "public_all_percent": 73.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:304": {
+   "band": "mix",
+   "counted_percent": 42.33,
+   "high": 0.4233,
+   "low": 0.4233,
+   "pct": 0.4233,
+   "public_all_percent": 44.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:309": {
+   "band": "priv",
+   "counted_percent": 2.37,
+   "high": 0.0237,
+   "low": 0.0237,
+   "pct": 0.0237,
+   "public_all_percent": 8.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:310": {
+   "band": "pub",
+   "counted_percent": 90.76,
+   "high": 0.9076,
+   "low": 0.9076,
+   "pct": 0.9076,
+   "public_all_percent": 90.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:311": {
+   "band": "priv",
+   "counted_percent": 13.46,
+   "high": 0.1346,
+   "low": 0.1346,
+   "pct": 0.1346,
+   "public_all_percent": 14.56,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:312": {
+   "band": "priv",
+   "counted_percent": 22.97,
+   "high": 0.2297,
+   "low": 0.2297,
+   "pct": 0.2297,
+   "public_all_percent": 23.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:313": {
+   "band": "pub",
+   "counted_percent": 85.84,
+   "high": 0.8584,
+   "low": 0.8584,
+   "pct": 0.8584,
+   "public_all_percent": 85.95,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:314": {
+   "band": "mix",
+   "counted_percent": 41.76,
+   "high": 0.4176,
+   "low": 0.4176,
+   "pct": 0.4176,
+   "public_all_percent": 41.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:315": {
+   "band": "priv",
+   "counted_percent": 20.45,
+   "high": 0.2045,
+   "low": 0.2045,
+   "pct": 0.2045,
+   "public_all_percent": 20.48,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:316": {
+   "band": "pub",
+   "counted_percent": 98.66,
+   "high": 0.9866,
+   "low": 0.9866,
+   "pct": 0.9866,
+   "public_all_percent": 98.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:317": {
+   "band": "mix",
+   "counted_percent": 66.3,
+   "high": 0.663,
+   "low": 0.663,
+   "pct": 0.663,
+   "public_all_percent": 66.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:318": {
+   "band": "pub",
+   "counted_percent": 81.47,
+   "high": 0.8147,
+   "low": 0.8147,
+   "pct": 0.8147,
+   "public_all_percent": 81.67,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:319": {
+   "band": "pub",
+   "counted_percent": 77.39,
+   "high": 0.7739,
+   "low": 0.7739,
+   "pct": 0.7739,
+   "public_all_percent": 78.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:320": {
+   "band": "mix",
+   "counted_percent": 45.25,
+   "high": 0.4525,
+   "low": 0.4525,
+   "pct": 0.4525,
+   "public_all_percent": 45.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:321": {
+   "band": "mix",
+   "counted_percent": 62.95,
+   "high": 0.6295,
+   "low": 0.6295,
+   "pct": 0.6295,
+   "public_all_percent": 63.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:322": {
+   "band": "priv",
+   "counted_percent": 25.5,
+   "high": 0.255,
+   "low": 0.255,
+   "pct": 0.255,
+   "public_all_percent": 25.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:323": {
+   "band": "pub",
+   "counted_percent": 70.0,
+   "high": 0.7,
+   "low": 0.7,
+   "pct": 0.7,
+   "public_all_percent": 74.52,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:324": {
+   "band": "mix",
+   "counted_percent": 48.0,
+   "high": 0.48,
+   "low": 0.48,
+   "pct": 0.48,
+   "public_all_percent": 48.27,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:329": {
+   "band": "mix",
+   "counted_percent": 66.03,
+   "high": 0.6603,
+   "low": 0.6603,
+   "pct": 0.6603,
+   "public_all_percent": 66.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:331": {
+   "band": "pub",
+   "counted_percent": 80.98,
+   "high": 0.8098,
+   "low": 0.8098,
+   "pct": 0.8098,
+   "public_all_percent": 81.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:335": {
+   "band": "mix",
+   "counted_percent": 54.35,
+   "high": 0.5435,
+   "low": 0.5435,
+   "pct": 0.5435,
+   "public_all_percent": 55.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:339": {
+   "band": "priv",
+   "counted_percent": 28.63,
+   "high": 0.2863,
+   "low": 0.2863,
+   "pct": 0.2863,
+   "public_all_percent": 28.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:340": {
+   "band": "mix",
+   "counted_percent": 48.3,
+   "high": 0.483,
+   "low": 0.483,
+   "pct": 0.483,
+   "public_all_percent": 48.84,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:343": {
+   "band": "mix",
+   "counted_percent": 52.76,
+   "high": 0.5276,
+   "low": 0.5276,
+   "pct": 0.5276,
+   "public_all_percent": 53.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:350": {
+   "band": "pub",
+   "counted_percent": 81.48,
+   "high": 0.8148,
+   "low": 0.8148,
+   "pct": 0.8148,
+   "public_all_percent": 82.44,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:360": {
+   "band": "mix",
+   "counted_percent": 54.53,
+   "high": 0.5453,
+   "low": 0.5453,
+   "pct": 0.5453,
+   "public_all_percent": 54.59,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:361": {
+   "band": "pub",
+   "counted_percent": 79.52,
+   "high": 0.7952,
+   "low": 0.7952,
+   "pct": 0.7952,
+   "public_all_percent": 80.14,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:370": {
+   "band": "priv",
+   "counted_percent": 37.14,
+   "high": 0.3714,
+   "low": 0.3714,
+   "pct": 0.3714,
+   "public_all_percent": 37.57,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:380": {
+   "band": "mix",
+   "counted_percent": 41.41,
+   "high": 0.4141,
+   "low": 0.4141,
+   "pct": 0.4141,
+   "public_all_percent": 42.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:388": {
+   "band": "priv",
+   "counted_percent": 8.33,
+   "high": 0.0833,
+   "low": 0.0833,
+   "pct": 0.0833,
+   "public_all_percent": 15.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:390": {
+   "band": "priv",
+   "counted_percent": 9.58,
+   "high": 0.0958,
+   "low": 0.0958,
+   "pct": 0.0958,
+   "public_all_percent": 9.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:391": {
+   "band": "priv",
+   "counted_percent": 37.5,
+   "high": 0.375,
+   "low": 0.375,
+   "pct": 0.375,
+   "public_all_percent": 39.55,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:392": {
+   "band": "pub",
+   "counted_percent": 90.62,
+   "high": 0.9062,
+   "low": 0.9062,
+   "pct": 0.9062,
+   "public_all_percent": 91.16,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:393": {
+   "band": "priv",
+   "counted_percent": 12.59,
+   "high": 0.1259,
+   "low": 0.1259,
+   "pct": 0.1259,
+   "public_all_percent": 12.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:400": {
+   "band": "priv",
+   "counted_percent": 10.13,
+   "high": 0.1013,
+   "low": 0.1013,
+   "pct": 0.1013,
+   "public_all_percent": 13.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:401": {
+   "band": "priv",
+   "counted_percent": 8.97,
+   "high": 0.0897,
+   "low": 0.0897,
+   "pct": 0.0897,
+   "public_all_percent": 9.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:403": {
+   "band": "priv",
+   "counted_percent": 11.16,
+   "high": 0.1116,
+   "low": 0.1116,
+   "pct": 0.1116,
+   "public_all_percent": 11.45,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:404": {
+   "band": "priv",
+   "counted_percent": 6.25,
+   "high": 0.0625,
+   "low": 0.0625,
+   "pct": 0.0625,
+   "public_all_percent": 7.63,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:405": {
+   "band": "priv",
+   "counted_percent": 6.95,
+   "high": 0.0695,
+   "low": 0.0695,
+   "pct": 0.0695,
+   "public_all_percent": 8.7,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:406": {
+   "band": "priv",
+   "counted_percent": 9.01,
+   "high": 0.0901,
+   "low": 0.0901,
+   "pct": 0.0901,
+   "public_all_percent": 9.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:410": {
+   "band": "priv",
+   "counted_percent": 38.41,
+   "high": 0.3841,
+   "low": 0.3841,
+   "pct": 0.3841,
+   "public_all_percent": 46.76,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:411": {
+   "band": "priv",
+   "counted_percent": 20.44,
+   "high": 0.2044,
+   "low": 0.2044,
+   "pct": 0.2044,
+   "public_all_percent": 21.17,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:412": {
+   "band": "priv",
+   "counted_percent": 15.63,
+   "high": 0.1563,
+   "low": 0.1563,
+   "pct": 0.1563,
+   "public_all_percent": 15.68,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:413": {
+   "band": "priv",
+   "counted_percent": 34.33,
+   "high": 0.3433,
+   "low": 0.3433,
+   "pct": 0.3433,
+   "public_all_percent": 34.47,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:415": {
+   "band": "pub",
+   "counted_percent": 97.67,
+   "high": 0.9767,
+   "low": 0.9767,
+   "pct": 0.9767,
+   "public_all_percent": 97.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:416": {
+   "band": "mix",
+   "counted_percent": 47.4,
+   "high": 0.474,
+   "low": 0.474,
+   "pct": 0.474,
+   "public_all_percent": 47.43,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:417": {
+   "band": "priv",
+   "counted_percent": 34.09,
+   "high": 0.3409,
+   "low": 0.3409,
+   "pct": 0.3409,
+   "public_all_percent": 37.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:418": {
+   "band": "priv",
+   "counted_percent": 21.01,
+   "high": 0.2101,
+   "low": 0.2101,
+   "pct": 0.2101,
+   "public_all_percent": 21.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:419": {
+   "band": "priv",
+   "counted_percent": 10.36,
+   "high": 0.1036,
+   "low": 0.1036,
+   "pct": 0.1036,
+   "public_all_percent": 10.55,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:420": {
+   "band": "mix",
+   "counted_percent": 53.03,
+   "high": 0.5303,
+   "low": 0.5303,
+   "pct": 0.5303,
+   "public_all_percent": 53.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:421": {
+   "band": "priv",
+   "counted_percent": 11.31,
+   "high": 0.1131,
+   "low": 0.1131,
+   "pct": 0.1131,
+   "public_all_percent": 11.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:422": {
+   "band": "mix",
+   "counted_percent": 45.04,
+   "high": 0.4504,
+   "low": 0.4504,
+   "pct": 0.4504,
+   "public_all_percent": 45.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:424": {
+   "band": "pub",
+   "counted_percent": 98.16,
+   "high": 0.9816,
+   "low": 0.9816,
+   "pct": 0.9816,
+   "public_all_percent": 98.17,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:425": {
+   "band": "priv",
+   "counted_percent": 36.92,
+   "high": 0.3692,
+   "low": 0.3692,
+   "pct": 0.3692,
+   "public_all_percent": 40.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:426": {
+   "band": "priv",
+   "counted_percent": 20.77,
+   "high": 0.2077,
+   "low": 0.2077,
+   "pct": 0.2077,
+   "public_all_percent": 20.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:432": {
+   "band": "mix",
+   "counted_percent": 46.76,
+   "high": 0.4676,
+   "low": 0.4676,
+   "pct": 0.4676,
+   "public_all_percent": 46.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:441": {
+   "band": "priv",
+   "counted_percent": 37.08,
+   "high": 0.3708,
+   "low": 0.3708,
+   "pct": 0.3708,
+   "public_all_percent": 37.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:442": {
+   "band": "pub",
+   "counted_percent": 98.84,
+   "high": 0.9884,
+   "low": 0.9884,
+   "pct": 0.9884,
+   "public_all_percent": 98.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:444": {
+   "band": "priv",
+   "counted_percent": 11.56,
+   "high": 0.1156,
+   "low": 0.1156,
+   "pct": 0.1156,
+   "public_all_percent": 15.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:445": {
+   "band": "priv",
+   "counted_percent": 11.89,
+   "high": 0.1189,
+   "low": 0.1189,
+   "pct": 0.1189,
+   "public_all_percent": 11.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:446": {
+   "band": "priv",
+   "counted_percent": 23.05,
+   "high": 0.2305,
+   "low": 0.2305,
+   "pct": 0.2305,
+   "public_all_percent": 23.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:447": {
+   "band": "priv",
+   "counted_percent": 20.88,
+   "high": 0.2088,
+   "low": 0.2088,
+   "pct": 0.2088,
+   "public_all_percent": 21.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:448": {
+   "band": "pub",
+   "counted_percent": 73.81,
+   "high": 0.7381,
+   "low": 0.7381,
+   "pct": 0.7381,
+   "public_all_percent": 73.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:450": {
+   "band": "priv",
+   "counted_percent": 21.61,
+   "high": 0.2161,
+   "low": 0.2161,
+   "pct": 0.2161,
+   "public_all_percent": 23.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:451": {
+   "band": "priv",
+   "counted_percent": 17.32,
+   "high": 0.1732,
+   "low": 0.1732,
+   "pct": 0.1732,
+   "public_all_percent": 17.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:452": {
+   "band": "priv",
+   "counted_percent": 38.63,
+   "high": 0.3863,
+   "low": 0.3863,
+   "pct": 0.3863,
+   "public_all_percent": 38.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:455": {
+   "band": "pub",
+   "counted_percent": 99.42,
+   "high": 0.9942,
+   "low": 0.9942,
+   "pct": 0.9942,
+   "public_all_percent": 99.44,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:471": {
+   "band": "priv",
+   "counted_percent": 19.11,
+   "high": 0.1911,
+   "low": 0.1911,
+   "pct": 0.1911,
+   "public_all_percent": 19.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:502": {
+   "band": "priv",
+   "counted_percent": 10.36,
+   "high": 0.1036,
+   "low": 0.1036,
+   "pct": 0.1036,
+   "public_all_percent": 10.95,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:515": {
+   "band": "priv",
+   "counted_percent": 6.79,
+   "high": 0.0679,
+   "low": 0.0679,
+   "pct": 0.0679,
+   "public_all_percent": 7.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:525": {
+   "band": "mix",
+   "counted_percent": 63.92,
+   "high": 0.6392,
+   "low": 0.6392,
+   "pct": 0.6392,
+   "public_all_percent": 64.03,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:535": {
+   "band": "priv",
+   "counted_percent": 16.77,
+   "high": 0.1677,
+   "low": 0.1677,
+   "pct": 0.1677,
+   "public_all_percent": 17.51,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:540": {
+   "band": "priv",
+   "counted_percent": 33.52,
+   "high": 0.3352,
+   "low": 0.3352,
+   "pct": 0.3352,
+   "public_all_percent": 33.72,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:555": {
+   "band": "mix",
+   "counted_percent": 63.02,
+   "high": 0.6302,
+   "low": 0.6302,
+   "pct": 0.6302,
+   "public_all_percent": 68.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:565": {
+   "band": "pub",
+   "counted_percent": 98.6,
+   "high": 0.986,
+   "low": 0.986,
+   "pct": 0.986,
+   "public_all_percent": 98.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:575": {
+   "band": "priv",
+   "counted_percent": 4.0,
+   "high": 0.04,
+   "low": 0.04,
+   "pct": 0.04,
+   "public_all_percent": 4.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:580": {
+   "band": "priv",
+   "counted_percent": 21.75,
+   "high": 0.2175,
+   "low": 0.2175,
+   "pct": 0.2175,
+   "public_all_percent": 21.79,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:590": {
+   "band": "priv",
+   "counted_percent": 9.61,
+   "high": 0.0961,
+   "low": 0.0961,
+   "pct": 0.0961,
+   "public_all_percent": 10.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:600": {
+   "band": "priv",
+   "counted_percent": 18.51,
+   "high": 0.1851,
+   "low": 0.1851,
+   "pct": 0.1851,
+   "public_all_percent": 20.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:620": {
+   "band": "priv",
+   "counted_percent": 37.63,
+   "high": 0.3763,
+   "low": 0.3763,
+   "pct": 0.3763,
+   "public_all_percent": 41.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:621": {
+   "band": "mix",
+   "counted_percent": 49.24,
+   "high": 0.4924,
+   "low": 0.4924,
+   "pct": 0.4924,
+   "public_all_percent": 77.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:622": {
+   "band": "mix",
+   "counted_percent": 49.18,
+   "high": 0.4918,
+   "low": 0.4918,
+   "pct": 0.4918,
+   "public_all_percent": 74.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:630": {
+   "band": "mix",
+   "counted_percent": 55.32,
+   "high": 0.5532,
+   "low": 0.5532,
+   "pct": 0.5532,
+   "public_all_percent": 67.47,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:640": {
+   "band": "priv",
+   "counted_percent": 13.19,
+   "high": 0.1319,
+   "low": 0.1319,
+   "pct": 0.1319,
+   "public_all_percent": 14.65,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:650": {
+   "band": "priv",
+   "counted_percent": 13.96,
+   "high": 0.1396,
+   "low": 0.1396,
+   "pct": 0.1396,
+   "public_all_percent": 14.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:652": {
+   "band": "priv",
+   "counted_percent": 33.38,
+   "high": 0.3338,
+   "low": 0.3338,
+   "pct": 0.3338,
+   "public_all_percent": 62.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:670": {
+   "band": "mix",
+   "counted_percent": 42.9,
+   "high": 0.429,
+   "low": 0.429,
+   "pct": 0.429,
+   "public_all_percent": 44.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:690": {
+   "band": "priv",
+   "counted_percent": 17.84,
+   "high": 0.1784,
+   "low": 0.1784,
+   "pct": 0.1784,
+   "public_all_percent": 19.25,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:700": {
+   "band": "priv",
+   "counted_percent": 24.11,
+   "high": 0.2411,
+   "low": 0.2411,
+   "pct": 0.2411,
+   "public_all_percent": 36.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:701": {
+   "band": "priv",
+   "counted_percent": 18.08,
+   "high": 0.1808,
+   "low": 0.1808,
+   "pct": 0.1808,
+   "public_all_percent": 18.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:702": {
+   "band": "priv",
+   "counted_percent": 9.69,
+   "high": 0.0969,
+   "low": 0.0969,
+   "pct": 0.0969,
+   "public_all_percent": 11.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:703": {
+   "band": "priv",
+   "counted_percent": 15.9,
+   "high": 0.159,
+   "low": 0.159,
+   "pct": 0.159,
+   "public_all_percent": 16.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:704": {
+   "band": "priv",
+   "counted_percent": 30.2,
+   "high": 0.302,
+   "low": 0.302,
+   "pct": 0.302,
+   "public_all_percent": 30.38,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "elk:705": {
+   "band": "priv",
+   "counted_percent": 30.18,
+   "high": 0.3018,
+   "low": 0.3018,
+   "pct": 0.3018,
+   "public_all_percent": 30.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:100": {
+   "band": "pub",
+   "counted_percent": 87.17,
+   "high": 0.8717,
+   "low": 0.8717,
+   "pct": 0.8717,
+   "public_all_percent": 87.36,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:101": {
+   "band": "pub",
+   "counted_percent": 81.29,
+   "high": 0.8129,
+   "low": 0.8129,
+   "pct": 0.8129,
+   "public_all_percent": 81.37,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:131": {
+   "band": "pub",
+   "counted_percent": 88.05,
+   "high": 0.8805,
+   "low": 0.8805,
+   "pct": 0.8805,
+   "public_all_percent": 88.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:132": {
+   "band": "pub",
+   "counted_percent": 95.54,
+   "high": 0.9554,
+   "low": 0.9554,
+   "pct": 0.9554,
+   "public_all_percent": 95.54,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:133": {
+   "band": "pub",
+   "counted_percent": 98.3,
+   "high": 0.983,
+   "low": 0.983,
+   "pct": 0.983,
+   "public_all_percent": 98.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:134": {
+   "band": "pub",
+   "counted_percent": 95.93,
+   "high": 0.9593,
+   "low": 0.9593,
+   "pct": 0.9593,
+   "public_all_percent": 95.94,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:140": {
+   "band": "pub",
+   "counted_percent": 92.82,
+   "high": 0.9282,
+   "low": 0.9282,
+   "pct": 0.9282,
+   "public_all_percent": 92.94,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:141": {
+   "band": "pub",
+   "counted_percent": 99.59,
+   "high": 0.9959,
+   "low": 0.9959,
+   "pct": 0.9959,
+   "public_all_percent": 99.59,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:142": {
+   "band": "pub",
+   "counted_percent": 100.0,
+   "high": 1.0,
+   "low": 1.0,
+   "pct": 1.0,
+   "public_all_percent": 100.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:150": {
+   "band": "pub",
+   "counted_percent": 100.0,
+   "high": 1.0,
+   "low": 1.0,
+   "pct": 1.0,
+   "public_all_percent": 100.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:151": {
+   "band": "pub",
+   "counted_percent": 100.0,
+   "high": 1.0,
+   "low": 1.0,
+   "pct": 1.0,
+   "public_all_percent": 100.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:240": {
+   "band": "pub",
+   "counted_percent": 77.38,
+   "high": 0.7738,
+   "low": 0.7738,
+   "pct": 0.7738,
+   "public_all_percent": 77.51,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:312": {
+   "band": "pub",
+   "counted_percent": 80.44,
+   "high": 0.8044,
+   "low": 0.8044,
+   "pct": 0.8044,
+   "public_all_percent": 80.58,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:313": {
+   "band": "priv",
+   "counted_percent": 21.01,
+   "high": 0.2101,
+   "low": 0.2101,
+   "pct": 0.2101,
+   "public_all_percent": 21.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:314": {
+   "band": "mix",
+   "counted_percent": 57.22,
+   "high": 0.5722,
+   "low": 0.5722,
+   "pct": 0.5722,
+   "public_all_percent": 58.18,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:316": {
+   "band": "pub",
+   "counted_percent": 98.24,
+   "high": 0.9824,
+   "low": 0.9824,
+   "pct": 0.9824,
+   "public_all_percent": 98.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:320": {
+   "band": "mix",
+   "counted_percent": 45.51,
+   "high": 0.4551,
+   "low": 0.4551,
+   "pct": 0.4551,
+   "public_all_percent": 45.79,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:323": {
+   "band": "pub",
+   "counted_percent": 87.86,
+   "high": 0.8786,
+   "low": 0.8786,
+   "pct": 0.8786,
+   "public_all_percent": 87.93,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:324": {
+   "band": "mix",
+   "counted_percent": 42.96,
+   "high": 0.4296,
+   "low": 0.4296,
+   "pct": 0.4296,
+   "public_all_percent": 43.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:325": {
+   "band": "priv",
+   "counted_percent": 39.96,
+   "high": 0.3996,
+   "low": 0.3996,
+   "pct": 0.3996,
+   "public_all_percent": 40.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:326": {
+   "band": "pub",
+   "counted_percent": 75.52,
+   "high": 0.7552,
+   "low": 0.7552,
+   "pct": 0.7552,
+   "public_all_percent": 75.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:329": {
+   "band": "pub",
+   "counted_percent": 99.32,
+   "high": 0.9932,
+   "low": 0.9932,
+   "pct": 0.9932,
+   "public_all_percent": 99.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:330": {
+   "band": "mix",
+   "counted_percent": 52.88,
+   "high": 0.5288,
+   "low": 0.5288,
+   "pct": 0.5288,
+   "public_all_percent": 53.28,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:331": {
+   "band": "mix",
+   "counted_percent": 49.9,
+   "high": 0.499,
+   "low": 0.499,
+   "pct": 0.499,
+   "public_all_percent": 50.01,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:350": {
+   "band": "pub",
+   "counted_percent": 79.56,
+   "high": 0.7956,
+   "low": 0.7956,
+   "pct": 0.7956,
+   "public_all_percent": 80.96,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:361": {
+   "band": "pub",
+   "counted_percent": 79.3,
+   "high": 0.793,
+   "low": 0.793,
+   "pct": 0.793,
+   "public_all_percent": 80.01,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:362": {
+   "band": "pub",
+   "counted_percent": 97.21,
+   "high": 0.9721,
+   "low": 0.9721,
+   "pct": 0.9721,
+   "public_all_percent": 97.23,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:393": {
+   "band": "priv",
+   "counted_percent": 28.82,
+   "high": 0.2882,
+   "low": 0.2882,
+   "pct": 0.2882,
+   "public_all_percent": 29.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:415": {
+   "band": "pub",
+   "counted_percent": 99.12,
+   "high": 0.9912,
+   "low": 0.9912,
+   "pct": 0.9912,
+   "public_all_percent": 99.14,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:442": {
+   "band": "pub",
+   "counted_percent": 81.26,
+   "high": 0.8126,
+   "low": 0.8126,
+   "pct": 0.8126,
+   "public_all_percent": 81.28,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:447": {
+   "band": "priv",
+   "counted_percent": 16.38,
+   "high": 0.1638,
+   "low": 0.1638,
+   "pct": 0.1638,
+   "public_all_percent": 16.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:453": {
+   "band": "priv",
+   "counted_percent": 32.02,
+   "high": 0.3202,
+   "low": 0.3202,
+   "pct": 0.3202,
+   "public_all_percent": 32.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:514": {
+   "band": "mix",
+   "counted_percent": 60.92,
+   "high": 0.6092,
+   "low": 0.6092,
+   "pct": 0.6092,
+   "public_all_percent": 60.94,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:517": {
+   "band": "pub",
+   "counted_percent": 81.67,
+   "high": 0.8167,
+   "low": 0.8167,
+   "pct": 0.8167,
+   "public_all_percent": 81.78,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:518": {
+   "band": "pub",
+   "counted_percent": 97.7,
+   "high": 0.977,
+   "low": 0.977,
+   "pct": 0.977,
+   "public_all_percent": 97.7,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:519": {
+   "band": "pub",
+   "counted_percent": 79.53,
+   "high": 0.7953,
+   "low": 0.7953,
+   "pct": 0.7953,
+   "public_all_percent": 79.54,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "goat:521": {
+   "band": "pub",
+   "counted_percent": 99.67,
+   "high": 0.9967,
+   "low": 0.9967,
+   "pct": 0.9967,
+   "public_all_percent": 99.67,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:100": {
+   "band": "pub",
+   "counted_percent": 91.77,
+   "high": 0.9177,
+   "low": 0.9177,
+   "pct": 0.9177,
+   "public_all_percent": 91.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:101": {
+   "band": "pub",
+   "counted_percent": 86.15,
+   "high": 0.8615,
+   "low": 0.8615,
+   "pct": 0.8615,
+   "public_all_percent": 86.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:102": {
+   "band": "pub",
+   "counted_percent": 79.61,
+   "high": 0.7961,
+   "low": 0.7961,
+   "pct": 0.7961,
+   "public_all_percent": 79.81,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:103": {
+   "band": "pub",
+   "counted_percent": 79.51,
+   "high": 0.7951,
+   "low": 0.7951,
+   "pct": 0.7951,
+   "public_all_percent": 79.57,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:104": {
+   "band": "pub",
+   "counted_percent": 77.82,
+   "high": 0.7782,
+   "low": 0.7782,
+   "pct": 0.7782,
+   "public_all_percent": 78.03,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:105": {
+   "band": "pub",
+   "counted_percent": 76.46,
+   "high": 0.7646,
+   "low": 0.7646,
+   "pct": 0.7646,
+   "public_all_percent": 76.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:106": {
+   "band": "priv",
+   "counted_percent": 39.19,
+   "high": 0.3919,
+   "low": 0.3919,
+   "pct": 0.3919,
+   "public_all_percent": 41.05,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:110": {
+   "band": "pub",
+   "counted_percent": 84.09,
+   "high": 0.8409,
+   "low": 0.8409,
+   "pct": 0.8409,
+   "public_all_percent": 84.28,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:111": {
+   "band": "mix",
+   "counted_percent": 53.45,
+   "high": 0.5345,
+   "low": 0.5345,
+   "pct": 0.5345,
+   "public_all_percent": 54.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:112": {
+   "band": "priv",
+   "counted_percent": 23.65,
+   "high": 0.2365,
+   "low": 0.2365,
+   "pct": 0.2365,
+   "public_all_percent": 25.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:121": {
+   "band": "pub",
+   "counted_percent": 84.18,
+   "high": 0.8418,
+   "low": 0.8418,
+   "pct": 0.8418,
+   "public_all_percent": 84.35,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:122": {
+   "band": "mix",
+   "counted_percent": 52.29,
+   "high": 0.5229,
+   "low": 0.5229,
+   "pct": 0.5229,
+   "public_all_percent": 52.46,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:125": {
+   "band": "pub",
+   "counted_percent": 81.0,
+   "high": 0.81,
+   "low": 0.81,
+   "pct": 0.81,
+   "public_all_percent": 81.08,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:126": {
+   "band": "pub",
+   "counted_percent": 84.18,
+   "high": 0.8418,
+   "low": 0.8418,
+   "pct": 0.8418,
+   "public_all_percent": 84.31,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:140": {
+   "band": "pub",
+   "counted_percent": 93.25,
+   "high": 0.9325,
+   "low": 0.9325,
+   "pct": 0.9325,
+   "public_all_percent": 93.27,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:141": {
+   "band": "pub",
+   "counted_percent": 98.88,
+   "high": 0.9888,
+   "low": 0.9888,
+   "pct": 0.9888,
+   "public_all_percent": 98.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:150": {
+   "band": "pub",
+   "counted_percent": 99.79,
+   "high": 0.9979,
+   "low": 0.9979,
+   "pct": 0.9979,
+   "public_all_percent": 99.79,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:210": {
+   "band": "mix",
+   "counted_percent": 66.79,
+   "high": 0.6679,
+   "low": 0.6679,
+   "pct": 0.6679,
+   "public_all_percent": 66.91,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:211": {
+   "band": "pub",
+   "counted_percent": 88.74,
+   "high": 0.8874,
+   "low": 0.8874,
+   "pct": 0.8874,
+   "public_all_percent": 88.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:213": {
+   "band": "mix",
+   "counted_percent": 48.48,
+   "high": 0.4848,
+   "low": 0.4848,
+   "pct": 0.4848,
+   "public_all_percent": 56.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:214": {
+   "band": "mix",
+   "counted_percent": 55.81,
+   "high": 0.5581,
+   "low": 0.5581,
+   "pct": 0.5581,
+   "public_all_percent": 58.48,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:215": {
+   "band": "mix",
+   "counted_percent": 49.4,
+   "high": 0.494,
+   "low": 0.494,
+   "pct": 0.494,
+   "public_all_percent": 51.06,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:220": {
+   "band": "pub",
+   "counted_percent": 92.61,
+   "high": 0.9261,
+   "low": 0.9261,
+   "pct": 0.9261,
+   "public_all_percent": 92.69,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:230": {
+   "band": "pub",
+   "counted_percent": 81.32,
+   "high": 0.8132,
+   "low": 0.8132,
+   "pct": 0.8132,
+   "public_all_percent": 82.13,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:240": {
+   "band": "pub",
+   "counted_percent": 79.66,
+   "high": 0.7966,
+   "low": 0.7966,
+   "pct": 0.7966,
+   "public_all_percent": 79.73,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:261": {
+   "band": "priv",
+   "counted_percent": 38.82,
+   "high": 0.3882,
+   "low": 0.3882,
+   "pct": 0.3882,
+   "public_all_percent": 39.89,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:270": {
+   "band": "pub",
+   "counted_percent": 84.57,
+   "high": 0.8457,
+   "low": 0.8457,
+   "pct": 0.8457,
+   "public_all_percent": 84.62,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:280": {
+   "band": "pub",
+   "counted_percent": 100.0,
+   "high": 1.0,
+   "low": 1.0,
+   "pct": 1.0,
+   "public_all_percent": 100.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:285": {
+   "band": "pub",
+   "counted_percent": 72.96,
+   "high": 0.7296,
+   "low": 0.7296,
+   "pct": 0.7296,
+   "public_all_percent": 75.92,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:292": {
+   "band": "priv",
+   "counted_percent": 32.51,
+   "high": 0.3251,
+   "low": 0.3251,
+   "pct": 0.3251,
+   "public_all_percent": 34.51,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:293": {
+   "band": "mix",
+   "counted_percent": 62.61,
+   "high": 0.6261,
+   "low": 0.6261,
+   "pct": 0.6261,
+   "public_all_percent": 62.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:300": {
+   "band": "pub",
+   "counted_percent": 74.74,
+   "high": 0.7474,
+   "low": 0.7474,
+   "pct": 0.7474,
+   "public_all_percent": 75.26,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:301": {
+   "band": "mix",
+   "counted_percent": 68.67,
+   "high": 0.6867,
+   "low": 0.6867,
+   "pct": 0.6867,
+   "public_all_percent": 68.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:302": {
+   "band": "pub",
+   "counted_percent": 75.63,
+   "high": 0.7563,
+   "low": 0.7563,
+   "pct": 0.7563,
+   "public_all_percent": 75.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:303": {
+   "band": "priv",
+   "counted_percent": 21.1,
+   "high": 0.211,
+   "low": 0.211,
+   "pct": 0.211,
+   "public_all_percent": 21.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:310": {
+   "band": "pub",
+   "counted_percent": 89.25,
+   "high": 0.8925,
+   "low": 0.8925,
+   "pct": 0.8925,
+   "public_all_percent": 89.29,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:311": {
+   "band": "priv",
+   "counted_percent": 25.15,
+   "high": 0.2515,
+   "low": 0.2515,
+   "pct": 0.2515,
+   "public_all_percent": 27.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:312": {
+   "band": "priv",
+   "counted_percent": 15.87,
+   "high": 0.1587,
+   "low": 0.1587,
+   "pct": 0.1587,
+   "public_all_percent": 16.61,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:313": {
+   "band": "pub",
+   "counted_percent": 70.47,
+   "high": 0.7047,
+   "low": 0.7047,
+   "pct": 0.7047,
+   "public_all_percent": 72.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:314": {
+   "band": "mix",
+   "counted_percent": 41.84,
+   "high": 0.4184,
+   "low": 0.4184,
+   "pct": 0.4184,
+   "public_all_percent": 41.95,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:319": {
+   "band": "pub",
+   "counted_percent": 82.9,
+   "high": 0.829,
+   "low": 0.829,
+   "pct": 0.829,
+   "public_all_percent": 83.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:320": {
+   "band": "mix",
+   "counted_percent": 45.2,
+   "high": 0.452,
+   "low": 0.452,
+   "pct": 0.452,
+   "public_all_percent": 45.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:322": {
+   "band": "pub",
+   "counted_percent": 96.43,
+   "high": 0.9643,
+   "low": 0.9643,
+   "pct": 0.9643,
+   "public_all_percent": 96.53,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:323": {
+   "band": "mix",
+   "counted_percent": 59.02,
+   "high": 0.5902,
+   "low": 0.5902,
+   "pct": 0.5902,
+   "public_all_percent": 59.04,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:324": {
+   "band": "pub",
+   "counted_percent": 82.93,
+   "high": 0.8293,
+   "low": 0.8293,
+   "pct": 0.8293,
+   "public_all_percent": 83.09,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:325": {
+   "band": "pub",
+   "counted_percent": 82.34,
+   "high": 0.8234,
+   "low": 0.8234,
+   "pct": 0.8234,
+   "public_all_percent": 82.35,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:326": {
+   "band": "mix",
+   "counted_percent": 63.55,
+   "high": 0.6355,
+   "low": 0.6355,
+   "pct": 0.6355,
+   "public_all_percent": 63.87,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:327": {
+   "band": "mix",
+   "counted_percent": 62.52,
+   "high": 0.6252,
+   "low": 0.6252,
+   "pct": 0.6252,
+   "public_all_percent": 62.58,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:329": {
+   "band": "mix",
+   "counted_percent": 67.34,
+   "high": 0.6734,
+   "low": 0.6734,
+   "pct": 0.6734,
+   "public_all_percent": 67.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:330": {
+   "band": "mix",
+   "counted_percent": 61.32,
+   "high": 0.6132,
+   "low": 0.6132,
+   "pct": 0.6132,
+   "public_all_percent": 62.42,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:332": {
+   "band": "mix",
+   "counted_percent": 61.12,
+   "high": 0.6112,
+   "low": 0.6112,
+   "pct": 0.6112,
+   "public_all_percent": 61.22,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:334": {
+   "band": "priv",
+   "counted_percent": 30.84,
+   "high": 0.3084,
+   "low": 0.3084,
+   "pct": 0.3084,
+   "public_all_percent": 77.23,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:335": {
+   "band": "mix",
+   "counted_percent": 50.55,
+   "high": 0.5055,
+   "low": 0.5055,
+   "pct": 0.5055,
+   "public_all_percent": 53.11,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:340": {
+   "band": "mix",
+   "counted_percent": 48.22,
+   "high": 0.4822,
+   "low": 0.4822,
+   "pct": 0.4822,
+   "public_all_percent": 48.75,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:341": {
+   "band": "mix",
+   "counted_percent": 67.08,
+   "high": 0.6708,
+   "low": 0.6708,
+   "pct": 0.6708,
+   "public_all_percent": 69.8,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:343": {
+   "band": "priv",
+   "counted_percent": 39.63,
+   "high": 0.3963,
+   "low": 0.3963,
+   "pct": 0.3963,
+   "public_all_percent": 40.33,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:350": {
+   "band": "mix",
+   "counted_percent": 66.37,
+   "high": 0.6637,
+   "low": 0.6637,
+   "pct": 0.6637,
+   "public_all_percent": 67.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:360": {
+   "band": "mix",
+   "counted_percent": 54.53,
+   "high": 0.5453,
+   "low": 0.5453,
+   "pct": 0.5453,
+   "public_all_percent": 54.59,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:361": {
+   "band": "pub",
+   "counted_percent": 79.44,
+   "high": 0.7944,
+   "low": 0.7944,
+   "pct": 0.7944,
+   "public_all_percent": 80.15,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:380": {
+   "band": "priv",
+   "counted_percent": 38.15,
+   "high": 0.3815,
+   "low": 0.3815,
+   "pct": 0.3815,
+   "public_all_percent": 39.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:382": {
+   "band": "pub",
+   "counted_percent": 81.5,
+   "high": 0.815,
+   "low": 0.815,
+   "pct": 0.815,
+   "public_all_percent": 81.78,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:390": {
+   "band": "priv",
+   "counted_percent": 32.34,
+   "high": 0.3234,
+   "low": 0.3234,
+   "pct": 0.3234,
+   "public_all_percent": 33.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:401": {
+   "band": "priv",
+   "counted_percent": 8.97,
+   "high": 0.0897,
+   "low": 0.0897,
+   "pct": 0.0897,
+   "public_all_percent": 9.49,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:415": {
+   "band": "pub",
+   "counted_percent": 97.67,
+   "high": 0.9767,
+   "low": 0.9767,
+   "pct": 0.9767,
+   "public_all_percent": 97.71,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:422": {
+   "band": "mix",
+   "counted_percent": 54.14,
+   "high": 0.5414,
+   "low": 0.5414,
+   "pct": 0.5414,
+   "public_all_percent": 54.82,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:441": {
+   "band": "mix",
+   "counted_percent": 40.62,
+   "high": 0.4062,
+   "low": 0.4062,
+   "pct": 0.4062,
+   "public_all_percent": 40.92,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:447": {
+   "band": "priv",
+   "counted_percent": 20.88,
+   "high": 0.2088,
+   "low": 0.2088,
+   "pct": 0.2088,
+   "public_all_percent": 21.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:494": {
+   "band": "priv",
+   "counted_percent": 33.26,
+   "high": 0.3326,
+   "low": 0.3326,
+   "pct": 0.3326,
+   "public_all_percent": 33.34,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:496": {
+   "band": "priv",
+   "counted_percent": 28.53,
+   "high": 0.2853,
+   "low": 0.2853,
+   "pct": 0.2853,
+   "public_all_percent": 29.0,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:513": {
+   "band": "mix",
+   "counted_percent": 64.05,
+   "high": 0.6405,
+   "low": 0.6405,
+   "pct": 0.6405,
+   "public_all_percent": 64.07,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:514": {
+   "band": "priv",
+   "counted_percent": 27.51,
+   "high": 0.2751,
+   "low": 0.2751,
+   "pct": 0.2751,
+   "public_all_percent": 27.96,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:516": {
+   "band": "mix",
+   "counted_percent": 61.16,
+   "high": 0.6116,
+   "low": 0.6116,
+   "pct": 0.6116,
+   "public_all_percent": 61.24,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:600": {
+   "band": "priv",
+   "counted_percent": 27.15,
+   "high": 0.2715,
+   "low": 0.2715,
+   "pct": 0.2715,
+   "public_all_percent": 31.23,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "moose:700": {
+   "band": "priv",
+   "counted_percent": 22.17,
+   "high": 0.2217,
+   "low": 0.2217,
+   "pct": 0.2217,
+   "public_all_percent": 23.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:100": {
+   "band": "pub",
+   "counted_percent": 91.73,
+   "high": 0.9173,
+   "low": 0.9173,
+   "pct": 0.9173,
+   "public_all_percent": 91.83,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:101": {
+   "band": "pub",
+   "counted_percent": 79.65,
+   "high": 0.7965,
+   "low": 0.7965,
+   "pct": 0.7965,
+   "public_all_percent": 79.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:102": {
+   "band": "pub",
+   "counted_percent": 79.55,
+   "high": 0.7955,
+   "low": 0.7955,
+   "pct": 0.7955,
+   "public_all_percent": 79.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:121": {
+   "band": "mix",
+   "counted_percent": 58.65,
+   "high": 0.5865,
+   "low": 0.5865,
+   "pct": 0.5865,
+   "public_all_percent": 58.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:122": {
+   "band": "mix",
+   "counted_percent": 67.01,
+   "high": 0.6701,
+   "low": 0.6701,
+   "pct": 0.6701,
+   "public_all_percent": 67.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:123": {
+   "band": "pub",
+   "counted_percent": 85.13,
+   "high": 0.8513,
+   "low": 0.8513,
+   "pct": 0.8513,
+   "public_all_percent": 85.35,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:124": {
+   "band": "mix",
+   "counted_percent": 53.16,
+   "high": 0.5316,
+   "low": 0.5316,
+   "pct": 0.5316,
+   "public_all_percent": 53.27,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:203": {
+   "band": "pub",
+   "counted_percent": 82.69,
+   "high": 0.8269,
+   "low": 0.8269,
+   "pct": 0.8269,
+   "public_all_percent": 82.74,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:210": {
+   "band": "pub",
+   "counted_percent": 89.71,
+   "high": 0.8971,
+   "low": 0.8971,
+   "pct": 0.8971,
+   "public_all_percent": 90.1,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:214": {
+   "band": "mix",
+   "counted_percent": 50.54,
+   "high": 0.5054,
+   "low": 0.5054,
+   "pct": 0.5054,
+   "public_all_percent": 53.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:250": {
+   "band": "pub",
+   "counted_percent": 97.07,
+   "high": 0.9707,
+   "low": 0.9707,
+   "pct": 0.9707,
+   "public_all_percent": 97.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:261": {
+   "band": "mix",
+   "counted_percent": 57.08,
+   "high": 0.5708,
+   "low": 0.5708,
+   "pct": 0.5708,
+   "public_all_percent": 57.39,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:270": {
+   "band": "pub",
+   "counted_percent": 90.52,
+   "high": 0.9052,
+   "low": 0.9052,
+   "pct": 0.9052,
+   "public_all_percent": 90.58,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:300": {
+   "band": "pub",
+   "counted_percent": 75.02,
+   "high": 0.7502,
+   "low": 0.7502,
+   "pct": 0.7502,
+   "public_all_percent": 75.08,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:301": {
+   "band": "mix",
+   "counted_percent": 44.0,
+   "high": 0.44,
+   "low": 0.44,
+   "pct": 0.44,
+   "public_all_percent": 45.4,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:302": {
+   "band": "pub",
+   "counted_percent": 82.42,
+   "high": 0.8242,
+   "low": 0.8242,
+   "pct": 0.8242,
+   "public_all_percent": 82.64,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:303": {
+   "band": "pub",
+   "counted_percent": 89.77,
+   "high": 0.8977,
+   "low": 0.8977,
+   "pct": 0.8977,
+   "public_all_percent": 89.85,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:304": {
+   "band": "mix",
+   "counted_percent": 51.63,
+   "high": 0.5163,
+   "low": 0.5163,
+   "pct": 0.5163,
+   "public_all_percent": 53.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:305": {
+   "band": "mix",
+   "counted_percent": 61.33,
+   "high": 0.6133,
+   "low": 0.6133,
+   "pct": 0.6133,
+   "public_all_percent": 61.68,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:330": {
+   "band": "mix",
+   "counted_percent": 53.49,
+   "high": 0.5349,
+   "low": 0.5349,
+   "pct": 0.5349,
+   "public_all_percent": 53.6,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:340": {
+   "band": "mix",
+   "counted_percent": 57.62,
+   "high": 0.5762,
+   "low": 0.5762,
+   "pct": 0.5762,
+   "public_all_percent": 58.02,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:380": {
+   "band": "mix",
+   "counted_percent": 41.4,
+   "high": 0.414,
+   "low": 0.414,
+   "pct": 0.414,
+   "public_all_percent": 42.25,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:381": {
+   "band": "priv",
+   "counted_percent": 28.66,
+   "high": 0.2866,
+   "low": 0.2866,
+   "pct": 0.2866,
+   "public_all_percent": 28.68,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:421": {
+   "band": "pub",
+   "counted_percent": 99.99,
+   "high": 0.9999,
+   "low": 0.9999,
+   "pct": 0.9999,
+   "public_all_percent": 99.99,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:422": {
+   "band": "priv",
+   "counted_percent": 32.01,
+   "high": 0.3201,
+   "low": 0.3201,
+   "pct": 0.3201,
+   "public_all_percent": 35.5,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:423": {
+   "band": "pub",
+   "counted_percent": 98.98,
+   "high": 0.9898,
+   "low": 0.9898,
+   "pct": 0.9898,
+   "public_all_percent": 98.98,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:424": {
+   "band": "mix",
+   "counted_percent": 66.16,
+   "high": 0.6616,
+   "low": 0.6616,
+   "pct": 0.6616,
+   "public_all_percent": 67.3,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:441": {
+   "band": "priv",
+   "counted_percent": 36.87,
+   "high": 0.3687,
+   "low": 0.3687,
+   "pct": 0.3687,
+   "public_all_percent": 37.19,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:455": {
+   "band": "priv",
+   "counted_percent": 39.29,
+   "high": 0.3929,
+   "low": 0.3929,
+   "pct": 0.3929,
+   "public_all_percent": 39.32,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:482": {
+   "band": "priv",
+   "counted_percent": 26.71,
+   "high": 0.2671,
+   "low": 0.2671,
+   "pct": 0.2671,
+   "public_all_percent": 28.37,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:500": {
+   "band": "pub",
+   "counted_percent": 99.53,
+   "high": 0.9953,
+   "low": 0.9953,
+   "pct": 0.9953,
+   "public_all_percent": 99.54,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:501": {
+   "band": "mix",
+   "counted_percent": 69.15,
+   "high": 0.6915,
+   "low": 0.6915,
+   "pct": 0.6915,
+   "public_all_percent": 69.22,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:502": {
+   "band": "pub",
+   "counted_percent": 75.5,
+   "high": 0.755,
+   "low": 0.755,
+   "pct": 0.755,
+   "public_all_percent": 75.59,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:503": {
+   "band": "mix",
+   "counted_percent": 69.61,
+   "high": 0.6961,
+   "low": 0.6961,
+   "pct": 0.6961,
+   "public_all_percent": 81.44,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:620": {
+   "band": "mix",
+   "counted_percent": 48.4,
+   "high": 0.484,
+   "low": 0.484,
+   "pct": 0.484,
+   "public_all_percent": 51.08,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:622": {
+   "band": "mix",
+   "counted_percent": 47.35,
+   "high": 0.4735,
+   "low": 0.4735,
+   "pct": 0.4735,
+   "public_all_percent": 75.42,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  },
+  "sheep:680": {
+   "band": "mix",
+   "counted_percent": 54.85,
+   "high": 0.5485,
+   "low": 0.5485,
+   "pct": 0.5485,
+   "public_all_percent": 56.66,
+   "source": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+   "status": "computed"
+  }
+ },
  "nv": {
   "011": {
    "acres": 425863.3,

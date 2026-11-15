@@ -36,6 +36,11 @@
    "state": "NV",
    "rule": "No state-trust hunting layer was joined. State land stays in the uncertain share.",
    "url": "https://services.arcgis.com/RyxlXSfFi87rAosq/arcgis/rest/services/NDOW_Hunt_Units/FeatureServer/0"
+  },
+  {
+   "state": "MT",
+   "rule": "Counted land is BLM, U.S. Forest Service, Montana state trust land, and Montana Fish, Wildlife and Parks, from FWP's 2026-2027 ownership workbook. National parks, wildlife refuges, defense land, Bureau of Reclamation, and tribal land are not counted. The workbook is one figure, so there is no second uncertain share.",
+   "url": "https://fwp.mt.gov/gis/maps/huntPlanner"
   }
  ],
  "sources": {
@@ -328,6 +333,13 @@
     "last_edit": null,
     "url": "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_with_PriUnk/MapServer/29"
    }
+  ],
+  "mt": [
+   {
+    "title": "FWP 2026-2027 Hunting District Landcover and Land Ownership Calculations, Own sheet",
+    "url": "https://fwp.mt.gov/gis/maps/huntPlanner",
+    "sheet": "Own"
+   }
   ]
  },
  "notes": {
@@ -365,6 +377,11 @@
    "not_counted": "SITLA / SMA state land is not counted. Utah trust land is not public hunting land unless a separate access program covers it, and this build does not have that enrollment layer. NPS, DOD, BIA, local, and private are not counted.",
    "uncertain": "FWS and BOR. A boundary is skipped when adding that land would change the band.",
    "wma": "UDWR wildlife management areas were not unioned as their own layer. They are not subtracted, and they are not added beyond whatever BLM or Forest Service land they do not overlap."
+  },
+  "mt": {
+   "counted": "BLM, USFS, Montana state trust land, and FWP",
+   "not_counted": "NPS, USFWS, Defense, BOR, local government, and tribal land",
+   "uncertain": "None. The workbook percent is a single figure, so low and high are the same share."
   }
  },
  "sma": {
