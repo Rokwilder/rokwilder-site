@@ -34,6 +34,9 @@ footer{background:url(img/brand/topo.svg) repeat}
 /* phones: 2 per row so labels like "Muzzleloader" never clip */
 @media(max-width:480px){.seg{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .dox input,.dox select{width:100%;min-height:52px;font-size:1.15rem;padding:.5rem .8rem;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:8px}
+/* More options checkboxes live in .dox, so the field rule above was stretching them to a full-width 52px control. The flex label then shoved the words outside the panel. Keep a normal checkbox and wrap the label inside the box. */
+.dox .more2 label{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:.55rem;align-items:start;min-width:0;max-width:100%;margin:.6rem 0;font-size:1.05rem;line-height:1.4;color:var(--ink);overflow-wrap:break-word}
+.dox .more2 input[type=checkbox]{appearance:auto;-webkit-appearance:auto;color-scheme:light;accent-color:var(--acc);width:24px;height:24px;min-width:24px;max-width:24px;min-height:24px;max-height:24px;margin:.05rem 0 0;padding:0;border:0;border-radius:4px;background:transparent;box-shadow:none;flex:none;font-size:1rem}
 .ubox .urow{display:flex;gap:.5rem;align-items:stretch}
 .ubox .urow input{flex:1 1 auto;min-width:0;width:auto}
 .ubox .clr{flex:0 0 auto;min-height:52px;padding:0 .9rem;font:inherit;font-weight:700;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:8px;cursor:pointer}
