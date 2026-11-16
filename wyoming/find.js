@@ -8,8 +8,8 @@
 // window.RW_FP shows the stored chance and the raw table when a Full Pass record has raw fields.
 (function(){
 const FP=window.RW_FP===true && typeof WH==='object' && Object.values(WH).some(h=>h&&h.raw);
-const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This page shows a verdict band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. <a href="../pricing.html">See pricing</a></p></aside>`;
-const fpLine=()=>FP?'':`<p class="fpl">Exact percentages are not on this free file. They come with the Full Pass where we have published them (not on sale yet). <a href="../pricing.html">See pricing</a></p>`;
+const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"><p class="fpt">What the Full Pass adds on top of this list</p><ul><li>Exact draw odds, where we have published them, for every state on the site</li><li>A multi-year look where we have the years</li></ul><p class="fpp">This page shows a verdict band, not an exact percentage. Exact percentages are not in the public file. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing.<span class="rw-offer" data-pricing="../pricing.html" data-kind="aside"></span></p></aside>`;
+const fpLine=()=>FP?'':`<p class="fpl">Exact percentages are not on this free file. They come with the Full Pass where we have published them<span class="rw-offer" data-pricing="../pricing.html" data-kind="paren"></span></p>`;
 const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const a=WH[k]&&WH[k].area;return a==='100'||a==='102'};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
