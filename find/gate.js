@@ -1,6 +1,7 @@
 // Soft front-end gate. Member login is on this page via member/rw.js. This still hides the hunt list unless window.RW_FP is set or ?preview=fullpass is used.
 // FULLPASS_GATING stays on. ?preview=fullpass, or window.RW_FP from a member data file, shows the paid list.
-// Checkout stays closed. The public files are still verdict bands; exact percentages need the member file.
+// The public files are still verdict bands; exact percentages need the member file.
+// Buy links follow checkoutOpen: Get the Full Pass when checkout is open, and the old not-on-sale line when it is closed.
 (function(){
 const FULLPASS_GATING=true;
 const Q=new URLSearchParams(location.search);
@@ -15,8 +16,38 @@ function stamp(params){
 function sale(){return (window.RW&&window.RW.saleState)||{open:false,pass:false}}
 function banner(){
   if(!(Q.get('preview')==='fullpass' && window.RW_FP!==true)) return '';
-  return '<p class="note">Full Pass preview. Checkout is not open. This is the hunt list. Exact percentages are not in the public file.</p>';
+  const closed=sale().open===true?'':' Checkout is not open.';
+  return '<p class="note">Full Pass preview.'+closed+' This is the hunt list. Exact percentages are not in the public file.</p>';
 }
+function offerHTML(pricing, kind){
+  const open=sale().open===true;
+  const href=open?pricing+'#fullpass':pricing;
+  const label=open?'Get the Full Pass':'See pricing';
+  const link='<a href="'+href+'">'+label+'</a>';
+  if(kind==='paren') return open?'. '+link:' (not on sale yet). '+link;
+  return open?' '+link:' Not on sale yet. '+link;
+}
+function paintOffers(){
+  const open=sale().open===true?'1':'0';
+  document.querySelectorAll('.rw-offer').forEach(el=>{
+    if(el.getAttribute('data-painted')===open) return;
+    el.setAttribute('data-painted', open);
+    el.innerHTML=offerHTML(el.getAttribute('data-pricing')||'pricing.html', el.getAttribute('data-kind')||'aside');
+  });
+}
+function armOffers(){
+  const run=()=>{
+    paintOffers();
+    if(window.RW&&RW.loadSale) RW.loadSale().then(paintOffers).catch(function(){});
+  };
+  const obs=new MutationObserver(run);
+  ['out','detail'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) obs.observe(el,{childList:true,subtree:true});
+  });
+  run();
+}
+armOffers();
 function unlock(pricing){
   const open=sale().open===true;
   const line=open
@@ -49,5 +80,5 @@ function freeShell(o){
     (o.extra||'')+
     (sale().open?'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee.</p>':'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee. Checkout is not open.</p>');
 }
-window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit};
+window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit,offerHTML,paintOffers};
 })();

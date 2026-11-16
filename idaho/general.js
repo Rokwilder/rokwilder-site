@@ -89,7 +89,7 @@ function show(sc){
   (rows.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,rows.length-S.n)} more (${rows.length-S.n} left)</button>`:'')+
   (rows.length?'':`<p class="dq">Nothing matches these choices.</p>`)+
   `<p class="note">${note}</p>`+
-  `<p class="fpl">Exact percentages are not in this public file. Full Pass: $29.99 a year. Not on sale yet. <a href="../pricing.html">See pricing</a></p>`;
+  `<p class="fpl">Exact percentages are not in this public file. Full Pass: $29.99 a year.<span class="rw-offer" data-pricing="../pricing.html" data-kind="aside"></span></p>`;
  if($('more'))$('more').onclick=()=>{S.n+=25;show()};
  if(sc)o.scrollIntoView({behavior:'smooth'});
 }
