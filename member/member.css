@@ -43,3 +43,13 @@ header{overflow-x:clip}
 .mbox select option:disabled{color:#7a7d72}
 .spots{font-weight:800}.fine2{font-size:.9rem;color:var(--mute)}
 @media(min-width:900px){.mbox{padding:1.8rem}}
+body.rw-app>header,body.rw-app>footer{display:none}
+body.rw-app main{padding-top:.2rem}
+.appbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.4rem 0 .6rem}
+.appbar .btn,.appbar .btn.dis{min-height:48px;display:inline-flex;align-items:center}
+.appstates{display:flex;flex-wrap:wrap;gap:.4rem;padding:.2rem 0 .6rem}
+.appstates a{flex:1 1 7.2rem;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:.4rem .7rem;border:2px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);font-weight:800;background:var(--panel)}
+.appstates a.on{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.appframe{display:block;width:100%;height:calc(100vh - 11rem);min-height:28rem;border:2px solid var(--line);border-radius:10px;background:#1E1E1C}
+.appnote{margin:.3rem 0 .6rem}
+@media(max-width:700px){.appframe{height:calc(100vh - 13rem);min-height:24rem}}

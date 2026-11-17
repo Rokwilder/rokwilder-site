@@ -322,6 +322,7 @@ document.addEventListener('keydown',function(ev){
 window.RW={API,ROOT,account,hasFullPass,api,boot,nav,esc,catalog,health,startCheckout,safePayUrl,safePortalUrl,saleButtons,loadSale,pendingBuy,rememberBuy,clearBuy,EXACT,VER};
 window.RW.saleState=saleState;
 document.addEventListener('DOMContentLoaded',()=>{
+  if(/[?&]app=1(?:&|$)/.test(location.search))document.body.classList.add('rw-app');
   armSales();
   if(!me_.hasAttribute('data-no-nav'))nav();
   else paintNav(null);

@@ -79,7 +79,8 @@ const isSample=k=>{const a=IH[k]&&IH[k].area;return a==='31'||a==='37'};
 function idBand(k){return RWLand.band('id',RWLand.idKey(IH[k].area))}
 function idExtra(k,v){if(!paid())return '';const h=IH[k],key=RWLand.idKey(h.area),b=idBand(k);
  const cap=key&&window.RW_CAPS&&RW_CAPS.id?RW_CAPS.id[key]:null;
- return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'Unit '+h.area,href:RWLand.pkgHref('../','id',String(h.area)),cap:Number.isInteger(cap)?cap:null})}
+ const saleSp=h.sp==='elk'||h.sp==='deer'||h.sp==='pronghorn'?h.sp:'';
+ return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'Unit '+h.area,href:RWLand.pkgHref('../','id',String(h.area),saleSp),cap:Number.isInteger(cap)?cap:null})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
 function tie(a,b){const d=RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area]);if(d)return d;const oa=String((IH[a.k].seg[0]||{}).o||''),ob=String((IH[b.k].seg[0]||{}).o||'');if(oa!==ob)return oa<ob?-1:1;return IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true})}
 function idChance(k){const h=IH[k];if(FP){const r=exactRate(sideRaw(h));if(r!=null)return r}return S.res==='res'?h.res:h.nr}

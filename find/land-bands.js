@@ -139,8 +139,22 @@ function packageCap(tags){
   if(!Number.isInteger(tags)||tags<1) return null;
   return Math.min(30, Math.max(3, Math.floor(tags/25)));
 }
-function pkgHref(prefix, state, unit){
-  return (prefix||'')+'packages.html?state='+encodeURIComponent(state)+'&unit='+encodeURIComponent(unit)+'#unitiq-scouting';
+function normSale(unit){
+  return String(unit==null?'':unit).trim().toUpperCase().replace(/^UNIT\s+/,'').replace(/^0+(\d)/,'$1');
+}
+// Colorado GMU 60 and sheep unit S60 stay in the Full Pass hunt data. They are not a scouting package.
+function blockedPackage(state, unit){
+  const st=String(state||'').toLowerCase();
+  if(st!=='co' && st!=='colorado') return false;
+  const parts=normSale(unit).split(/[,+]/).map(s=>s.trim()).filter(Boolean);
+  return parts.length>0 && parts.every(p=>p==='60'||p==='S60');
+}
+function pkgHref(prefix, state, unit, species){
+  if(blockedPackage(state, unit)) return 'blocked:60';
+  let q='p=package&state='+encodeURIComponent(String(state||'').toUpperCase());
+  if(unit!=null && String(unit)!=='') q+='&unit='+encodeURIComponent(String(unit));
+  if(species) q+='&species='+encodeURIComponent(String(species));
+  return (prefix||'')+'buy.html?'+q;
 }
 function extra(o){
   o=o||{};
@@ -149,7 +163,9 @@ function extra(o){
     bits.push('<div class="fs fland"><span class="hsl">Public land</span><b>'+LABEL[o.band]+'</b></div>');
   const note=combined(o);
   if(note) bits.push('<p class="sum">'+esc(note)+'</p>');
-  if(o.place&&o.href){
+  if(o.href==='blocked:60' || blockedPackage(o.state, o.unit)){
+    bits.push('<p class="next">Unit 60 stays in the Full Pass. A $99 UnitIQ Scouting Package is not sold for Unit 60 or S60.</p>');
+  }else if(o.place&&o.href){
     const cap=Number.isInteger(o.cap)&&o.cap>=3&&o.cap<=30?o.cap:null;
     let line='<p class="next"><a href="'+esc(o.href)+'">Ready for the next step? Get the UnitIQ Scouting Package for '+esc(o.place)+'.</a>';
     if(cap) line+=' Only '+cap+' scouting packages go out for this unit each season, so we don\'t send too many hunters to the same spots.';
@@ -171,5 +187,5 @@ function pageNote(state){
   return lead+' '+(by[state]||'')+' Landlocked public land is not flagged. Exact percentages are not shown.';
 }
 function splitNext(html){const i=String(html).indexOf('<p class="next">');return i<0?{info:html,next:''}:{info:html.slice(0,i),next:html.slice(i)}}
-window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,mtKey,nmKey,band,combined,packageCap,pkgHref,extra,splitNext,pageNote,human,esc,sg};
+window.RWLand={D,LABEL,bandOf,oddsKind,harvestKind,rank,coKey,wyKey,idKey,nvKey,utKey,mtKey,nmKey,band,combined,packageCap,blockedPackage,pkgHref,extra,splitNext,pageNote,human,esc,sg};
 })();

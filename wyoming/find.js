@@ -67,7 +67,7 @@ function how(h,b){const pp=b&&b.pts;
  return 'This draw is random. Points are not used.'+EST}
 function wyBand(k){const h=WH[k];return RWLand.band('wy',RWLand.wyKey(h.sp,h.area))}
 function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+$/.test(String(h.area))?`${SP[h.sp]} Hunt Area ${+h.area}`:'';
- return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',h.sp+'-'+String(+h.area)):''})}
+ return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',String(h.area),h.sp):''})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
 function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
 function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}

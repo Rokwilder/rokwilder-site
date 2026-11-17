@@ -90,10 +90,19 @@ function latestHarvest(h){
   if(!bag)return null;
   return bag['2025-26']&&bag['2025-26'].success!=null?bag['2025-26'].success*100:null;
 }
+function nmSaleUnit(h){
+  const u=h.units&&h.units[0];
+  if(u)return String(u);
+  const m=h.unmapped&&h.unmapped[0];
+  if(m&&/^[0-9]+[A-Z]?$/.test(String(m)))return String(m);
+  return '';
+}
 function landExtra(h,v){
   if(!paid())return '';
   const label=place(h);
-  if(h.privateOnly)return RWLand.extra({privateOnly:true,place:label,href:RWLand.pkgHref('../','nm',(h.units&&h.units[0])||h.code)});
+  const sale=nmSaleUnit(h);
+  const sp=h.sp==='elk'||h.sp==='deer'||h.sp==='pronghorn'?h.sp:'';
+  if(h.privateOnly)return RWLand.extra({privateOnly:true,place:label,href:sale?RWLand.pkgHref('../','nm',sale,sp):''});
   const b=nmBand(h);
   if(!b){
     let why='';
@@ -104,7 +113,7 @@ function landExtra(h,v){
     else if(!h.units||!h.units.length)why='The 2026 report did not name a game management unit for this hunt.';
     return why?'<p class="dq">'+esc(why)+'</p>':'';
   }
-  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),harvest:latestHarvest(h),place:label,href:RWLand.pkgHref('../','nm',(h.units&&h.units[0])||h.code)});
+  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),harvest:latestHarvest(h),place:label,href:sale?RWLand.pkgHref('../','nm',sale,sp):''});
 }
 function card(x,i,full){
   const bits=full?RWLand.splitNext(landExtra(x.h,x.v)):{info:'',next:''};
