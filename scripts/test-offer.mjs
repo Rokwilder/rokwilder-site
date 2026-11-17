@@ -46,7 +46,9 @@ ok(!/at most 10/.test(pricing + packages + terms), 'the old maximum of 10 is gon
 ok(/so we don't send too many hunters to the same spots/.test(pricing + packages + terms), 'cap reason is plain');
 ok(/refund that purchase in full|refund that package in full|refund it in full/.test(terms), 'terms still refund a sold-out unit');
 ok(/5 to 8/.test(pricing) && /5 to 8/.test(packages), 'Boots limit stays 5 to 8');
-ok(/Colorado for now; Utah and Arizona coming once licensed/.test(pricing), 'Boots licensing line stays');
+ok(/Colorado and Utah, starting at \$300\. Arizona coming once licensed\./.test(pricing), 'Boots is open in Colorado and Utah, Arizona stays closed');
+ok(/licensed Utah outfitter/.test(pricing), 'Utah Boots names the licensed outfitter');
+ok(!/Utah and Arizona coming once licensed/.test(pricing), 'Utah is no longer grouped with Arizona as coming once licensed');
 ok(/1 free revision/.test(pricing) && /1 free revision/.test(packages) && /1 free revision/.test(terms), 'scouting package includes one free revision');
 ok(/UnitIQ Scouting Package/.test(pricing) && /UnitIQ Scouting Package/.test(refund), 'scouting package name is consistent');
 ok(/You could draw 732 elk hunts/.test(pricing), 'free column describes the count');

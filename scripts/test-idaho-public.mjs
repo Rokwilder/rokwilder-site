@@ -60,7 +60,7 @@ ok(/checkout is not open/.test(pricing), 'pricing still says checkout is not ope
 ok(pricing.includes('$0') && pricing.includes('$29.99') && pricing.includes('$19.99'), 'free, Full Pass and Founding prices are unchanged');
 ok(!/buy\.stripe|stripe\.com\/checkout|checkout\.stripe/i.test(pricing + packages + html), 'no Stripe checkout was added');
 ok(/Join the waitlist/.test(pricing), 'pricing still ends at the waitlist');
-ok(/Boots-on-the-Ground requests are Colorado only/.test(faq), 'Boots stays Colorado only');
+ok(/Boots-on-the-Ground requests are Colorado and Utah, starting at \$300/.test(faq) && /Arizona is coming once licensed/.test(faq) && /licensed Utah outfitter/.test(faq), 'Boots is Colorado and Utah, Arizona stays closed');
 ok(/Nothing is for sale yet/.test(packages) && /Checkout is not open/.test(packages), 'packages still say nothing is for sale and checkout is not open');
 ok(/historical|past result|not a forecast/i.test(html + find), 'page says the band is historical');
 ok(!/YES, you'll draw/.test(html + find), 'Idaho does not use the future-draw verdict words');

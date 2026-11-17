@@ -75,6 +75,7 @@ footer{background:url(img/brand/topo.svg) repeat}
 .vg[hidden],[hidden].tw{display:none !important}
 .fpbox a.btn{color:#111;background:var(--acc)}
 .fpbox a.btn:hover,.fpbox a.btn:focus{color:#111}
+.renew{display:block;margin:.55rem 0 0;color:var(--mute);font-size:.98rem;line-height:1.45;max-width:36rem}
 .samp{display:inline-block;background:#c96f1e;color:#fff;border-radius:4px;padding:.05rem .45rem;font-size:.72rem;font-weight:800;letter-spacing:.04em;vertical-align:middle}
 .fpl{color:var(--mute);font-size:.92rem;margin:.8rem 0}
 .sum{margin:.35rem 0 0;font-size:1.02rem}

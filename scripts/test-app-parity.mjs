@@ -27,7 +27,8 @@ const app = readFileSync(join(root, 'member/app.html'), 'utf8') + readFileSync(j
 for (const name of ['Colorado', 'Utah', 'Arizona', 'Wyoming', 'Idaho', 'Nevada', 'Montana', 'New Mexico']) ok(app.includes(name), 'app names ' + name);
 ok(app.includes('UnitIQ Scouting Package, $99'), 'app has the $99 package entry');
 ok(app.includes('starting at $300') && app.includes('btn dis'), 'Boots stays greyed out at starting at $300');
-ok(app.includes('Utah and Arizona coming once licensed'), 'Utah and Arizona Boots stay closed');
+ok(app.includes('Starting at $300 in Colorado and Utah. Arizona coming once licensed.'), 'Utah Boots is available and Arizona stays closed');
+ok(app.includes('In Utah, the field scouting is done by a licensed Utah outfitter.'), 'app names the Utah outfitter');
 ok(!app.includes('—'), 'app copy has no em dash');
 
 const box = {window: {}};
