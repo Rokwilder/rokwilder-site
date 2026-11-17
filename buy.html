@@ -7,10 +7,11 @@
 <label class="choice"><input type="radio" name="p" value="package"><b>UnitIQ Scouting Package · $99</b><span>Hotspot maps, glassing spots, GPX/KML waypoints and a written plan for one unit, one species, one season. Includes 1 year of the Full Pass.</span></label>
 <label class="choice"><input type="radio" name="p" value="extra_unit"><b>Extra unit · $39</b><span>Add one more unit to a UnitIQ Scouting Package you already bought for the same season.</span></label>
 <p class="step" style="margin-top:1.2rem">Step 2 of 2</p><h2 style="margin-top:.2rem">Where are you hunting?</h2>
-<label for="st">State</label><select id="st"><option value="CO">Colorado</option><option value="UT">Utah</option><option value="AZ">Arizona</option></select>
+<label for="st">State</label><select id="st"><option value="CO">Colorado</option><option value="UT">Utah</option><option value="AZ">Arizona</option><option value="WY">Wyoming</option><option value="ID">Idaho</option><option value="NV">Nevada</option><option value="MT">Montana</option><option value="NM">New Mexico</option></select>
 <label for="sp">Animal</label><select id="sp"><option value="elk">Elk</option><option value="deer">Deer</option><option value="pronghorn">Pronghorn</option></select>
 <label for="un" id="unl">Unit</label><select id="un"></select>
 <label for="se">Season</label><select id="se"></select>
+<p class="rw-calm" id="skip60">Unit 60 and S60 are not sold as a UnitIQ Scouting Package. Those Colorado units stay in the Full Pass hunt list.</p>
 <p class="say" id="spots" role="status"></p>
 <button class="bigbtn" id="buy" type="button">Review checkout</button>
 <p class="say" id="m" role="status"></p>
@@ -22,15 +23,30 @@
 <script>
 (async()=>{const $=i=>document.getElementById(i),Q=new URLSearchParams(location.search);
 const say=(t,c)=>{$('m').className='say '+(c||'');$('m').textContent=t};
-const [U,cat]=await Promise.all([fetch('member/units.json?v=20261114').then(r=>r.json()).catch(()=>({})),RW.catalog()]);
+const STATES=['CO','UT','AZ','WY','ID','NV','MT','NM'];
+const SPECIES=['elk','deer','pronghorn'];
+function blockedUnit(state, unit){
+  if(String(state).toUpperCase()!=='CO')return false;
+  const u=String(unit||'').trim().toUpperCase().replace(/^UNIT\s+/,'').replace(/^0+(\d)/,'$1');
+  return u==='60'||u==='S60';
+}
+const [U,cat]=await Promise.all([fetch('member/units.json?v=20261117a').then(r=>r.json()).catch(()=>({})),RW.catalog()]);
 const open=!!(cat&&cat.checkoutOpen===true);
 try{sessionStorage.setItem('rw-buy',JSON.stringify({product:Q.get('p')||'package',href:location.pathname+location.search}))}catch(e){}
 $('se').innerHTML=((cat&&cat.seasons)||['2027']).map(s=>`<option value="${s}">${s} season</option>`).join('');
 const pick=Q.get('p')||'package';document.querySelectorAll('input[name=p]').forEach(r=>r.checked=r.value==pick);
-if(Q.get('state')&&['CO','UT','AZ'].indexOf(Q.get('state'))!==-1)$('st').value=Q.get('state');if(Q.get('species'))$('sp').value=Q.get('species');if(Q.get('season'))$('se').value=Q.get('season');
-function units(){const st=$('st').value,l=(U[st]||{})[$('sp').value]||[];$('unl').textContent=st=='UT'?'Hunt area':'Unit';
- $('un').innerHTML=l.map(u=>`<option value="${RW.esc(u)}">${st=='UT'?'':'Unit '}${RW.esc(u)}</option>`).join('');spots()}
-const SN={CO:'Colorado',UT:'Utah',AZ:'Arizona'};
+if(Q.get('state')&&STATES.indexOf(Q.get('state').toUpperCase())!==-1)$('st').value=Q.get('state').toUpperCase();
+if(Q.get('species')&&SPECIES.indexOf(Q.get('species'))!==-1)$('sp').value=Q.get('species');
+if(Q.get('season'))$('se').value=Q.get('season');
+function units(){const st=$('st').value,l=((U[st]||{})[$('sp').value]||[]).filter(u=>!blockedUnit(st,u));
+ $('unl').textContent=st=='UT'?'Hunt area':st=='WY'?'Hunt area':st=='MT'?'Hunting district':'Unit';
+ const prefix=st=='UT'?'':st=='WY'?'Area ':st=='MT'?'HD ':'Unit ';
+ $('un').innerHTML=l.map(u=>`<option value="${RW.esc(u)}">${prefix}${RW.esc(u)}</option>`).join('');
+ const want=Q.get('unit');
+ if(want&&blockedUnit(st,want))say('Unit 60 and S60 are not sold as a scouting package. Pick another unit. Nothing was charged.','err');
+ else if(want&&l.indexOf(want)!==-1)$('un').value=want;
+ spots()}
+const SN={CO:'Colorado',UT:'Utah',AZ:'Arizona',WY:'Wyoming',ID:'Idaho',NV:'Nevada',MT:'Montana',NM:'New Mexico'};
 async function spots(){const st=$('st').value,p=(document.querySelector('input[name=p]:checked')||{}).value;
  if(!open){$('spots').className='say';$('spots').textContent='';return}
  const q=new URLSearchParams({state:st,season:$('se').value,species:$('sp').value,unit:$('un').value});
@@ -38,10 +54,10 @@ async function spots(){const st=$('st').value,p=(document.querySelector('input[n
  $('spots').className='say '+(r.left?'ok':'err');
  $('spots').textContent=r.left?`${r.left} of ${r.cap} packages left for this unit, species and season in ${SN[st]}.`:`Sold out: the cap for this unit, species and season in ${SN[st]} is taken.`;}
 $('st').onchange=units;$('sp').onchange=units;$('se').onchange=spots;$('un').onchange=spots;document.querySelectorAll('input[name=p]').forEach(r=>r.onchange=spots);units();
-if(Q.get('unit'))$('un').value=Q.get('unit');
 if(Q.get('canceled'))say('Checkout canceled. Nothing was charged.','ok');
 $('buy').onclick=async()=>{const p=(document.querySelector('input[name=p]:checked')||{}).value;if(!p){say('Pick a package first.','err');return}
- if($('st').value!=='CO'&&$('st').value!=='UT'&&$('st').value!=='AZ'){say('Pick Colorado, Utah or Arizona.','err');return}
+ if(STATES.indexOf($('st').value)===-1){say('Pick one of the eight states.','err');return}
+ if(blockedUnit($('st').value,$('un').value)){say('Unit 60 and S60 are not sold as a scouting package. Nothing was charged.','err');return}
  const b={product:p,state:$('st').value,species:$('sp').value,unit:$('un').value,season:$('se').value};
  $('buy').disabled=true;say('Checking checkout…');const r=await RW.startCheckout(b);$('buy').disabled=false;
  if(r.status==401){location.href='login.html?next='+encodeURIComponent('/buy.html?'+new URLSearchParams({p,state:b.state,species:b.species,unit:b.unit,season:b.season}));return}

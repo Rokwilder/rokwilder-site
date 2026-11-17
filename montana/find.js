@@ -103,10 +103,10 @@ function title(h){
 function mtBand(h){return RWLand.band('mt', RWLand.mtKey(h.sp, h.area))}
 function landExtra(h,v){
   if(!paid())return '';
-  if(h.privateOnly)return RWLand.extra({privateOnly:true,place:'HD '+h.area,href:RWLand.pkgHref('../','mt',h.area)});
+  if(h.privateOnly)return RWLand.extra({privateOnly:true,place:'HD '+h.area,href:RWLand.pkgHref('../','mt',h.area,h.sp==='antelope'?'pronghorn':h.sp)});
   const b=mtBand(h);
   if(!b)return '';
-  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'HD '+h.area,href:RWLand.pkgHref('../','mt',h.area)});
+  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place:'HD '+h.area,href:RWLand.pkgHref('../','mt',h.area,h.sp==='antelope'?'pronghorn':h.sp)});
 }
 function card(x,i,full){
   const bits=full?RWLand.splitNext(landExtra(x.h,x.v)):{info:'',next:''};

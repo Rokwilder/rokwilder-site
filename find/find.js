@@ -135,9 +135,9 @@ let CO_OTC=null;
 function coOtcSet(){if(CO_OTC)return CO_OTC;CO_OTC=new Set();if(typeof OTC!=='undefined')for(const r of OTC)for(const u of r.u||[])CO_OTC.add(String(+u));return CO_OTC}
 function coCap(place){const ids=place.unit?String(place.unit).split(',').filter(Boolean):[];return ids.length===1&&coOtcSet().has(ids[0])?30:null}
 function landExtra(k,v){if(!paid())return '';const d=D[k],place=coPlace(k),b=landBandOf(k);
- return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),harvest:RWLand.harvestKind(hsv(k)),privateOnly:coPrivate(d),place:place.place,href:place.unit?RWLand.pkgHref('','co',place.unit):'',cap:coCap(place)})}
+ return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),harvest:RWLand.harvestKind(hsv(k)),privateOnly:coPrivate(d),place:place.place,href:place.unit?RWLand.pkgHref('','co',place.unit,d[0]):'',cap:coCap(place)})}
 function otcLand(u,hb){const b=RWLand.band('co',RWLand.coKey('elk',[u]));
- return RWLand.extra({band:b,land:b,voice:'forecast',odds:null,harvest:RWLand.harvestKind(hb),place:'Unit '+u,href:RWLand.pkgHref('','co',String(u)),cap:30})}
+ return RWLand.extra({band:b,land:b,voice:'forecast',odds:null,harvest:RWLand.harvestKind(hb),place:'Unit '+u,href:RWLand.pkgHref('','co',String(u),'elk'),cap:30})}
 function uL(k,full){const u=units(k);if(u.length==1)return 'Unit '+u[0];return full||u.length<=4?'Units '+u.join(', '):`Units ${u.slice(0,3).join(', ')} +${u.length-3} more`}
 function title(k,full){const d=D[k],sx=sexL(d);return `${sx?`<b class="sx">${sx}</b> · `:''}${uL(k,full)} · ${seas(k)}`}
 function showList(){const r=ranked(),oR=otcRows(),o=$('out');
