@@ -1,20 +1,39 @@
-// Draw-result history. Loads one state's band file after the hunter asks for hunts.
-// Bands and trend words only. The averaged percentage is not in the file and is not shown.
+// Draw-result history. One state's band file loads after the hunter asks for hunts.
+// The public file stores bands, not percentages. This never prints a percent.
+// Last year is the newest year on that hunt. A later year in the file shows up on its own.
+// A 2-year or 3-year line uses the published average when that average is exactly those years.
+// When every year in the window sits in one band, the average is that band, because the
+// published cutoffs do not let the mean leave the band. Anything else is not invented.
 (function(){
+const KEY='rw_draw_span';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const YES=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
 const DREW=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'UNDER ONE IN TWENTY':v===0?'NONE DREW':'NO RESULT';
 const COL=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
+const RANK=[0,0.01,0.05,0.25,0.75,1];
 const col=v=>(COL.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
-const me=document.currentScript;
+const me=typeof document!=='undefined'&&document.currentScript;
 const url=me&&me.dataset.history;
-let data=null, failed=false, pending=null, scheduled=false;
+let data=null, failed=false, pending=null, scheduled=false, busy=false;
 
+function span(){
+  try{
+    const v=localStorage.getItem(KEY);
+    if(v==='1'||v==='2'||v==='3') return Number(v);
+  }catch(e){}
+  return 1;
+}
+function setSpan(v){
+  const n=String(v)==='2'?'2':String(v)==='3'?'3':'1';
+  try{localStorage.setItem(KEY,n)}catch(e){}
+  return Number(n);
+}
 function word(v){
   if(v==null)return '';
   return data&&data.words==='drew'?DREW(v):YES(v);
 }
 function dot(v){return `<i class="vdot" style="background:${col(v)}"></i>`}
+function rankOf(v){const i=RANK.indexOf(v);return i<0?null:i}
 function recordFor(hunt, side){
   if(!hunt)return null;
   if(hunt.y)return hunt;
@@ -36,30 +55,167 @@ function view(rec, pts){
   const n=rec.n&&rec.n[key]||0;
   return {years, avg:n>=2?rec.a[key]:null, n, trend:rec.t&&rec.t[key]||null, pointed:true};
 }
+function series(row){
+  return Object.keys(row.years||{}).filter(y=>row.years[y]!=null).sort((a,b)=>Number(a)-Number(b)).map(y=>({year:String(y), band:row.years[y]}));
+}
+function sameBand(slice){
+  if(!slice.length)return null;
+  const b=slice[0].band;
+  return slice.every(x=>x.band===b)?b:null;
+}
+// want is 1 (newest year), 2, or 3. Shorter history keeps the years that exist.
+function windowOf(row, want){
+  const all=series(row||{years:{}});
+  const ask=want===2?2:want===3?3:1;
+  if(!all.length)return {ok:false, kind:'none', band:null, n:0, label:'History not available'};
+  if(ask===1){
+    const last=all[all.length-1];
+    return {ok:true, kind:'year', year:last.year, band:last.band, n:1, short:false, label:last.year+' draw'};
+  }
+  const slice=all.slice(-ask);
+  if(slice.length===1){
+    const y=slice[0];
+    return {ok:true, kind:'year', year:y.year, band:y.band, n:1, short:true, label:y.year+' draw (only 1 year available)'};
+  }
+  const covers=row&&row.avg!=null&&Number(row.n)===slice.length&&all.length===slice.length;
+  const shared=sameBand(slice);
+  const band=covers?row.avg:(shared!=null?shared:null);
+  if(band==null){
+    let label=ask+'-year average is not published for this hunt';
+    let wider=null, widerN=null;
+    if(row&&row.avg!=null&&Number(row.n)>=2&&Number(row.n)===all.length&&all.length>slice.length){
+      label+='. Published average uses '+row.n+' years';
+      wider=row.avg;
+      widerN=Number(row.n);
+    }
+    return {ok:false, kind:'missing', band:null, n:slice.length, short:slice.length<ask, wider, widerN, label};
+  }
+  const n=slice.length;
+  const name=n===2?'2-yr avg':n===3?'3-yr avg':n+'-yr avg';
+  const short=n<ask;
+  const label=short?name+' (only '+n+' years available)':name;
+  return {ok:true, kind:'avg', band, n, short, label};
+}
+function hintText(head, three, last){
+  if(!three||!three.ok||three.short||three.n!==3||three.band==null)return '';
+  const subject=head&&head.kind==='avg'&&head.n===3&&!head.short?last:head;
+  if(!subject||subject.band==null)return '';
+  const a=rankOf(subject.band), b=rankOf(three.band);
+  if(a==null||b==null||a===b)return '';
+  const harder=a<b;
+  if(head&&head.kind==='avg'&&head.n===3&&!head.short){
+    return harder?'Last year was harder to draw than this average':'Last year was easier than this average';
+  }
+  return harder?'Harder to draw than the 3-yr average':'Easier than the 3-yr average';
+}
+function formatLine(win, say){
+  if(!win)return '';
+  const band=win.band!=null?win.band:win.wider;
+  if(band==null)return win.label;
+  return win.label+': '+(say?say(band):'');
+}
+function lineHtml(win){
+  if(!win)return '';
+  const band=win.band!=null?win.band:win.wider;
+  if(band==null)return esc(win.label);
+  return `${esc(win.label)}: ${dot(band)}${esc(word(band))}`;
+}
+function rowFor(hk, side, pts){
+  if(!data)return null;
+  const hunt=data.hunts&&data.hunts[hk];
+  const rec=recordFor(hunt, side);
+  if(!rec)return null;
+  return view(rec, pts);
+}
+function bandFor(hk, side, pts){
+  const row=rowFor(hk, side, pts);
+  if(!row)return null;
+  const win=windowOf(row, span());
+  return win&&win.ok&&typeof win.band==='number'?win.band:null;
+}
 function htmlFor(el){
   if(el.dataset.hist==='none')return `<span class="hym">${esc(el.dataset.why||'History not available')}</span>`;
   if(failed)return `<span class="hym">History not available</span>`;
   if(!data)return `<span class="hym">History loading</span>`;
-  const hunt=data.hunts&&data.hunts[el.dataset.hk];
-  const rec=recordFor(hunt, el.dataset.side);
-  if(!rec)return `<span class="hym">History not available</span>`;
   const pts=el.hasAttribute('data-pts')?el.dataset.pts:null;
-  const row=view(rec, pts);
-  const years=Object.keys(row.years);
+  const row=rowFor(el.dataset.hk, el.dataset.side, pts);
+  if(!row)return `<span class="hym">History not available</span>`;
+  const years=Object.keys(row.years||{});
   if(!years.length)return `<span class="hym">${row.pointed&&row.missing?'History not available':'History not available at this point level'}</span>`;
-  const cells=years.sort().map(yr=>`<span class="yr"><b>${esc(yr)}</b><span>${dot(row.years[yr])}${esc(word(row.years[yr]))}</span></span>`).join('');
-  const avg=(row.n===4||row.n===3||row.n===2)?`<span class="yr avg"><b>${row.n}-yr average</b><span>${dot(row.avg)}${esc(word(row.avg))}</span></span>`:'';
-  const trend=row.trend?`<div class="tr">${esc(row.trend)}</div>`:'';
-  return `<span class="yrs">${cells}${avg}</span>${trend}`;
+  const want=span();
+  const head=windowOf(row, want);
+  const three=windowOf(row, 3);
+  const last=windowOf(row, 1);
+  const sub=want===3?last:three;
+  const say=v=>word(v);
+  const headHtml=lineHtml(head);
+  let subHtml='';
+  if(sub&&formatLine(sub, say)!==formatLine(head, say)) subHtml=`<span class="hysub">${lineHtml(sub)}</span>`;
+  const hint=hintText(head, three, last);
+  const hintHtml=hint?`<span class="hyhint">${esc(hint)}</span>`:'';
+  return `<span class="hynum">${headHtml}</span>${subHtml}${hintHtml}`;
+}
+function place(el){
+  const parent=el.parentElement;
+  if(!parent)return;
+  let head=null;
+  for(const child of parent.children){
+    if(child!==el&&child.classList&&(child.classList.contains('fv')||child.classList.contains('vd'))){head=child;break}
+  }
+  if(!head||head.previousElementSibling===el)return;
+  parent.insertBefore(el, head);
 }
 function paint(el){
   const html=htmlFor(el);
-  if(el.dataset.sig===html)return;
-  el.dataset.sig=html;
-  el.innerHTML=html;
+  if(el.dataset.sig!==html){
+    el.dataset.sig=html;
+    el.innerHTML=html;
+  }
+  place(el);
 }
-function note(root){
-  if(!data||!data.note)return;
+function controls(){
+  if(typeof document==='undefined')return;
+  for(const id of ['out','detail']){
+    const box=document.getElementById(id);
+    if(!box||box.hidden||box.querySelector('.dspan'))continue;
+    if(!box.querySelector('.hy'))continue;
+    const label=document.createElement('label');
+    label.className='dspan';
+    label.appendChild(document.createTextNode('Show draw odds as'));
+    const sel=document.createElement('select');
+    sel.className='rwspan';
+    sel.setAttribute('aria-label','Show draw odds as');
+    [['1','Last year'],['2','2-year average'],['3','3-year average']].forEach(([v,t])=>{
+      const o=document.createElement('option');
+      o.value=v;o.textContent=t;
+      if(String(span())===v)o.selected=true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change',()=>{
+      setSpan(sel.value);
+      document.querySelectorAll('.hy').forEach(el=>{delete el.dataset.sig});
+      const out=document.getElementById('out');
+      const det=document.getElementById('detail');
+      const listOpen=out&&!out.hidden&&!(det&&!det.hidden);
+      if(listOpen&&typeof window.RWFindRefresh==='function')askRefresh();
+      else fill();
+    });
+    label.appendChild(sel);
+    const note=document.createElement('p');
+    note.className='dnote';
+    note.textContent='Last year is the newest year on file for that hunt. Fewer years are labeled.';
+    const h=box.querySelector('h2');
+    if(h){
+      h.insertAdjacentElement('afterend', label);
+      label.insertAdjacentElement('afterend', note);
+    }else{
+      box.prepend(note);
+      box.prepend(label);
+    }
+  }
+}
+function note(){
+  if(!data||!data.note||typeof document==='undefined')return;
   for(const id of ['out','detail']){
     const box=document.getElementById(id);
     if(!box||box.hidden||!box.querySelector('.hy'))continue;
@@ -67,45 +223,62 @@ function note(root){
     const p=document.createElement('p');
     p.className='hynote';
     p.textContent=data.note;
-    const h=box.querySelector('h2');
-    if(h)h.insertAdjacentElement('afterend', p);
+    const anchor=box.querySelector('.dspan .dnote')||box.querySelector('.dnote')||box.querySelector('.dspan')||box.querySelector('h2');
+    if(anchor)anchor.insertAdjacentElement('afterend', p);
     else box.prepend(p);
-  }
-  if(root&&root.classList&&root.classList.contains('mp')&&!root.querySelector('.hynote')&&data.note){
-    const p=document.createElement('p');
-    p.className='hynote';
-    p.textContent=data.note;
-    root.prepend(p);
   }
 }
 function fill(){
   scheduled=false;
+  if(typeof document==='undefined')return;
   document.querySelectorAll('.hy').forEach(paint);
+  controls();
   note();
 }
 function schedule(){
   if(scheduled)return;
   scheduled=true;
-  requestAnimationFrame(fill);
+  const raf=typeof requestAnimationFrame==='function'?requestAnimationFrame:fn=>setTimeout(fn,0);
+  raf(fill);
+}
+function askRefresh(){
+  if(busy||typeof window==='undefined'||typeof window.RWFindRefresh!=='function')return;
+  const det=typeof document!=='undefined'&&document.getElementById('detail');
+  const out=typeof document!=='undefined'&&document.getElementById('out');
+  if(det&&!det.hidden)return;
+  if(out&&out.hidden)return;
+  busy=true;
+  try{window.RWFindRefresh()}finally{busy=false}
 }
 function load(){
   if(data||failed||pending||!url){if(!url)failed=true;return pending||Promise.resolve()}
   pending=fetch(url).then(r=>{if(!r.ok)throw new Error(String(r.status));return r.json()}).then(j=>{
-    data=j;pending=null;schedule();
+    data=j;pending=null;schedule();askRefresh();
   }).catch(()=>{failed=true;pending=null;schedule()});
   return pending;
 }
-window.RWHy=function(k, side, pts){
+function hy(k, side, pts){
   const sideAttr=side==null?'':` data-side="${esc(side)}"`;
   const ptsAttr=pts==null||pts===''?'':` data-pts="${Number(pts)}"`;
   return `<span class="hy" data-hk="${esc(k)}"${sideAttr}${ptsAttr}></span>`;
-};
+}
+hy.band=bandFor;
+hy.span=span;
+hy.setSpan=setSpan;
+hy.windowOf=windowOf;
+hy.hintText=hintText;
+hy.formatLine=formatLine;
+window.RWHy=hy;
 window.RWHyNone=function(why){
   return `<span class="hy" data-hist="none" data-why="${esc(why)}"></span>`;
 };
-const obs=new MutationObserver(()=>{
-  if(document.querySelector('.hy'))load();
-  schedule();
-});
-obs.observe(document.documentElement,{childList:true,subtree:true});
+function boot(){
+  if(typeof document==='undefined'||!document.documentElement||typeof MutationObserver!=='function')return;
+  const obs=new MutationObserver(()=>{
+    if(document.querySelector('.hy'))load();
+    schedule();
+  });
+  obs.observe(document.documentElement,{childList:true,subtree:true});
+}
+boot();
 })();

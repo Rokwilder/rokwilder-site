@@ -45,8 +45,8 @@ const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
 function tie(a,b){const d=RWUnit.sortNum(azUnits(a.k))-RWUnit.sortNum(azUnits(b.k));if(d)return d;const da=String(AH[a.k].d||''),db=String(AH[b.k].d||'');if(da!==db)return da<db?-1:1;return String(AH[a.k].n).localeCompare(String(AH[b.k].n),undefined,{numeric:true})}
-function ranked(){return AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function ranked(){const rows=AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
+ .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,S.res,S.pts),row=>row.v,tie)}
 function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
 function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
 function rowsInOrder(r){if(S.ord!=='hard'&&S.ord!=='easy')return lsort(r);return RWDraw.order(r,S.ord,rowMeasure,tie)}
@@ -281,5 +281,6 @@ if(Q.get('sp')){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=sp=='bear'?'':(PL[
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&AH[h]&&plOK(AH[h])&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__AZ={otcRows,OU:()=>OU,FP,oddsAt,hWhat,XP,plOK,wsOf,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,noHist};
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={max:MAXP,pointsMatter,contexts(){const out=[];for(const pl of Object.keys(PL))for(const res of ['res','nonres'])out.push({id:pl+' '+res,apply(){Object.assign(S,{sp:PL[pl][0],pl,res,w:'',sx:'',unit:'',so:'',ord:'',yo:0,champ:0})}});out.push({id:'bear res',apply(){Object.assign(S,{sp:'bear',pl:'',res:'res',w:'',sx:'',unit:'',so:'',ord:'',yo:0,champ:0})}});return out},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

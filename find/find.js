@@ -95,8 +95,9 @@ function rowsInOrder(r){if(S.ord!=='hard'&&S.ord!=='easy')return lsort(r);return
 const pointsMatter=()=>S.sp!=='dsheep';
 const orderLine=fallback=>S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':fallback;
 const unitOK=k=>RWUnit.hit(units(k),S.unit);
-function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k)||!unitOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function histSide(){return S.yo?(S.res==='res'?'yres':'ynonres'):S.res}
+function ranked(){const rows=Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k)||!unitOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
+ .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,histSide(),S.pts),row=>row.v,tie)}
 // ===== Over-the-counter (OTC) licenses: find/otc.js, from the CPW 2026 big game brochure OTC tables (pages 38-41) =====
 // Not drawn and no preference points, so no verdict and no odds: one row per unit the license is valid in. The weapon, rifle-season,
 // sex and residency choices filter these rows the same way they filter draw hunts. Harvest success is CPW's 2025 number for the
@@ -344,5 +345,6 @@ if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={otcRows,OU:()=>OU,FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={max:30,pointsMatter,contexts(){const out=[];for(const sp of Object.keys(SP))for(const res of ['res','nonres'])out.push({id:sp+' '+res,apply(){Object.assign(S,{sp,res,w:'',se:'',sx:'',unit:'',so:'',ord:'',yo:0,priv:0})}});return out},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

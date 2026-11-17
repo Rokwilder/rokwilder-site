@@ -35,8 +35,8 @@ function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
 function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function tie(a,b){const d=RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area]);if(d)return d;const ta=String(WH[a.k].type),tb=String(WH[b.k].type);if(ta!==tb)return ta<tb?-1:1;return a.k.localeCompare(b.k)}
-function ranked(){return WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}))
- .sort((a,b)=>b.v-a.v||tie(a,b))}
+function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}));
+ return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,pool(),usesPts()?S.pts:''),row=>row.v,tie)}
 function bandAtPts(k,pts){const h=WH[k];if(!h)return null;const b=h.od[pool()];if(!b)return null;return b.o[Math.min(pts,b.o.length-1)]}
 function rowMeasure(x){return RWDraw.measure(p=>bandAtPts(x.k,p),S.pts)}
 function orderRows(r){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(r,S.ord,rowMeasure,tie);if(S.focus!='land')return r;return [...r].sort((a,b)=>RWLand.rank(wyBand(b.k))-RWLand.rank(wyBand(a.k))||b.v-a.v||a.k.localeCompare(b.k,undefined,{numeric:true}))}
@@ -176,5 +176,6 @@ unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),subm
 if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');if(Q.get('tab')==='map')S.tab='map';
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={pointsMatter:usesPts,contexts(){const out=[];for(const sp of Object.keys(SP))for(const res of ['res','nr']){const drs=res==='nr'&&HAS_SPECIAL.has(sp)?['nr','nrs']:['nr'];for(const dr of drs)out.push({id:sp+' '+res+' '+dr,apply(){Object.assign(S,{sp,res,dr,sx:'',unit:'',red:1,gen:1,focus:'',ord:''})}})}return out},maxFor(){return usesPts()?MAXP():0},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

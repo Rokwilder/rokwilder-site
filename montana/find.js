@@ -77,7 +77,8 @@ function tie(a,b){
 }
 function rowMeasure(x){return RWDraw.measure(p=>chanceAt(x.h,p), usesPts()?S.pts:0)}
 function ranked(){
-  return pool().filter(([k,h])=>RWUnit.hit([h.area],S.unit)&&bandAt(h)!=null&&bandAt(h)>=0.05).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||tie(a,b));
+  const rows=pool().filter(([k,h])=>RWUnit.hit([h.area],S.unit)&&bandAt(h)!=null&&bandAt(h)>=0.05).map(([k,h])=>({k,h,v:bandAt(h)}));
+  return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,S.res,usesPts()?S.pts:null),row=>row.v,tie);
 }
 function rowsInOrder(all){
   if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);
@@ -333,6 +334,7 @@ if(Q.get('tab')==='map')S.tab='map';
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&MH[Q.get('k')]){const h=MH[Q.get('k')];S.sp=h.sp;S.cls='';S.sx='';S.wpn='';S.res=Q.get('res')==='nr'?'nr':'res';if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={
   pointsMatter:usesPts,
   contexts(){

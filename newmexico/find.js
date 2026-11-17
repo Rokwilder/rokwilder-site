@@ -67,7 +67,7 @@ function rowsInOrder(all){
   if(!usesRate())return all.slice().sort(tie);
   if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);
   if(S.focus==='land')return all.slice().sort((a,b)=>RWLand.rank(nmBand(b.h))-RWLand.rank(nmBand(a.h))||(b.v||0)-(a.v||0)||tie(a,b));
-  return all.slice().sort((a,b)=>(b.v||0)-(a.v||0)||tie(a,b));
+  return RWDraw.byDraw(all,row=>RWDraw.spanBand(row.k,S.pool,null),row=>row.v||0,tie);
 }
 function whoLine(){
   const bits=[SP[S.sp],S.wpn?(S.wpn==='bow'?'Bow':S.wpn==='muzzle'?'Muzzleloader':'Any legal sporting arm'):null,S.bag||null,POOL[S.pool]];
@@ -300,6 +300,7 @@ if(Q.get('tab')==='map')S.tab='map';
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.wpn='';S.bag='';if(Q.get('pool')==='nr'||Q.get('pool')==='out'||Q.get('pool')==='res')S.pool=Q.get('pool');paint();showDetail(Q.get('k'))}
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={
   pointsMatter(){return false},
   contexts(){

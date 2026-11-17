@@ -165,15 +165,17 @@ try {
   const order = await dp.evaluate(() => [...document.querySelectorAll('#out .fh')].map(el => {
     const k = el.dataset.k;
     const units = (typeof FL !== 'undefined' && FL[k] && FL[k][2]) || [D[k][1]];
-    return {k, v: window.__FY.odds(k), u: RWUnit.sortNum(units)};
+    const hist = window.RWHy && typeof RWHy.band === 'function' ? RWHy.band(k, 'res', 0) : null;
+    return {k, v: window.__FY.odds(k), u: RWUnit.sortNum(units), hist};
   }));
-  let tied = true;
+  let ordered = true, ties = 0;
   for (let i = 1; i < order.length; i++) {
-    if (order[i].v !== order[0].v) break;
-    if (order[i].u < order[i - 1].u) tied = false;
+    const a = order[i - 1], b = order[i];
+    const ah = a.hist == null ? -1 : a.hist, bh = b.hist == null ? -1 : b.hist;
+    if (ah < bh || (ah === bh && a.v < b.v) || (ah === bh && a.v === b.v && a.u > b.u)) ordered = false;
+    if (a.hist === b.hist && a.v === b.v) ties++;
   }
-  const top = order.filter(r => r.v === order[0].v);
-  ok(top.length >= 2 && tied, 'tied hunts are in unit order: ' + top.map(r => r.k + '@' + r.u).join(', '));
+  ok(ordered && ties >= 1, 'draw order follows the selected year, then odds, then unit (' + ties + ' ties)');
   await dp.evaluate(() => {
     document.querySelectorAll('#out .fl > li').forEach((li, i) => { if (i > 3) li.style.display = 'none'; });
   });

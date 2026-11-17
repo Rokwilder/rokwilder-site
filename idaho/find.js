@@ -35,7 +35,8 @@ function split(){const show=[],under=[],none=[],unlabeled=[];
   else if(v>=.05)show.push({k,v});
   else under.push(k);
  }
- show.sort((a,b)=>b.v-a.v||RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area])||String((IH[a.k].seg[0]||{}).o||'').localeCompare(String((IH[b.k].seg[0]||{}).o||''))||IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true}));
+ function idTie(a,b){const area=RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area]);if(area)return area;const oa=String((IH[a.k].seg[0]||{}).o||''),ob=String((IH[b.k].seg[0]||{}).o||'');if(oa!==ob)return oa<ob?-1:1;return IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true})}
+ show.splice(0,show.length,...RWDraw.byDraw(show,row=>RWDraw.spanBand(row.k,S.res,null),row=>row.v,idTie));
  return {show,under,none,unlabeled}}
 function title(k){const h=IH[k];const bits=[`Hunt ${esc(h.n)}`,`Area ${esc(h.area)}`];
  if(h.sex)bits.push(SXN[h.sex]);
@@ -142,5 +143,6 @@ paint();
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 if(Q.get('go'))showList();
 if(Q.get('k')&&IH[Q.get('k')])showDetail(Q.get('k'));
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={max:0,pointsMatter:()=>false,contexts(){const out=[];for(const sp of ORDER)for(const draw of [1,2])for(const res of ['res','nr'])out.push({id:sp+' '+draw+' '+res,apply(){Object.assign(S,{sp,draw,res,sx:'',unit:'',youth:1,focus:'',ord:''})}});return out},setPts(){S.pts=0},list(){return split().show},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(split().show)}finally{S.ord=prev}},measure(x){return RWDraw.measure(()=>idChance(x.k),0)},tie};
 })();

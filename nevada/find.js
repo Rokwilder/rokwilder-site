@@ -46,7 +46,7 @@ function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[
 function tie(a,b){const d=RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units]);if(d)return d;const s=a.h.season.localeCompare(b.h.season);return s||a.k.localeCompare(b.k)}
 function nvChance(h,pts){const prev=S.pts;S.pts=pts;try{if(FP){const row=lvRaw(h);if(row&&typeof row.rate1==='number'&&row.rate1>=0&&row.rate1<=1)return row.rate1}return bandAt(h)}finally{S.pts=prev}}
 function rowMeasure(x){return RWDraw.measure(p=>nvChance(x.h,p),S.pts)}
-function ranked(){return weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function ranked(){const rows=weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,null,S.pts),row=>row.v,tie)}
 function rowsInOrder(all){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);if(S.focus=='land')return all.slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true}));return all}
 const below=()=>weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v<0.05}).length;
 const missing=()=>weaponRows().filter(([,h])=>bandAt(h)===null).length;
@@ -161,5 +161,6 @@ if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.sx=h.sx;S.live=h.live;S.who=h.who;S.wpn=h.wpn;if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={pointsMatter:()=>true,contexts(){const out=[];const seen=new Set();for(const [,h] of H){const id=[h.sp,h.sx,h.live,h.who,h.wpn].join(' ');if(seen.has(id))continue;seen.add(id);out.push({id,apply(){Object.assign(S,{sp:h.sp,sx:h.sx,live:h.live,who:h.who,wpn:h.wpn,unit:'',focus:'',ord:''})}})}return out},maxFor(){return maxPts()},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();
