@@ -1,0 +1,161 @@
+{
+ "retrieved": "2026-11-18",
+ "credit": "Controlled hunt area boundaries: Idaho Department of Fish and Game.",
+ "url": "https://services.arcgis.com/FjJI5xHF2dUPVrgK/arcgis/rest/services/ControlledHunts_All/FeatureServer/0",
+ "item": "https://www.arcgis.com/home/item.html?id=2384064cb26f451f92cada96ce6dd340",
+ "owner": "idahofishandgame",
+ "license": "Refer to the boundaries published in the current IDFG regulation booklets before hunting or pursuing game animals. The data in this file is true and accurate to the best of our knowledge but is considered a best representation only. Users must assume responsibility in determining the usability of this data for their purposes. IDFG does not assume liability. No warranty expressed or implied is made by IDFG regarding the utility of the data on any other system, nor shall the act of distribution constitute such warranty.",
+ "format": "ArcGIS FeatureServer polygon, downloaded as GeoJSON in WGS84.",
+ "note": "Lines are simplified. The layer is IDFG's current controlled hunt areas, drawn from the legal descriptions in the hunting regulations. The year field is 2025 for big game and 2026 for turkey. A trailing star on a hunt area is dropped when that species has no separate polygon without the star. An extra-tag hunt uses the area without the X. A comma list is drawn only when every named area has a polygon. The written boundary is the one that counts.",
+ "match": {
+  "areas": 432,
+  "hunts": 816,
+  "linked": 805,
+  "unlinked": 11,
+  "species": {
+   "elk": {
+    "file": "elk.json",
+    "big_game": "Elk",
+    "areas": 142,
+    "bytes": 621830,
+    "years": [
+     2025
+    ]
+   },
+   "deer": {
+    "file": "deer.json",
+    "big_game": "Deer",
+    "areas": 98,
+    "bytes": 521693,
+    "years": [
+     2025
+    ]
+   },
+   "pronghorn": {
+    "file": "pronghorn.json",
+    "big_game": "Pronghorn",
+    "areas": 47,
+    "bytes": 304871,
+    "years": [
+     2025
+    ]
+   },
+   "moose": {
+    "file": "moose.json",
+    "big_game": "Moose",
+    "areas": 77,
+    "bytes": 338076,
+    "years": [
+     2025
+    ]
+   },
+   "sheep-rm": {
+    "file": "sheep-rm.json",
+    "big_game": "Rocky Mtn Sheep",
+    "areas": 27,
+    "bytes": 121785,
+    "years": [
+     2025
+    ]
+   },
+   "sheep-ca": {
+    "file": "sheep-ca.json",
+    "big_game": "California Sheep",
+    "areas": 4,
+    "bytes": 15226,
+    "years": [
+     2025
+    ]
+   },
+   "goat": {
+    "file": "goat.json",
+    "big_game": "Goat",
+    "areas": 19,
+    "bytes": 83864,
+    "years": [
+     2025
+    ]
+   },
+   "bear": {
+    "file": "bear.json",
+    "big_game": "Bear",
+    "areas": 3,
+    "bytes": 24587,
+    "years": [
+     2025
+    ]
+   },
+   "turkey": {
+    "file": "turkey.json",
+    "big_game": "Turkey",
+    "areas": 15,
+    "bytes": 119942,
+    "years": [
+     2026
+    ]
+   }
+  },
+  "by_species": {
+   "elk": {
+    "hunts": 319,
+    "linked": 319,
+    "missing": {}
+   },
+   "deer": {
+    "hunts": 250,
+    "linked": 248,
+    "missing": {
+     "41-2": 2
+    }
+   },
+   "pronghorn": {
+    "hunts": 78,
+    "linked": 78,
+    "missing": {}
+   },
+   "moose": {
+    "hunts": 94,
+    "linked": 93,
+    "missing": {
+     "29, 30, 30A, 37, 37A, 58": 1
+    }
+   },
+   "sheep-rm": {
+    "hunts": 28,
+    "linked": 25,
+    "missing": {
+     "51-1": 1,
+     "27": 1,
+     "Bannock": 1
+    }
+   },
+   "sheep-ca": {
+    "hunts": 2,
+    "linked": 2,
+    "missing": {}
+   },
+   "goat": {
+    "hunts": 19,
+    "linked": 17,
+    "missing": {
+     "51-1": 1,
+     "61-1": 1
+    }
+   },
+   "bear": {
+    "hunts": 10,
+    "linked": 10,
+    "missing": {}
+   },
+   "turkey": {
+    "hunts": 16,
+    "linked": 13,
+    "missing": {
+     "54": 2,
+     "60-2": 1
+    }
+   }
+  },
+  "skipped_features": 3
+ }
+}
