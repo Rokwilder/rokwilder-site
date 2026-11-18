@@ -187,6 +187,7 @@ export function parsePdf(tsv, srcId, url) {
   let mode = '';
   let cols = null;
   let open = null;
+  let pendingQuota = null;
 
   const identity = () => [title, units, season, weapon].join('|');
 
@@ -195,7 +196,8 @@ export function parsePdf(tsv, srcId, url) {
     if (open && open.id === id && !open.closed) return;
     if (open && !open.closed) throw new Error(srcId + ' closed without a total: ' + open.id);
     const meta = classify(title, weapon);
-    open = {id, ...meta, units, season, src: srcId, url, rows: [], total: null, closed: false};
+    open = {id, ...meta, units, season, src: srcId, url, quota: pendingQuota, rows: [], total: null, closed: false};
+    pendingQuota = null;
     hunts.push(open);
   }
 
@@ -215,6 +217,7 @@ export function parsePdf(tsv, srcId, url) {
       units = t.replace(/^Units?:\s*/, '');
       season = '';
       weapon = '';
+      pendingQuota = null;
       mode = 'units';
       continue;
     }
@@ -241,6 +244,8 @@ export function parsePdf(tsv, srcId, url) {
       continue;
     }
     if (/^Quota:/.test(t)) {
+      const printed = t.match(/^Quota:\s*([\d,]+)\b/);
+      pendingQuota = printed ? Number(printed[1].replace(/,/g, '')) : null;
       mode = 'quota';
       continue;
     }
