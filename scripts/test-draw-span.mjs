@@ -90,6 +90,14 @@ ok(H.trendWord('Up and down')==='' && H.trendWord('One year stood out')==='', 'a
 ok(H.reasonText([{year:2025,tags:120},{year:2026,tags:90}])==='Tags cut from 120 to 90', 'a quota drop is named from the counts');
 ok(H.reasonText([{year:2025,apps:100},{year:2026,apps:130}])==='Applicants up 30%', 'an applicant change uses the two official counts');
 ok(H.reasonText([{year:2026,tags:90}])==='', 'one year is not a reason');
+ok(H.reasonText([{year:2025,tags:50,apps:52},{year:2026,tags:50,apps:74}])==='Applicants up 42%', 'unchanged tags leave the applicant change');
+const counts = JSON.parse(readFileSync(join(root, 'find/member/colorado-counts.json'), 'utf8'));
+const unit39 = counts.hunts.EM039O3R;
+ok(unit39['2024'].quota === 50 && unit39['2024'].apps === 46, 'unit 39 2024 quota and applicants match the recap check');
+ok(unit39['2025'].quota === 50 && unit39['2025'].apps === 52, 'unit 39 2025 quota and applicants match the recap check');
+ok(unit39['2026'].quota === 50 && unit39['2026'].apps === 74, 'unit 39 2026 quota and applicants match the recap check');
+ok(counts.hunts.BE001O1A['2026'].quota === 5 && counts.hunts.BE001O1A['2026'].apps === 5, 'bear 1 2026 matches the printed 5 tags and 5 first-choice applicants');
+ok(!/%/.test(JSON.stringify(counts.note)) && counts.sources.every(s => /^https:\/\//.test(s.pdf)), 'count notes have no percent and sources are https');
 ok(!/—|–/.test(readFileSync(join(root, 'find/history-ui.js'), 'utf8') + readFileSync(join(root, 'find/draw-sort.js'), 'utf8')), 'new copy has no em dash or en dash');
 
 const sortSrc = readFileSync(join(root, 'find/draw-sort.js'), 'utf8');

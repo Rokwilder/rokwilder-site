@@ -14,7 +14,7 @@ const RANK=[0,0.01,0.05,0.25,0.75,1];
 const col=v=>(COL.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
 const me=typeof document!=='undefined'&&document.currentScript;
 const url=me&&me.dataset.history;
-let data=null, failed=false, pending=null, scheduled=false, busy=false;
+let data=null, failed=false, pending=null, scheduled=false, busy=false, countsLoaded=false;
 
 function span(){
   try{
@@ -177,6 +177,16 @@ function reasonText(rows){
   }
   return '';
 }
+function countsLine(rows){
+  const list=(rows||[]).filter(r=>r&&(typeof r.tags==='number'||typeof r.apps==='number')).slice().sort((a,b)=>b.year-a.year);
+  if(!list.length) return '';
+  return list.map(r=>{
+    const bits=[];
+    if(typeof r.tags==='number') bits.push(r.tags.toLocaleString()+' tags');
+    if(typeof r.apps==='number') bits.push(r.apps.toLocaleString()+' applicants');
+    return r.year+': '+bits.join(', ');
+  }).join('. ');
+}
 function countRows(hk){
   if(!memberOn()) return [];
   const rows=[];
@@ -260,9 +270,12 @@ function htmlFor(el){
     const yearsHtml=entries.length?`<span class="hyyears">${esc(yearLine(entries, say, anyExact, rates))}</span>`:'';
     const trend=trendWord(row.trend);
     const trendHtml=trend?`<span class="hytrend">${esc(trend)}</span>`:'';
-    const why=reasonText(countRows(el.dataset.hk));
+    const rows=countRows(el.dataset.hk);
+    const why=reasonText(rows);
+    const counts=countsLine(rows);
     const whyHtml=why?`<span class="hywhy">${esc(why)}</span>`:'';
-    return `<span class="hynum">${headHtml}</span>${yearsHtml}${trendHtml}${whyHtml}`;
+    const countsHtml=counts?`<span class="hycounts">${esc(counts)}</span>`:'';
+    return `<span class="hynum">${headHtml}</span>${yearsHtml}${trendHtml}${whyHtml}${countsHtml}`;
   }
   let subHtml='';
   if(sub&&formatLine(sub, say)!==formatLine(head, say)) subHtml=`<span class="hysub">${lineHtml(sub)}</span>`;
@@ -346,6 +359,7 @@ function note(){
 function fill(){
   scheduled=false;
   if(typeof document==='undefined')return;
+  loadCounts();
   document.querySelectorAll('.hy').forEach(paint);
   controls();
   note();
@@ -365,10 +379,26 @@ function askRefresh(){
   busy=true;
   try{window.RWFindRefresh()}finally{busy=false}
 }
+function countsUrl(){
+  if(!me||!me.src||!data||data.state!=='colorado') return '';
+  return new URL('member/colorado-counts.json', me.src).href;
+}
+function loadCounts(){
+  if(countsLoaded||!memberOn()) return;
+  const href=countsUrl();
+  if(!href) return;
+  countsLoaded=true;
+  fetch(href).then(r=>{if(!r.ok) throw new Error(String(r.status)); return r.json()}).then(j=>{
+    window.RWQ=window.RWQ||{};
+    window.RWQ.co=j;
+    document.querySelectorAll('.hy').forEach(el=>{delete el.dataset.sig});
+    schedule();
+  }).catch(()=>{countsLoaded=false});
+}
 function load(){
   if(data||failed||pending||!url){if(!url)failed=true;return pending||Promise.resolve()}
   pending=fetch(url).then(r=>{if(!r.ok)throw new Error(String(r.status));return r.json()}).then(j=>{
-    data=j;pending=null;schedule();askRefresh();
+    data=j;pending=null;loadCounts();schedule();askRefresh();
   }).catch(()=>{failed=true;pending=null;schedule()});
   return pending;
 }
