@@ -222,5 +222,6 @@ if(Q.get('tab')==='map')S.tab='map';
 if(Q.get('go'))showList();
 if(Q.get('k')&&IH[Q.get('k')])showDetail(Q.get('k'));
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
+window.__ID={S, FP};
 window.__DRAW={max:0,pointsMatter:()=>false,contexts(){const out=[];for(const sp of ORDER)for(const draw of [1,2])for(const res of ['res','nr'])out.push({id:sp+' '+draw+' '+res,apply(){Object.assign(S,{sp,draw,res,sx:'',unit:'',youth:1,focus:'',ord:''})}});return out},setPts(){S.pts=0},list(){return split().show},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(split().show)}finally{S.ord=prev}},measure(x){return RWDraw.measure(()=>idChance(x.k),0)},tie};
 })();

@@ -235,5 +235,6 @@ paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.sx=h.sx;S.live=h.live;S.who=h.who;S.wpn=h.wpn;if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
+window.__NV={S, FP};
 window.__DRAW={pointsMatter:()=>true,contexts(){const out=[];const seen=new Set();for(const [,h] of H){const id=[h.sp,h.sx,h.live,h.who,h.wpn].join(' ');if(seen.has(id))continue;seen.add(id);out.push({id,apply(){Object.assign(S,{sp:h.sp,sx:h.sx,live:h.live,who:h.who,wpn:h.wpn,unit:'',focus:'',ord:''})}})}return out},maxFor(){return maxPts()},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

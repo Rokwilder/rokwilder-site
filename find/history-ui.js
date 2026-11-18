@@ -399,6 +399,35 @@ function hy(k, side, pts){
   const ptsAttr=pts==null||pts===''?'':` data-pts="${Number(pts)}"`;
   return `<span class="hy" data-hk="${esc(k)}"${sideAttr}${ptsAttr}></span>`;
 }
+function packFor(hk, side, pts){
+  if(!data) return {headline:'Not published', line:'Not published', value:null, kind:null, exact:false, year:null};
+  const row=rowFor(hk, side, pts);
+  if(!row) return {headline:'Not published', line:'Not published', value:null, kind:null, exact:false, year:null};
+  const entries=series(row);
+  const last=windowOf(row, 1);
+  const rates={};
+  let any=false;
+  for(const y of entries){
+    const rate=exactRate(hk, side, pts, y.year);
+    if(rate!=null){rates[y.year]=rate;any=true}
+  }
+  const line=entries.length?yearLine(entries.slice().reverse(), word, any, rates):'';
+  let headline='Not published', value=null, kind=null, exact=false, year=null;
+  if(last&&last.ok&&typeof last.band==='number'){
+    year=last.year||null;
+    const rate=year!=null?rates[year]:null;
+    if(typeof rate==='number'){
+      exact=true; kind='exact'; value=rate;
+      headline=(year?year+' draw: ':'')+pctLabel(rate);
+    }else{
+      kind='band'; value=last.band;
+      headline=(last.label?last.label+': ':'')+word(last.band);
+    }
+  }
+  return {headline, line:line||'Not published', value, kind, exact, year};
+}
+hy.pack=packFor;
+hy.when=function(){return load()};
 hy.band=bandFor;
 hy.yearLine=yearLine;
 hy.trendWord=trendWord;

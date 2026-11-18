@@ -179,5 +179,6 @@ if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');if(Q.get('tab')==='map')S.tab='map';
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
+window.__WY={S, FP, odds:band, usesPts, pool};
 window.__DRAW={pointsMatter:usesPts,contexts(){const out=[];for(const sp of Object.keys(SP))for(const res of ['res','nr']){const drs=res==='nr'&&HAS_SPECIAL.has(sp)?['nr','nrs']:['nr'];for(const dr of drs)out.push({id:sp+' '+res+' '+dr,apply(){Object.assign(S,{sp,res,dr,sx:'',unit:'',red:1,gen:1,focus:'',ord:''})}})}return out},maxFor(){return usesPts()?MAXP():0},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();
