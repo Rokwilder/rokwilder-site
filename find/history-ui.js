@@ -177,6 +177,16 @@ function reasonText(rows){
   }
   return '';
 }
+function countsLine(rows){
+  const list=(rows||[]).filter(r=>r&&(typeof r.tags==='number'||typeof r.apps==='number')).slice().sort((a,b)=>b.year-a.year);
+  if(!list.length) return '';
+  return list.map(r=>{
+    const bits=[];
+    if(typeof r.tags==='number') bits.push(r.tags.toLocaleString()+' tags');
+    if(typeof r.apps==='number') bits.push(r.apps.toLocaleString()+' applicants');
+    return r.year+': '+bits.join(', ');
+  }).join('. ');
+}
 function countRows(hk){
   if(!memberOn()) return [];
   const rows=[];
@@ -260,9 +270,12 @@ function htmlFor(el){
     const yearsHtml=entries.length?`<span class="hyyears">${esc(yearLine(entries, say, anyExact, rates))}</span>`:'';
     const trend=trendWord(row.trend);
     const trendHtml=trend?`<span class="hytrend">${esc(trend)}</span>`:'';
-    const why=reasonText(countRows(el.dataset.hk));
+    const rows=countRows(el.dataset.hk);
+    const why=reasonText(rows);
+    const counts=countsLine(rows);
     const whyHtml=why?`<span class="hywhy">${esc(why)}</span>`:'';
-    return `<span class="hynum">${headHtml}</span>${yearsHtml}${trendHtml}${whyHtml}`;
+    const countsHtml=counts?`<span class="hycounts">${esc(counts)}</span>`:'';
+    return `<span class="hynum">${headHtml}</span>${yearsHtml}${trendHtml}${whyHtml}${countsHtml}`;
   }
   let subHtml='';
   if(sub&&formatLine(sub, say)!==formatLine(head, say)) subHtml=`<span class="hysub">${lineHtml(sub)}</span>`;
@@ -280,6 +293,14 @@ function place(el){
   if(!head||head.previousElementSibling===el)return;
   parent.insertBefore(el, head);
 }
+function hideTagGate(el){
+  if(!el.querySelector('.hycounts')) return;
+  const card=el.closest&&(el.closest('#detail')||el.closest('.yo'));
+  if(!card) return;
+  card.querySelectorAll('.note.fpx').forEach(p=>{
+    if(String(p.textContent||'').indexOf('Tags each year, and hunters afield')===0) p.hidden=true;
+  });
+}
 function paint(el){
   const html=htmlFor(el);
   if(el.dataset.sig!==html){
@@ -287,6 +308,7 @@ function paint(el){
     el.innerHTML=html;
   }
   place(el);
+  hideTagGate(el);
 }
 function controls(){
   if(typeof document==='undefined')return;

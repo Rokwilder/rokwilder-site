@@ -1,5 +1,5 @@
 // History window: last year, 2-year average, 3-year average. Bands only. No percents.
-import {readFileSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import vm from 'node:vm';
 
@@ -90,6 +90,27 @@ ok(H.trendWord('Up and down')==='' && H.trendWord('One year stood out')==='', 'a
 ok(H.reasonText([{year:2025,tags:120},{year:2026,tags:90}])==='Tags cut from 120 to 90', 'a quota drop is named from the counts');
 ok(H.reasonText([{year:2025,apps:100},{year:2026,apps:130}])==='Applicants up 30%', 'an applicant change uses the two official counts');
 ok(H.reasonText([{year:2026,tags:90}])==='', 'one year is not a reason');
+ok(H.reasonText([{year:2025,tags:50,apps:52},{year:2026,tags:50,apps:74}])==='Applicants up 42%', 'unchanged tags leave the applicant change');
+const historySrc = readFileSync(join(root, 'find/history-ui.js'), 'utf8');
+ok(!historySrc.includes('colorado-counts.json') && !/function loadCounts/.test(historySrc), 'the public page does not fetch a counts file');
+ok(!existsSync(join(root, 'find/member/colorado-counts.json')), 'the counts file is not in the public site');
+const sources = JSON.parse(readFileSync(join(root, 'find/history/colorado-counts.sources.json'), 'utf8'));
+ok(sources.counts === 'not in this file' && !sources.hunts, 'the public source list has no counts');
+ok(sources.sources.every(s => /^https:\/\//.test(s.page) && /^https:\/\//.test(s.pdf)), 'count sources are https');
+const privateCounts = join(root, 'private/fullpass/co-counts.js');
+if (existsSync(privateCounts)) {
+  const box = {RWQ: {co: {years: [2023], hunts: {EM039O3R: {'2026': {quota: 1, drawn: 9}}}}}};
+  box.window = box;
+  vm.createContext(box);
+  vm.runInContext(readFileSync(privateCounts, 'utf8'), box);
+  const unit39 = box.RWQ.co.hunts.EM039O3R;
+  ok(unit39['2026'].quota === 1 && unit39['2026'].drawn === 9 && unit39['2026'].apps === 74, 'a count merge keeps a quota and a drawn count already on the hunt');
+  ok(unit39['2024'].quota === 50 && unit39['2024'].apps === 46, 'unit 39 2024 quota and applicants match the recap check');
+  ok(unit39['2025'].quota === 50 && unit39['2025'].apps === 52, 'unit 39 2025 quota and applicants match the recap check');
+  ok(box.RWQ.co.hunts.BE001O1A['2026'].quota === 5 && box.RWQ.co.hunts.BE001O1A['2026'].apps === 5, 'bear 1 2026 matches the printed 5 tags and 5 first-choice applicants');
+} else {
+  console.log('SKIP private count file is not in this checkout');
+}
 ok(!/—|–/.test(readFileSync(join(root, 'find/history-ui.js'), 'utf8') + readFileSync(join(root, 'find/draw-sort.js'), 'utf8')), 'new copy has no em dash or en dash');
 
 const sortSrc = readFileSync(join(root, 'find/draw-sort.js'), 'utf8');
