@@ -7,7 +7,7 @@
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const M=ID_META;
-let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:'',ord:''};
+let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:'',ord:'',tab:'list'};
 let unitCtl=null;
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
@@ -90,7 +90,7 @@ function bandSeason(){return {y:M.year,kind:'result'}}
 function verdictLine(v){if(v==null)return '';return window.RWSeason?RWSeason.label(bandSeason().y,bandSeason().kind,VERD(v)):VERD(v)}
 function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
 function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
-function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;const {show,under,none,unlabeled}=split();
+function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!=='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const {show,under,none,unlabeled}=split();
  const emptySpecies=!rows().length;
  const note=emptySpecies?`<p class="note">IDFG's 2026 drawing-odds table returned no ${esc(drawName())} hunts for ${esc(spName(S.sp))}.</p>`:
   `<p class="note">Each band is the share of ${esc(resName().toLowerCase())} first-choice people who were drawn in IDFG's 2026 ${esc(drawName())}. It is a past result. It is not your chance in a later drawing, and it is not a second-choice result. Hunts under one in twenty aren't shown${under.length?` (${under.length} more with these choices)`:''}.${none.length?` ${none.length} hunt${none.length===1?'':'s'} had nobody of this residency putting them first, so they have no result.`:''}${unlabeled.length?` ${unlabeled.length} hunt${unlabeled.length===1?' is':'s are'} hidden because the 2026 hunt list did not label sex.`:''} Not a guarantee.</p>`+(paid()?`<p class="note">${RWLand.pageNote('id')}</p>`:'');
@@ -102,21 +102,96 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;co
  const list=window.RWTrophy?RWTrophy.refine(ordered):ordered;
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.'));
- o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at one in twenty or better</h2>${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+ const tabs=mapTabs();
+ if(S.tab==='map'){
+  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at one in twenty or better</h2>`+tabs+`<p class="dq">${esc(who())}. Colored areas have at least one hunt at one in twenty or better. The color is the best 2026 result in that area. Tap an area to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Idaho controlled hunt areas"></div>`+mapCred()+note+fpLine();
+  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
+  drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
+ o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at one in twenty or better</h2>`+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length||emptySpecies?'':(window.RWTrophy?RWTrophy.emptyNote(ordered.length,list.length):'')||`<p class="dq">No hunts at one in twenty or better with these choices.</p>`)+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+ o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
  if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
  if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  if(sc)o.scrollIntoView({behavior:'smooth'})}
-function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=IH[k];if(!h)return;S.sp=h.sp;S.draw=h.draw;paint();const v=S.res==='res'?h.res:h.nr;const o=$('detail');$('out').hidden=true;o.hidden=false;
- o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
-  `<div class="fv">${v==null?'':vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+RWQuota.html('id',k,FP)+idExtra(k,v)+fpBox()+segHTML(h)+
+async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}const h=IH[k];if(!h)return;S.sp=h.sp;S.draw=h.draw;paint();const v=S.res==='res'?h.res:h.nr;const o=$('detail');$('out').hidden=true;o.hidden=false;if(LM){LM.remove();LM=null}if(DM){DM.remove();DM=null}
+ let ids=[];try{await ensureMap();ids=areaCodes(h.area)}catch(e){ids=[]}
+ const where=ids.length?`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p><div id="dmap" class="gmap dm" data-areas="${esc(ids.join(','))}" aria-label="Map of this controlled hunt area"></div>${mapCred()}`:`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p>`;
+ const bk=S.tab==='map'?'← Back to the map':'← Back to the list';
+ o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
+  `<div class="fv">${v==null?'':vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+RWQuota.html('id',k,FP)+idExtra(k,v)+fpBox()+where+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
- $('back').onclick=()=>showList(1);if(sc)o.scrollIntoView({behavior:'smooth'})}
+ $('back').onclick=()=>showList(1);if($('dmap'))drawDetailMap(v);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}
+const MAPS={elk:'elk.json',deer:'deer.json',pronghorn:'pronghorn.json',moose:'moose.json','sheep-rm':'sheep-rm.json','sheep-ca':'sheep-ca.json',goat:'goat.json',bear:'bear.json',turkey:'turkey.json'};
+const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
+let LM=null,DM=null,GJ=null;const GJS={};
+const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
+function mapTabs(){return `<div class="tabs" role="tablist"><button type="button" class="tb${S.tab==='list'?' on':''}" data-tab="list">List</button><button type="button" class="tb${S.tab==='map'?' on':''}" data-tab="map">Map</button></div>`}
+function mapCred(){const year=S.sp==='turkey'?'2026':'2025';return `<p class="mapcred"><b>Controlled hunt area boundaries: Idaho Department of Fish and Game.</b> Lines are simplified. IDFG marks these areas as ${year} in the current controlled hunt layer. <a href="https://www.arcgis.com/home/item.html?id=2384064cb26f451f92cada96ce6dd340">IDFG controlled hunt areas</a>. The written boundary in the regulations is the one that counts. An area with no polygon in this layer is left off the map.</p>`}
+function mapKey(){
+ const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['none','No hunt at one in twenty',MC.none]];
+ return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is the best 2026 result in that area</p><ul>`+items.map(([b,w,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b><span class="mkn"></span></span></li>`).join('')+'</ul></div>';
+}
+function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} area${n===1?'':'s'}`:' · none'})}
+const bucket=v=>v>=1?'all':v>=.75?'most':v>=.25?'some':v>=.05?'few':'none';
+function polygonCodes(){return new Set((GJ&&GJ.features||[]).map(f=>String(f.properties.u)))}
+function oneArea(codes,area){if(codes.has(area))return [area];if(area.endsWith('X')&&codes.has(area.slice(0,-1)))return [area.slice(0,-1)];return []}
+function areaCodes(area){
+ const text=String(area||'').trim();if(!text||!GJ)return [];
+ const codes=polygonCodes();
+ if(text.includes(',')){
+  const parts=text.split(',').map(s=>s.trim()).filter(Boolean),ids=[];
+  for(const part of parts){const hit=oneArea(codes,part);if(!hit.length)return [];ids.push.apply(ids,hit)}
+  return ids;
+ }
+ return oneArea(codes,text);
+}
+function whereCopy(h,ids){
+ if(!ids.length)return 'The controlled hunt area layer used here does not have a polygon for '+h.area+'.';
+ const base=h.area.endsWith('X')?h.area.slice(0,-1):'';
+ if(base&&ids.length===1&&ids[0]===base)return 'Area '+h.area+' is an extra-tag hunt. The highlighted boundary is area '+base+', the same controlled hunt area without the X.';
+ if(ids.length===1)return 'Area '+ids[0]+', highlighted on the controlled hunt area map.';
+ return 'Areas '+ids.join(', ')+', highlighted on the controlled hunt area map. This hunt names more than one area.';
+}
+async function ensureMap(){
+ if(!MAPS[S.sp])throw new Error('no map');
+ if(!window.L){const c=document.createElement('link');c.rel='stylesheet';c.href='../find/vendor/leaflet.css';document.head.appendChild(c);await loadJS('../find/vendor/leaflet.js')}
+ if(!window.topojson)await loadJS('../find/vendor/topojson-client.min.js');
+ const f=MAPS[S.sp];
+ if(!GJS[f]){const t=await(await fetch(f)).json();const gj=topojson.feature(t,t.objects.area);gj.features.sort((a,b)=>(b.properties.a||0)-(a.properties.a||0));GJS[f]=gj}
+ GJ=GJS[f];
+}
+function byArea(rows){const m={};rows.forEach(x=>{areaCodes(IH[x.k].area).forEach(u=>{const cur=m[u];if(!cur||x.v>cur.v)m[u]=x})});return m}
+async function drawMap(rows){
+ const el=$('map');if(!el)return;
+ try{await ensureMap()}catch(e){el.innerHTML='<p class="dq">The map could not load. Use the List tab.</p>';return}
+ if(!el.isConnected)return;if(LM){LM.remove();LM=null}
+ LM=L.map(el,{zoomSnap:.25,minZoom:5,maxZoom:11,scrollWheelZoom:false,tap:true});
+ LM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Controlled hunt areas: Idaho Department of Fish and Game');
+ const bu=byArea(rows),cnt={};
+ const ly=L.geoJSON(GJ,{style:f=>{const u=String(f.properties.u),h=bu[u];return RWMap.fillStyle({hunt:h,fill:h?vcol(h.v):null,none:MC.none,line:MC.sel,odds:h?h.v:null})},
+  onEachFeature:(f,l)=>{const u=String(f.properties.u),h=bu[u];if(!h){l.options.interactive=false;return}l.bindTooltip('Area '+u,{sticky:true,direction:'top'});l.on('click',()=>{S.unit=u;if(unitCtl)unitCtl.set(u);S.tab='list';showList(1)})}}).addTo(LM);
+ const seen=new Set();GJ.features.forEach(f=>{const u=String(f.properties.u);if(seen.has(u))return;seen.add(u);const h=bu[u];const b=h?bucket(h.v):'none';cnt[b]=(cnt[b]||0)+1});
+ fillKey(cnt);LM.fitBounds(ly.getBounds(),{padding:[4,4]});
+}
+async function drawDetailMap(v){
+ const el=$('dmap');if(!el)return;
+ try{await ensureMap()}catch(e){return}
+ if(!el.isConnected)return;if(DM){DM.remove();DM=null}
+ const ids=new Set(String(el.dataset.areas||'').split(',').filter(Boolean));
+ const fill=v==null?MC.none:vcol(v);
+ DM=L.map(el,{zoomSnap:.25,minZoom:5,maxZoom:11,scrollWheelZoom:false,dragging:true,tap:false});
+ DM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>').addAttribution('Controlled hunt areas: Idaho Department of Fish and Game');
+ const on=[];
+ L.geoJSON(GJ,{interactive:false,style:f=>RWMap.detailStyle(ids.has(String(f.properties.u)),fill,MC.sel),
+  onEachFeature:(f,l)=>{if(ids.has(String(f.properties.u)))on.push(l)}}).addTo(DM);
+ on.forEach(l=>l.bindTooltip(String(l.feature.properties.u),{permanent:true,direction:'center',className:'ulab'}));
+ if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});
+}
 function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.toggle('on',b.dataset.sp===S.sp));
  document.querySelectorAll('[data-res]').forEach(b=>b.classList.toggle('on',b.dataset.res===S.res));
  document.querySelectorAll('[data-draw]').forEach(b=>b.classList.toggle('on',+b.dataset.draw===S.draw));
@@ -143,6 +218,7 @@ if(Q.get('sx')&&SXN[Q.get('sx')])S.sx=Q.get('sx');
 if(Q.get('youth')==='0'){$('youth').checked=false;S.youth=0}
 paint();
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
+if(Q.get('tab')==='map')S.tab='map';
 if(Q.get('go'))showList();
 if(Q.get('k')&&IH[Q.get('k')])showDetail(Q.get('k'));
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};

@@ -1,0 +1,46 @@
+{
+ "retrieved": "2026-11-18",
+ "credit": "Hunt unit boundaries: Nevada Department of Wildlife.",
+ "url": "https://services.arcgis.com/RyxlXSfFi87rAosq/arcgis/rest/services/NDOW_Hunt_Units/FeatureServer/0",
+ "item": "https://www.arcgis.com/home/item.html?id=63f5d9da297f4422a646cd8bdf8cd9a5",
+ "owner": "NDOW_DEV",
+ "license": "This data is considered public information and is available for download without restrictions. No warranty is made by the Nevada Department of Wildlife as to the accuracy, reliability, or completeness of the data provided for individual use or aggregate use with other data.",
+ "format": "ArcGIS FeatureServer polygon, downloaded as GeoJSON in WGS84.",
+ "note": "Lines are simplified. A unit is kept when is_active is true and display_name is three digits. Named closures are not hunt units. A hunt links only when every unit it names is in this layer. Wording that is only part of a unit is not given the whole unit's shape. The written boundary is the one that counts.",
+ "match": {
+  "units": 124,
+  "bytes": 248412,
+  "closures_left_off": [
+   "Death Valley National Park",
+   "Great Basin National Park",
+   "Indian Springs Air Force Auxiliary Field",
+   "Nellis Air Force Range/Nevada Test Site",
+   "Sheldon National Wildlife Refuge"
+  ],
+  "hunts": 918,
+  "linked": 854,
+  "unlinked": 64,
+  "unparsed": {
+   "104, 121, North portion of 108 (see CR 25-07)": 18,
+   "131, 132, South portion of 108 (see CR 25-07)": 13,
+   "062, 066 Northeast, Unit restrictions (see CR 25-07)": 2,
+   "113N, North portion of 113 (see CR 25-07)": 2,
+   "065, 142, Portion of 144 in Eureka Co.": 6,
+   "101 - 104, 108 - 109, Portion of 144 in White Pine Co.": 7,
+   "115, Within 1 mile of Great Basin Ranch": 1,
+   "280 Unit Restrictions (See CR 25-07) Additional requirement applies": 1,
+   "281 Unit Restrictions (See CR 25-07) Additional requirement applies": 1,
+   "282 Unit Restrictions (See CR 25-07) Additional requirement applies": 1,
+   "East portion of 181 (see CR 25-07)": 1,
+   "Northwest portion of 173 (see CR 25-07)": 1,
+   "West portion of 181 (see CR 25-07)": 2,
+   "031 - Double Hs (see CR 25-07)": 1,
+   "032 - Pine Forest, Pueblos (see CR 25-07)": 2,
+   "032, 033 - SNWR, McGee Mtn (see CR 25-07)": 1,
+   "035 - Bloody Runs (see CR 25-07)": 1,
+   "035 - Jacksons (see CR 25-07)": 2,
+   "115 Unit restrictions (see CR 25-07)": 1
+  },
+  "missing_unit_ids": {}
+ }
+}
