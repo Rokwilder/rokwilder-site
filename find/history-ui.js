@@ -14,7 +14,7 @@ const RANK=[0,0.01,0.05,0.25,0.75,1];
 const col=v=>(COL.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
 const me=typeof document!=='undefined'&&document.currentScript;
 const url=me&&me.dataset.history;
-let data=null, failed=false, pending=null, scheduled=false, busy=false, countsLoaded=false;
+let data=null, failed=false, pending=null, scheduled=false, busy=false;
 
 function span(){
   try{
@@ -293,6 +293,14 @@ function place(el){
   if(!head||head.previousElementSibling===el)return;
   parent.insertBefore(el, head);
 }
+function hideTagGate(el){
+  if(!el.querySelector('.hycounts')) return;
+  const card=el.closest&&(el.closest('#detail')||el.closest('.yo'));
+  if(!card) return;
+  card.querySelectorAll('.note.fpx').forEach(p=>{
+    if(String(p.textContent||'').indexOf('Tags each year, and hunters afield')===0) p.hidden=true;
+  });
+}
 function paint(el){
   const html=htmlFor(el);
   if(el.dataset.sig!==html){
@@ -300,6 +308,7 @@ function paint(el){
     el.innerHTML=html;
   }
   place(el);
+  hideTagGate(el);
 }
 function controls(){
   if(typeof document==='undefined')return;
@@ -359,7 +368,6 @@ function note(){
 function fill(){
   scheduled=false;
   if(typeof document==='undefined')return;
-  loadCounts();
   document.querySelectorAll('.hy').forEach(paint);
   controls();
   note();
@@ -379,26 +387,10 @@ function askRefresh(){
   busy=true;
   try{window.RWFindRefresh()}finally{busy=false}
 }
-function countsUrl(){
-  if(!me||!me.src||!data||data.state!=='colorado') return '';
-  return new URL('member/colorado-counts.json', me.src).href;
-}
-function loadCounts(){
-  if(countsLoaded||!memberOn()) return;
-  const href=countsUrl();
-  if(!href) return;
-  countsLoaded=true;
-  fetch(href).then(r=>{if(!r.ok) throw new Error(String(r.status)); return r.json()}).then(j=>{
-    window.RWQ=window.RWQ||{};
-    window.RWQ.co=j;
-    document.querySelectorAll('.hy').forEach(el=>{delete el.dataset.sig});
-    schedule();
-  }).catch(()=>{countsLoaded=false});
-}
 function load(){
   if(data||failed||pending||!url){if(!url)failed=true;return pending||Promise.resolve()}
   pending=fetch(url).then(r=>{if(!r.ok)throw new Error(String(r.status));return r.json()}).then(j=>{
-    data=j;pending=null;loadCounts();schedule();askRefresh();
+    data=j;pending=null;schedule();askRefresh();
   }).catch(()=>{failed=true;pending=null;schedule()});
   return pending;
 }

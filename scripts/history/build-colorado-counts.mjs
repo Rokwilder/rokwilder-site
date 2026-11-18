@@ -1,7 +1,16 @@
 // Colorado tag quotas and first-choice applicants from CPW primary post-draw recaps.
 // Reads the printed Total Quota amount and the printed Total Choice 1 general plus
 // landowner (LPP) applicant totals. Does not estimate a missing cell. Does not use
-// choice 2, 3, or 4. Writes the Full Pass file only. The public history file is unchanged.
+// choice 2, 3, or 4.
+//
+// Writes:
+//   private/fullpass/co-counts.js
+//     Exact counts. Git ignores private/. Paste this file onto the end of the
+//     member-only script at https://api.rokwilder.com/api/fullpass/data/co.js.
+//     It merges into window.RWQ.co and does not replace a quota or a drawn count
+//     that file already set. Do not commit the counts. Do not put them on the site.
+//   find/history/colorado-counts.sources.json
+//     Source pages and PDF links only. No tag counts and no applicant counts.
 import {execFileSync} from 'node:child_process';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
@@ -140,9 +149,38 @@ for (const code of Object.keys(hunts)) {
 }
 const note = 'Tags are the Total Quota amount printed on the CPW primary post-draw recap. Applicants are the printed Total Choice 1 general applicants plus the printed Total Choice 1 landowner (LPP) applicants. Choice 2, 3, and 4 are not included. A missing year was not in that recap. These figures are not estimates.';
 const pack = {years: YEARS, note, sources, skipped, hunts};
-const dir = join(root, 'find/member');
-mkdirSync(dir, {recursive: true});
-writeFileSync(join(dir, 'colorado-counts.json'), JSON.stringify(pack));
+const privateDir = join(root, 'private/fullpass');
+mkdirSync(privateDir, {recursive: true});
+const js = '(function(){\n'
+  + 'var add=' + JSON.stringify(pack) + ';\n'
+  + 'var root=window.RWQ=window.RWQ||{};\n'
+  + 'var pack=root.co=root.co||{years:[],hunts:{}};\n'
+  + 'var years={};(pack.years||[]).concat(add.years||[]).forEach(function(y){years[y]=1});\n'
+  + 'pack.years=Object.keys(years).map(Number).sort(function(a,b){return a-b});\n'
+  + 'pack.countsNote=add.note;\n'
+  + 'pack.countsSources=add.sources;\n'
+  + 'pack.hunts=pack.hunts||{};\n'
+  + 'Object.keys(add.hunts).forEach(function(code){\n'
+  + '  var dest=pack.hunts[code]=pack.hunts[code]||{};\n'
+  + '  var src=add.hunts[code];\n'
+  + '  Object.keys(src).forEach(function(year){\n'
+  + '    var from=src[year]||{};\n'
+  + '    var cell=dest[year]=dest[year]||{};\n'
+  + '    if(typeof from.quota==="number"&&typeof cell.quota!=="number")cell.quota=from.quota;\n'
+  + '    if(typeof from.apps==="number")cell.apps=from.apps;\n'
+  + '  });\n'
+  + '});\n'
+  + '})();\n';
+writeFileSync(join(privateDir, 'co-counts.js'), js);
+const pub = {
+  state: 'colorado',
+  years: YEARS,
+  counts: 'not in this file',
+  note: 'Source list only. Tag quotas and applicant counts are not in this file. They belong in the Full Pass file served by the member API.',
+  species: sources.map(s => s.species).filter((v, i, a) => a.indexOf(v) === i),
+  sources: sources.map(s => ({year: s.year, species: s.species, page: s.page, pdf: s.pdf}))
+};
+writeFileSync(join(root, 'find/history/colorado-counts.sources.json'), JSON.stringify(pub, null, 2) + '\n');
 console.log('hunts', Object.keys(hunts).length);
 const check = hunts.BE001O1A && hunts.BE001O1A['2026'];
 const elk = hunts.EE001O1A && hunts.EE001O1A['2026'];
