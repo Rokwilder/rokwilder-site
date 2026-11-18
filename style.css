@@ -85,6 +85,9 @@ footer{background:url(img/brand/topo.svg) repeat}
 .hy{display:block;margin:.45rem 0 .15rem}
 .hy .hynum{display:block;font-size:1.65rem;font-weight:900;letter-spacing:.01em;line-height:1.15}
 .hy .hysub{display:block;margin-top:.2rem;font-size:1rem;color:var(--mute);font-weight:700}
+.hy .hyyears{display:block;margin-top:.25rem;font-size:1.02rem;line-height:1.35}
+.hy .hytrend{display:block;margin-top:.15rem;font-weight:800}
+.hy .hywhy{display:block;margin-top:.15rem;color:var(--mute);font-size:.98rem}
 .hy .hyhint{display:block;margin-top:.15rem;font-weight:800;font-size:.98rem;color:#e0a050}
 .fh:has(.hynum) .fv{font-size:1.05rem;font-weight:800}
 .yo:has(.hynum) .vd{font-size:1.2rem;font-weight:800;margin:.35rem 0 .2rem}

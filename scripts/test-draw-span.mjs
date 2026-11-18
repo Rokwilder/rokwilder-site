@@ -78,6 +78,18 @@ ok(Season.label(2027, 'estimate', 'MAYBE') === '2027 estimate: MAYBE', 'estimate
 ok(Season.label(2026, 'result', 'MOST DREW') === '2026 result: MOST DREW', 'a published result is not called an estimate');
 ok(Season.label(null, 'estimate', 'MAYBE') === 'MAYBE', 'a missing year leaves the band unlabeled');
 ok(!/—|–/.test(Season.label(2027, 'estimate', 'MAYBE')), 'the season label has no em dash or en dash');
+const years=[{year:'2026',band:0.25},{year:'2025',band:0.75},{year:'2024',band:0.75}];
+const bandSay=v=>({0.25:'MAYBE',0.75:'LIKELY'}[v]);
+const listed=H.yearLine(years, bandSay, false, {'2026':0.12,'2025':0.4,'2024':0.55});
+ok(listed==='2026: MAYBE, 2025: LIKELY, 2024: LIKELY', 'free year line is bands, newest first');
+ok(!/%/.test(listed), 'free year line has no percent even if rates are nearby');
+const member=H.yearLine(years, bandSay, true, {'2026':0.12,'2025':0.4,'2024':0.55});
+ok(member==='2026: 12%, 2025: 40%, 2024: 55%', 'a member file can show each year as a percent');
+ok(H.trendWord('Getting harder')==='Getting harder' && H.trendWord('Holding steady')==='Steady', 'trend words stay plain');
+ok(H.trendWord('Up and down')==='' && H.trendWord('One year stood out')==='', 'an unclear trend is left off');
+ok(H.reasonText([{year:2025,tags:120},{year:2026,tags:90}])==='Tags cut from 120 to 90', 'a quota drop is named from the counts');
+ok(H.reasonText([{year:2025,apps:100},{year:2026,apps:130}])==='Applicants up 30%', 'an applicant change uses the two official counts');
+ok(H.reasonText([{year:2026,tags:90}])==='', 'one year is not a reason');
 ok(!/—|–/.test(readFileSync(join(root, 'find/history-ui.js'), 'utf8') + readFileSync(join(root, 'find/draw-sort.js'), 'utf8')), 'new copy has no em dash or en dash');
 
 const sortSrc = readFileSync(join(root, 'find/draw-sort.js'), 'utf8');
