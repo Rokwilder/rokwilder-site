@@ -121,6 +121,93 @@ function hintText(head, three, last){
   }
   return harder?'Harder to draw than the 3-yr average':'Easier than the 3-yr average';
 }
+function pctLabel(rate){
+  if(typeof rate!=='number'||!Number.isFinite(rate)||rate<0||rate>1) return '';
+  const r=Math.round(rate*100);
+  if(rate>0&&r===0) return 'under 1%';
+  if(rate<1&&r===100) return 'over 99%';
+  return r+'%';
+}
+function memberOn(){
+  return window.RW_FP===true||window.RW_EXACT===true;
+}
+function exactRate(hk, side, pts, year){
+  if(!memberOn()) return null;
+  const pack=window.RWHyExact;
+  const hunt=pack&&pack.hunts&&pack.hunts[hk];
+  if(!hunt) return null;
+  let node=hunt;
+  if(side&&node[side]&&typeof node[side]==='object') node=node[side];
+  const cell=node[year]!=null?node[year]:node[String(year)];
+  if(typeof cell==='number') return cell;
+  if(cell&&typeof cell==='object'&&pts!=null){
+    const v=cell[String(pts)];
+    return typeof v==='number'?v:null;
+  }
+  return null;
+}
+function yearLine(entries, say, allowExact, rates){
+  return entries.map(y=>{
+    const rate=allowExact&&rates?rates[y.year]:null;
+    const value=rate==null?say(y.band):pctLabel(rate);
+    return y.year+': '+(value||say(y.band));
+  }).join(', ');
+}
+function trendWord(stored){
+  if(stored==='Getting harder'||stored==='Getting easier') return stored;
+  if(stored==='Holding steady') return 'Steady';
+  return '';
+}
+function reasonText(rows){
+  const list=(rows||[]).filter(r=>r&&Number.isFinite(r.year)).slice().sort((a,b)=>a.year-b.year);
+  const tags=list.filter(r=>typeof r.tags==='number'&&Number.isFinite(r.tags));
+  if(tags.length>=2){
+    const a=tags[tags.length-2], b=tags[tags.length-1];
+    if(b.tags<a.tags) return 'Tags cut from '+a.tags.toLocaleString()+' to '+b.tags.toLocaleString();
+    if(b.tags>a.tags) return 'Tags up from '+a.tags.toLocaleString()+' to '+b.tags.toLocaleString();
+  }
+  const apps=list.filter(r=>typeof r.apps==='number'&&Number.isFinite(r.apps));
+  if(apps.length>=2){
+    const a=apps[apps.length-2], b=apps[apps.length-1];
+    if(a.apps>0&&b.apps!==a.apps){
+      const pct=Math.round((b.apps-a.apps)/a.apps*100);
+      if(pct>0) return 'Applicants up '+pct+'%';
+      if(pct<0) return 'Applicants down '+Math.abs(pct)+'%';
+    }
+  }
+  return '';
+}
+function countRows(hk){
+  if(!memberOn()) return [];
+  const rows=[];
+  const table=typeof D!=='undefined'?D:(window.D||null);
+  if(table&&table[hk]&&Array.isArray(table[hk][6])){
+    for(const h of table[hk][6]){
+      if(!h) continue;
+      const year=Number(h[0]);
+      if(!year) continue;
+      const tags=typeof h[1]==='number'?h[1]:null;
+      const apps=typeof h[2]==='number'?h[2]:null;
+      if(tags==null&&apps==null) continue;
+      rows.push({year, tags, apps});
+    }
+  }
+  const st=data&&data.state&&{colorado:'co',utah:'ut',arizona:'az',wyoming:'wy',idaho:'id',nevada:'nv',montana:'mt',newmexico:'nm'}[data.state];
+  const rec=st&&window.RWQ&&RWQ[st]&&RWQ[st].hunts&&RWQ[st].hunts[hk];
+  if(!rows.length&&rec){
+    for(const y of Object.keys(rec)){
+      if(!/^\d{4}$/.test(y)||!rec[y]) continue;
+      const tags=typeof rec[y].quota==='number'?rec[y].quota:null;
+      const apps=typeof rec[y].apps==='number'?rec[y].apps:(typeof rec[y].applicants==='number'?rec[y].applicants:null);
+      if(tags==null&&apps==null) continue;
+      rows.push({year:Number(y), tags, apps});
+    }
+  }
+  return rows;
+}
+function oddsCard(el){
+  return !!(el.closest&&(el.closest('#detail')||el.closest('.yo')));
+}
 function formatLine(win, say){
   if(!win)return '';
   const band=win.band!=null?win.band:win.wider;
@@ -162,6 +249,21 @@ function htmlFor(el){
   const sub=want===3?last:three;
   const say=v=>word(v);
   const headHtml=lineHtml(head);
+  if(oddsCard(el)){
+    const entries=series(row).slice().reverse();
+    const rates={};
+    let anyExact=false;
+    for(const y of entries){
+      const rate=exactRate(el.dataset.hk, el.dataset.side, pts, y.year);
+      if(rate!=null){rates[y.year]=rate;anyExact=true}
+    }
+    const yearsHtml=entries.length?`<span class="hyyears">${esc(yearLine(entries, say, anyExact, rates))}</span>`:'';
+    const trend=trendWord(row.trend);
+    const trendHtml=trend?`<span class="hytrend">${esc(trend)}</span>`:'';
+    const why=reasonText(countRows(el.dataset.hk));
+    const whyHtml=why?`<span class="hywhy">${esc(why)}</span>`:'';
+    return `<span class="hynum">${headHtml}</span>${yearsHtml}${trendHtml}${whyHtml}`;
+  }
   let subHtml='';
   if(sub&&formatLine(sub, say)!==formatLine(head, say)) subHtml=`<span class="hysub">${lineHtml(sub)}</span>`;
   const hint=hintText(head, three, last);
@@ -276,6 +378,10 @@ function hy(k, side, pts){
   return `<span class="hy" data-hk="${esc(k)}"${sideAttr}${ptsAttr}></span>`;
 }
 hy.band=bandFor;
+hy.yearLine=yearLine;
+hy.trendWord=trendWord;
+hy.reasonText=reasonText;
+hy.pctLabel=pctLabel;
 hy.span=span;
 hy.setSpan=setSpan;
 hy.windowOf=windowOf;
