@@ -1,0 +1,89 @@
+{
+  "state": "utah",
+  "years": [
+    2024,
+    2025
+  ],
+  "counts": "not in this file",
+  "note": "Source list only. Permit totals and applicant counts are not in this file. They belong in the Full Pass file served by the member API.",
+  "page": "https://wildlife.utah.gov/biggame/odds",
+  "unavailable": [
+    "Utah DWR did not publish a 2026 hunt-level draw-odds PDF. The odds page sends 2026 to the interactive draw site.",
+    "2024 youth-deer: No hunt on this PDF matched a current hunt code and the printed Totals line.",
+    "2025 youth-deer: No hunt on this PDF matched a current hunt code and the printed Totals line."
+  ],
+  "sources": [
+    {
+      "year": 2024,
+      "name": "limited",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_bg-odds.pdf"
+    },
+    {
+      "year": 2024,
+      "name": "deer",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_deer_odds.pdf"
+    },
+    {
+      "year": 2024,
+      "name": "antlerless",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_antlerless_drawing_odds_report.pdf"
+    },
+    {
+      "year": 2024,
+      "name": "youth-elk",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_youth_elk.pdf"
+    },
+    {
+      "year": 2024,
+      "name": "youth-deer",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_youth_deer.pdf"
+    },
+    {
+      "year": 2024,
+      "name": "dedicated",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2024/24_dh_odds.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "limited",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_bg-odds.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "deer",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_deer_odds.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "antlerless",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_antlerless_drawing_odds_report.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "youth-elk",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_youth_elk.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "youth-deer",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_youth_deer.pdf"
+    },
+    {
+      "year": 2025,
+      "name": "dedicated",
+      "page": "https://wildlife.utah.gov/biggame/odds",
+      "pdf": "https://wildlife.utah.gov/pdf/bg/2025/25_dh_odds.pdf"
+    }
+  ]
+}

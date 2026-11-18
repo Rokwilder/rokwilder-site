@@ -1,0 +1,28 @@
+{
+  "state": "idaho",
+  "years": [
+    2024,
+    2025,
+    2026
+  ],
+  "counts": "not in this file",
+  "note": "Source list only. Tag quotas and applicant counts are not in this file. They belong in the Full Pass file served by the member API.",
+  "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+  "sources": [
+    {
+      "year": 2024,
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/"
+    },
+    {
+      "year": 2025,
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/"
+    },
+    {
+      "year": 2026,
+      "page": "https://idfg.idaho.gov/ifwis/huntplanner/odds/",
+      "url": "https://idfg.idaho.gov/ifwis/huntplanner/api/1.1/odds/"
+    }
+  ]
+}
