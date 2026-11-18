@@ -19,6 +19,7 @@ const fpLine=()=>(FP||paid())?'':`<p class="fpl">Exact Nevada odds are not on th
 const SAMPLE_UNITS=new Set(['231','075']);
 const isSample=k=>{const u=NH[k]&&NH[k].units;return SAMPLE_UNITS.has(u)};
 const bandWord=v=>WORD[v]||(v===0?'NONE DREW':v>0?'UNDER ONE IN TWENTY':'');
+function verdictLine(v){const word=bandWord(v);if(!word)return '';return window.RWSeason?RWSeason.label(NV_META.year,'result',word):word}
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const H=Object.entries(NH);
@@ -46,7 +47,7 @@ function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[
 function tie(a,b){const d=RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units]);if(d)return d;const s=a.h.season.localeCompare(b.h.season);return s||a.k.localeCompare(b.k)}
 function nvChance(h,pts){const prev=S.pts;S.pts=pts;try{if(FP){const row=lvRaw(h);if(row&&typeof row.rate1==='number'&&row.rate1>=0&&row.rate1<=1)return row.rate1}return bandAt(h)}finally{S.pts=prev}}
 function rowMeasure(x){return RWDraw.measure(p=>nvChance(x.h,p),S.pts)}
-function ranked(){return weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function ranked(){const rows=weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,null,S.pts),row=>row.v,tie)}
 function rowsInOrder(all){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);if(S.focus=='land')return all.slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true}));return all}
 const below=()=>weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v<0.05}).length;
 const missing=()=>weaponRows().filter(([,h])=>bandAt(h)===null).length;
@@ -63,8 +64,8 @@ function nvSaleUnit(text){const key=RWLand.nvKey(text);if(!key||key.indexOf('+')
 function nvExtra(h,v){if(!paid())return '';const b=nvBand(h),place=nvPlace(h.units),unit=nvSaleUnit(h.units),sp=h.sp==='antelope'?'pronghorn':h.sp;
  return RWLand.extra({band:b,land:b,voice:'history',odds:RWLand.oddsKind(v),place,href:RWLand.pkgHref('../','nv',unit,sp)})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(nvExtra(x.h,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${bandWord(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}</button></li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(nvExtra(x.h,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.season)}</span><span class="fd">2025 main draw · 1st choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,null,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function sampleRows(){return weaponRows().filter(([k,h])=>isSample(k)&&bandAt(h)!=null).map(([k,h])=>({k,h,v:bandAt(h)}))}
 function ladder(h){
   if(FP&&h.raw&&h.raw.lv){
@@ -105,7 +106,7 @@ function showList(sc){
 function showDetail(k,sc){
   if(!paid()&&!isSample(k)){showList(sc);return}
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
-  const word=v===null?'No 1st-choice row at this point level':(WORD[v]||(v===0?'NONE DREW':'UNDER ONE IN TWENTY'));
+  const word=v===null?'No 1st-choice row at this point level':verdictLine(v);
   const src=NV_META.src[h.src];
   o.innerHTML=`<button class="btn o" id="back">← Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
     (v===null?'':ladder(h))+fpBox()+
@@ -161,5 +162,6 @@ if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.sx=h.sx;S.live=h.live;S.who=h.who;S.wpn=h.wpn;if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={pointsMatter:()=>true,contexts(){const out=[];const seen=new Set();for(const [,h] of H){const id=[h.sp,h.sx,h.live,h.who,h.wpn].join(' ');if(seen.has(id))continue;seen.add(id);out.push({id,apply(){Object.assign(S,{sp:h.sp,sx:h.sx,live:h.live,who:h.who,wpn:h.wpn,unit:'',focus:'',ord:''})}})}return out},maxFor(){return maxPts()},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

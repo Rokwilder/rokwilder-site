@@ -42,6 +42,40 @@ function monotonic(rows, dir, measureOf, tie){
   }
   return {ok:true};
 }
+function spanBand(k, side, pts){
+  if(!window.RWHy||typeof RWHy.band!=='function')return null;
+  let b;
+  try{b=RWHy.band(k, side, pts)}catch(e){return null}
+  return typeof b==='number'&&b>=0?b:null;
+}
+// Draw-odds order uses the selected history window when that band is published.
+// No band for every row keeps the page's own odds order. Hardest and easiest stay on points.
+function byDraw(rows, bandOf, valueOf, tie){
+  const base=rows.slice().sort((a,b)=>{
+    const va=valueOf(a), vb=valueOf(b);
+    if(va!==vb)return (vb||0)-(va||0);
+    return tie(a,b);
+  });
+  let any=false;
+  for(const row of base){
+    if(bandOf(row)!=null){any=true;break}
+  }
+  if(!any)return base;
+  return base.slice().sort((a,b)=>{
+    const ba=bandOf(a), bb=bandOf(b);
+    if(ba==null&&bb==null){
+      const va=valueOf(a), vb=valueOf(b);
+      if(va!==vb)return (vb||0)-(va||0);
+      return tie(a,b);
+    }
+    if(ba==null)return 1;
+    if(bb==null)return -1;
+    if(ba!==bb)return bb-ba;
+    const va=valueOf(a), vb=valueOf(b);
+    if(va!==vb)return (vb||0)-(va||0);
+    return tie(a,b);
+  });
+}
 function bar(ord, points){
   const note=points?'Hardest = takes the most points to draw.':'Hardest = the lowest chance to draw. Points are not used in this draw.';
   const opts=[['','Default order'],['hard','Hardest to draw first'],['easy','Easiest to draw first']];
@@ -55,5 +89,5 @@ function wire(root, on){
   sel.onchange=()=>on(sel.value==='hard'||sel.value==='easy'?sel.value:'');
 }
 const ordOf=v=>v==='hard'||v==='easy'?v:'';
-window.RWDraw={BAR, measure, cmp, order, monotonic, bar, wire, ordOf};
+window.RWDraw={BAR, measure, cmp, order, monotonic, bar, wire, ordOf, spanBand, byDraw};
 })();

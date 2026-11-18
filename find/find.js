@@ -17,7 +17,7 @@ const fpBox=()=>FP?'':`<aside class="fpbox" aria-label="What the Full Pass adds"
 const fpLine=()=>FP?'':`<p class="fpl">Exact odds and harvest numbers for every hunt come with the Full Pass<span class="rw-offer" data-pricing="pricing.html" data-kind="paren"></span></p>`;
 const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>units(k).map(String).some(u=>u==='12'||u==='2');
-function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
+function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
 function freeList(r,who){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>units(x.k).map(String).filter(u=>u==='12'||u==='2')),o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'pricing.html',
@@ -72,6 +72,14 @@ function wOdds(d,P,res){const m=d[9]&&d[9][res||S.res];if(!m)return null;if(m.vb
 function odds(k){const d=D[k];if(d[9])return wOdds(d,Math.min(S.pts,30));if(d[0]=='moose'){const r=mooseRow(d);return r?r.v:null}
  const p=d[5][S.res];if(!p)return null;const m=Math.max(...Object.keys(p.o).map(Number));return oAt(k,p,Math.min(S.pts,m))[0]}
 const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
+function estimateYear(){
+  return window.RWSeason?RWSeason.maxYear('CPW 2026')+1:null;
+}
+function verdictLine(v){
+  if(v==null) return '';
+  const word=verdict(v);
+  return window.RWSeason?RWSeason.label(estimateYear(),'estimate',word):word;
+}
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':r+'%'};
 const priv=d=>/private/.test(d[4])&&!/public/.test(d[4]);
 function landS(l){if(/^(Bighorn Sheep Access|Chancellor|Part of the unit)/.test(l))return l;if(/^all lands \(public\+private\) · /.test(l))return 'Public and private land · '+l.split(' · ').slice(1).join(' · ');return /^all lands/.test(l)?'Public and private land':/^private/.test(l)?'Private land only':/Ranching/.test(l)?'Ranching for Wildlife (private ranch)':'Special land rules (CPW land code '+(l.match(/^(?:land code )?([A-Z])/)||[,'?'])[1]+'), see the CPW brochure'}
@@ -95,8 +103,9 @@ function rowsInOrder(r){if(S.ord!=='hard'&&S.ord!=='easy')return lsort(r);return
 const pointsMatter=()=>S.sp!=='dsheep';
 const orderLine=fallback=>S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':fallback;
 const unitOK=k=>RWUnit.hit(units(k),S.unit);
-function ranked(){return Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k)||!unitOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
- .map(k=>({k,v:odds(k)})).sort((a,b)=>b.v-a.v||tie(a,b))}
+function histSide(){return S.yo?(S.res==='res'?'yres':'ynonres'):S.res}
+function ranked(){const rows=Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.sp)return false;if(typeof EXCL!='undefined'&&EXCL.has(k))return false;if(priv(d)&&!S.priv)return false;if(!wOK(k)||!sxOK(k)||!seOK(k)||!unitOK(k))return false;const v=odds(k);return v!=null&&(WT(S.sp)?v>0:v>=.05)})
+ .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,histSide(),S.pts),row=>row.v,tie)}
 // ===== Over-the-counter (OTC) licenses: find/otc.js, from the CPW 2026 big game brochure OTC tables (pages 38-41) =====
 // Not drawn and no preference points, so no verdict and no odds: one row per unit the license is valid in. The weapon, rifle-season,
 // sex and residency choices filter these rows the same way they filter draw hunts. Harvest success is CPW's 2025 number for the
@@ -152,16 +161,16 @@ function showList(){const r=ranked(),oR=otcRows(),o=$('out');
   fpBox()+mapKey(WT(S.sp)?['Under 5% or no hunt you can draw','(tap a unit to see its hunts under 5%)']:['No hunt you can draw','(or only hunts under 5%, not shown)'],.9)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Colorado hunting units"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>`+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
+  `<p class="note">Odds are estimates for ${estimateYear()} from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is shown, long shots under 5% included':'Hunts under 5% aren\'t shown'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
   wireTabs(o);drawMap(r);return}
  const rawList=rowsInOrder(r), list=window.RWTrophy?RWTrophy.refine(rawList):rawList;
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+otcTop(oR)+
-  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(landExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdict(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(landExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||`<p class="dq">${WT(S.sp)?'No hunts you can draw with these choices.':'No hunts at 5% or better with these points. Try fewer filters, or check back as you build points.'}</p>`)+otcSec(oR)+
-  `<p class="note">Odds are estimates for 2027 from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p><p class="note">${RWLand.pageNote('co')}</p>`+fpLine()+fbA('find');
+  `<p class="note">Odds are estimates for ${estimateYear()} from CPW's past draws (1st choice). ${WT(S.sp)?'Every hunt with a chance is listed, long shots included':'Hunts under 5% aren\'t listed'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p><p class="note">${RWLand.pageNote('co')}</p>`+fpLine()+fbA('find');
  wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};
  if($('omore'))$('omore').onclick=()=>{const y=scrollY;S.on=(S.on||25)+25;showList();scrollTo(0,y)};
@@ -281,7 +290,7 @@ function showDetail(k){if(!paid()&&!isSample(k)){showList();return}const d=D[k],
  let sure='';if(WT(d[0]))sure=wtSure(d);else if(FP&&d[0]!='moose'){const p=d[5][S.res],ks=Object.keys(p.o).map(Number).sort((a,b)=>a-b),s=ks.find(n=>oAt(k,p,n)[0]>=.995);sure=`<p class="dq"><b>${s!=null?`You need about ${s} point${s==1?'':'s'} to be sure to draw.`:'No point level is a sure draw yet.'}</b></p>`}
  const bk=S.tab=='map'?'← Back to my map':'← Back to my list';if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  o.innerHTML=`<button class="btn big2" id="back">${bk}</button>
- <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdict(v)}</div>${RWHy(k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}${window.RWTrophy?RWTrophy.block(k):''}${RWQuota.html('co',k,FP)}${landExtra(k,v)}
+ <div class="yo"><p class="yt">Your odds</p><p class="tg">${title(k,1)}</p><div class="vd">${vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${oddsHTML(v,'fo')}${sure}${succHTML(k,'fs')}${window.RWTrophy?RWTrophy.block(k):''}${RWQuota.html('co',k,FP)}${landExtra(k,v)}
  <p class="dq">${landS(d[4])}</p>${d[10]?`<p class="dq">${d[10]}</p>`:''}</div>${lad}${feeHTML(d)}
  ${FP?'':`<p class="note fpx">Odds at every point level, points needed and past draw results (tags, applicants, points drawn at): coming with the Full Pass.</p>`}${FP&&d[6]&&d[6].length?`<h3>Past draws (1st choice, CPW)</h3>`+d[6].map(h=>`<div class="yr"><b>${h[0]}</b><span>${h[1]??'–'} tags · ${h[2]??'–'} applied</span><span>${WT(d[0])?(S.res=='res'?'Residents':'Nonresidents')+': ':'Drew out at: '}${(S.res=='res'?h[3]:h[4])||'–'}</span></div>`).join(''):''}
  <h3>Where this hunt is</h3><p class="dq">${uL(k,1)}, highlighted on the unit map.</p>${huntKey(v??0,.35,`This hunt's unit${units(k).length==1?'':'s'} (numbered)`,'Other units')}<div id="dmap" class="gmap dm" aria-label="Map of the units in this hunt"></div>
@@ -344,5 +353,6 @@ if(Q.get('sp')&&D){apply({sp:SP[Q.get('sp')]?Q.get('sp'):'elk',res:Q.get('r')=='
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&D[h]&&D[h][0]==S.sp&&!(typeof EXCL!='undefined'&&EXCL.has(h))&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__FY={otcRows,OU:()=>OU,FP,oddsAt,hWhat,seaOf,seAvail,hsv,lsort,hbk,hBest,ranked,odds,wOdds,sxOf,sxAvail,S,FULLPASS_GATING,MC,vcol,gfile};
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={max:30,pointsMatter,contexts(){const out=[];for(const sp of Object.keys(SP))for(const res of ['res','nonres'])out.push({id:sp+' '+res,apply(){Object.assign(S,{sp,res,w:'',se:'',sx:'',unit:'',so:'',ord:'',yo:0,priv:0})}});return out},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return rowsInOrder(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();

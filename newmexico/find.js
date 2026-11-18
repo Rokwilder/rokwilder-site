@@ -32,6 +32,7 @@ function word(h,v){
   if(v==null)return 'NO FIRST-CHOICE APPLICANTS';
   return WORD[v]||(v>0?'UNDER ONE IN TWENTY':'NONE DREW');
 }
+function verdictLine(h,v){const text=word(h,v);if(!h.drawn||v==null)return text;return window.RWSeason?RWSeason.label(NM_META.year,'result',text):text}
 function num(n){return typeof n==='number'?n.toLocaleString():'not published'}
 function oddsHTML(h){
   if(!FP)return '';
@@ -67,7 +68,7 @@ function rowsInOrder(all){
   if(!usesRate())return all.slice().sort(tie);
   if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);
   if(S.focus==='land')return all.slice().sort((a,b)=>RWLand.rank(nmBand(b.h))-RWLand.rank(nmBand(a.h))||(b.v||0)-(a.v||0)||tie(a,b));
-  return all.slice().sort((a,b)=>(b.v||0)-(a.v||0)||tie(a,b));
+  return RWDraw.byDraw(all,row=>RWDraw.spanBand(row.k,S.pool,null),row=>row.v||0,tie);
 }
 function whoLine(){
   const bits=[SP[S.sp],S.wpn?(S.wpn==='bow'?'Bow':S.wpn==='muzzle'?'Muzzleloader':'Any legal sporting arm'):null,S.bag||null,POOL[S.pool]];
@@ -118,7 +119,7 @@ function landExtra(h,v){
 function card(x,i,full){
   const bits=full?RWLand.splitNext(landExtra(x.h,x.v)):{info:'',next:''};
   const tags=[x.h.wlab,x.h.blab,x.h.resOnly?'Resident only':'',x.h.youth?'Youth only':'',x.h.privateOnly?'Private land only':'',x.h.season?('2026-27 season: '+x.h.season):'2026-27 season not published'].filter(Boolean).join(' · ');
-  return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${word(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.area)}</span><span class="fd">${esc(tags)}</span>${oddsHTML(x.h)}${RWHy(x.k,S.pool,null)}${bits.info}</button>${bits.next}</li>`;
+  return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.area)}</span><span class="fd">${esc(tags)}</span>${oddsHTML(x.h)}${RWHy(x.k,S.pool,null)}${bits.info}</button>${bits.next}</li>`;
 }
 function focusBar(){return usesRate()?`<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus==='land'?'on':''}">Public land</button></div></div>`:''}
 function showList(sc){
@@ -205,7 +206,7 @@ async function showDetail(k,sc){
   const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   if(LM){LM.remove();LM=null}
   const where=(h.units&&h.units.length)?`<h3>Where this hunt is</h3><p class="dq">${esc(place(h))}. ${h.areaChoice?'The highlighted units are areas a hunter can choose under this code. The color is the code-level result, not an area-level result.':h.units.length>1?'A hunt named in more than one unit is drawn for the whole hunt code.':''} ${h.unmapped&&h.unmapped.length?'Unit '+esc(h.unmapped.join(', '))+' is named in the report and is not a polygon on the 2026 map.':''}</p><div id="dmap" class="gmap dm" data-units="${esc(h.units.join(','))}" aria-label="Map of this game management unit"></div>${mapCred()}`:'<h3>Where this hunt is</h3><p class="dq">The 2026 unit map used here does not have a polygon for '+esc(h.area||'this hunt')+'.</p>';
-  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
+  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
   $('back').onclick=()=>showList(1);
   if($('dmap'))drawDetailMap(v);
   if(sc)o.scrollIntoView({behavior:'smooth'});
@@ -300,6 +301,7 @@ if(Q.get('tab')==='map')S.tab='map';
 paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&NH[Q.get('k')]){const h=NH[Q.get('k')];S.sp=h.sp;S.wpn='';S.bag='';if(Q.get('pool')==='nr'||Q.get('pool')==='out'||Q.get('pool')==='res')S.pool=Q.get('pool');paint();showDetail(Q.get('k'))}
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={
   pointsMatter(){return false},
   contexts(){

@@ -35,8 +35,8 @@ function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
 function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function tie(a,b){const d=RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area]);if(d)return d;const ta=String(WH[a.k].type),tb=String(WH[b.k].type);if(ta!==tb)return ta<tb?-1:1;return a.k.localeCompare(b.k)}
-function ranked(){return WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}))
- .sort((a,b)=>b.v-a.v||tie(a,b))}
+function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}));
+ return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,pool(),usesPts()?S.pts:''),row=>row.v,tie)}
 function bandAtPts(k,pts){const h=WH[k];if(!h)return null;const b=h.od[pool()];if(!b)return null;return b.o[Math.min(pts,b.o.length-1)]}
 function rowMeasure(x){return RWDraw.measure(p=>bandAtPts(x.k,p),S.pts)}
 function orderRows(r){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(r,S.ord,rowMeasure,tie);if(S.focus!='land')return r;return [...r].sort((a,b)=>RWLand.rank(wyBand(b.k))-RWLand.rank(wyBand(a.k))||b.v-a.v||a.k.localeCompare(b.k,undefined,{numeric:true}))}
@@ -47,7 +47,9 @@ function title(k){const h=WH[k];const a=isGen(h)?(h.area=='GEN'?'Nonresident gen
  return `${h.cls=='reduced'?'<b class="sx">Reduced price</b> · ':''}${esc(a)} · ${esc(cap(h.desc))}`}
 const ptsWord=()=>usesPts()?`${S.pts} point${S.pts==1?'':'s'}`:'no points used';
 const who=()=>`${SP[S.sp]} · ${S.res=='res'?'Wyoming resident':'Out of state'+(HAS_SPECIAL.has(S.sp)?(S.dr=='nrs'?' · special draw':' · regular draw'):'')} · ${ptsWord()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}`;
-function oddsHTML(v){if(!FP)return `<div class="fo lk"><span class="fpn">Verdict band, not an exact percentage</span></div>`;return `<div class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()} (2026)</span></div>`}
+function bandSeason(){return {y:M.year,kind:'estimate'}}
+function verdictLine(v){if(v==null)return '';const s=bandSeason();return window.RWSeason?RWSeason.label(s.y,s.kind,VERD(v)):VERD(v)}
+function oddsHTML(v){if(!FP)return `<div class="fo lk"><span class="fpn">Verdict band, not an exact percentage</span></div>`;return `<div class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()} (${bandSeason().y})</span></div>`}
 const SRCN={pp_nr:'Nonresident preference point',rand_nr:'Nonresident random',pp_nrs:'Nonresident special preference point',rand_nrs:'Nonresident special random',res:'Resident',cc_res:'Resident reduced price',cc_nr:'Nonresident reduced price',pp_res:'Resident preference point',rand_res:'Resident random',f_res:'Resident female/calf',f_nr:'Nonresident female/calf'};
 const rep=n=>n&&M.src[S.sp]&&M.src[S.sp][n]?`<a href="${esc(M.src[S.sp][n].url)}">WGFD 2026 ${SRCN[n]||n} report</a>`:'';
 function sourceNames(h){
@@ -69,8 +71,8 @@ function wyBand(k){const h=WH[k];return RWLand.band('wy',RWLand.wyKey(h.sp,h.are
 function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+$/.test(String(h.area))?`${SP[h.sp]} Hunt Area ${+h.area}`:'';
  return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',String(h.area),h.sp):''})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${VERD(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const all=ranked(),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
  const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('wy')}</p>`:'');
@@ -105,7 +107,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  if(aid){try{await ensureMap();if(GJ.features.some(f=>String(f.properties.u)===aid))where=`<h3>Where this hunt is</h3><p class="dq">Hunt area ${esc(h.area)}, highlighted on the hunt area map.</p><div id="dmap" class="gmap dm" data-area="${aid}" aria-label="Map of this hunt area"></div>${mapCred()}<p><button class="btn o" id="vsm">View on statewide map</button></p>`}catch(e){where=''}}
  const bk=S.tab=='map'?'← Back to the map':'← Back to the list';
  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
- `<div class="fv">${vdot(v)}${VERD(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+(window.RWTrophy?RWTrophy.block(k):'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
+ `<div class="fv">${vdot(v)}${verdictLine(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+(window.RWTrophy?RWTrophy.block(k):'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
  `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):fpBox())+where+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
  `<p class="note">WGFD's printed description: "${esc(h.desc)}". Their reports cut long descriptions short; season dates, weapons and limitations are in the WGFD regulations for this hunt area. Sources: ${sourceHTML(h)}.</p>`;
@@ -176,5 +178,6 @@ unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),subm
 if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');if(Q.get('tab')==='map')S.tab='map';
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
+window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
 window.__DRAW={pointsMatter:usesPts,contexts(){const out=[];for(const sp of Object.keys(SP))for(const res of ['res','nr']){const drs=res==='nr'&&HAS_SPECIAL.has(sp)?['nr','nrs']:['nr'];for(const dr of drs)out.push({id:sp+' '+res+' '+dr,apply(){Object.assign(S,{sp,res,dr,sx:'',unit:'',red:1,gen:1,focus:'',ord:''})}})}return out},maxFor(){return usesPts()?MAXP():0},setPts(p){S.pts=p},list(){return ranked()},ordered(dir){const prev=S.ord;S.ord=dir;try{return orderRows(ranked())}finally{S.ord=prev}},measure:rowMeasure,tie};
 })();
