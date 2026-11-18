@@ -71,6 +71,13 @@ const line = H.formatLine(head, say);
 const sub = H.formatLine(avg, say);
 ok(line === '2026 draw: LONG SHOT' && sub === '3-yr avg: MAYBE', 'the lines name the year and the average');
 ok(!/%/.test(line + sub + wide.label + short.label), 'the public lines have no percent sign');
+const Season = context.RWSeason;
+ok(Season.maxYear('CPW 2026') + 1 === 2027, 'the estimate year is one year after the brochure year already named');
+ok(Season.maxYear('draw2026 and harvest2025') === 2026, 'a year glued to a word still counts');
+ok(Season.label(2027, 'estimate', 'MAYBE') === '2027 estimate: MAYBE', 'estimate line names the season and the band');
+ok(Season.label(2026, 'result', 'MOST DREW') === '2026 result: MOST DREW', 'a published result is not called an estimate');
+ok(Season.label(null, 'estimate', 'MAYBE') === 'MAYBE', 'a missing year leaves the band unlabeled');
+ok(!/—|–/.test(Season.label(2027, 'estimate', 'MAYBE')), 'the season label has no em dash or en dash');
 ok(!/—|–/.test(readFileSync(join(root, 'find/history-ui.js'), 'utf8') + readFileSync(join(root, 'find/draw-sort.js'), 'utf8')), 'new copy has no em dash or en dash');
 
 const sortSrc = readFileSync(join(root, 'find/draw-sort.js'), 'utf8');

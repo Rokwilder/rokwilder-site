@@ -53,6 +53,7 @@ function word(h,v){
   if(h.unl&&v===1)return 'UNLIMITED';
   return WORD[v]||(v>0?'UNDER ONE IN TWENTY':'NONE DREW');
 }
+function verdictLine(h,v){const text=word(h,v);if(v==null)return text;return window.RWSeason?RWSeason.label(MT_META.year,'result',text):text}
 function oddsHTML(h){
   if(!FP)return '';
   const row=rawLv(h);
@@ -112,7 +113,7 @@ function landExtra(h,v){
 function card(x,i,full){
   const bits=full?RWLand.splitNext(landExtra(x.h,x.v)):{info:'',next:''};
   const trophy=full&&window.RWTrophy?RWTrophy.chip(x.k):'';
-  return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${word(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.desc)}</span><span class="fd">${esc(x.h.wlab)} · 2026 first choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,S.res,usesPts()?S.pts:null)}${trophy}${bits.info}</button>${bits.next}</li>`;
+  return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.desc)}</span><span class="fd">${esc(x.h.wlab)} · 2026 first choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,S.res,usesPts()?S.pts:null)}${trophy}${bits.info}</button>${bits.next}</li>`;
 }
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus==='land'?'on':''}">Public land</button></div></div>`}
 function showList(sc){
@@ -220,7 +221,7 @@ async function showDetail(k,sc){
   if(MAPS[h.sp]){
     where=`<h3>Where this hunt is</h3><p class="dq">Hunting district ${esc(h.area)}. A license that covers only part of a district, or more than one district, is still drawn on the whole district boundary.</p><div id="dmap" class="gmap dm" data-area="${esc(h.area)}" aria-label="Map of this hunting district"></div>${mapCred()}`;
   }
-  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.res,usesPts()?S.pts:null)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${esc(h.desc)}. ${esc(h.season)}${h.note&&h.note.split(/\s+/).length>=8?` ${esc(h.note)}.` :''} ${h.firstOnly?'The 2026 report says this is first choice only.':''} This is a 2026 result, not a forecast.</p>${chances}${harvestHTML(h)}${landExtra(h,v)}${where}${ladder(h)}${loHTML(h)}<p class="note">Source: <a href="${esc(MT_META.pages.stats)}">FWP 2026 drawing statistics</a>. Regulations: <a href="${esc(h.sp==='moose'||h.sp==='sheep'||h.sp==='goat'||h.sp==='bison'?MT_META.pages.msgb:MT_META.pages.regs)}">2026 FWP regulations</a>. Harvest: <a href="${esc(MT_META.pages.harvest)}">FWP harvest estimates</a>.</p>`;
+  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.res,usesPts()?S.pts:null)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${esc(h.desc)}. ${esc(h.season)}${h.note&&h.note.split(/\s+/).length>=8?` ${esc(h.note)}.` :''} ${h.firstOnly?'The 2026 report says this is first choice only.':''} This is a 2026 result, not a forecast.</p>${chances}${harvestHTML(h)}${landExtra(h,v)}${where}${ladder(h)}${loHTML(h)}<p class="note">Source: <a href="${esc(MT_META.pages.stats)}">FWP 2026 drawing statistics</a>. Regulations: <a href="${esc(h.sp==='moose'||h.sp==='sheep'||h.sp==='goat'||h.sp==='bison'?MT_META.pages.msgb:MT_META.pages.regs)}">2026 FWP regulations</a>. Harvest: <a href="${esc(MT_META.pages.harvest)}">FWP harvest estimates</a>.</p>`;
   $('back').onclick=()=>showList(1);
   if($('dmap'))drawDetailMap(v);
   if(sc)o.scrollIntoView({behavior:'smooth'});

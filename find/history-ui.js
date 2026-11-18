@@ -28,6 +28,19 @@ function setSpan(v){
   try{localStorage.setItem(KEY,n)}catch(e){}
   return Number(n);
 }
+function yearsIn(text){
+  return [...String(text??'').matchAll(/(?:^|[^0-9])(20\d{2})(?![0-9])/g)].map(m=>Number(m[1]));
+}
+function maxYear(text){
+  const ys=yearsIn(text);
+  return ys.length?Math.max.apply(null,ys):null;
+}
+function seasonLabel(year, kind, band){
+  if(!band) return '';
+  if(year==null||!Number.isFinite(Number(year))) return String(band);
+  const name=kind==='result'?'result':'estimate';
+  return Number(year)+' '+name+': '+band;
+}
 function word(v){
   if(v==null)return '';
   return data&&data.words==='drew'?DREW(v):YES(v);
@@ -268,6 +281,7 @@ hy.setSpan=setSpan;
 hy.windowOf=windowOf;
 hy.hintText=hintText;
 hy.formatLine=formatLine;
+window.RWSeason={yearsIn, maxYear, label:seasonLabel};
 window.RWHy=hy;
 window.RWHyNone=function(why){
   return `<span class="hy" data-hist="none" data-why="${esc(why)}"></span>`;
