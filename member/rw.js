@@ -10,12 +10,18 @@
 // file (GitHub Pages caches it for 10 minutes). Load it with ?v= so a new copy is a new URL.
 (function(){
 'use strict';
+try{ if(localStorage.getItem('rw_fp_pass')==='1') document.documentElement.classList.add('rw-pass'); }catch(e){}
+if(!document.getElementById('rw-pass-style')){
+  const s=document.createElement('style');
+  s.id='rw-pass-style';
+  s.textContent='html.rw-pass .rw-fp-cta{display:none!important}';
+  (document.head||document.documentElement).appendChild(s);
+}
 const me_=document.currentScript;
 const ROOT=me_.src.replace(/member\/rw\.js(\?.*)?$/,'');
 const API=window.RW_API!=null?window.RW_API:'https://api.rokwilder.com';
 const EXACT=new Set(['co','ut','az','wy','id','nv','mt','nm']);
 const TROPHY=new Set(['co','ut','az','wy','id','nv','mt']);
-const STATE_NAME={co:'Colorado',ut:'Utah',az:'Arizona',wy:'Wyoming',id:'Idaho',nv:'Nevada',mt:'Montana',nm:'New Mexico'};
 const VER='20261115c';
 const BUY_KEY='rw-buy';
 let acct=null;
@@ -40,11 +46,21 @@ async function fetchJSON(url,creds){
   }
 }
 function account(force){
-  if(!acct||force)acct=fetchJSON(bust('/api/account'),'include').then(j=>j||{loggedIn:false,offline:true});
+  if(!acct||force)acct=fetchJSON(bust('/api/account'),'include').then(j=>{
+    const a=j||{loggedIn:false,offline:true};
+    if(j) paintMember(j);
+    return a;
+  });
   return acct;
 }
 function hasFullPass(a,st){const f=a&&a.loggedIn&&a.fullpass;return !!(f&&f.active&&(f.states||[]).some(s=>s==='ALL'||s===String(st).toUpperCase()))}
 function passOn(a){const f=a&&a.loggedIn&&a.fullpass;return !!(f&&f.active)}
+function paintMember(a){
+  if(!a||a.offline)return;
+  const on=passOn(a);
+  document.documentElement.classList.toggle('rw-pass', on);
+  try{localStorage.setItem('rw_fp_pass', on?'1':'0')}catch(e){}
+}
 async function api(path,body,method){
   const r=await fetch(API+path,{method:method||(body===undefined?'GET':'POST'),credentials:'include',headers:body===undefined?{}:{'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});
   let j={};try{j=await r.json()}catch(e){}
@@ -300,9 +316,8 @@ async function boot(o){const st=String(o.state||'').toLowerCase();
  if(!exact){window.RW_FP=false;for(const s of free)await load(s)}
  window.RW_EXACT=exact;
  window.RW_FP=entitled;
- const m=document.querySelector('main');if(m&&(entitled||(a&&a.loggedIn))&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar '+(entitled?'on':'off');
-  const name=esc(STATE_NAME[st]||'this state');
-  b.innerHTML=entitled&&exact?'<b>Full Pass:</b> exact draw odds are on for '+name+'.':entitled?'<b>Full Pass:</b> the full '+name+' hunt list is on. Exact odds for '+name+' did not load, so this page shows verdict bands.':'<b>Free view:</b> you see the verdict word and harvest band. Exact '+name+' odds come with the Full Pass. <a href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
+ const m=document.querySelector('main');if(m&&!entitled&&a&&a.loggedIn&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar off';
+  b.innerHTML='<b>Free view:</b> you see the verdict word and harvest band. Exact odds come with the Full Pass. <a class="rw-fp-cta" href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
   const out=document.getElementById('out');if(out&&out.parentNode)out.parentNode.insertBefore(b,out);else m.prepend(b)}
  for(const s of o.after||[])await load(s);
  nav();return entitled}
@@ -319,7 +334,8 @@ document.addEventListener('keydown',function(ev){
   ev.preventDefault();
   onSale(el);
 });
-window.RW={API,ROOT,account,hasFullPass,api,boot,nav,esc,catalog,health,startCheckout,safePayUrl,safePortalUrl,saleButtons,loadSale,pendingBuy,rememberBuy,clearBuy,EXACT,VER};
+window.RW={API,ROOT,account,hasFullPass,passOn,api,boot,nav,esc,catalog,health,startCheckout,safePayUrl,safePortalUrl,saleButtons,loadSale,pendingBuy,rememberBuy,clearBuy,EXACT,VER};
+account();
 window.RW.saleState=saleState;
 document.addEventListener('DOMContentLoaded',()=>{
   if(/[?&]app=1(?:&|$)/.test(location.search))document.body.classList.add('rw-app');

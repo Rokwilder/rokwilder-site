@@ -58,7 +58,10 @@ async function who(){
   let a=null;
   try{a=await RW.account()}catch(e){a=null}
   if(!a||a.offline){el.textContent='The member service did not answer. The list below is the public file. Nothing was charged.';return}
-  if(RW.hasFullPass(a, state)){el.textContent='Full Pass is on for '+STATES.find(s=>s.id===state).name+'. You get the full hunt list. Exact odds show when that member file loads.';return}
+  const eight=['co','ut','az','wy','id','nv','mt','nm'];
+  const covered=eight.filter(s=>RW.hasFullPass(a,s));
+  if(covered.length===8){el.textContent='Your Full Pass is active. You get the full hunt list and exact odds for all 8 states.';return}
+  if(covered.length){el.textContent='Your Full Pass is active. You get the full hunt list for the states on your account.';return}
   if(a.loggedIn){el.textContent='You are logged in. This state is the free look: a count and sample units. The full list is the Full Pass.';return}
   el.textContent='You are not logged in. This is the free look: a count and sample units.';
 }
