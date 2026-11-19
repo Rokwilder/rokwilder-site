@@ -1,0 +1,381 @@
+{
+  "checked": "2026-11-18",
+  "note": "Application deadlines and draw-result dates copied from the agency pages and brochures already cited on Find Your Hunt. A later year is included only when that agency has posted it. Dates are not projected.",
+  "states": {
+    "co": {
+      "name": "Colorado",
+      "label": "2026 dates, 2027 not posted yet",
+      "source": {
+        "title": "CPW Primary Draw",
+        "url": "https://cpw.state.co.us/activities/hunting/big-game/primary-draw"
+      },
+      "also": [
+        {
+          "title": "CPW big game brochure",
+          "url": "https://cpw.state.co.us/activities/hunting/big-game"
+        },
+        {
+          "title": "2026 Colorado Big Game Hunting Brochure",
+          "url": "https://cpw.widen.net/s/5wvx7rggrd/colorado-big-game-hunting-brochure"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Primary draw",
+          "text": "March 1 to April 7, 2026, 8 p.m. MT",
+          "start": "2026-03-01",
+          "end": "2026-04-07"
+        }
+      ],
+      "results": [
+        {
+          "who": "Primary draw",
+          "text": "April 23, 2026",
+          "date": "2026-04-23",
+          "note": "The 2026 sheep, goat, and moose cost line on Find Your Hunt, labeled CPW 2026, says results April 23. That is the same apply-by day as the primary draw. 2027 results are not posted."
+        }
+      ]
+    },
+    "ut": {
+      "name": "Utah",
+      "label": "2026 dates, 2027 not posted yet",
+      "source": {
+        "title": "2026 Utah Big Game Application Guidebook",
+        "url": "https://wildlife.utah.gov/guidebooks/biggameapp.pdf"
+      },
+      "apply": [
+        {
+          "who": "Big game",
+          "text": "March 19, 2026, 8 a.m. to April 23, 2026, 11 p.m. MDT",
+          "start": "2026-03-19",
+          "end": "2026-04-23"
+        }
+      ],
+      "results": [
+        {
+          "who": "Big game",
+          "text": "By May 31, 2026",
+          "date": "2026-05-31",
+          "note": "The 2026 guidebook says results by May 31. 2027 dates are not posted."
+        }
+      ]
+    },
+    "az": {
+      "name": "Arizona",
+      "label": "2026 deadlines posted. 2027 elk, pronghorn, and fall dates are not posted. The 2027 spring draw deadline is posted.",
+      "source": {
+        "title": "2026-27 Arizona Hunting Regulations",
+        "url": "https://azgfd-live-portal-wordpress-pantheon.s3.us-west-2.amazonaws.com/wp-content/uploads/2026/05/20151617/2026-27-Arizona-Hunting-Regulations.pdf"
+      },
+      "also": [
+        {
+          "title": "2026 Pronghorn and Elk Regulations",
+          "url": "https://azgfd-live-portal-wordpress-pantheon.s3.us-west-2.amazonaws.com/wp-content/uploads/2025/12/20163130/2026-Pronghorn-and-Elk-Regulations_251223.pdf"
+        },
+        {
+          "title": "2027 Spring Regulations",
+          "url": "https://azgfd-live-portal-wordpress-pantheon.s3.us-west-2.amazonaws.com/wp-content/uploads/2026/09/08084903/2027-Spring-Regulations.pdf"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Elk and pronghorn",
+          "text": "February 3, 2026, 11:59 p.m. Arizona time",
+          "start": "2026-02-03",
+          "end": "2026-02-03"
+        },
+        {
+          "who": "Deer, fall turkey, fall javelina, bighorn sheep, bison, and sandhill crane",
+          "text": "June 2, 2026, 11:59 p.m. Arizona time",
+          "start": "2026-06-02",
+          "end": "2026-06-02"
+        },
+        {
+          "who": "2027 spring turkey, javelina, and bison",
+          "text": "October 6, 2026, 11:59 p.m. Arizona time. This 2027 spring draw is posted.",
+          "start": "2026-10-06",
+          "end": "2026-10-06"
+        }
+      ],
+      "results": [
+        {
+          "who": "Draw results",
+          "text": "Not published as one results day on the regulation pages used here. Results are shown in the AZGFD portal.",
+          "date": null
+        }
+      ]
+    },
+    "wy": {
+      "name": "Wyoming",
+      "label": "2026 dates, 2027 not posted yet",
+      "source": {
+        "title": "WGFD application dates and deadlines",
+        "url": "https://wgfd.wyo.gov/licenses-applications/application-dates-deadlines"
+      },
+      "also": [
+        {
+          "title": "Chapter 44 license regulation",
+          "url": "https://wgfd.wyo.gov/media/34010/download"
+        },
+        {
+          "title": "WGFD 2026 draw results and odds",
+          "url": "https://wgfd.wyo.gov/licenses-applications/draw-results-odds"
+        },
+        {
+          "title": "2026 Elk Hunting Seasons, Chapter 7",
+          "url": "https://wgfd.wyo.gov/media/33695/download?inline"
+        },
+        {
+          "title": "2026 Deer Hunting Seasons, Chapter 6",
+          "url": "https://wgfd.wyo.gov/media/33694/download?inline"
+        },
+        {
+          "title": "2026 Antelope Hunting Seasons, Chapter 5",
+          "url": "https://wgfd.wyo.gov/media/33693/download?inline"
+        },
+        {
+          "title": "2026 Moose Hunting Seasons, Chapter 8",
+          "url": "https://wgfd.wyo.gov/media/33696/download?inline"
+        },
+        {
+          "title": "2026 Bighorn Sheep and Mountain Goat Hunting Seasons, Chapter 9",
+          "url": "https://wgfd.wyo.gov/media/33697/download?inline"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Nonresident elk",
+          "text": "January 2 to February 2, 2026",
+          "start": "2026-01-02",
+          "end": "2026-02-02"
+        },
+        {
+          "who": "Moose, bighorn sheep, and mountain goat",
+          "text": "January 2 to April 30, 2026",
+          "start": "2026-01-02",
+          "end": "2026-04-30"
+        },
+        {
+          "who": "Bison",
+          "text": "March 2 to April 30, 2026",
+          "start": "2026-03-02",
+          "end": "2026-04-30"
+        },
+        {
+          "who": "Deer, pronghorn, and resident elk",
+          "text": "January 2 to June 1, 2026",
+          "start": "2026-01-02",
+          "end": "2026-06-01"
+        },
+        {
+          "who": "Preference point only",
+          "text": "Not published as one window. The application dates table says July 1 to Nov. 2. Chapter 44 and the preference-points page say July through October 31.",
+          "start": null,
+          "end": null
+        }
+      ],
+      "results": [
+        {
+          "who": "Draw results",
+          "text": "Not published as one results day on the pages used here.",
+          "date": null
+        }
+      ]
+    },
+    "id": {
+      "name": "Idaho",
+      "label": "2026 dates. 2027 dates are not stated.",
+      "source": {
+        "title": "IDAPA 13.01.04, Rules Governing Licensing",
+        "url": "https://adminrules.idaho.gov/rules/current/13/130104.pdf"
+      },
+      "also": [
+        {
+          "title": "IDFG Hunt Planner drawing odds",
+          "url": "https://idfg.idaho.gov/ifwis/huntplanner/odds/"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Moose, bighorn sheep, and mountain goat",
+          "text": "April 1 through April 30, 2026",
+          "start": "2026-04-01",
+          "end": "2026-04-30"
+        },
+        {
+          "who": "Deer, elk, pronghorn, swan, fall black bear, and fall turkey",
+          "text": "May 1 through June 5, 2026",
+          "start": "2026-05-01",
+          "end": "2026-06-05"
+        },
+        {
+          "who": "Second drawing",
+          "text": "August 5 through August 15, 2026",
+          "start": "2026-08-05",
+          "end": "2026-08-15"
+        }
+      ],
+      "results": [
+        {
+          "who": "First drawing",
+          "text": "2026 first-drawing results were posted in May and June 2026. A single results day is not stated.",
+          "date": null
+        }
+      ],
+      "gap": "The rule says IDFG publishes the calendar on its website and in brochures. It does not print the days. These windows are the 2026 IDFG news posts recorded on the Idaho finder. The news post URL was not on that page."
+    },
+    "nv": {
+      "name": "Nevada",
+      "label": "2026 big-game dates. 2027 big-game main-draw deadline is not posted. 2027 spring turkey dates are posted.",
+      "source": {
+        "title": "Commission Regulation 26-01",
+        "url": "https://www.ndow.org/wp-content/uploads/2026/01/CR-26-01-2026-2027-Application-Deadlines-Draw-Result-Dates-NBWC-Approved-January-2026.pdf"
+      },
+      "also": [
+        {
+          "title": "NDOW apply and buy hunting",
+          "url": "https://www.ndow.org/apply-buy/apply-buy-hunting/"
+        }
+      ],
+      "apply": [
+        {
+          "who": "2026 guided mule deer",
+          "text": "February 9 to March 9, 2026",
+          "start": "2026-02-09",
+          "end": "2026-03-09"
+        },
+        {
+          "who": "2026 main draw",
+          "text": "March 23 to May 13, 2026",
+          "start": "2026-03-23",
+          "end": "2026-05-13"
+        },
+        {
+          "who": "2026 second draw",
+          "text": "From June 8, 2026. The apply page says the deadline is June 15. Commission Regulation 26-01 says 11:00 p.m. Pacific on June 16.",
+          "start": "2026-06-08",
+          "end": "2026-06-16"
+        },
+        {
+          "who": "2027 spring turkey",
+          "text": "Applications before 11:00 p.m. Pacific on Monday, January 25, 2027",
+          "start": "2027-01-25",
+          "end": "2027-01-25"
+        },
+        {
+          "who": "2027 bonus point only",
+          "text": "Purchases before 11:00 p.m. Pacific on Monday, February 1, 2027",
+          "start": "2027-02-01",
+          "end": "2027-02-01"
+        }
+      ],
+      "results": [
+        {
+          "who": "2026 guided mule deer",
+          "text": "March 20, 2026",
+          "date": "2026-03-20"
+        },
+        {
+          "who": "2026 main draw",
+          "text": "May 29, 2026",
+          "date": "2026-05-29"
+        },
+        {
+          "who": "2026 second draw",
+          "text": "On or before June 26, 2026 (Commission Regulation 26-01)",
+          "date": "2026-06-26"
+        },
+        {
+          "who": "2027 spring turkey",
+          "text": "On or before Friday, February 12, 2027",
+          "date": "2027-02-12"
+        }
+      ]
+    },
+    "mt": {
+      "name": "Montana",
+      "label": "2026 dates, 2027 not posted yet",
+      "source": {
+        "title": "2026 deer, elk, and antelope regulations",
+        "url": "https://fwp.mt.gov/binaries/content/assets/fwp/hunt/regulations/2026/2026-dea-regulations-final-with-low-resolution-maps-for-web.pdf"
+      },
+      "also": [
+        {
+          "title": "2026 moose, sheep, goat, and bison regulations",
+          "url": "https://fwp.mt.gov/binaries/content/assets/fwp/hunt/regulations/2026/2026-msgb-final-for-web.pdf"
+        },
+        {
+          "title": "FWP drawing statistics",
+          "url": "https://fwp.mt.gov/buyandapply/hunting-licenses/drawing-statistics"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Deer and elk permits, and nonresident combination licenses",
+          "text": "Apply by April 1, 2026",
+          "start": "2026-04-01",
+          "end": "2026-04-01"
+        },
+        {
+          "who": "Moose, sheep, goat, and bison",
+          "text": "Apply by May 1, 2026",
+          "start": "2026-05-01",
+          "end": "2026-05-01"
+        },
+        {
+          "who": "Deer B, elk B, and antelope",
+          "text": "Apply by June 1, 2026",
+          "start": "2026-06-01",
+          "end": "2026-06-01"
+        }
+      ],
+      "results": [
+        {
+          "who": "Draw results",
+          "text": "Not published as a results day on the 2026 regulation pages used here.",
+          "date": null
+        }
+      ]
+    },
+    "nm": {
+      "name": "New Mexico",
+      "label": "2026-27 dates. 2027-28 deadlines are not listed.",
+      "source": {
+        "title": "2026-2027 Hunting Rules and Information",
+        "url": "https://wildlife.dgf.nm.gov/download/2026-2027-new-mexico-hunting-rules-and-info/?wpdmdl=52826"
+      },
+      "also": [
+        {
+          "title": "2026-27 Big Game Draw FAQ",
+          "url": "https://wildlife.dgf.nm.gov/download/26-27-big-game-draw-frequently-asked-questions/?wpdmdl=53341"
+        }
+      ],
+      "apply": [
+        {
+          "who": "Bear and turkey draw permits",
+          "text": "Apply by February 11, 2026, 5:00 p.m. Mountain Time",
+          "start": "2026-02-11",
+          "end": "2026-02-11"
+        },
+        {
+          "who": "Barbary sheep, bighorn, deer, elk, ibex, javelina, pronghorn, oryx, and private-land deer in units 2A, 2B, 2C, 4, and 5A",
+          "text": "Apply by March 18, 2026, 5:00 p.m. Mountain Time",
+          "start": "2026-03-18",
+          "end": "2026-03-18"
+        }
+      ],
+      "results": [
+        {
+          "who": "Bear and turkey",
+          "text": "February 18, 2026",
+          "date": "2026-02-18"
+        },
+        {
+          "who": "Big game draw",
+          "text": "April 22, 2026",
+          "date": "2026-04-22"
+        }
+      ]
+    }
+  }
+}

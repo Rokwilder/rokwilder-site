@@ -96,3 +96,31 @@ footer{background:url(img/brand/topo.svg) repeat}
 .dspan select{display:block;width:100%;max-width:22rem;min-height:52px;font:inherit;font-weight:700;font-size:1.08rem;margin:.3rem 0 .15rem}
 .hym{color:var(--mute);font-size:.92rem}
 .hynote{color:var(--mute);font-size:.92rem;margin:.35rem 0 .7rem}
+/* Full Pass compare and season dates */
+#rwtools{margin:1.2rem 0 1.6rem}
+#rwtools .rwtabs{margin:.4rem 0 .8rem}
+.pkbar{display:flex;margin:-.15rem 0 .7rem}
+.pkbar .pkadd,.pkx{min-height:48px;font:inherit;font-weight:800;background:var(--panel);color:var(--ink);border:2px solid var(--acc);border-radius:8px;cursor:pointer}
+.pkbar .pkadd{flex:1;font-size:1.05rem}
+.pkadd.on{background:var(--acc);color:#111}
+.pkx{min-height:36px;margin-top:.35rem;padding:.2rem .55rem;font-size:.85rem}
+.mocktag{background:#5a2b12;color:#ffd9b8;font-weight:800;padding:.45rem .7rem;border-radius:6px}
+.cmpscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:2px solid var(--line);border-radius:10px}
+.cmpt{min-width:40rem;border-collapse:collapse}
+.cmpt th,.cmpt td{border-bottom:1px solid var(--line);padding:.55rem .6rem;text-align:left;vertical-align:top;min-width:11rem}
+.cmpt th:first-child,.cmpt td:first-child{position:sticky;left:0;background:#1e1f1b;min-width:8.5rem;z-index:1}
+.cmpt .mute,.tlrow .mute,.src{color:var(--mute);font-weight:500;font-size:.92rem}
+.cmpline{font-size:1.15rem;font-weight:750;margin:.8rem 0}
+.overlap{border:2px solid #d2501f;border-radius:8px;padding:.6rem .8rem;font-weight:700}
+.tlm{margin:.6rem 0}
+.tlrow{display:flex;gap:.55rem;align-items:flex-start;margin:.35rem 0;padding:.45rem .5rem;background:var(--panel);border-radius:8px}
+.tlrow i{flex:0 0 auto;width:.7rem;height:.7rem;margin-top:.4rem;border-radius:50%}
+.dl{margin:.8rem 0;padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+.dl ul{margin:.2rem 0 .4rem 1.1rem;padding:0}
+.pklist{list-style:none;padding:0;margin:.3rem 0 .8rem}
+.pklist li{padding:.35rem 0;border-bottom:1px solid var(--line)}
+.cmpcard{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:.8rem;margin:.7rem 0}
+.cmpcard h3{margin:.1rem 0 .2rem;border:0;padding:0}
+.cmpcard p{margin:.35rem 0}
+.cmpcard .pkx{width:100%;margin-top:.6rem}
+#rwtools{scroll-margin-top:7.5rem}

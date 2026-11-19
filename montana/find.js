@@ -336,6 +336,7 @@ paint();
 if(Q.get('go'))showList();
 if(Q.get('k')&&MH[Q.get('k')]){const h=MH[Q.get('k')];S.sp=h.sp;S.cls='';S.sx='';S.wpn='';S.res=Q.get('res')==='nr'?'nr':'res';if(Q.get('pts'))S.pts=+Q.get('pts')||0;paint();showDetail(Q.get('k'))}
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
+window.__MT={S, FP};
 window.__DRAW={
   pointsMatter:usesPts,
   contexts(){
