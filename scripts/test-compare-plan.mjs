@@ -271,10 +271,46 @@ async function freeFlow(viewport, tag) {
   await browser.close();
 }
 
+async function seasonProof(viewport, tag) {
+  const browser = await chromium.launch({headless: true});
+  const context = await browser.newContext({
+    viewport,
+    isMobile: viewport.width < 500,
+    hasTouch: viewport.width < 500,
+    deviceScaleFactor: viewport.width < 500 ? 2 : 1
+  });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', err => errors.push(err.stack || String(err)));
+  await routeApi(page, true);
+  async function showDates(fragment) {
+    await page.locator('[data-rwt="dates"]').click();
+    await page.locator('#rwdates').getByText(fragment).first().waitFor({timeout: 20000});
+  }
+  await addHunt(page, '/find.html?sp=elk&h=EE012O1A', 1);
+  await showDates('Sep 2 to Sep 30, 2026');
+  await shot(page, 'co-archery-dates-' + tag);
+  await addHunt(page, '/find.html?sp=elk&h=EE083O1M', 2);
+  await showDates('Sep 12 to Sep 20, 2026');
+  await shot(page, 'co-muzzle-dates-' + tag);
+  await addHunt(page, '/wyoming/find.html?sp=elk&k=elk-001-1', 3);
+  await showDates('Sep 1 to Sep 30, 2026');
+  const text = await page.locator('#rwtools').innerText();
+  ok(/Sep 2 to Sep 30, 2026/.test(text) && /Sep 12 to Sep 20, 2026/.test(text), tag + ' Colorado archery and muzzleloader dates are on the timeline');
+  ok(/Sep 1 to Sep 30, 2026/.test(text) && /Oct 15, 2026 to Nov 30, 2026/.test(text), tag + ' Wyoming hunt dates are on the timeline');
+  ok(/Mock numbers/.test(text), tag + ' mock odds stay labeled');
+  ok(!/[—–]/.test(text), tag + ' season timeline has no dash glyph');
+  await shot(page, 'co-wy-timeline-' + tag);
+  ok(errors.length === 0, tag + ' season proof has no page errors ' + errors.join(' | '));
+  await browser.close();
+}
+
 await memberFlow(desktop, 'desktop');
 await memberFlow(phone, 'phone');
 await freeFlow(desktop, 'desktop');
 await freeFlow(phone, 'phone');
+await seasonProof(desktop, 'desktop');
+await seasonProof(phone, 'phone');
 
 server.close();
 if (fails) { console.error(fails + ' failed'); process.exit(1); }

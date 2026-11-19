@@ -153,7 +153,20 @@ function explicitRanges(text){
   }
   return out;
 }
+let seasonPack=null;
+function tableSeasons(state, key){
+  const bag=seasonPack&&seasonPack[state]&&seasonPack[state].hunts&&seasonPack[state].hunts[key];
+  if(!bag||!bag.length) return null;
+  return bag.map(r=>{
+    const label=state==='wy'
+      ?(r.kind==='archery'?'2026 WGFD archery season':'2026 WGFD regular season')
+      :'2026 CPW big game brochure';
+    return season(r.start, r.end, label);
+  }).filter(Boolean);
+}
 function coSeasons(k){
+  const mapped=tableSeasons('co', k);
+  if(mapped&&mapped.length) return mapped;
   const d=D[k];
   const sp=d[0], name=String(d[2]||'');
   const rifle={
@@ -251,7 +264,7 @@ function snapWy(key){
   const band=window.RWLand?RWLand.band('wy', RWLand.wyKey(h.sp, h.area)):null;
   const land=landOf(band, false);
   const side=w.pool();
-  return base('wy', key, title, w.S.res==='res'?'Wyoming resident':'Out of state', w.usesPts()?w.S.pts:0, points, oddsPack(key, side, w.usesPts()?w.S.pts:''), 'Not published', {text:'Not published', value:null, kind:null}, land, combinedOf({land:band, odds:RWLand.oddsKind(v), voice:'forecast'}), []);
+  return base('wy', key, title, w.S.res==='res'?'Wyoming resident':'Out of state', w.usesPts()?w.S.pts:0, points, oddsPack(key, side, w.usesPts()?w.S.pts:''), 'Not published', {text:'Not published', value:null, kind:null}, land, combinedOf({land:band, odds:RWLand.oddsKind(v), voice:'forecast'}), tableSeasons('wy', key)||[]);
 }
 function snapId(key){
   const id=window.__ID;
@@ -621,7 +634,8 @@ function boot(){
   }, true);
   window.addEventListener('storage', ev=>{if(ev.key===KEY) render()});
   window.addEventListener('resize', ()=>{if(paid()) render()});
-  fetch(ROOT+'find/dates.json').then(r=>r.ok?r.json():null).then(j=>{dates=j; if(paid()&&tab==='dates') render()}).catch(()=>{});
+  fetch(ROOT+'find/dates.json?v=20261119a').then(r=>r.ok?r.json():null).then(j=>{dates=j; if(paid()&&tab==='dates') render()}).catch(()=>{});
+  fetch(ROOT+'find/season-dates.json?v=20261119a').then(r=>r.ok?r.json():null).then(j=>{seasonPack=j; if(paid()) render()}).catch(()=>{});
 }
 window.RWTools={snap, addKey, render, loadPicks};
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
