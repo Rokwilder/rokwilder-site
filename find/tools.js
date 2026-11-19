@@ -434,7 +434,7 @@ function saleLink(){
   return '<a class="btn" href="'+esc(href)+'">'+label+'</a>';
 }
 function teaser(){
-  return '<aside class="fpbox" id="rwlock" aria-label="Full Pass"><p class="fpt">Compare hunts and plan dates</p><p>Put 2 to 4 hunts side by side, across states, and see their season dates on one calendar. Free visitors get this short look. The comparison and the calendar are the Full Pass.</p><p>'+saleLink()+'</p><p class="renew">Renews every year until you cancel. Cancel anytime from your account.</p></aside>';
+  return '<aside class="fpbox" id="rwlock" aria-label="Full Pass"><p class="fpt">Compare hunts and plan dates</p><p>Put 2 to 4 hunts side by side, across states, and see their season dates on one calendar. Free visitors get this short look. The comparison and the calendar are the Full Pass.</p><p>'+saleLink()+'</p><p class="renew">Renews every year at the same price until you cancel. You can cancel anytime from your account.</p><p class="renew">Renews every year at $19.99. That price stays locked as long as you keep renewing. You can cancel anytime from your account.</p></aside>';
 }
 function tabs(){
   return '<div class="seg rwtabs" role="tablist"><button type="button" data-rwt="compare" class="'+(tab==='compare'?'on':'')+'">Compare</button><button type="button" data-rwt="dates" class="'+(tab==='dates'?'on':'')+'">Season dates</button></div>';
