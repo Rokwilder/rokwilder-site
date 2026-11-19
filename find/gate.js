@@ -20,6 +20,7 @@ function banner(){
   return '<p class="note">Full Pass preview.'+closed+' This is the hunt list. Exact percentages are not in the public file.</p>';
 }
 function offerHTML(pricing, kind){
+  if(window.RW_FP===true) return '';
   const open=sale().open===true;
   const href=open?pricing+'#fullpass':pricing;
   const label=open?'Get the Full Pass':'See pricing';
@@ -55,7 +56,8 @@ function unlock(pricing){
     : 'We do the research and narrow it to the hunts you can draw. Full Pass: $29.99 a year. Founding Hunter: $19.99 a year for the first 200 members, locked as long as you keep renewing. Not on sale yet. Checkout is not open.';
   const href=open?pricing+'#fullpass':pricing+'#waitlist';
   const label=open?'Get the Full Pass':'See Full Pass';
-  return `<aside class="fpbox" id="unlock" aria-label="Unlock with Full Pass"><p class="fpt">Unlock with Full Pass</p><ul><li>The full hunt list, with a verdict on every hunt you can draw</li><li>Exact odds, where we have published them</li><li>Harvest success</li><li>The what-can-I-draw finder</li></ul><p class="fpp">${line}</p><p><a class="btn" href="${href}">${label}</a></p><p class="renew">Renews every year at the same price until you cancel. You can cancel anytime from your account.</p><p class="renew">Renews every year at $19.99. That price stays locked as long as you keep renewing. You can cancel anytime from your account.</p></aside>`;
+  if(window.RW_FP===true) return '';
+  return `<aside class="fpbox rw-fp-cta" id="unlock" aria-label="Unlock with Full Pass"><p class="fpt">Unlock with Full Pass</p><ul><li>The full hunt list, with a verdict on every hunt you can draw</li><li>Exact odds, where we have published them</li><li>Harvest success</li><li>The what-can-I-draw finder</li></ul><p class="fpp">${line}</p><p><a class="btn" href="${href}">${label}</a></p><p class="renew">Renews every year at the same price until you cancel. You can cancel anytime from your account.</p><p class="renew">Renews every year at $19.99. That price stays locked as long as you keep renewing. You can cancel anytime from your account.</p></aside>`;
 }
 // At most n hunts from each sample unit. A hunt is shown once and counts toward the first of its sample units that still has room.
 function takePerUnit(rows, unitOf, n){
