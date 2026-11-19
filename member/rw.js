@@ -316,8 +316,8 @@ async function boot(o){const st=String(o.state||'').toLowerCase();
  if(!exact){window.RW_FP=false;for(const s of free)await load(s)}
  window.RW_EXACT=exact;
  window.RW_FP=entitled;
- const m=document.querySelector('main');if(m&&(entitled||(a&&a.loggedIn))&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar '+(entitled?'on':'off');
-  b.innerHTML=entitled&&exact?'<b>Full Pass:</b> Your Full Pass is active. You get the full hunt list and exact odds for all 8 states.':entitled?'<b>Full Pass:</b> Your Full Pass is active. You get the full hunt list. This page shows verdict bands.':'<b>Free view:</b> you see the verdict word and harvest band. Exact odds come with the Full Pass. <a class="rw-fp-cta" href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
+ const m=document.querySelector('main');if(m&&!entitled&&a&&a.loggedIn&&!document.getElementById('rwbar')){const b=document.createElement('div');b.id='rwbar';b.className='rwbar off';
+  b.innerHTML='<b>Free view:</b> you see the verdict word and harvest band. Exact odds come with the Full Pass. <a class="rw-fp-cta" href="'+ROOT+'pricing.html#fullpass">Full Pass pricing</a>';
   const out=document.getElementById('out');if(out&&out.parentNode)out.parentNode.insertBefore(b,out);else m.prepend(b)}
  for(const s of o.after||[])await load(s);
  nav();return entitled}
