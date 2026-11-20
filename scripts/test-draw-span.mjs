@@ -66,6 +66,12 @@ ok(H.hintText(H.windowOf({years:{2026:1}, n:1}, 1), H.windowOf({years:{2024:0.25
 ok(H.hintText(avg, avg, head) === 'Last year was harder to draw than this average', 'when the average is the headline, the hint names last year');
 ok(H.hintText(head, head, head) === '', 'the same band has no trend hint');
 ok(H.hintText(head, short, head) === '', 'a short average does not get the 3-year hint');
+ok(H.historyNote(head, avg) === 'Last year was harder to draw than the 3-year average.', 'more info says last year was harder');
+ok(H.historyNote(H.windowOf({years:{2024:0.05,2025:0.05,2026:0.75}, avg:0.05, n:3}, 1), H.windowOf({years:{2024:0.05,2025:0.05,2026:0.75}, avg:0.05, n:3}, 3)) === 'Last year was easier to draw than the 3-year average.', 'more info says last year was easier');
+ok(H.historyNote(head, head) === '', 'the same band omits the more-info note');
+ok(H.infoLine(head) === '2026 draw: Long shot', 'history uses sentence case');
+ok(H.infoLine(avg) === '3-year average: Maybe', 'the average is spelled out');
+ok(!/%/.test(H.infoLine(head) + H.infoLine(avg) + H.historyNote(head, avg)), 'more info has no percent');
 
 const line = H.formatLine(head, say);
 const sub = H.formatLine(avg, say);

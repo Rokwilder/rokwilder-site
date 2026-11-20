@@ -74,7 +74,7 @@ const ptsWord=()=>`${S.pts} point${S.pts==1?'':'s'}`;
 const nextDraw=h=>h.dr=='M'?'2027 elk and pronghorn draw':h.dr=='F'?'2027 fall draw':'next spring draw';
 function bandSeason(k){const h=k&&AH[k];if(!h||!window.RWSeason)return {y:null,kind:'estimate'};const named=RWSeason.maxYear(nextDraw(h));if(named)return {y:named,kind:'estimate'};const onHunt=RWSeason.maxYear(h.d);return {y:onHunt==null?null:onHunt+1,kind:'estimate'}}
 function verdictLine(v,k){if(v==null)return 'NO DATA';const s=bandSeason(k);return window.RWSeason?RWSeason.label(s.y,s.kind,VERD(v)):VERD(v)}
-function oddsHTML(v,cls,k){const h=AH[k];if(!FP)return `<div class="${cls} lk">${FPN}</div>`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()} (estimate for the ${nextDraw(h)})</span></div>`}
+function oddsHTML(v,cls,k){const h=AH[k];if(!FP)return `<div class="${cls} lk">${FPN}</div>`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()}</span></div>`}
 const fee=h=>h.fee;const money=n=>'$'+n.toLocaleString();
 const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
 const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',bg:'#2A2D26',sel:'#C8792F',otc:'#6A4C93'};
