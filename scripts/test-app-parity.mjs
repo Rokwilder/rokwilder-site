@@ -29,6 +29,7 @@ ok(app.includes('UnitIQ Scouting Package, $99'), 'app has the $99 package entry'
 ok(app.includes('starting at $300') && app.includes('btn dis'), 'Boots stays greyed out at starting at $300');
 ok(app.includes('Starting at $300 in Colorado and Utah. Arizona coming once licensed.'), 'Utah Boots is available and Arizona stays closed');
 ok(app.includes('In Utah, the field scouting is done by a licensed Utah outfitter.'), 'app names the Utah outfitter');
+ok(!app.includes('<iframe'), 'app has no finder frame');
 ok(!app.includes('—'), 'app copy has no em dash');
 
 const box = {window: {}};

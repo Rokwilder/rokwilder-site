@@ -223,20 +223,19 @@ async function memberFlow(viewport, tag) {
   ok(picks === 3, tag + ' saved 3 picks');
 
   await page.goto(origin + '/member/app.html?state=co', {waitUntil: 'domcontentloaded'});
-  const frame = page.frameLocator('#view');
-  await frame.locator('#rwtools').waitFor({timeout: 20000});
-  await frame.locator('#rwcompare .cmpt, #rwcompare .cmpcard').first().waitFor({timeout: 20000});
-  await frame.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
-  await page.evaluate(() => { const v = document.getElementById('view'); if (v) v.style.height = '920px'; });
+  await page.locator('#rwtools').waitFor({timeout: 20000});
+  await page.locator('#rwcompare .cmpt, #rwcompare .cmpcard').first().waitFor({timeout: 20000});
+  await page.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
   await page.screenshot({path: path.join(shots, 'app-compare-' + tag + '.png'), fullPage: false});
-  const appText = await frame.locator('#rwtools').innerText();
+  const appText = await page.locator('#rwtools').innerText();
   ok(/easier to draw/.test(appText), tag + ' app shows the same comparison');
   ok(/Mock numbers/.test(appText), tag + ' app still labels mock numbers');
-  await frame.locator('[data-rwt="dates"]').click();
-  await frame.locator('#rwdates .overlap, #rwdates .dq').first().waitFor();
-  await frame.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
+  ok(await page.locator('iframe.appframe, iframe#view').count() === 0, tag + ' app has no finder frame');
+  await page.locator('[data-rwt="dates"]').click();
+  await page.locator('#rwdates .overlap, #rwdates .dq').first().waitFor();
+  await page.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
   await page.screenshot({path: path.join(shots, 'app-dates-' + tag + '.png'), fullPage: false});
-  const appDates = await frame.locator('#rwtools').innerText();
+  const appDates = await page.locator('#rwtools').innerText();
   ok(/These hunts overlap/.test(appDates), tag + ' app flags the overlap');
   ok(errors.length === 0, tag + ' has no page errors ' + errors.join(' | '));
   await browser.close();
@@ -264,9 +263,9 @@ async function freeFlow(viewport, tag) {
   ok(before == null && after == null, tag + ' free add does not save a pick');
   await shot(page, 'free-locked-' + tag);
   await page.goto(origin + '/member/app.html?state=co', {waitUntil: 'domcontentloaded'});
-  const frame = page.frameLocator('#view');
-  await frame.locator('#rwlock').waitFor({timeout: 20000});
-  await page.evaluate(() => { const v = document.getElementById('view'); if (v) v.style.height = '900px'; });
+  await page.locator('#rwlock').waitFor({timeout: 20000});
+  await page.locator('#hunt nav.stp').waitFor({state: 'detached', timeout: 20000}).catch(()=>{});
+  ok(await page.locator('#hunt nav.stp').count() === 0, tag + ' app has one state picker');
   await page.screenshot({path: path.join(shots, 'app-free-locked-' + tag + '.png'), fullPage: false});
   await browser.close();
 }

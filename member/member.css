@@ -50,6 +50,7 @@ body.rw-app main{padding-top:.2rem}
 .appstates{display:flex;flex-wrap:wrap;gap:.4rem;padding:.2rem 0 .6rem}
 .appstates a{flex:1 1 7.2rem;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:.4rem .7rem;border:2px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);font-weight:800;background:var(--panel)}
 .appstates a.on{background:var(--ink);color:var(--panel);border-color:var(--ink)}
-.appframe{display:block;width:100%;height:calc(100vh - 11rem);min-height:28rem;border:2px solid var(--line);border-radius:10px;background:#1E1E1C}
 .appnote{margin:.3rem 0 .6rem}
-@media(max-width:700px){.appframe{height:calc(100vh - 13rem);min-height:24rem}}
+#hunt{margin-top:.3rem}
+#appsteps{border:1px dashed var(--acc);border-radius:8px;padding:.8rem 1rem;margin:.8rem 0;max-width:34rem}
+#appsteps p{margin:.35rem 0}

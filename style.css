@@ -3,7 +3,12 @@
 a{color:var(--acc)}header{background:#141612;border-bottom:3px solid var(--acc);position:sticky;top:0;z-index:9}
 .nav{max-width:1100px;margin:auto;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;padding:.7rem 1rem}
 .brand{font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;margin-right:auto}
-.brand span{color:var(--acc)}.nav a.l{color:var(--mute);text-decoration:none;font-size:.92rem}.nav a.l.on,.nav a.l:hover{color:var(--ink)}
+.brand span{color:var(--acc)}.nav a.l{color:var(--mute);text-decoration:none;font-size:.92rem;white-space:nowrap}.nav a.l.on,.nav a.l:hover{color:var(--ink)}
+#unitiq-scouting,#field-scouting{scroll-margin-top:9rem}
+@media(max-width:700px){
+  .nav{gap:.3rem .55rem;padding:.55rem .7rem}
+  .nav a.l{font-size:.84rem;line-height:1.25}
+}
 main{max-width:1100px;margin:auto;padding:1rem}
 .hero{padding:2.5rem 1rem;background:url(img/brand/topo.svg) repeat,linear-gradient(rgba(20,22,18,.75),rgba(20,22,18,.9));border-bottom:1px solid var(--line)}
 .hero div{max-width:1100px;margin:auto}h1{font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.15;margin:.2rem 0 .8rem}
