@@ -20,10 +20,10 @@ const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',sheep:'Bigho
 const PTSP=new Set(['moose','sheep']);   // residents use points too
 const NRPTS=new Set(['elk','deer','pronghorn','moose','sheep']);
 const HAS_SPECIAL=new Set(['elk','deer','pronghorn']);
-const VERD=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
+const VERD=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>0?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
 const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
-const vcol=v=>(vcolList.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
+const vcol=v=>v>0&&v<.05?'#D2501F':(vcolList.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const WK=Object.keys(WH);
 const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};
@@ -35,12 +35,12 @@ function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
 function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function tie(a,b){const d=RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area]);if(d)return d;const ta=String(WH[a.k].type),tb=String(WH[b.k].type);if(ta!==tb)return ta<tb?-1:1;return a.k.localeCompare(b.k)}
-function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>=.05}).map(k=>({k,v:band(k)}));
+function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>0}).map(k=>({k,v:band(k)}));
  return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,pool(),usesPts()?S.pts:''),row=>row.v,tie)}
 function bandAtPts(k,pts){const h=WH[k];if(!h)return null;const b=h.od[pool()];if(!b)return null;return b.o[Math.min(pts,b.o.length-1)]}
 function rowMeasure(x){return RWDraw.measure(p=>bandAtPts(x.k,p),S.pts)}
 function orderRows(r){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(r,S.ord,rowMeasure,tie);if(S.focus!='land')return r;return [...r].sort((a,b)=>RWLand.rank(wyBand(b.k))-RWLand.rank(wyBand(a.k))||b.v-a.v||a.k.localeCompare(b.k,undefined,{numeric:true}))}
-const below=()=>WK.filter(k=>ok(k)&&band(k)!=null&&band(k)<.05).length;
+const below=()=>WK.filter(k=>ok(k)&&band(k)===0).length;
 const TN={1:'Type 1',2:'Type 2',3:'Type 3',4:'Type 4',5:'Type 5',6:'Type 6',7:'Type 7',8:'Type 8',9:'Type 9',0:'Type 0'};
 const cap=s=>s.toLowerCase().replace(/(^|[\s,;(])([a-z])/g,(m,a,b)=>a+b.toUpperCase()).replace(/[;,]\s*$/,'');
 function title(k){const h=WH[k];const a=isGen(h)?(h.area=='GEN'?'Nonresident general license':`Nonresident general license, Region ${h.area}`):`Hunt area ${h.area} · ${TN[h.type]||'Type '+h.type}`;
@@ -73,23 +73,32 @@ function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
 function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
 function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
-function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const all=ranked(),nb=below();
+function wyName(k){const h=WH[k];return isGen(h)?(h.area=='GEN'?'Nonresident general license':`Nonresident general license, Region ${h.area}`):`Hunt area ${h.area}`}
+function wyOpts(member){const pts=usesPts()?S.pts:null;return {points:pts,rule:window.RWLong?RWLong.rules.wy:'',member:!!member,next:pts!=null&&window.RWLong?RWLong.nextFromHistory(WK.filter(ok),pool(),S.pts,wyName):null}}
+function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,wyOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n==1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
+function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const all=lsOrder(ranked()),nb=below();
  const redNote=pool()=='nrs'&&S.red?'<p class="note">Reduced-price cow/calf and doe/fawn licenses are a separate random draw. They are not in the special draw, so they are left off this list. Choose Regular to see them.</p>':'';
- const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Hunts under a 5% estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} under 5% with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('wy')}</p>`:'');
- if(!paid()){if(LM){LM.remove();LM=null}const samples=RWGate.takePerUnit(all.filter(x=>isSample(x.k)),x=>WH[x.k]&&WH[x.k].area);
+ const note=`<p class="note">Point-pool odds are WGFD's printed 2026 1st-choice figures. Random odds, and any verdict that mixes the two, are estimates. Odds above 0 and under 5% are long shots. Hunts with a zero estimate aren't shown${nb?` (${nb} more hunt${nb==1?'':'s'} at zero with these choices)`:''}. Not a guarantee. Check the current WGFD regulations before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('wy')}</p>`:'');
+ if(!paid()){if(LM){LM.remove();LM=null}
+  if(window.RWLong&&RWLong.allLong(all)){
+    const best=RWLong.bestFirst(all);
+    o.innerHTML=RWLong.banner(wyOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${who()}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map(card).join('')+`</ol>`+note;
+    o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
+  const samples=RWGate.takePerUnit(all.filter(x=>isSample(x.k)),x=>WH[x.k]&&WH[x.k].area);
   o.innerHTML=RWGate.freeShell({count:all.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
- const r=orderRows(all);
- const list=window.RWTrophy?RWTrophy.refine(r):r;
+ const r=lsOrder(orderRows(all));
+ const list=lsOrder(window.RWTrophy?RWTrophy.refine(r):r);
  const ban=window.RWGate?RWGate.banner():'';
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Best odds first.'));
- if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}<p class="dq">${who()}. Colored hunt areas have at least one hunt you can draw. The color is the best odds in that area. Tap an area to see its hunts.</p>`+fpBox()+mapKey()+`<div id="map" class="gmap" aria-label="Map of Wyoming hunt areas"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+mapCred()+`<p class="note">A general or region license has no single hunt area in this layer, so it is left off the map. A numbered area that is missing from the layer is left off too.</p>`+note+fpLine();
+ if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}<p class="dq">${who()}. Colored hunt areas have at least one hunt you can draw. The color is the best odds in that area. Tap an area to see its hunts.</p>`+fpBox()+mapKey()+`<div id="map" class="gmap" aria-label="Map of Wyoming hunt areas"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+mapCred()+`<p class="note">A general or region license has no single hunt area in this layer, so it is left off the map. A numbered area that is missing from the layer is left off too.</p>`+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList();o.scrollIntoView({behavior:'smooth'})});drawMap(r);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length==1?'':'s'} you can draw</h2>${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
+ o.innerHTML=ban+lsHead(list,true)+`${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
-  (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||'<p class="dq">No hunts at 5% or better with these choices. Try another hunt type, or check back as you build points.</p>')+note+fpLine();
+  (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||(window.RWLong?RWLong.empty(wyOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+note+fpLine();
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
  if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
@@ -122,10 +131,10 @@ const MAPS={
  bison:{file:'bison.json',year:'2016',pdf:'https://wgfd.wyo.gov/media/33721/download?inline',label:'WGFD wild bison hunt area map'}
 };
 const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2',bg:'#2A2D26'};
-const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>0?'long':'none';
 const areaId=a=>/^\d+$/.test(String(a))?String(parseInt(a,10)):null;
 function mapCred(){const m=MAPS[S.sp];return `<p class="mapcred"><b>Hunt area boundaries: Wyoming Game and Fish Department.</b> Lines are simplified. WGFD describes this layer as ${m.year} boundaries. <a href="${m.pdf}">${m.label}</a>. The written boundary in the regulations is the one that counts.</p>`}
-function mapKey(){const items=[['yes','Yes','sure to draw',MC.yes],['likely','Likely','',MC.likely],['maybe','Maybe','',MC.maybe],['long','Long shot','',MC.long],['none','No hunt you can draw','(under 5%, or not in this list)',MC.none]];
+function mapKey(){const items=[['yes','Yes','sure to draw',MC.yes],['likely','Likely','',MC.likely],['maybe','Maybe','',MC.maybe],['long','Long shot','',MC.long],['none','No hunt you can draw','(zero odds, or not in this list)',MC.none]];
  return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is your best odds in that hunt area</p><ul>`+items.map(([b,w,d,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b>${d?` <span class="mkd">${d}</span>`:''}<span class="mkn"></span></span></li>`).join('')+'</ul></div>'}
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} area${n==1?'':'s'}`:' · none'})}
 let LM=null,DM=null,GJ=null;const GJS={};

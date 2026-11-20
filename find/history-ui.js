@@ -7,11 +7,11 @@
 (function(){
 const KEY='rw_draw_span';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const YES=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
-const DREW=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'UNDER ONE IN TWENTY':v===0?'NONE DREW':'NO RESULT';
+const YES=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>0?'LONG SHOT':'NOT THIS YEAR';
+const DREW=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'LONG SHOT':v===0?'NONE DREW':'NO RESULT';
 const COL=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
 const RANK=[0,0.01,0.05,0.25,0.75,1];
-const col=v=>(COL.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
+const col=v=>v>0&&v<.05?'#D2501F':(COL.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
 const me=typeof document!=='undefined'&&document.currentScript;
 const url=me&&me.dataset.history;
 let data=null, failed=false, pending=null, scheduled=false, busy=false;
@@ -495,6 +495,28 @@ function packFor(hk, side, pts){
 }
 hy.pack=packFor;
 hy.when=function(){return load()};
+function abovePoints(hk, side, pts){
+  if(!data)return null;
+  const hunt=data.hunts&&data.hunts[hk];
+  const rec=recordFor(hunt, side);
+  if(!rec||!rec.y)return null;
+  const sample=Object.values(rec.y).find(v=>v!=null);
+  if(!sample||typeof sample!=='object')return null;
+  const min=Number(pts)+1;
+  if(!Number.isFinite(min))return null;
+  let best=null;
+  for(const yr of Object.keys(rec.y)){
+    const map=rec.y[yr];
+    if(!map||typeof map!=='object')continue;
+    for(const [k,v] of Object.entries(map)){
+      const n=Number(k);
+      if(!Number.isFinite(n)||n<min||!(typeof v==='number'&&v>0))continue;
+      if(!best||n<best.points||(n===best.points&&Number(yr)>Number(best.year)))best={points:n, year:String(yr)};
+    }
+  }
+  return best;
+}
+hy.abovePoints=abovePoints;
 hy.band=bandFor;
 hy.yearLine=yearLine;
 hy.trendWord=trendWord;

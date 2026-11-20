@@ -13,9 +13,9 @@ const H=Object.entries(MH);
 const SP={elk:'Elk',deer:'Deer',antelope:'Antelope',moose:'Moose',sheep:'Bighorn sheep',goat:'Mountain goat',bison:'Bison',bear:'Black bear'};
 const CLS={permit:'Permit',B:'B license',archery:'Archery',license:'License'};
 const SXN={M:'Antlered',F:'Antlerless',E:'Either sex','':'Any'};
-const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW',0.01:'UNDER ONE IN TWENTY',0:'NONE DREW'};
+const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW',0.01:'LONG SHOT',0:'NONE DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
-const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
+const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
 let S={sp:'elk',cls:'',sx:'',wpn:'',res:'res',pts:0,unit:'',youth:true,n:25,focus:'',ord:'',tab:'list',ol:''};
 let unitCtl=null;
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -51,7 +51,7 @@ function chanceAt(h,pts){
 function word(h,v){
   if(v==null)return 'NO ROW AT THIS POINT LEVEL';
   if(h.unl&&v===1)return 'UNLIMITED';
-  return WORD[v]||(v>0?'UNDER ONE IN TWENTY':'NONE DREW');
+  return WORD[v]||(v>0?'LONG SHOT':'NONE DREW');
 }
 function verdictLine(h,v){const text=word(h,v);if(v==null)return text;return window.RWSeason?RWSeason.label(MT_META.year,'result',text):text}
 function oddsHTML(h){
@@ -78,7 +78,7 @@ function tie(a,b){
 }
 function rowMeasure(x){return RWDraw.measure(p=>chanceAt(x.h,p), usesPts()?S.pts:0)}
 function ranked(){
-  const rows=pool().filter(([k,h])=>RWUnit.hit([h.area],S.unit)&&bandAt(h)!=null&&bandAt(h)>=0.05).map(([k,h])=>({k,h,v:bandAt(h)}));
+  const rows=pool().filter(([k,h])=>RWUnit.hit([h.area],S.unit)&&bandAt(h)!=null&&bandAt(h)>0).map(([k,h])=>({k,h,v:bandAt(h)}));
   return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,S.res,usesPts()?S.pts:null),row=>row.v,tie);
 }
 function rowsInOrder(all){
@@ -86,7 +86,7 @@ function rowsInOrder(all){
   if(S.focus==='land')return all.slice().sort((a,b)=>RWLand.rank(mtBand(b.h))-RWLand.rank(mtBand(a.h))||b.v-a.v||tie(a,b));
   return all;
 }
-const below=()=>pool().filter(([,h])=>{const v=bandAt(h);return v!=null&&v<0.05}).length;
+const below=()=>pool().filter(([,h])=>bandAt(h)===0).length;
 const missing=()=>pool().filter(([,h])=>bandAt(h)==null).length;
 function maxPts(){return usesPts()?(MT_META.maxp[S.sp]||0):0}
 function whoLine(){
@@ -116,12 +116,23 @@ function card(x,i,full){
   return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.desc)}</span><span class="fd">${esc(x.h.wlab)} · 2026 first choice · historical result</span>${oddsHTML(x.h)}${RWHy(x.k,S.res,usesPts()?S.pts:null)}${trophy}${bits.info}</button>${bits.next}</li>`;
 }
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus==='land'?'on':''}">Public land</button></div></div>`}
+function mtKeys(){return pool().filter(([,h])=>RWUnit.hit([h.area],S.unit)).map(([k])=>k)}
+function mtOpts(member){const pts=usesPts()?S.pts:null;return {points:pts,rule:window.RWLong?RWLong.rules.mt:'',member:!!member,next:pts!=null&&window.RWLong?RWLong.nextFromHistory(mtKeys(),S.res,S.pts,k=>'District '+(MH[k].area||k)):null}}
+function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,mtOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
 function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;
   if(LM&&S.tab!=='map'){LM.remove();LM=null}
-  const all=ranked(), nb=below(), nm=missing();
-  const note=`<p class="note">Bands are the 2026 first-choice result at this bonus-point level. They are not a chance in a future draw. Under one in twenty stays off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no first-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current FWP regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('mt')}</p>`:'');
+  const all=lsOrder(ranked()), nb=below(), nm=missing();
+  const note=`<p class="note">Bands are the 2026 first-choice result at this bonus-point level. They are not a chance in a future draw. Odds above 0 and under one in twenty are long shots. Hunts where none drew stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no first-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current FWP regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('mt')}</p>`:'');
   if(!paid()){
+    if(window.RWLong&&RWLong.allLong(all)){
+      const best=RWLong.bestFirst(all);
+      o.innerHTML=RWLong.banner(mtOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${esc(whoLine())}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>card(x,i,false)).join('')+`</ol>`+note;
+      o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+      if(sc)o.scrollIntoView({behavior:'smooth'});
+      return;
+    }
     const samples=RWGate.takePerUnit(all.filter(x=>SAMPLES.has(String(x.h.area))), x=>x.h.area);
     const who=SAMPLES.size?`Districts ${[...SAMPLES].join(' and ')}`:'the sample districts';
     o.innerHTML=RWGate.freeShell({count:all.length,species:(SP[S.sp]||'hunt').toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:`<b>Sample.</b> ${who} only, up to 3 hunts from each. This is not your whole list.`,samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>card(x,i,false)).join('')+'</ol>':''});
@@ -130,16 +141,16 @@ function showList(sc){
     return;
   }
   const ordered=rowsInOrder(all);
-  const list=window.RWTrophy?RWTrophy.refine(ordered):ordered;
+  const list=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
   const ban=window.RWGate?RWGate.banner():'';
   const lead=(window.RWTrophy&&RWTrophy.sortNote())||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus==='land'?'Mostly public land first.':'Strongest 2026 result first.'));
   const tabs=mapTabs();
   if(S.tab==='map'){
-    o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at this point level</h2>`+tabs+`<p class="dq">${esc(whoLine())}. Colored districts have at least one hunt at one in twenty or better. The color is the best 2026 result in that district.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Montana hunting districts"></div><div id="mpanel" hidden></div>`+mapCred()+note;
+    o.innerHTML=ban+lsHead(list,true)+tabs+`<p class="dq">${esc(whoLine())}. Colored districts have at least one hunt you can draw. The color is the best 2026 result in that district. Orange is a long shot when the share was above 0 and under one in twenty.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Montana hunting districts"></div><div id="mpanel" hidden></div>`+mapCred()+note;
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return;
   }
-  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at this point level</h2>`+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':`<p class="dq">No 2026 first-choice row at this point level reached one in twenty. Try another license type, another point level, or the other residency.</p>`)+note;
+  o.innerHTML=ban+lsHead(list,true)+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(mtOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note;
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.n=25;showList()});
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
@@ -272,11 +283,11 @@ const MAPS={
 function mapTabs(){return `<div class="tabs" role="tablist"><button type="button" class="tb${S.tab==='list'?' on':''}" data-tab="list">List</button><button type="button" class="tb${S.tab==='map'?' on':''}" data-tab="map">Map</button></div>`}
 function mapCred(){return `<p class="mapcred"><b>Hunting district boundaries: Montana Fish, Wildlife and Parks.</b> The layer is the 2026 and 2027 season boundary. Lines are simplified. <a href="${esc(MT_META.pages.legal)}">2026 and 2027 legal descriptions</a>. The written boundary is the one that counts. A license for only part of a district is not given its own shape.</p>`}
 function mapKey(){
-  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['none','No hunt at one in twenty',MC.none]];
+  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['long','Long shot',MC.long],['none','Nobody drew',MC.none]];
   return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is the best 2026 result in that district</p><ul>`+items.map(([b,w,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b><span class="mkn"></span></span></li>`).join('')+'</ul></div>';
 }
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} district${n===1?'':'s'}`:' · none'})}
-const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':'none';
+const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':v>0?'long':'none';
 let LM=null,DM=null,GJ=null;const GJS={};
 const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
 async function ensureMap(){

@@ -25,7 +25,7 @@ const PL=AZ_META.pools;const poolsOf=sp=>Object.keys(PL).filter(k=>PL[k][0]==sp)
 const PSHORT={'elk-bull':'Bull','elk-cow':'Antlerless','elk-any':'Any elk','ph':'Buck pronghorn','deer-ad':'Any antlered deer','deer-mule':'Antlered mule deer','deer-wt':'Antlered whitetail','deer-al':'Antlerless or any deer','turkey-s':'Spring','turkey-f':'Fall','jav-s':'Spring','jav-f':'Fall','sheep-d':'Desert bighorn','sheep-rm':'Rocky Mountain bighorn','bison':'Bison','crane':'Sandhill crane'};
 const WN={'':'Any weapon',R:'General (any legal weapon)',A:'Archery only',M:'Muzzleloader',H:'HAM (handgun, archery, muzzleloader)',S:'Shotgun shooting shot'};
 const DRAW={M:'elk and pronghorn draw',F:'fall draw',S:'spring draw'};
-const VERD=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
+const VERD=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>0?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
 const AHk=Object.keys(AH);
 // Sex of each hunt, from the "legal wildlife" in AZGFD's hunt tables, read with the Commission's definitions (R12-4-101):
@@ -45,7 +45,7 @@ const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
 function tie(a,b){const d=RWUnit.sortNum(azUnits(a.k))-RWUnit.sortNum(azUnits(b.k));if(d)return d;const da=String(AH[a.k].d||''),db=String(AH[b.k].d||'');if(da!==db)return da<db?-1:1;return String(AH[a.k].n).localeCompare(String(AH[b.k].n),undefined,{numeric:true})}
-function ranked(){const rows=AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
+function ranked(){const rows=AHk.filter(k=>{const h=AH[k];if(!plOK(h)||!avail(h)||!wOK(h)||!sxOK(k)||!RWUnit.hit(azUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>0})
  .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,S.res,S.pts),row=>row.v,tie)}
 function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
 function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
@@ -80,7 +80,7 @@ const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']
 const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E8E0D2',bg:'#2A2D26',sel:'#C8792F',otc:'#6A4C93'};
 // Over the counter: its own purple, outside both the draw-odds ramp and the harvest blues.
 const otcKey=()=>hasOTC()?[{b:'otc',w:'Over the counter',d:'no hunt to draw here with your choices, but an over-the-counter nonpermit-tag is sold (no draw)',st:fillSt(MC.otc,1)}]:[];
-const vcol=v=>(vcolList.find(c=>v>=c[0])||[0,MC.none])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
+const vcol=v=>v>0&&v<.05?MC.long:(vcolList.find(c=>v>=c[0])||[0,MC.none])[1];const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 const bk=(d,pg)=>{const t={M:'2026 Pronghorn and Elk Regulations',F:'2026–27 Arizona Hunting Regulations',S:'2027 Spring Hunting Regulations'}[d];return `<a href="${SRC.bk[d]}">${t}</a>${pg?' ('+(typeof pg=='number'?'PDF page '+pg:pg)+')':''}`};
 const rep=d=>{const s=SRC[{M:'M26',F:'F26',S:'S26'}[d]];const n={M:'2026 elk and pronghorn',F:'2026 fall',S:'2026 spring'}[d];return `AZGFD ${n} draw reports: <a href="${s.bp}">Bonus Point Report</a>, <a href="${s.bonus}">Bonus Pass</a>, <a href="${s.p12}">1-2 Pass</a>`};
 const gmu=u=>`https://www.azgfd.com/location/gmu-${u.toLowerCase()}/`;
@@ -127,25 +127,35 @@ function otcSec(o){if(!hasOTC())return'';const ns=S.on||25;
 function otcTop(o){if(!hasOTC())return'';return `<p class="note otn"><b>No draw needed:</b> ${o.length?`${o.length} over-the-counter (nonpermit-tag) hunt${o.length==1?'':'s'} match${o.length==1?'es':''} your choices. <a href="#otc" class="otj">See them after the draw list</a>.`:'no over-the-counter nonpermit-tag matches these choices (some are archery, HAM or youth only).'}</p>`}
 function azPkg(k){if(!paid()||!window.RWLand)return '';const h=AH[k],units=(h.u||[]).map(String).filter(u=>u&&u!=='SP');if(units.length!==1)return '';
  return RWLand.extra({place:'Unit '+units[0],href:RWLand.pkgHref('../','az',units[0],h.sp)})}
+function azKeys(){return AHk.filter(k=>{const h=AH[k];return plOK(h)&&avail(h)&&wOK(h)&&sxOK(k)&&RWUnit.hit(azUnits(k),S.unit)})}
+function azName(k){const h=AH[k];return h.area||h.legal||String(h.n)}
+function azOpts(member){return {points:S.pts,rule:window.RWLong?RWLong.rules.az:'',member:!!member,next:window.RWLong?RWLong.nextFromHistory(azKeys(),S.res,S.pts,azName):null}}
+function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,azOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n==1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.so==='h')return rows;return RWLong.bestFirst(rows)}
 function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  if(S.sp=='bear'){o.innerHTML=`<h2 id="lt">Black bear</h2>${bearNote()}${fbA('find')}`;return}
- const r=ranked(),nh=noHist(),oR=otcRows();
+ const r=lsOrder(ranked()),nh=noHist(),oR=otcRows();
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Arizona resident':'Out of state'} · ${ptsWord()} · ${WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
- const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
- if(!paid()){const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>(AH[x.k].u||[]).filter(u=>u==='7'||u==='1'));
+ const note=`<p class="note">Odds are estimates from AZGFD's 2026 draw reports (1st choice only) and Arizona's draw rules; how we figure them is under each hunt. Odds above 0 and under 5% are long shots. Hunts with zero odds for your residency aren't shown${S.champ?'':', and CHAMP hunts are hidden (turn them on under More options)'}.${nh.length?` ${nh.length} hunt${nh.length==1?' has':'s have'} no usable 2026 draw record and ${nh.length==1?'isn\'t':'aren\'t'} ranked.`:''} Not a guarantee. Always check the AZGFD regulations before you apply.</p>`;
+ if(!paid()){
+  if(window.RWLong&&RWLong.allLong(r)){
+    const best=RWLong.bestFirst(r);
+    o.innerHTML=RWLong.banner(azOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${who}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.res,S.pts):''}</button></li>`).join('')+`</ol>`+note;
+    o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
+  const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>(AH[x.k].u||[]).filter(u=>u==='7'||u==='1'));
   o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 7 and 1 only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.res,S.pts):''}</button></li>`).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
  const ban=window.RWGate?RWGate.banner():'';
- if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter nonpermit-tag (no draw).':''} Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts under 5%, not shown)'],.55)+mLab()+tiles(r)+
+ if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter nonpermit-tag (no draw).':''} Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts with zero odds)'],.55)+mLab()+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fpLine()+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
- const rawList=rowsInOrder(r), list=window.RWTrophy?RWTrophy.refine(rawList):rawList;
+ const rawList=rowsInOrder(r), list=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
+ o.innerHTML=ban+lsHead(list,true)+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}</button>${azPkg(x.k)}</li>`).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
-  (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||'<p class="dq">No hunts at 5% or better with these choices. Try another weapon or hunt type, or check back as you build points.</p>')+otcSec(oR)+note+fpLine()+fbA('find');
+  (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(azOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+otcSec(oR)+note+fpLine()+fbA('find');
  wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
  if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
@@ -154,7 +164,7 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
 // the light square is the greyed tile (55% over the panel), and the orange outline is the tile you tapped.
 const KU='unit';
 const KEYB=[['yes','Yes','sure to draw'],['likely','Likely',''],['maybe','Maybe',''],['long','Long shot','']];
-const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>0?'long':'none';
 // ===== Harvest success: sort the list and color the map by it =====
 // Harvest success comes only from the agency's own harvest reports (the same number shown on each hunt): hunters who
 // took an animal / hunters who hunted, as the agency reports it. A hunt with no official number shows "No data" and sorts last.
