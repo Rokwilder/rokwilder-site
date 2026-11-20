@@ -224,6 +224,64 @@ function formatLine(win, say){
   if(band==null)return win.label;
   return win.label+': '+(say?say(band):'');
 }
+function sentenceWord(v){
+  const w=word(v);
+  const map={
+    "YES, you'll draw":"Yes, you'll draw",
+    'LIKELY':'Likely',
+    'MAYBE':'Maybe',
+    'LONG SHOT':'Long shot',
+    'NOT THIS YEAR':'Not this year',
+    'ALL DREW':'All drew',
+    'MOST DREW':'Most drew',
+    'SOME DREW':'Some drew',
+    'FEW DREW':'Few drew',
+    'UNDER ONE IN TWENTY':'Under one in twenty',
+    'NONE DREW':'None drew',
+    'NO RESULT':'No result'
+  };
+  return map[w]||w;
+}
+function infoLabel(win){
+  return String(win&&win.label||'').replace(/(\d+)-yr avg/g,'$1-year average');
+}
+function infoLine(win){
+  if(!win||!win.ok)return '';
+  const band=win.band!=null?win.band:win.wider;
+  if(band==null)return '';
+  return infoLabel(win)+': '+sentenceWord(band);
+}
+function historyNote(last, three){
+  if(!three||!three.ok||three.short||three.n!==3||three.band==null)return '';
+  if(!last||last.band==null)return '';
+  const a=rankOf(last.band), b=rankOf(three.band);
+  if(a==null||b==null||a===b)return '';
+  return a<b
+    ? 'Last year was harder to draw than the 3-year average.'
+    : 'Last year was easier to draw than the 3-year average.';
+}
+function verdictHead(el){
+  const parent=el&&el.parentElement;
+  if(!parent)return null;
+  return [...parent.children].find(c=>c!==el&&c.classList&&(c.classList.contains('fv')||c.classList.contains('vd')))||null;
+}
+function isEstimateCard(el){
+  const head=verdictHead(el);
+  return !!(head&&/estimate:/i.test(head.textContent||''));
+}
+function moreInfoHtml(row){
+  const last=windowOf(row, 1);
+  const three=windowOf(row, 3);
+  const bits=[];
+  const a=infoLine(last);
+  const b=infoLine(three);
+  if(a)bits.push(`<span class="hymine">${esc(a)}</span>`);
+  if(b&&b!==a)bits.push(`<span class="hymine">${esc(b)}</span>`);
+  const note=historyNote(last, three);
+  if(note)bits.push(`<span class="hyhint">${esc(note)}</span>`);
+  if(!bits.length)return '';
+  return `<span class="hymore"><span class="hylab">More info</span>${bits.join('')}</span>`;
+}
 function lineHtml(win){
   if(!win)return '';
   const band=win.band!=null?win.band:win.wider;
@@ -259,6 +317,9 @@ function htmlFor(el){
   const sub=want===3?last:three;
   const say=v=>word(v);
   const headHtml=lineHtml(head);
+  if(!oddsCard(el)&&isEstimateCard(el)){
+    return moreInfoHtml(row);
+  }
   if(oddsCard(el)){
     const entries=series(row).slice().reverse();
     const rates={};
@@ -286,11 +347,16 @@ function htmlFor(el){
 function place(el){
   const parent=el.parentElement;
   if(!parent)return;
-  let head=null;
-  for(const child of parent.children){
-    if(child!==el&&child.classList&&(child.classList.contains('fv')||child.classList.contains('vd'))){head=child;break}
+  const head=verdictHead(el);
+  if(!head)return;
+  if(isEstimateCard(el)){
+    const odds=[...parent.children].find(c=>c.classList&&c.classList.contains('fo')&&!c.classList.contains('lk'));
+    if(odds&&head.nextElementSibling!==odds)parent.insertBefore(odds, head.nextSibling);
+    const anchor=odds&&odds.parentNode===parent?odds:head;
+    if(el.previousElementSibling!==anchor)parent.insertBefore(el, anchor.nextSibling);
+    return;
   }
-  if(!head||head.previousElementSibling===el)return;
+  if(head.previousElementSibling===el)return;
   parent.insertBefore(el, head);
 }
 function hideTagGate(el){
@@ -303,6 +369,7 @@ function hideTagGate(el){
 }
 function paint(el){
   const html=htmlFor(el);
+  el.classList.toggle('hy-est', isEstimateCard(el));
   if(el.dataset.sig!==html){
     el.dataset.sig=html;
     el.innerHTML=html;
@@ -437,6 +504,8 @@ hy.span=span;
 hy.setSpan=setSpan;
 hy.windowOf=windowOf;
 hy.hintText=hintText;
+hy.historyNote=historyNote;
+hy.infoLine=infoLine;
 hy.formatLine=formatLine;
 window.RWSeason={yearsIn, maxYear, label:seasonLabel};
 window.RWHy=hy;

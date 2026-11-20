@@ -86,7 +86,7 @@ const ptsWord=()=>{const t=UH&&PL[S.pl][1];return t=='lottery'?'':`${S.pts} ${t=
 function drawYear(){return window.RWSeason?RWSeason.maxYear(JSON.stringify(UT_META.src)):null}
 function bandSeason(k){const draw=drawYear(),h=k&&UH[k];if(h&&h.pt=='lottery')return {y:draw,kind:'result'};return {y:draw==null?null:draw+1,kind:'estimate'}}
 function verdictLine(v,k){if(v==null)return 'NO DATA';const s=bandSeason(k),word=verdict(v);return window.RWSeason?RWSeason.label(s.y,s.kind,word):word}
-function oddsHTML(v,cls,k){const s=bandSeason(k);if(!FP)return `<div class="${cls} lk">${FPN}</div>`;const tail=s.kind=='result'?` (random draw, ${s.y})`:` with ${ptsWord()} (${s.y} estimate)`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${tail}</span></div>`}
+function oddsHTML(v,cls,k){const s=bandSeason(k);if(!FP)return `<div class="${cls} lk">${FPN}</div>`;const tail=s.kind=='result'?` (random draw, ${s.y})`:` with ${ptsWord()}`;return `<div class="${cls}"><b>${pct(v)}</b> <span>draw odds${tail}</span></div>`}
 function fee(h){return S.yo&&h.fy?h.fy:h.fee}
 const money=n=>n==null?'not offered':'$'+n.toLocaleString();
 // ===== Over-the-counter (OTC) general-season bull elk permits: utah/otc.js =====

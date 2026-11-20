@@ -96,6 +96,13 @@ html.rw-pass .rw-fp-cta,html.rw-pass .rw-free-intro{display:none !important}
 .hy .hywhy{display:block;margin-top:.15rem;font-weight:800}
 .hy .hycounts{display:block;margin-top:.15rem;color:var(--mute);font-size:.98rem}
 .hy .hyhint{display:block;margin-top:.15rem;font-weight:800;font-size:.98rem;color:#e0a050}
+.hy .hymore{display:block;margin-top:.35rem;color:var(--mute);font-size:.9rem;font-weight:500;line-height:1.35}
+.hy .hylab{display:block;margin-bottom:.05rem;font-size:.75rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+.hy .hymine{display:block}
+.hy-est .hyhint{font-size:.9rem;font-weight:600;color:var(--mute)}
+.fh:has(.hy-est) .fv,.yo:has(.hy-est) .vd{font-size:1.7rem;font-weight:900;line-height:1.15;letter-spacing:.01em}
+.fh:has(.hy-est) .fo:not(.lk){margin-top:.1rem;font-size:1.15rem;font-weight:800}
+.fh:has(.hy-est) .fo.lk,.yo:has(.hy-est) .fo.lk{display:none}
 .fh:has(.hynum) .fv{font-size:1.05rem;font-weight:800}
 .yo:has(.hynum) .vd{font-size:1.2rem;font-weight:800;margin:.35rem 0 .2rem}
 .dspan{display:block;font-weight:700;margin:.45rem 0 .7rem;max-width:34rem}

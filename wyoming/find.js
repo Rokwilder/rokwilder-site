@@ -49,7 +49,7 @@ const ptsWord=()=>usesPts()?`${S.pts} point${S.pts==1?'':'s'}`:'no points used';
 const who=()=>`${SP[S.sp]} · ${S.res=='res'?'Wyoming resident':'Out of state'+(HAS_SPECIAL.has(S.sp)?(S.dr=='nrs'?' · special draw':' · regular draw'):'')} · ${ptsWord()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}`;
 function bandSeason(){return {y:M.year,kind:'estimate'}}
 function verdictLine(v){if(v==null)return '';const s=bandSeason();return window.RWSeason?RWSeason.label(s.y,s.kind,VERD(v)):VERD(v)}
-function oddsHTML(v){if(!FP)return `<div class="fo lk"><span class="fpn">Verdict band, not an exact percentage</span></div>`;return `<div class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()} (${bandSeason().y})</span></div>`}
+function oddsHTML(v){if(!FP)return `<div class="fo lk"><span class="fpn">Verdict band, not an exact percentage</span></div>`;return `<div class="fo"><b>${pct(v)}</b> <span>draw odds with ${ptsWord()}</span></div>`}
 const SRCN={pp_nr:'Nonresident preference point',rand_nr:'Nonresident random',pp_nrs:'Nonresident special preference point',rand_nrs:'Nonresident special random',res:'Resident',cc_res:'Resident reduced price',cc_nr:'Nonresident reduced price',pp_res:'Resident preference point',rand_res:'Resident random',f_res:'Resident female/calf',f_nr:'Nonresident female/calf'};
 const rep=n=>n&&M.src[S.sp]&&M.src[S.sp][n]?`<a href="${esc(M.src[S.sp][n].url)}">WGFD 2026 ${SRCN[n]||n} report</a>`:'';
 function sourceNames(h){
