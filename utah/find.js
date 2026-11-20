@@ -56,11 +56,11 @@ function odds(k){const h=UH[k],b=h.d[S.res];if(!b)return null;
  const p=Math.min(S.pts,MAXP);let v=b.o[p];
  if(S.yo&&h.y&&h.y[S.res]){const y=h.y[S.res];if(h.ys){if(y.o[p]!=null)v=y.o[p]}else if(yOK(y)&&y.o[p]!=null)v=Math.max(v??0,y.o[p])}
  return v??null}
-const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>=.05?'LONG SHOT':'NOT THIS YEAR';
+const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>0?'LONG SHOT':'NOT THIS YEAR';
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
 function tie(a,b){const d=RWUnit.sortNum(utUnits(a.k))-RWUnit.sortNum(utUnits(b.k));if(d)return d;const sa=String((UH[a.k].seas[0]||[])[0]||''),sb=String((UH[b.k].seas[0]||[])[0]||'');if(sa!==sb)return sa<sb?-1:1;return a.k.localeCompare(b.k)}
 function histSide(){return S.yo?(S.res==='res'?'yres':'ynonres'):S.res}
-function ranked(){const rows=Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k)||!RWUnit.hit(utUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>=.05})
+function ranked(){const rows=Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k)||!RWUnit.hit(utUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>0})
  .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,histSide(),S.pts),row=>row.v,tie)}
 function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
 function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
@@ -110,28 +110,39 @@ function otcSec(o){if(!hasOTC())return'';const ns=S.on||25;
  return `<h3 id="otc" class="oth">Over the counter: no draw needed (${o.length})</h3><p class="dq">${o.length?`General-season bull elk permits aren't drawn and don't use points, so there are no odds. One row per hunt area the permit is valid in, ${S.so=='h'?'best harvest success first, then by area':'by area name'}. Multiseason spike bull and youth general-season elk permits are also sold over the counter (${gl('bg','page 15')}).`:'No over-the-counter permit matches these choices.'}</p>`+
   (o.length?`<ol class="fl otl">`+o.slice(0,ns).map(otcLi).join('')+'</ol>':'')+(o.length>ns?`<button class="btn o big2" id="omore">Show ${Math.min(25,o.length-ns)} more over-the-counter (${o.length-ns} left)</button>`:'')}
 function otcTop(o){if(!hasOTC())return'';return `<p class="note otn"><b>No draw needed:</b> ${o.length?`${o.length} over-the-counter general-season bull elk hunt${o.length==1?'':'s'} match${o.length==1?'es':''} your choices (2026: archery from July 7, any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). <a href="#otc" class="otj">See them after the draw list</a>.`:'no over-the-counter general-season bull elk permit matches these choices.'} Source: ${gl('bg','pages 13 and 15')}.</p>`}
-function showList(){const r=ranked(),oR=otcRows(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
+function utSide(){return S.yo?(S.res==='res'?'yres':'ynonres'):S.res}
+function utKeys(){const out=[];for(const k in UH){const h=UH[k];if(h.pool!=S.pl||(h.cw&&!S.priv)||!wOK(h)||!sxOK(k)||!RWUnit.hit(utUnits(k),S.unit))continue;out.push(k)}return out}
+function utNext(){return window.RWLong?RWLong.nextFromHistory(utKeys(),utSide(),S.pts,k=>UH[k].name):null}
+function utRule(){const kind=PL[S.pl]&&PL[S.pl][1];if(!window.RWLong)return '';if(kind==='lottery')return RWLong.rules.utLottery;if(kind==='pref')return RWLong.rules.utPref;return RWLong.rules.utBonus}
+function utOpts(member){return {points:S.pts,rule:utRule(),member:!!member,next:utNext()}}
+function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,utOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n==1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.so==='h'||S.so==='land')return rows;return RWLong.bestFirst(rows)}
+function showList(){const r=lsOrder(ranked()),oR=otcRows(),o=$('out');$('detail').hidden=true;o.hidden=false;if(M&&S.tab!='map'){M.remove();M=null}if(DM){DM.remove();DM=null}
  const who=`${SP[S.sp]} · ${PSHORT[S.pl]} · ${S.res=='res'?'Utah resident':'Out of state'}${PL[S.pl][1]=='lottery'?'':' · '+ptsWord()} · ${NOW.has(S.pl)?'any legal weapon':WN[S.w].toLowerCase()}${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.yo?' · youth':''}`;
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
- const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Hunts under 5% aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
+ const note=`<p class="note">Odds are estimates for 2027 from Utah DWR's 2026 draw (1st choice only) and Utah's draw rules; how we figure them is under each hunt. Odds above 0 and under 5% are long shots. Hunts with zero odds for your residency aren't shown${S.priv?'':', and CWMU (private land) hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the Utah DWR guidebook before you apply.</p>`;
  const yoOnly=S.pl=='elk-yo'&&!S.yo?'<p class="dq"><b>Youth only.</b> This hunt is for hunters 17 or younger on July 31. Turn on "Yes, youth" under More options.</p>':'';
  if(!paid()){if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
+  if(window.RWLong&&RWLong.allLong(r)){
+    const best=RWLong.bestFirst(r);
+    o.innerHTML=RWLong.banner(utOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${who}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,utSide(),S.pts):''}</button></li>`).join('')+`</ol>`+note;
+    o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
   const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>UH[x.k]&&UH[x.k].name);
   o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Manti and La Sal Mountains only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
  const ban=window.RWGate?RWGate.banner():'';
- if(S.tab=='map'){o.innerHTML=ban+`<h2 id="lt">${r.length} hunt${r.length==1?'':'s'} you can draw</h2>${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there.${hasOTC()?' Purple areas have no hunt to draw with your choices but sell an over-the-counter general-season bull elk permit (no draw).':''} Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
-  fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts under 5%, not shown)`],.9)+
+ if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there.${hasOTC()?' Purple areas have no hunt to draw with your choices but sell an over-the-counter general-season bull elk permit (no draw).':''} Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
+  fpBox()+mapKey(['No hunt you can draw',`(other ${PSHORT[S.pl].toLowerCase()} areas, or only hunts with zero odds)`],.9)+
   mLab()+`<div id="map" class="gmap" aria-label="Map of Utah hunt boundaries"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   CRED+note+fpLine()+fbA('maps');wireTabs(o);drawMap(r);return}
- const rawList=rowsInOrder(r), list=window.RWTrophy?RWTrophy.refine(rawList):rawList;
+ const rawList=rowsInOrder(r), list=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length==1?'':'s'} you can draw</h2>${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
+ o.innerHTML=ban+lsHead(list,true)+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
   (S.sp=='elk'&&!hasOTC()?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:otcTop(oR))+
   fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(utExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
-  (list.length||yoOnly?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||'<p class="dq">No hunts at 5% or better with these choices. Try fewer filters, or check back as you build points.</p>')+otcSec(oR)+note+`<p class="note">${RWLand.pageNote('ut')}</p>`+fpLine()+fbA('find');
+  (list.length||yoOnly?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(utOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+otcSec(oR)+note+`<p class="note">${RWLand.pageNote('ut')}</p>`+fpLine()+fbA('find');
  wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  o.querySelectorAll('a.ygo').forEach(a=>a.onclick=e=>{e.preventDefault();S.pl=a.dataset.pl;S.sp=PL[S.pl][0];S.yo=1;S.n=25;sync();history.pushState(st('list'),'',url());showList();top2(o)});
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
@@ -174,12 +185,12 @@ const MC={yes:'#263E2C',likely:'#6F7F4F',maybe:'#C4B28C',long:'#D2501F',none:'#E
 // Over the counter: its own purple, outside both the draw-odds ramp and the harvest blues.
 const otcKey=()=>hasOTC()?[{b:'otc',w:'Over the counter',d:'no hunt to draw here with your choices, but an over-the-counter general-season bull elk permit is sold (no draw)',st:fillSt(MC.otc,1)}]:[];
 const VC=[[.995,MC.yes],[.75,MC.likely],[.25,MC.maybe],[.05,MC.long]];
-const vcol=v=>(VC.find(c=>v>=c[0])||[0,MC.none])[1];const KU='hunt area';
+const vcol=v=>v>0&&v<.05?MC.long:(VC.find(c=>v>=c[0])||[0,MC.none])[1];const KU='hunt area';
 // ===== Map key =====
 // Big swatches with the same verdict words as the hunt cards. The swatches are drawn the way the map draws them
 // (same fill colors, same opacity over the map background, same cream outline), so the key matches what you see.
 const KEYB=[['yes','Yes','sure to draw'],['likely','Likely',''],['maybe','Maybe',''],['long','Long shot','']];
-const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>=.05?'long':'none';
+const bucket=v=>v>=.995?'yes':v>=.75?'likely':v>=.25?'maybe':v>0?'long':'none';
 // ===== Harvest success: sort the list and color the map by it =====
 // Harvest success comes only from the agency's own harvest reports (the same number shown on each hunt): hunters who
 // took an animal / hunters who hunted, as the agency reports it. A hunt with no official number shows "No data" and sorts last.

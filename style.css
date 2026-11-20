@@ -97,6 +97,10 @@ html.rw-pass .rw-fp-cta,html.rw-pass .rw-free-intro{display:none !important}
 .hy .hycounts{display:block;margin-top:.15rem;color:var(--mute);font-size:.98rem}
 .hy .hyhint{display:block;margin-top:.15rem;font-weight:800;font-size:.98rem;color:#e0a050}
 .hy .hymore{display:block;margin-top:.35rem;color:var(--mute);font-size:.9rem;font-weight:500;line-height:1.35}
+.lsbox{background:#F6F1E8;border:1px solid #E4D9C8;border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.lsbox p{margin:0 0 8px;font-size:15px;line-height:1.45}
+.lsbox p:last-child{margin:0}
+.lsbox .lshead{font-size:17px}
 .hy .hylab{display:block;margin-bottom:.05rem;font-size:.75rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
 .hy .hymine{display:block}
 .hy-est .hyhint{font-size:.9rem;font-weight:600;color:var(--mute)}

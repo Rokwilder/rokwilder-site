@@ -11,9 +11,9 @@ let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:'',ord:'',tab:
 let unitCtl=null;
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
-const VERD=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'UNDER ONE IN TWENTY':v===0?'NONE DREW':'NO RESULT';
+const VERD=v=>v===1?'ALL DREW':v>=.75?'MOST DREW':v>=.25?'SOME DREW':v>=.05?'FEW DREW':v>0?'LONG SHOT':v===0?'NONE DREW':'NO RESULT';
 const vcolList=[[.995,'#263E2C'],[.75,'#6F7F4F'],[.25,'#C4B28C'],[.05,'#D2501F']];
-const vcol=v=>(vcolList.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
+const vcol=v=>v>0&&v<.05?'#D2501F':(vcolList.find(c=>v>=c[0])||[0,'#E8E0D2'])[1];
 const vdot=v=>`<i class="vdot" style="background:${vcol(v)}"></i>`;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const MONTHS=['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sept.','Oct.','Nov.','Dec.'];
@@ -32,7 +32,7 @@ function split(){const show=[],under=[],none=[],unlabeled=[];
   if(!RWUnit.hit([h.area,h.n],S.unit))continue;
   const v=S.res==='res'?h.res:h.nr;
   if(v==null)none.push(k);
-  else if(v>=.05)show.push({k,v});
+  else if(v>0)show.push({k,v});
   else under.push(k);
  }
  function idTie(a,b){const area=RWUnit.sortNum([IH[a.k].area])-RWUnit.sortNum([IH[b.k].area]);if(area)return area;const oa=String((IH[a.k].seg[0]||{}).o||''),ob=String((IH[b.k].seg[0]||{}).o||'');if(oa!==ob)return oa<ob?-1:1;return IH[a.k].n.localeCompare(IH[b.k].n,undefined,{numeric:true})}
@@ -51,7 +51,7 @@ function wordNote(v){if(v===1)return 'Every first-choice person of this residenc
  if(v>=.75)return 'At least three out of four first-choice people of this residency were drawn. Not every person was drawn.';
  if(v>=.25)return 'At least one out of four first-choice people of this residency were drawn.';
  if(v>=.05)return 'At least one out of twenty first-choice people of this residency were drawn.';
- if(v>0)return 'Somebody was drawn, and the share was under one in twenty. This hunt is left off the main list.';
+ if(v>0)return 'Somebody was drawn, and the share was under one in twenty. This hunt is a long shot.';
  if(v===0)return 'People of this residency put the hunt first, and none of them were drawn.';
  return 'IDFG recorded nobody of this residency putting the hunt first, so there is no result to show.'}
 const FP=window.RW_FP===true && typeof IH==='object' && Object.values(IH).some(h=>h&&h.raw&&(h.raw.res||h.raw.nr));
@@ -90,26 +90,34 @@ function bandSeason(){return {y:M.year,kind:'result'}}
 function verdictLine(v){if(v==null)return '';return window.RWSeason?RWSeason.label(bandSeason().y,bandSeason().kind,VERD(v)):VERD(v)}
 function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
 function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
-function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!=='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const {show,under,none,unlabeled}=split();
+function idOpts(){return {points:null,rule:window.RWLong?RWLong.rules.id:'',member:false,next:null}}
+function lsHead(rows){if(window.RWLong)return RWLong.head(rows,idOpts());const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
+function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if(LM&&S.tab!=='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}const splitRows=split();const show=lsOrder(splitRows.show),under=splitRows.under,none=splitRows.none,unlabeled=splitRows.unlabeled;
  const emptySpecies=!rows().length;
  const note=emptySpecies?`<p class="note">IDFG's 2026 drawing-odds table returned no ${esc(drawName())} hunts for ${esc(spName(S.sp))}.</p>`:
-  `<p class="note">Each band is the share of ${esc(resName().toLowerCase())} first-choice people who were drawn in IDFG's 2026 ${esc(drawName())}. It is a past result. It is not your chance in a later drawing, and it is not a second-choice result. Hunts under one in twenty aren't shown${under.length?` (${under.length} more with these choices)`:''}.${none.length?` ${none.length} hunt${none.length===1?'':'s'} had nobody of this residency putting them first, so they have no result.`:''}${unlabeled.length?` ${unlabeled.length} hunt${unlabeled.length===1?' is':'s are'} hidden because the 2026 hunt list did not label sex.`:''} Not a guarantee.</p>`+(paid()?`<p class="note">${RWLand.pageNote('id')}</p>`:'');
- if(!paid()){const samples=RWGate.takePerUnit(show.filter(x=>isSample(x.k)),x=>IH[x.k]&&IH[x.k].area);
-  o.innerHTML=RWGate.freeShell({count:show.length,species:spName(S.sp).toLowerCase(),who:esc(who())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Areas 31 and 37 only, up to 3 hunts from each. This is not your whole list. The count is 2026 first-choice results at one in twenty or better, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
+  `<p class="note">Each band is the share of ${esc(resName().toLowerCase())} first-choice people who were drawn in IDFG's 2026 ${esc(drawName())}. It is a past result. It is not your chance in a later drawing, and it is not a second-choice result. Odds above 0 and under one in twenty are long shots. Hunts where nobody was drawn aren't shown${under.length?` (${under.length} more with these choices)`:''}.${none.length?` ${none.length} hunt${none.length===1?'':'s'} had nobody of this residency putting them first, so they have no result.`:''}${unlabeled.length?` ${unlabeled.length} hunt${unlabeled.length===1?' is':'s are'} hidden because the 2026 hunt list did not label sex.`:''} Not a guarantee.</p>`+(paid()?`<p class="note">${RWLand.pageNote('id')}</p>`:'');
+ if(!paid()){
+  if(window.RWLong&&RWLong.allLong(show)){
+    const best=RWLong.bestFirst(show);
+    o.innerHTML=RWLong.banner(idOpts())+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${esc(who())}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map(card).join('')+`</ol>`+note;
+    o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
+  const samples=RWGate.takePerUnit(show.filter(x=>isSample(x.k)),x=>IH[x.k]&&IH[x.k].area);
+  o.innerHTML=RWGate.freeShell({count:show.length,species:spName(S.sp).toLowerCase(),who:esc(who())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Areas 31 and 37 only, up to 3 hunts from each. This is not your whole list. The count includes long shots above 0. It is a 2026 result, not a forecast.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const ban=window.RWGate?RWGate.banner():'';
  const ordered=orderRows(show);
- const list=window.RWTrophy?RWTrophy.refine(ordered):ordered;
+ const list=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.'));
  const tabs=mapTabs();
  if(S.tab==='map'){
-  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at one in twenty or better</h2>`+tabs+`<p class="dq">${esc(who())}. Colored areas have at least one hunt at one in twenty or better. The color is the best 2026 result in that area. Tap an area to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Idaho controlled hunt areas"></div>`+mapCred()+note+fpLine();
+  o.innerHTML=ban+lsHead(list)+tabs+`<p class="dq">${esc(who())}. Colored areas have at least one hunt you can draw. The color is the best 2026 result in that area. Orange is a long shot when the share was above 0 and under one in twenty. Tap an area to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Idaho controlled hunt areas"></div>`+mapCred()+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
   drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at one in twenty or better</h2>`+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+ o.innerHTML=ban+lsHead(list)+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
-  (list.length||emptySpecies?'':(window.RWTrophy?RWTrophy.emptyNote(ordered.length,list.length):'')||`<p class="dq">No hunts at one in twenty or better with these choices.</p>`)+note+fpLine();
+  (list.length||emptySpecies?'':(window.RWTrophy?RWTrophy.emptyNote(ordered.length,list.length):'')||(window.RWLong?RWLong.empty(idOpts()):`<p class="dq">No hunts you can draw with these choices.</p>`))+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
@@ -127,17 +135,17 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  $('back').onclick=()=>showList(1);if($('dmap'))drawDetailMap(v);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}
 const MAPS={elk:'elk.json',deer:'deer.json',pronghorn:'pronghorn.json',moose:'moose.json','sheep-rm':'sheep-rm.json','sheep-ca':'sheep-ca.json',goat:'goat.json',bear:'bear.json',turkey:'turkey.json'};
-const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
+const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
 let LM=null,DM=null,GJ=null;const GJS={};
 const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
 function mapTabs(){return `<div class="tabs" role="tablist"><button type="button" class="tb${S.tab==='list'?' on':''}" data-tab="list">List</button><button type="button" class="tb${S.tab==='map'?' on':''}" data-tab="map">Map</button></div>`}
 function mapCred(){const year=S.sp==='turkey'?'2026':'2025';return `<p class="mapcred"><b>Controlled hunt area boundaries: Idaho Department of Fish and Game.</b> Lines are simplified. IDFG marks these areas as ${year} in the current controlled hunt layer. <a href="https://www.arcgis.com/home/item.html?id=2384064cb26f451f92cada96ce6dd340">IDFG controlled hunt areas</a>. The written boundary in the regulations is the one that counts. An area with no polygon in this layer is left off the map.</p>`}
 function mapKey(){
- const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['none','No hunt at one in twenty',MC.none]];
+ const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['long','Long shot',MC.long],['none','Nobody drew',MC.none]];
  return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is the best 2026 result in that area</p><ul>`+items.map(([b,w,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b><span class="mkn"></span></span></li>`).join('')+'</ul></div>';
 }
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} area${n===1?'':'s'}`:' · none'})}
-const bucket=v=>v>=1?'all':v>=.75?'most':v>=.25?'some':v>=.05?'few':'none';
+const bucket=v=>v>=1?'all':v>=.75?'most':v>=.25?'some':v>=.05?'few':v>0?'long':'none';
 function polygonCodes(){return new Set((GJ&&GJ.features||[]).map(f=>String(f.properties.u)))}
 function oneArea(codes,area){if(codes.has(area))return [area];if(area.endsWith('X')&&codes.has(area.slice(0,-1)))return [area.slice(0,-1)];return []}
 function areaCodes(area){
