@@ -549,8 +549,9 @@ function paintButtons(){
   const ids=new Set(loadPicks().map(p=>p.id));
   document.querySelectorAll('.pkadd').forEach(b=>{
     const on=ids.has(here()+':'+b.getAttribute('data-k'));
-    b.classList.toggle('on', on);
-    b.textContent=paid()?(on?'Saved to compare':'Add to compare'):'Compare is Full Pass';
+    if(b.classList.contains('on')!==on) b.classList.toggle('on', on);
+    const next=paid()?(on?'Saved to compare':'Add to compare'):'Compare is Full Pass';
+    if(b.textContent!==next) b.textContent=next;
   });
 }
 function ensureButtons(root){
@@ -624,7 +625,13 @@ function boot(){
   mount();
   ensureButtons(document);
   render();
-  const obs=new MutationObserver(()=>{ensureButtons(document); paintButtons()});
+  let busy=false;
+  const obs=new MutationObserver(()=>{
+    if(busy) return;
+    busy=true;
+    try{ensureButtons(document); paintButtons()}
+    finally{busy=false}
+  });
   obs.observe(document.documentElement,{childList:true, subtree:true});
   document.addEventListener('click', ev=>{
     const b=ev.target&&ev.target.closest&&ev.target.closest('.pkadd');

@@ -198,8 +198,8 @@ async function run(browser, browserName) {
       ok((await page.locator('.rw-cart').getAttribute('href')) === '/pricing.html', label + ' checkout goes to pricing');
       const src = await page.locator('script[src*="rw.js"]').getAttribute('src');
       const css = await page.locator('link[href*="member.css"]').getAttribute('href');
-      ok(src.includes('?v=20261114c'), label + ' rw.js is cache-busted (' + src + ')');
-      ok(css.includes('?v=20261114'), label + ' member.css is cache-busted');
+      ok(src.includes('?v=20261120b'), label + ' rw.js is cache-busted (' + src + ')');
+      ok(css.includes('?v=20261120b'), label + ' member.css is cache-busted');
       if (browserName === 'webkit' && vname === 'phone') await shot(page, 'phone-header-logged-out');
       if (browserName === 'chromium' && vname === 'desktop') await shot(page, 'desktop-header-logged-out');
       await context.close();
@@ -224,13 +224,13 @@ async function run(browser, browserName) {
       const line = page.locator('[data-rw-state]');
       ok(await line.isHidden(), label + ' full pass hides the checkout-closed line');
       ok((await page.locator('#fullpass [data-rw-sale="fullpass"]').innerText()).includes('You have the Full Pass'), label + ' full pass button names the pass');
-      await page.locator('#fullpass [data-rw-sale="fullpass"]').scrollIntoViewIfNeeded();
+      ok(await page.locator('#fullpass [data-rw-sale="fullpass"]').isHidden(), label + ' full pass purchase button stays hidden');
       if (browserName === 'webkit' && vname === 'phone') await shot(page, 'phone-header-full-pass');
       if (browserName === 'chromium' && vname === 'desktop') await shot(page, 'desktop-header-full-pass');
       const postsBefore = page._posts.length;
-      await page.locator('#fullpass [data-rw-sale="fullpass"]').click();
+      await page.locator('.rw-acct').click();
       await page.waitForURL('**/account.html');
-      ok(page._posts.length === postsBefore, label + ' full pass tap does not post checkout');
+      ok(page._posts.length === postsBefore, label + ' opening the account does not post checkout');
       ok((await page.locator('body').innerText()).includes('hunter@example.com'), label + ' account page shows the member');
       await context.close();
     }

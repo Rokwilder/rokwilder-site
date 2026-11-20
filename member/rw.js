@@ -14,7 +14,7 @@ try{ if(localStorage.getItem('rw_fp_pass')==='1') document.documentElement.class
 if(!document.getElementById('rw-pass-style')){
   const s=document.createElement('style');
   s.id='rw-pass-style';
-  s.textContent='html.rw-pass .rw-fp-cta{display:none!important}';
+  s.textContent='html.rw-pass .rw-fp-cta,html.rw-pass .rw-free-intro{display:none!important}';
   (document.head||document.documentElement).appendChild(s);
 }
 const me_=document.currentScript;
