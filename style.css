@@ -123,6 +123,14 @@ html.rw-pass .rw-fp-cta,html.rw-pass .rw-free-intro{display:none !important}
 .pknote{flex:1 1 100%;margin:.4rem 0 0;font-size:1.05rem;font-weight:700}
 .pknotes{display:block;margin:.45rem 0 .8rem;font-weight:700}
 .pknotes textarea{display:block;width:100%;min-height:4.5rem;margin-top:.3rem;font:inherit;font-weight:600;padding:.55rem .7rem;border:2px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+.planhelp label{display:block;font-weight:700;margin:.8rem 0 .3rem}
+.planhelp input,.planhelp textarea{display:block;width:100%;min-height:52px;margin-top:.25rem;font:inherit;font-size:1.05rem;padding:.6rem .75rem;border:2px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+.planhelp textarea{min-height:7rem}
+.planhelp .btn{display:block;width:100%;min-height:56px;font-size:1.15rem;margin-top:.8rem}
+.phattach{white-space:pre-wrap;background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:.7rem .8rem;font:inherit}
+.planhelp .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.planhelp .msg.err{color:#e8833a;font-weight:700}
+#phok{background:var(--panel);border:2px solid var(--green);border-radius:10px;padding:1rem;font-size:1.15rem;font-weight:700}
 .printsheet{display:none}
 @media print{
   header,footer,nav,.noprint,.pkx,.pkadd,.vbar,#rwdates,main>h1,main>.lead{display:none !important}

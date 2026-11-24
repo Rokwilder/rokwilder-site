@@ -617,12 +617,80 @@ function seasonLine(p){
   if(!list.length) return 'Season dates: Not published';
   return list.map(s=>((s.label?s.label+': ':'')+(window.RWPlan&&RWPlan.rangeText?RWPlan.rangeText(s.start, s.end):(s.start||'')))).join('. ');
 }
+function planPlain(){
+  const bag=loadBag();
+  const lines=[];
+  bag.picks.forEach(p=>{
+    const note=(p.note||'').trim();
+    lines.push((p.snap.stateName||'')+': '+(p.snap.title||'')+'. '+seasonLine(p)+(note?'. Notes: '+note:''));
+  });
+  Object.keys(NAMES).forEach(code=>{
+    if(bag.pointsOnly&&bag.pointsOnly[code]) lines.push(pointSentence(code));
+  });
+  return lines.join('\n');
+}
 function printSheetHTML(picks){
   if(!picks.length) return '';
   const hunts=picks.map(p=>'<h2>'+esc(p.snap.stateName)+': '+esc(p.snap.title)+'</h2><p>'+esc(seasonLine(p))+'</p><p>Notes: '+esc((p.note||'').trim()||'None')+'</p>').join('');
   const on=loadBag().pointsOnly||{};
   const points=Object.keys(NAMES).filter(code=>on[code]).map(code=>'<li>'+esc(pointSentence(code))+'</li>').join('');
   return '<div class="printsheet"><h1>Hunt Planner</h1>'+hunts+countdownHTML(picks)+(points?'<h3>Points only this year</h3><ul>'+points+'</ul>':'')+'</div>';
+}
+function helpHTML(){
+  const attached=planPlain()||'No saved hunts yet.';
+  return '<form class="planhelp noprint" id="planhelp"><h3>Need a hand planning your season?</h3><label>Name<input id="phname" name="name" maxlength="80" autocomplete="name"></label><label>Email<input id="phemail" type="email" maxlength="254" autocomplete="email" required></label><label>Your question<textarea id="phq" rows="4" maxlength="1200" required placeholder="Which should I put first?"></textarea></label><p class="dq"><b>Your saved hunts go with this message:</b></p><pre class="phattach" id="phattach">'+esc(attached)+'</pre><div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><button type="submit" class="btn" id="phsend">Send</button><p class="msg" id="phmsg" role="status"></p></form>';
+}
+function helpApi(){
+  const local=/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const q=new URLSearchParams(location.search).get('api');
+  if(local&&q) return q.replace(/\/feedback\/?$/,'')+'/help';
+  return 'https://rokwilder-waitlist.rokwilder.workers.dev/help';
+}
+async function fillHelp(box){
+  const name=box.querySelector('#phname');
+  const email=box.querySelector('#phemail');
+  const pre=box.querySelector('#phattach');
+  if(pre) pre.textContent=planPlain()||'No saved hunts yet.';
+  if(!name||!email||!window.RW||!RW.account) return;
+  let a=null;
+  try{a=await RW.account()}catch(e){a=null}
+  if(!a||!a.loggedIn) return;
+  if(!name.value) name.value=a.name||a.first_name||a.firstName||'';
+  if(!email.value) email.value=a.email||'';
+}
+function wireHelp(box){
+  const form=box.querySelector('#planhelp');
+  if(!form) return;
+  fillHelp(box);
+  form.onsubmit=async e=>{
+    e.preventDefault();
+    const msgEl=box.querySelector('#phmsg');
+    const btn=box.querySelector('#phsend');
+    const question=(box.querySelector('#phq').value||'').trim();
+    const email=(box.querySelector('#phemail').value||'').trim();
+    const name=(box.querySelector('#phname').value||'').trim();
+    const hunts=planPlain();
+    const pre=box.querySelector('#phattach');
+    if(pre) pre.textContent=hunts||'No saved hunts yet.';
+    msgEl.className='msg';
+    msgEl.textContent='';
+    if(question.length<3){msgEl.className='msg err';msgEl.textContent='Please write a short message.';return}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){msgEl.className='msg err';msgEl.textContent="That email doesn't look right.";return}
+    btn.disabled=true;
+    btn.textContent='Sending...';
+    try{
+      const r=await fetch(helpApi(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,question:question,hunts:hunts,page_url:location.href,website:form.website?form.website.value:''})});
+      const d=await r.json().catch(()=>({}));
+      if(r.ok&&d.ok){form.outerHTML='<p class="ok" id="phok">Thanks, we\'ll get back to you by email.</p>';return}
+      msgEl.className='msg err';
+      msgEl.textContent=(d&&d.error)||'Something went wrong. Please try again.';
+    }catch(err){
+      msgEl.className='msg err';
+      msgEl.textContent="Couldn't send right now. Please try again, or email support@rokwilder.com.";
+    }
+    btn.disabled=false;
+    btn.textContent='Send';
+  };
 }
 function icsEscape(s){
   return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
@@ -685,7 +753,7 @@ function render(){
   mount();
   const box=$('rwtools');
   if(!box) return;
-  if(!paid()){box.innerHTML=teaser(); return}
+  if(!paid()){box.innerHTML=teaser()+helpHTML(); wireHelp(box); return}
   const picks=loadPicks().map(p=>{
     if(p.state===here()){
       const fresh=snap(p.key);
@@ -696,8 +764,9 @@ function render(){
   savePicks(picks);
   const banner=picks.some(p=>p.snap&&p.snap.mock)||mockOn()?'<p class="mocktag">Mock numbers. Not an agency report.</p>':'';
   const empty=picks.length?'':'<p class="dq">Tap Add to Hunt Planner on any hunt in Find Your Hunt.</p><p class="noprint"><a class="btn" href="'+esc(findHref())+'">Open Find Your Hunt</a></p>';
-  box.innerHTML=banner+printSheetHTML(picks)+'<div id="rwdates">'+empty+(picks.length?datesHTML(picks):pointsHTML())+'</div>';
+  box.innerHTML=banner+printSheetHTML(picks)+'<div id="rwdates">'+empty+(picks.length?datesHTML(picks):pointsHTML())+'</div>'+helpHTML();
   wirePlanner(box);
+  wireHelp(box);
 }
 function wirePlanner(box){
   box.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{remove(b.getAttribute('data-rm'))});
@@ -714,6 +783,8 @@ function wirePlanner(box){
     if(!hit) return;
     hit.note=el.value;
     savePicks(picks);
+    const pre=document.getElementById('phattach');
+    if(pre) pre.textContent=planPlain()||'No saved hunts yet.';
   }));
   const print=box.querySelector('#pkprint');
   if(print) print.onclick=()=>window.print();
