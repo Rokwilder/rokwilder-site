@@ -14,7 +14,7 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const a=WH[k]&&WH[k].area;return a==='100'||a==='102'};
 const $=id=>document.getElementById(id);const Q=new URLSearchParams(location.search);
 const M=WY_META;
-let S={sp:'elk',res:'res',dr:'nr',pts:0,sx:'',unit:'',red:1,gen:1,n:25,focus:'',ord:'',tab:'list',ol:null};
+let S={sp:'elk',res:'res',dr:'nr',pts:0,sx:'',sea:'',unit:'',red:1,gen:1,n:25,focus:'',ord:'',tab:'list',ol:null};
 let unitCtl=null;
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',sheep:'Bighorn sheep',goat:'Mountain goat',bison:'Bison'};
 const PTSP=new Set(['moose','sheep']);   // residents use points too
@@ -34,7 +34,40 @@ const MAXP=()=>M.maxp[S.sp]||0;
 function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!b)return null;return b.o[Math.min(S.pts,b.o.length-1)]}
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
 function sexOk(sx){if(!S.sx)return true;if(sx==S.sx)return true;return (sx=='E'||sx==''||sx==null)&&S.sx!='E'}
-function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(!sexOk(h.sx))return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
+function seaBook(){return typeof WY_SEASONS==='undefined'?null:(WY_SEASONS[S.sp==='pronghorn'?'antelope':S.sp]||null)}
+function seaRows(h){
+  const book=typeof WY_SEASONS==='undefined'?null:WY_SEASONS[h.sp==='pronghorn'?'antelope':h.sp];
+  if(!book||!/^\d+$/.test(String(h.area)))return [];
+  const key=String(parseInt(h.area,10))+'|'+(h.type||'');
+  let rows=(book[key]||[]).slice();
+  const priv=/private|valid on/i.test(h.desc||'');
+  const pub=rows.filter(r=>priv?r.p: !r.p);
+  if(pub.length)rows=pub;
+  if(h.sx){
+    const hit=rows.filter(r=>!r.sx||r.sx===h.sx);
+    const extra=rows.filter(r=>!r.q&&!hit.includes(r));
+    if(hit.length)rows=hit.concat(extra);
+  }
+  const seen=new Set();
+  return rows.filter(r=>{const id=[r.archery,r.o,r.c,r.lim].join('|');if(seen.has(id))return false;seen.add(id);return true});
+}
+function seaMatch(h){
+  if(!S.sea)return true;
+  const rows=seaRows(h);
+  if(!rows.length)return false;
+  if(S.sea==='archery')return rows.some(r=>r.archery);
+  return rows.some(r=>r.b===S.sea);
+}
+function dateLine(h){
+  const rows=seaRows(h);
+  if(!rows.length)return 'Dates: see WGFD regulations';
+  return '2026 dates: '+rows.map(r=>(r.archery?'Archery ':'')+r.o+' to '+r.c+(r.lim?', '+r.lim.toLowerCase():'')).join('. ');
+}
+function seaBar(){
+  const items=[['','All'],['archery','Archery'],['early','Early'],['regular','Regular'],['late','Late']];
+  return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.sea===k?' on':''}" data-sea="${k}">${w}</button>`).join('')}</div><p class="dq">2026 dates. Early opens before Oct 1. Regular opens in October. Late opens Nov 1 or later.</p>`;
+}
+function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(!sexOk(h.sx))return false;if(!seaMatch(h))return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function tie(a,b){const d=RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area]);if(d)return d;const ta=String(WH[a.k].type),tb=String(WH[b.k].type);if(ta!==tb)return ta<tb?-1:1;return a.k.localeCompare(b.k)}
 function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>0}).map(k=>({k,v:band(k)}));
  return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,pool(),usesPts()?S.pts:''),row=>row.v,tie)}
@@ -72,8 +105,8 @@ function wyBand(k){const h=WH[k];return RWLand.band('wy',RWLand.wyKey(h.sp,h.are
 function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+$/.test(String(h.area))?`${SP[h.sp]} Hunt Area ${+h.area}`:'';
  return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',String(h.area),h.sp):''})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function wyName(k){const h=WH[k];return isGen(h)?(h.area=='GEN'?'Nonresident general license':`Nonresident general license, Region ${h.area}`):`Hunt area ${h.area}`}
 function wyOpts(member){const pts=usesPts()?S.pts:null;return {points:pts,rule:window.RWLong?RWLong.rules.wy:'',member:!!member,next:pts!=null&&window.RWLong?RWLong.nextFromHistory(WK.filter(ok),pool(),S.pts,wyName):null}}
 function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,wyOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n==1?'':'s'} you can draw</h2>`:''}
@@ -99,7 +132,7 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Best odds first.'));
  if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}<p class="dq">${who()}. Colored hunt areas have at least one hunt you can draw. The color is the best odds in that area. Tap an area to see its hunts.</p>`+fpBox()+mapKey()+`<div id="map" class="gmap" aria-label="Map of Wyoming hunt areas"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+mapCred()+`<p class="note">A general or region license has no single hunt area in this layer, so it is left off the map. A numbered area that is missing from the layer is left off too.</p>`+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList();o.scrollIntoView({behavior:'smooth'})});drawMap(r);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
+ o.innerHTML=ban+lsHead(list,true)+seaBar()+vbar+`${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||(window.RWLong?RWLong.empty(wyOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+note+fpLine();
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList()});
@@ -108,6 +141,7 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
  if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
+ o.querySelectorAll('[data-sea]').forEach(b=>b.onclick=()=>{S.sea=b.dataset.sea;S.vd='';S.n=25;showList()});
  if(sc)o.scrollIntoView({behavior:'smooth'})}
 function ladder(b){const mx=Math.min(b.o.length-1,Math.max(S.pts+3,b.o.findIndex(z=>z>=.995)+1||b.o.length-1));
  return `<p class="lh">Estimated chance by points (2026, 1st choice)</p><table class="dt"><tr><th>Points</th><th>Estimate</th></tr>`+[...Array(mx+1).keys()].map(n=>`<tr class="${n==S.pts?'on':''}"><td>${n}</td><td>${pct(b.o[n])}</td></tr>`).join('')+'</table><p class="dq">Printed point-pool odds mixed with the random estimate. Not a WGFD-printed total.</p>'}
@@ -121,7 +155,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  const bk=S.tab=='map'?'← Back to the map':'← Back to the list';
  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
  `<div class="fv">${vdot(v)}${verdictLine(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+(window.RWTrophy?RWTrophy.block(k):'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
- `<p class="how">${how(h,b)}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):(paid()?(window.RWTags?RWTags.missing('The Wyoming file on this page has a band, not how many people applied or drew at each point level.'):''):(window.RWTags?RWTags.locked('../pricing.html'):fpBox())))+where+
+ `<p class="how">${how(h,b)}</p><p class="dq">${esc(dateLine(h))}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):(paid()?(window.RWTags?RWTags.missing('The Wyoming file on this page has a band, not how many people applied or drew at each point level.'):''):(window.RWTags?RWTags.locked('../pricing.html'):fpBox())))+where+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
  `<p class="note">WGFD's printed description: "${esc(h.desc)}". Their reports cut long descriptions short; season dates, weapons and limitations are in the WGFD regulations for this hunt area. Sources: ${sourceHTML(h)}.</p>`;
  $('back').onclick=()=>showList(1);if($('vsm'))$('vsm').onclick=()=>{S.tab='map';S.ol=aid;showList(1)};if(where)drawDetailMap(k);if(sc)o.scrollIntoView({behavior:'smooth'})}
@@ -188,7 +222,7 @@ $('pm').onclick=()=>{S.pts=Math.max(0,S.pts-1);paint()};$('pp').onclick=()=>{S.p
 $('redp').onchange=e=>S.red=e.target.checked?1:0;$('genl').onchange=e=>S.gen=e.target.checked?1:0;
 $('go').onclick=()=>{S.n=25;showList(1)};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k of WK){if(WH[k].sp!=S.sp)continue;const x=String(WH[k].area);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
-if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('unit'))S.unit=Q.get('unit');
+if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('sea'))S.sea=Q.get('sea');if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');if(Q.get('tab')==='map')S.tab='map';
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};
