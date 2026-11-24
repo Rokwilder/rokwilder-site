@@ -1,0 +1,19 @@
+# Waitlist, feedback, and Hunt Planner help.
+# This file is ready to deploy. It has not been deployed.
+# Do not put secrets in this file. ADMIN_KEY is already set on the live worker.
+name = "rokwilder-waitlist"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+account_id = "a08b9076f1f5ffcfae2041f36a8e4451"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rokwilder-waitlist"
+database_id = "5969c9e3-c3e1-46a1-8898-9116e182f49b"
+
+# Binding name the worker reads: env.EMAIL
+# This binding can send only to support@rokwilder.com.
+# The worker always sends from help@rokwilder.com.
+[[send_email]]
+name = "EMAIL"
+destination_address = "support@rokwilder.com"
