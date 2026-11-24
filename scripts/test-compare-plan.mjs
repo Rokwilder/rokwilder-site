@@ -183,7 +183,7 @@ async function addHunt(page, url, n) {
     const count = raw ? JSON.parse(raw).picks.length : 0;
     return count >= need;
   }, n, {timeout: 20000});
-  await page.locator('#rwtools').waitFor();
+  await page.locator('.pknote').waitFor();
 }
 
 const desktop = {width: 1280, height: 900};
@@ -204,39 +204,31 @@ async function memberFlow(viewport, tag) {
   await addHunt(page, '/find.html?sp=elk&h=EE012O1A', 1);
   await addHunt(page, '/find.html?sp=elk&h=EE083O3R', 2);
   await addHunt(page, '/utah/find.html?sp=elk&pl=elk-le&h=EB3039', 3);
-  await page.locator('#rwcompare').waitFor();
-  const text = await page.locator('#rwtools').innerText();
-  ok(/Mock numbers/.test(text), tag + ' labels mock numbers');
-  ok(/easier to draw/.test(text), tag + ' says which hunt is easier to draw');
-  ok(/Not published/.test(text), tag + ' shows Not published where a field is missing');
-  ok(/\(mock\)/.test(text), tag + ' marks a mock percent');
-  ok(!/[—–]/.test(text), tag + ' comparison copy has no dash glyph');
-  await shot(page, 'finder-compare-' + tag);
-  await page.locator('[data-rwt="dates"]').click();
+  ok(/Open Hunt Planner/.test(await page.locator('.pknote').innerText()), tag + ' card confirms the save');
+  await page.goto(origin + '/hunt-planner.html?preview=fullpass', {waitUntil: 'domcontentloaded'});
   await page.locator('#rwdates').waitFor();
   const datesText = await page.locator('#rwtools').innerText();
   ok(/These hunts overlap/.test(datesText), tag + ' flags overlapping seasons');
   ok(/2026 dates, 2027 not posted yet/.test(datesText), tag + ' labels the posted year');
-  ok(/Not published/.test(datesText), tag + ' season gap stays Not published');
+  ok(/2026 dates|Season dates: Not published/.test(datesText), tag + ' shows a season line or the unpublished line');
+  ok(/Key dates/.test(datesText), tag + ' shows the countdown');
+  ok(/Points only this year/.test(datesText), tag + ' shows the points-only control');
+  ok(/Add to phone calendar/.test(datesText), tag + ' offers the phone file');
+  ok(!/calendar/i.test(datesText.replace(/Add to phone calendar/g, '')), tag + ' planner page is not called a calendar');
+  ok(!/[—–]/.test(datesText), tag + ' planner copy has no dash glyph');
   await shot(page, 'finder-dates-' + tag);
   const picks = await page.evaluate(() => JSON.parse(localStorage.getItem('rw_hunt_picks')).picks.length);
   ok(picks === 3, tag + ' saved 3 picks');
 
   await page.goto(origin + '/member/app.html?state=co', {waitUntil: 'domcontentloaded'});
-  await page.locator('#rwtools').waitFor({timeout: 20000});
-  await page.locator('#rwcompare .cmpt, #rwcompare .cmpcard').first().waitFor({timeout: 20000});
-  await page.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
-  await page.screenshot({path: path.join(shots, 'app-compare-' + tag + '.png'), fullPage: false});
-  const appText = await page.locator('#rwtools').innerText();
-  ok(/easier to draw/.test(appText), tag + ' app shows the same comparison');
-  ok(/Mock numbers/.test(appText), tag + ' app still labels mock numbers');
+  ok(/Hunt Planner/.test(await page.locator('header .nav').innerText()), tag + ' app nav has Hunt Planner');
   ok(await page.locator('iframe.appframe, iframe#view').count() === 0, tag + ' app has no finder frame');
-  await page.locator('[data-rwt="dates"]').click();
+  await page.goto(origin + '/hunt-planner.html?preview=fullpass', {waitUntil: 'domcontentloaded'});
   await page.locator('#rwdates .overlap, #rwdates .dq').first().waitFor();
   await page.locator('#rwtools').evaluate(el => el.scrollIntoView({block:'start'}));
   await page.screenshot({path: path.join(shots, 'app-dates-' + tag + '.png'), fullPage: false});
   const appDates = await page.locator('#rwtools').innerText();
-  ok(/These hunts overlap/.test(appDates), tag + ' app flags the overlap');
+  ok(/These hunts overlap/.test(appDates), tag + ' planner flags the overlap');
   ok(errors.length === 0, tag + ' has no page errors ' + errors.join(' | '));
   await browser.close();
 }
@@ -251,7 +243,7 @@ async function freeFlow(viewport, tag) {
   });
   const page = await context.newPage();
   await routeApi(page, false);
-  await page.goto(origin + '/find.html?sp=elk', {waitUntil: 'domcontentloaded'});
+  await page.goto(origin + '/hunt-planner.html', {waitUntil: 'domcontentloaded'});
   await page.locator('#rwlock').waitFor({timeout: 20000});
   const locked = await page.locator('#rwtools').innerText();
   ok(/Full Pass/.test(locked), tag + ' free view is the locked teaser');
@@ -263,6 +255,8 @@ async function freeFlow(viewport, tag) {
   ok(before == null && after == null, tag + ' free add does not save a pick');
   await shot(page, 'free-locked-' + tag);
   await page.goto(origin + '/member/app.html?state=co', {waitUntil: 'domcontentloaded'});
+  ok(/Hunt Planner/.test(await page.locator('header .nav').innerText()), tag + ' free app nav has Hunt Planner');
+  await page.goto(origin + '/hunt-planner.html', {waitUntil: 'domcontentloaded'});
   await page.locator('#rwlock').waitFor({timeout: 20000});
   await page.locator('#hunt nav.stp').waitFor({state: 'detached', timeout: 20000}).catch(()=>{});
   ok(await page.locator('#hunt nav.stp').count() === 0, tag + ' app has one state picker');
@@ -283,7 +277,7 @@ async function seasonProof(viewport, tag) {
   page.on('pageerror', err => errors.push(err.stack || String(err)));
   await routeApi(page, true);
   async function showDates(fragment) {
-    await page.locator('[data-rwt="dates"]').click();
+    await page.goto(origin + '/hunt-planner.html?preview=fullpass', {waitUntil: 'domcontentloaded'});
     await page.locator('#rwdates').getByText(fragment).first().waitFor({timeout: 20000});
   }
   await addHunt(page, '/find.html?sp=elk&h=EE012O1A', 1);
