@@ -18,7 +18,7 @@ const fpBox=()=>(FP||paid()||window.RW_FP===true)?'':`<aside class="fpbox rw-fp-
 const fpLine=()=>(FP||paid()||window.RW_FP===true)?'':`<p class="fpl rw-fp-cta">Exact Nevada odds are not on this free file. They come with the Full Pass where we have published them<span class="rw-offer" data-pricing="../pricing.html" data-kind="paren"></span></p>`;
 const SAMPLE_UNITS=new Set(['231','075']);
 const isSample=k=>{const u=NH[k]&&NH[k].units;return SAMPLE_UNITS.has(u)};
-const bandWord=v=>WORD[v]||(v===0?'NONE DREW':v>0?'UNDER ONE IN TWENTY':'');
+const bandWord=v=>WORD[v]||(v===0?'NONE DREW':v>0?'LONG SHOT':'');
 function verdictLine(v){const word=bandWord(v);if(!word)return '';return window.RWSeason?RWSeason.label(NV_META.year,'result',word):word}
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
@@ -47,9 +47,9 @@ function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[
 function tie(a,b){const d=RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units]);if(d)return d;const s=a.h.season.localeCompare(b.h.season);return s||a.k.localeCompare(b.k)}
 function nvChance(h,pts){const prev=S.pts;S.pts=pts;try{if(FP){const row=lvRaw(h);if(row&&typeof row.rate1==='number'&&row.rate1>=0&&row.rate1<=1)return row.rate1}return bandAt(h)}finally{S.pts=prev}}
 function rowMeasure(x){return RWDraw.measure(p=>nvChance(x.h,p),S.pts)}
-function ranked(){const rows=weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>=0.05}).map(([k,h])=>({k,h,v:bandAt(h)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,null,S.pts),row=>row.v,tie)}
+function ranked(){const rows=weaponRows().filter(([,h])=>{if(!RWUnit.hit([h.units],S.unit))return false;const v=bandAt(h);return v!==null&&v>0}).map(([k,h])=>({k,h,v:bandAt(h)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,null,S.pts),row=>row.v,tie)}
 function rowsInOrder(all){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(all,S.ord,rowMeasure,tie);if(S.focus=='land')return all.slice().sort((a,b)=>RWLand.rank(nvBand(b.h))-RWLand.rank(nvBand(a.h))||b.v-a.v||a.h.units.localeCompare(b.h.units,undefined,{numeric:true}));return all}
-const below=()=>weaponRows().filter(([,h])=>{const v=bandAt(h);return v!==null&&v<0.05}).length;
+const below=()=>weaponRows().filter(([,h])=>bandAt(h)===0).length;
 const missing=()=>weaponRows().filter(([,h])=>bandAt(h)===null).length;
 const maxPts=()=>{let m=0;for(const [,h] of rows())for(const p of Object.keys(h.bp))m=Math.max(m,Number(p));return m};
 const whoWord=()=>S.who==='junior'?'Junior hunt':S.who==='guided'?'Guided nonresident':'Main draw';
@@ -79,28 +79,37 @@ function ladder(h){
     }).join('')+'</table><p class="dq">1st choice is the percent on this page. All choices adds the other choices on that 2025 row. A level is listed when the file has a row. This is not a forecast.</p>';
   }
   const pts=Object.keys(h.bp).map(Number).sort((a,b)=>a-b);
-  return `<p class="lh">2025 1st-choice result by bonus-point level</p><table class="dt"><tr><th>Bonus points</th><th>Result</th></tr>`+pts.map(n=>{const v=h.bp[n];const word=WORD[v]||(v===0?'None drew':'Under one in twenty');return `<tr class="${n===S.pts?'on':''}"><td>${n}</td><td>${word}</td></tr>`}).join('')+'</table><p class="dq">Words only. A level is listed when that table had a 1st-choice row. A blank level is not a zero, and a higher level is not filled in from a lower one.</p>';
+  return `<p class="lh">2025 1st-choice result by bonus-point level</p><table class="dt"><tr><th>Bonus points</th><th>Result</th></tr>`+pts.map(n=>{const v=h.bp[n];const word=WORD[v]||(v===0?'None drew':v>0?'Long shot':'');return `<tr class="${n===S.pts?'on':''}"><td>${n}</td><td>${word}</td></tr>`}).join('')+'</table><p class="dq">Words only. A level is listed when that table had a 1st-choice row. A blank level is not a zero, and a higher level is not filled in from a lower one.</p>';
 }
+function nvKeys(){return weaponRows().filter(([,h])=>RWUnit.hit([h.units],S.unit)).map(([k])=>k)}
+function nvOpts(member){return {points:S.pts,rule:window.RWLong?RWLong.rules.nv:'',member:!!member,next:window.RWLong?RWLong.nextFromHistory(nvKeys(),null,S.pts,k=>'Unit '+(NH[k].units||k)):null}}
+function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,nvOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
 function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;$('empty').hidden=true;if(LM&&S.tab!=='map'){LM.remove();LM=null}if(DM){DM.remove();DM=null}
-  const all=ranked(),nb=below(),nm=missing();
-  const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Under one in twenty, and rows where none drew, stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('nv')}</p>`:'');
-  if(!paid()){const samples=RWGate.takePerUnit(sampleRows(),x=>x.h.units);
+  const all=lsOrder(ranked()),nb=below(),nm=missing();
+  const note=`<p class="note">Bands are the 2025 main-draw result for 1st choice at this bonus-point level. They are not a chance in a future draw. Odds above 0 and under one in twenty are long shots. Hunts where none drew stay off the list${nb?` (${nb} hunt${nb===1?'':'s'} in that group)`:''}. ${nm?`${nm} hunt${nm===1?' has':'s have'} no 1st-choice row at ${S.pts} point${S.pts===1?'':'s'}.`:''} Not a guarantee. Check the current NDOW regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('nv')}</p>`:'');
+  if(!paid()){
+    if(window.RWLong&&RWLong.allLong(all)){
+      const best=RWLong.bestFirst(all);
+      o.innerHTML=RWLong.banner(nvOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${esc(whoLine())}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map(card).join('')+`</ol>`+note;
+      o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
+    const samples=RWGate.takePerUnit(sampleRows(),x=>x.h.units);
     o.innerHTML=RWGate.freeShell({count:all.length,species:(SP[S.sp]||S.sp).toLowerCase(),who:esc(whoLine())+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Units 231 and 075 only, up to 3 hunts from each. These are the default elk filters: antlered, resident, any legal weapon, main draw, 0 bonus points. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
     o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
   const r=rowsInOrder(all);
-  const list=window.RWTrophy?RWTrophy.refine(r):r;
+  const list=lsOrder(window.RWTrophy?RWTrophy.refine(r):r);
   const ban=window.RWGate?RWGate.banner():'';
   const tNote=window.RWTrophy?RWTrophy.sortNote():'';
   const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Strongest 2025 result first.'));
   const tabs=mapTabs();
   if(S.tab==='map'){
-    o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at this point level</h2>`+tabs+`<p class="dq">${esc(whoLine())}. Colored units have at least one hunt at one in twenty or better. The color is the best 2025 result among hunts that include that unit. Tap a unit to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Nevada hunt units"></div>`+mapCred()+note+fpLine();
+    o.innerHTML=ban+lsHead(list,true)+tabs+`<p class="dq">${esc(whoLine())}. Colored units have at least one hunt you can draw. The color is the best 2025 result among hunts that include that unit. Orange is a long shot when the share was above 0 and under one in twenty. Tap a unit to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Nevada hunt units"></div>`+mapCred()+note+fpLine();
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
-  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'} at this point level</h2>`+tabs+`${focusBar()}${RWDraw.bar(S.ord,true)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p>`+fpBox()+
+  o.innerHTML=ban+lsHead(list,true)+tabs+`${focusBar()}${RWDraw.bar(S.ord,true)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p>`+fpBox()+
     `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
-    (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||`<p class="dq">No 2025 1st-choice row at this point level reached one in twenty. Try another weapon, another point level, or the other residency.</p>`)+note+fpLine();
+    (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||(window.RWLong?RWLong.empty(nvOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note+fpLine();
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
   RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
@@ -108,6 +117,14 @@ function showList(sc){
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
   if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
   if(sc)o.scrollIntoView({behavior:'smooth'});
+}
+function nvTags(h){
+  if(!window.RWTags)return '';
+  if(!paid())return RWTags.locked('../pricing.html');
+  const lv=FP&&h.raw&&h.raw.lv;
+  if(!lv)return RWTags.missing('The Nevada file on this page has a result band for each point level. It does not list how many people applied or drew.');
+  const rows=Object.keys(lv).map(Number).filter(n=>!Number.isNaN(n)).sort((a,b)=>b-a).map(n=>{const row=lv[n]!=null?lv[n]:lv[String(n)];return {points:String(n),applied:typeof row.a1==='number'?row.a1:null,drew:typeof row.s1==='number'?row.s1:null,how:'Random draw'}}).filter(r=>r.applied!=null||r.drew!=null);
+  return RWTags.show({paid:true,year:2025,rows,sentence:'Nevada squares bonus points and then draws at random.'});
 }
 async function showDetail(k,sc){
   if(!paid()&&!isSample(k)){showList(sc);return}
@@ -117,7 +134,7 @@ async function showDetail(k,sc){
   const word=v===null?'No 1st-choice row at this point level':verdictLine(v);
   const src=NV_META.src[h.src];
   const bk=S.tab==='map'?'← Back to the map':'← Back to the list';
-  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
+  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvTags(h)+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
     (v===null?'':ladder(h))+where+fpBox()+
     `<p class="note">Season dates are the dates printed on the 2025 table: ${esc(h.season)}. They are not a 2026 or 2027 season. Source: <a href="${esc(src)}">NDOW 2025 bonus-point table</a>.</p>`;
   $('back').onclick=()=>showList(1);
@@ -128,17 +145,17 @@ function seg(html,attr,cur,fn){
   const box=$(html);box.innerHTML=fn.map(x=>`<button data-${attr}="${x[0]}" class="${cur===x[0]?'on':''}">${x[1]}</button>`).join('');
   box.querySelectorAll('button').forEach(b=>b.onclick=()=>{S[attr]=b.dataset[attr];if(attr==='sx'||attr==='live'||attr==='who')S.pts=0;paint()});
 }
-const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
+const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
 let LM=null,DM=null,GJ=null;
 const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
 function mapTabs(){return `<div class="tabs" role="tablist"><button type="button" class="tb${S.tab==='list'?' on':''}" data-tab="list">List</button><button type="button" class="tb${S.tab==='map'?' on':''}" data-tab="map">Map</button></div>`}
 function mapCred(){return `<p class="mapcred"><b>Hunt unit boundaries: Nevada Department of Wildlife.</b> Lines are simplified. These are the active NDOW hunt units with a three-digit name. <a href="https://www.arcgis.com/home/item.html?id=63f5d9da297f4422a646cd8bdf8cd9a5">NDOW hunt units</a>. Parks, refuges and ranges in that layer are not hunt units and are left off. A hunt that names only part of a unit is not given that whole unit's shape. The written boundary in the regulations is the one that counts.</p>`}
 function mapKey(){
-  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['none','No hunt at one in twenty',MC.none]];
+  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['long','Long shot',MC.long],['none','Nobody drew',MC.none]];
   return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is the best 2025 result among hunts that include that unit</p><ul>`+items.map(([b,w,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b><span class="mkn"></span></span></li>`).join('')+'</ul></div>';
 }
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} unit${n===1?'':'s'}`:' · none'})}
-const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':'none';
+const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':v>0?'long':'none';
 async function ensureMap(){
   if(!window.L){const c=document.createElement('link');c.rel='stylesheet';c.href='../find/vendor/leaflet.css';document.head.appendChild(c);await loadJS('../find/vendor/leaflet.js')}
   if(!window.topojson)await loadJS('../find/vendor/topojson-client.min.js');

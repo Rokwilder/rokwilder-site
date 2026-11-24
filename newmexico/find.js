@@ -10,9 +10,9 @@ const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const H=Object.entries(NH);
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',oryx:'Oryx',barbary:'Barbary sheep',javelina:'Javelina',ibex:'Ibex',bighorn:'Bighorn sheep',bear:'Bear',turkey:'Turkey'};
-const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW',0.01:'UNDER ONE IN TWENTY',0:'NONE DREW'};
+const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW',0.01:'LONG SHOT',0:'NONE DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
-const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
+const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
 const POOL={res:'New Mexico resident',nr:'Nonresident',out:'Outfitter pool'};
 let S={sp:'elk',wpn:'',bag:'',pool:'res',unit:'',youth:true,n:25,focus:'',ord:'',tab:'list'};
 let unitCtl=null;
@@ -30,7 +30,7 @@ function chanceAt(h){
 function word(h,v){
   if(!h.drawn)return 'NOT PUBLISHED';
   if(v==null)return 'NO FIRST-CHOICE APPLICANTS';
-  return WORD[v]||(v>0?'UNDER ONE IN TWENTY':'NONE DREW');
+  return WORD[v]||(v>0?'LONG SHOT':'NONE DREW');
 }
 function verdictLine(h,v){const text=word(h,v);if(!h.drawn||v==null)return text;return window.RWSeason?RWSeason.label(NM_META.year,'result',text):text}
 function num(n){return typeof n==='number'?n.toLocaleString():'not published'}
@@ -62,7 +62,7 @@ function rowMeasure(x){
   return RWDraw.measure(()=>chanceAt(x.h),0);
 }
 function listed(){
-  return pool().filter(([,h])=>RWUnit.hit(h.units&&h.units.length?h.units:[h.area],S.unit)&&(h.drawn?bandAt(h)!=null&&bandAt(h)>=0.05:true)).map(([k,h])=>({k,h,v:h.drawn?bandAt(h):null}));
+  return pool().filter(([,h])=>RWUnit.hit(h.units&&h.units.length?h.units:[h.area],S.unit)&&(h.drawn?bandAt(h)!=null&&bandAt(h)>0:true)).map(([k,h])=>({k,h,v:h.drawn?bandAt(h):null}));
 }
 function rowsInOrder(all){
   if(!usesRate())return all.slice().sort(tie);
@@ -122,13 +122,23 @@ function card(x,i,full){
   return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv"><i class="vdot" style="background:${COL[x.v]||'#E8E0D2'}"></i>${verdictLine(x.h,x.v)}</span><span class="ft">${title(x.h)}</span><span class="fd">${esc(x.h.area)}</span><span class="fd">${esc(tags)}</span>${oddsHTML(x.h)}${RWHy(x.k,S.pool,null)}${bits.info}</button>${bits.next}</li>`;
 }
 function focusBar(){return usesRate()?`<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw result</button><button type="button" data-focus="land" class="${S.focus==='land'?'on':''}">Public land</button></div></div>`:''}
+function nmOpts(){return {points:null,rule:window.RWLong?RWLong.rules.nm:'',member:false,next:null}}
+function lsHead(rows){if(window.RWLong)return RWLong.head(rows,nmOpts());const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
+function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
 function showList(sc){
   const o=$('out');$('detail').hidden=true;o.hidden=false;
   if(LM&&S.tab!=='map'){LM.remove();LM=null}
-  const all=listed();
+  const all=lsOrder(listed());
   const hidden=pool().filter(([,h])=>h.resOnly&&bandAt(h)==null).length;
-  const note=`<p class="note">${usesRate()?'Bands are the 2026 first-choice result in this pool. They are not a chance in a future draw. Under one in twenty stays off the list.':`The 2026 ${SP[S.sp].toLowerCase()} report lists applicants and licenses issued. It does not say how many were drawn on the first choice, so there is no result band.`}${hidden&&S.pool!=='res'?` ${hidden} resident-only hunt${hidden===1?' is':'s are'} not given a result in this pool.`:''} Not a guarantee. Check the current regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('nm')}</p>`:'');
+  const note=`<p class="note">${usesRate()?'Bands are the 2026 first-choice result in this pool. They are not a chance in a future draw. Odds above 0 and under one in twenty are long shots. Hunts where none drew stay off the list.':`The 2026 ${SP[S.sp].toLowerCase()} report lists applicants and licenses issued. It does not say how many were drawn on the first choice, so there is no result band.`}${hidden&&S.pool!=='res'?` ${hidden} resident-only hunt${hidden===1?' is':'s are'} not given a result in this pool.`:''} Not a guarantee. Check the current regulation before you apply.</p>`+(paid()?`<p class="note">${RWLand.pageNote('nm')}</p>`:'');
   if(!paid()){
+    if(usesRate()&&window.RWLong&&RWLong.allLong(all)){
+      const best=RWLong.bestFirst(all);
+      o.innerHTML=RWLong.banner(nmOpts())+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${esc(whoLine())}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>card(x,i,false)).join('')+`</ol>`+note;
+      o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+      if(sc)o.scrollIntoView({behavior:'smooth'});
+      return;
+    }
     const samples=RWGate.takePerUnit(all.filter(x=>(x.h.units||[]).some(u=>SAMPLES.has(u))), x=>(x.h.units||[]).filter(u=>SAMPLES.has(u)));
     const who=`Units ${[...SAMPLES].join(' and ')}`;
     const tabs=mapTabs();
@@ -149,16 +159,16 @@ function showList(sc){
     if(sc)o.scrollIntoView({behavior:'smooth'});
     return;
   }
-  const list=rowsInOrder(all);
+  const list=lsOrder(rowsInOrder(all));
   const ban=window.RWGate?RWGate.banner():'';
   const lead=S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus==='land'?'Mostly public land first.':(usesRate()?'Strongest 2026 result first.':'Listed by game management unit. The first-choice rate was not published.'));
   const tabs=mapTabs();
   if(S.tab==='map'){
-    o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'}</h2>`+tabs+`<p class="dq">${esc(whoLine())}. ${usesRate()?'Colored units have at least one hunt at one in twenty or better. The color is the best 2026 result among hunts that name that unit. A hunt in more than one unit uses the result for the whole hunt code.':'The 2026 report did not publish a first-choice rate, so units are not colored by a result.'}</p>`+(usesRate()?mapKey():'')+`<div id="map" class="gmap" aria-label="Map of New Mexico game management units"></div>`+mapCred()+note;
+    o.innerHTML=ban+lsHead(list)+tabs+`<p class="dq">${esc(whoLine())}. ${usesRate()?'Colored units have at least one hunt you can draw. The color is the best 2026 result among hunts that name that unit. Orange is a long shot when the share was above 0 and under one in twenty. A hunt in more than one unit uses the result for the whole hunt code.':'The 2026 report did not publish a first-choice rate, so units are not colored by a result.'}</p>`+(usesRate()?mapKey():'')+`<div id="map" class="gmap" aria-label="Map of New Mexico game management units"></div>`+mapCred()+note;
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return;
   }
-  o.innerHTML=ban+`<h2 id="lt">${list.length} hunt${list.length===1?'':'s'}</h2>`+tabs+focusBar()+(usesRate()?RWDraw.bar(S.ord,false):'<p class="dnote">Points are not used in New Mexico. First-choice drawn counts were not published for this species, so the list stays in unit order.</p>')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other choices.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':`<p class="dq">No 2026 first-choice result in this pool reached one in twenty. Try another bag, another sporting arm, or another pool.</p>`)+note;
+  o.innerHTML=ban+lsHead(list)+tabs+focusBar()+(usesRate()?RWDraw.bar(S.ord,false):'<p class="dnote">Points are not used in New Mexico. First-choice drawn counts were not published for this species, so the list stays in unit order.</p>')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other choices.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(nmOpts()):`<p class="dq">No hunts you can draw in this pool.</p>`))+note;
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.n=25;showList()});
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
@@ -200,13 +210,20 @@ function areaHTML(h){
   if(!h.areaChoice||!h.areas||!h.areas.length)return '';
   return '<h3>Hunt areas in the 2026-27 booklet</h3><p class="dq">The odds above are for the whole hunt code. They are not a separate result for one area.</p><ul class="nvr">'+h.areas.map(a=>`<li>${esc(a)}</li>`).join('')+'</ul>';
 }
+function nmTags(h){
+  if(!window.RWTags)return '';
+  if(!paid())return RWTags.locked('../pricing.html');
+  const raw=FP&&h.raw&&h.raw[S.pool];
+  if(!raw||typeof raw.a1!=='number')return RWTags.missing('The New Mexico file on this page has a result band for the pool. It does not list a point-by-point count. New Mexico does not use preference points.');
+  return RWTags.show({paid:true,year:2026,rows:[{points:'No points',applied:raw.a1,drew:typeof raw.s1==='number'?raw.s1:null,how:'Random draw'}],sentence:'New Mexico draws these tags at random. There is no point level.'});
+}
 async function showDetail(k,sc){
   const h=NH[k];if(!h)return;
   if(!paid()&&!(h.units||[]).some(u=>SAMPLES.has(String(u)))){showList(sc);return}
   const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   if(LM){LM.remove();LM=null}
   const where=(h.units&&h.units.length)?`<h3>Where this hunt is</h3><p class="dq">${esc(place(h))}. ${h.areaChoice?'The highlighted units are areas a hunter can choose under this code. The color is the code-level result, not an area-level result.':h.units.length>1?'A hunt named in more than one unit is drawn for the whole hunt code.':''} ${h.unmapped&&h.unmapped.length?'Unit '+esc(h.unmapped.join(', '))+' is named in the report and is not a polygon on the 2026 map.':''}</p><div id="dmap" class="gmap dm" data-units="${esc(h.units.join(','))}" aria-label="Map of this game management unit"></div>${mapCred()}`:'<h3>Where this hunt is</h3><p class="dq">The 2026 unit map used here does not have a polygon for '+esc(h.area||'this hunt')+'.</p>';
-  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
+  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${nmTags(h)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
   $('back').onclick=()=>showList(1);
   if($('dmap'))drawDetailMap(v);
   if(sc)o.scrollIntoView({behavior:'smooth'});
@@ -237,11 +254,11 @@ function paint(){
 function mapTabs(){return `<div class="tabs" role="tablist"><button type="button" class="tb${S.tab==='list'?' on':''}" data-tab="list">List</button><button type="button" class="tb${S.tab==='map'?' on':''}" data-tab="map">Map</button></div>`}
 function mapCred(){return `<p class="mapcred"><b>Game management unit boundaries: New Mexico Department of Wildlife.</b> The layer was updated August 31, 2026. Lines are simplified. <a href="https://wildlife.dgf.nm.gov/hunting/maps/big-game-unit-maps-pdfs/">Unit map page</a>. The written boundary is the one that counts. There is no polygon named 2, 5, 6, 16, 21, 51, or 55 in this layer. Lettered units such as 2A and 16B are separate.</p>`}
 function mapKey(){
-  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['none','No hunt at one in twenty',MC.none]];
+  const items=[['all','All drew',MC.all],['most','Most drew',MC.most],['some','Some drew',MC.some],['few','Few drew',MC.few],['long','Long shot',MC.long],['none','Nobody drew',MC.none]];
   return `<div class="mkey" id="mkey" role="group" aria-label="Map key"><p class="mkh">Map key: the color is the best 2026 result among hunts that name that unit</p><ul>`+items.map(([b,w,c])=>`<li data-b="${b}"><i class="sw" style="background:${c}" aria-hidden="true"></i><span class="mkt"><b>${w}</b><span class="mkn"></span></span></li>`).join('')+'</ul></div>';
 }
 function fillKey(cnt){document.querySelectorAll('#mkey li[data-b]').forEach(li=>{const n=cnt[li.dataset.b]||0,s=li.querySelector('.mkn');li.classList.toggle('zero',!n);s.textContent=n?` · ${n} unit${n===1?'':'s'}`:' · none'})}
-const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':'none';
+const bucket=v=>v>=1?'all':v>=0.75?'most':v>=0.25?'some':v>=0.05?'few':v>0?'long':'none';
 let LM=null,DM=null,GJ=null;
 const loadJS=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
 async function ensureMap(){
