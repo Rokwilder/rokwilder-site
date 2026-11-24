@@ -17,7 +17,7 @@ const fpBox=()=>(FP||window.RW_FP===true)?'':`<aside class="fpbox rw-fp-cta" ari
 const fpLine=()=>(FP||window.RW_FP===true)?'':`<p class="fpl rw-fp-cta">Exact odds and harvest numbers for every hunt come with the Full Pass<span class="rw-offer" data-pricing="pricing.html" data-kind="paren"></span></p>`;
 const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>units(k).map(String).some(u=>u==='12'||u==='2');
-function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
+function huntCard(x,i){return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(coDateLine(x.k))}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`}
 function freeList(r,who){const o=$('out');
  $('detail').hidden=true;o.hidden=false;if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
  if(window.RWLong&&RWLong.allLong(r)){
@@ -32,6 +32,17 @@ function freeList(r,who){const o=$('out');
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k))}
 // =====================
 let S={sp:'elk',res:'res',pts:0,w:'',se:'',sx:'',unit:'',so:'',mc:'',ord:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
+let CO_DATES=null;
+const CO_RIFLE={'1st rifle':['2026-10-14','2026-10-18'],'2nd rifle':['2026-10-24','2026-11-01'],'3rd rifle':['2026-11-07','2026-11-15'],'4th rifle':['2026-11-18','2026-11-22']};
+function coFmt(iso){const p=String(iso||'').split('-');const mon=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]]||'';return mon?(mon+' '+Number(p[2])+(p[0]==='2027'?', 2027':'')):''}
+function coDateLine(k){const rows=CO_DATES&&CO_DATES[k], name=String((D[k]&&D[k][2])||'');
+ if(rows&&rows.length){const bits=rows.slice(0,3).map(r=>coFmt(r.start)+' to '+coFmt(r.end)).filter(Boolean);return '2026 dates: '+(name?name+'. ':'')+bits.join('. ')+(rows.length>3?' and '+(rows.length-3)+' more':'')}
+ if(CO_RIFLE[name])return '2026 dates: '+name+' '+coFmt(CO_RIFLE[name][0])+' to '+coFmt(CO_RIFLE[name][1]);
+ if(name)return '2026 dates: '+name+'. Dates: see CPW regulations';
+ return 'Dates: see CPW regulations'}
+function coSeaBar(){const items=[['','All'],['A','Archery'],['M','Muzzleloader'],['R','Rifle']];
+ return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.w===k?' on':''}" data-csea="${k}">${w}</button>`).join('')}</div><p class="dq">2026 dates from the CPW big game brochure, the same dates as Season dates. A season-choice license is listed under every weapon.</p>`}
+fetch('find/season-dates.json?v=20261119a').then(r=>r.ok?r.json():null).then(j=>{CO_DATES=j&&j.co&&j.co.hunts||null;const out=$('out');if(out&&!out.hidden)showList()}).catch(()=>{});
 let unitCtl=null;
 // Weapon = 5th character of the hunt code (CPW brochure): A archery, M muzzleloader, R rifle and associated methods.
 // X = season choice (one license good in archery, muzzleloader and rifle seasons), so it matches every weapon choice.
@@ -178,13 +189,13 @@ function showList(){const r=lsOrder(ranked()),oR=otcRows(),o=$('out');
  const list=window.RWLong?RWLong.applyVd(base,S.vd):base;
  const vbar=window.RWLong?RWLong.vBar(base,S.vd):'';
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+
+ o.innerHTML=ban+lsHead(list,true)+coSeaBar()+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+otcTop(oR)+
-  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(landExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(landExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(coDateLine(x.k))}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(coOpts(true)):`<p class="dq">No hunts you can draw with these choices.</p>`))+otcSec(oR)+
   `<p class="note">Odds are estimates for ${estimateYear()} from CPW's past draws (1st choice). ${coHybrid()?'Qualifying hybrid hunts with odds above 0 are listed. Odds above 0 and under 5% are long shots.':'Hunts under 5% aren\'t listed on points-only hunts'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p><p class="note">${RWLand.pageNote('co')}</p>`+fpLine()+fbA('find');
- wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('[data-csea]').forEach(b=>b.onclick=()=>{S.w=b.dataset.csea;if(S.w!=='R')S.se='';S.vd='';S.n=25;sync();history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};
  if($('omore'))$('omore').onclick=()=>{const y=scrollY;S.on=(S.on||25)+25;showList();scrollTo(0,y)};
  o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))});}
