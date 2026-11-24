@@ -211,7 +211,7 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
  const missing=ORDER.filter(sp=>!Object.values(IH).some(h=>h.sp===sp&&h.draw===2)).map(spName);
  $('d2note').textContent=`IDFG's 2026 odds table has no second-drawing rows for ${missing.join(', ')}.`;
  $('d2note').hidden=has2||S.draw!==2;
- $('ptnote').textContent=`No preference points. The band does not change if you have applied before. ${spName(S.sp)} uses the same random drawing as the other controlled hunts on this page.`;
+ $('ptnote').textContent=`Idaho draws these tags at random, so points don't count. The band does not change if you have applied before.`;
  if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}
 }
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;paint()});

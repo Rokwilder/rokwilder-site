@@ -178,7 +178,7 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
  $('sxseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';paint()});
  $('drawbox').hidden=!(S.res=='nr'&&HAS_SPECIAL.has(S.sp));
  const up=usesPts();$('ptsbox').hidden=!up;if(!up)S.pts=0;S.pts=Math.min(S.pts,MAXP());$('pv').textContent=S.pts;
- const np=$('nopts');np.hidden=up;np.textContent=['goat','bison'].includes(S.sp)?`${SP[S.sp]} is a random draw in Wyoming for everyone. No preference points.`:"Wyoming residents don't use preference points for elk, deer or pronghorn. The resident draw is random, and the verdict is an estimate from the quota and 1st-choice applicants.";
+ const np=$('nopts');np.hidden=up;np.textContent=['goat','bison'].includes(S.sp)?`${SP[S.sp]} is a random draw for residents and for hunters from out of state, so points don't count.`:"Residents draw at random for this animal, so points don't count. Hunting from out of state? Tap Out of state to enter your points.";
  $('plbl').textContent=`${HAS_SPECIAL.has(S.sp)&&S.res=='nr'?'5':'4'}. How many ${SP[S.sp].toLowerCase()} preference points do you have?`;
  if(unitCtl){unitCtl.refresh();const el=$('unitq');if(el&&el.value!==S.unit)unitCtl.set(S.unit)}}
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;paint()});
