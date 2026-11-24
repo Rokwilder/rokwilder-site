@@ -22,7 +22,7 @@ const paid=()=>window.RWGate?RWGate.paid():FP;
 const isSample=k=>{const n=UH[k]&&UH[k].name;return n==='Manti'||n==='La Sal Mtns'};
 const yOK=y=>y.ok!=null?!!y.ok:sumN(y.raw)>=10;   // band-only files carry an ok flag (10+ youth applied) instead of the counts
 const MAXP=33;
-let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',unit:'',so:'',mc:'',ord:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
+let S={sp:'elk',pl:'elk-le',res:'res',pts:0,w:'',sx:'',sea:'',unit:'',so:'',mc:'',ord:'',yo:0,priv:0,n:25,tab:'list',mv:null,mu:null,ol:null};
 let unitCtl=null;
 function utUnits(k){const h=UH[k];return [h.name].concat(h.b||[])}
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',moose:'Moose',bison:'Bison',sheep:'Bighorn sheep',goat:'Mountain goat',bear:'Black bear',turkey:'Turkey',crane:'Sandhill crane',swan:'Tundra swan',sgrouse:'Greater sage-grouse',stgrouse:'Sharp-tailed grouse'};
@@ -61,7 +61,20 @@ const verdict=v=>v>=.995?"YES, you'll draw":v>=.75?'LIKELY':v>=.25?'MAYBE':v>0?'
 const pct=v=>{const r=Math.round(v*100);return v>0&&r==0?'under 1%':v<1&&r==100?'over 99%':r+'%'};
 function tie(a,b){const d=RWUnit.sortNum(utUnits(a.k))-RWUnit.sortNum(utUnits(b.k));if(d)return d;const sa=String((UH[a.k].seas[0]||[])[0]||''),sb=String((UH[b.k].seas[0]||[])[0]||'');if(sa!==sb)return sa<sb?-1:1;return a.k.localeCompare(b.k)}
 function histSide(){return S.yo?(S.res==='res'?'yres':'ynonres'):S.res}
-function ranked(){const rows=Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k)||!RWUnit.hit(utUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>0})
+const UTMON=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function utWhen(iso){const p=String(iso||'').split('-');if(p.length<3)return '';const mon=UTMON[+p[1]]||p[1];return mon+' '+Number(p[2])+(p[0]==='2027'?', 2027':'')}
+function utBucket(s){const name=s[2]||'', open=s[0]||'';
+ if(/H\.A\.M/i.test(name))return 'hamss';
+ if(/archery/i.test(name)&&/muzzle|shotgun/i.test(name))return 'multi';
+ if(/archery/i.test(name))return 'archery';
+ if(/muzzle/i.test(name))return open<'2026-10-15'?'earlyml':'lateml';
+ if(/weapon|rifle/i.test(name))return 'rifle';
+ return ''}
+function utMatch(h){if(!S.sea)return true;return (h.seas||[]).some(s=>utBucket(s)===S.sea)}
+function utDateLine(h){if(!h.seas||!h.seas.length)return 'Dates: see Utah DWR regulations';return '2026 dates: '+(h.seas||[]).map(s=>`${s[2]} ${utWhen(s[0])} to ${utWhen(s[1])}`).join('. ')}
+function utSeaBar(){const items=[['','All'],['archery','Archery'],['earlyml','Early muzzleloader'],['rifle','Rifle'],['lateml','Late muzzleloader'],['hamss','H.A.M.S.S.'],['multi','Multi-weapon']];
+ return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.sea===k?' on':''}" data-sea="${k}">${w}</button>`).join('')}</div><p class="dq">2026 dates from the Utah Big Game Application Guidebook. Early muzzleloader opens before Oct 15. Late muzzleloader opens Oct 15 or later.</p>`}
+function ranked(){const rows=Object.keys(UH).filter(k=>{const h=UH[k];if(h.pool!=S.pl)return false;if(h.cw&&!S.priv)return false;if(!wOK(h)||!sxOK(k)||!utMatch(h)||!RWUnit.hit(utUnits(k),S.unit))return false;const v=odds(k);return v!=null&&v>0})
  .map(k=>({k,v:odds(k)}));return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,histSide(),S.pts),row=>row.v,tie)}
 function oddsAtPts(k,pts){const p=S.pts;S.pts=pts;try{return odds(k)}finally{S.pts=p}}
 function rowMeasure(x){return RWDraw.measure(p=>oddsAtPts(x.k,p),S.pts)}
@@ -126,10 +139,10 @@ function showList(){const r=lsOrder(ranked()),oR=otcRows(),o=$('out');$('detail'
  if(!paid()){if(M){M.remove();M=null}if(DM){DM.remove();DM=null}
   if(window.RWLong&&RWLong.allLong(r)){
     const best=RWLong.bestFirst(r);
-    o.innerHTML=RWLong.banner(utOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${who}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,utSide(),S.pts):''}</button></li>`).join('')+`</ol>`+note;
+    o.innerHTML=RWLong.banner(utOpts(false))+`<h2 id="lt">Long shots you could still draw</h2><p class="dq">${who}. Words only on the free page.</p>`+RWGate.unlock('../pricing.html')+`<ol class="fl">`+best.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(utDateLine(UH[x.k]))}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,utSide(),S.pts):''}</button></li>`).join('')+`</ol>`+note;
     o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
   const samples=RWGate.takePerUnit(r.filter(x=>isSample(x.k)),x=>UH[x.k]&&UH[x.k].name);
-  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Manti and La Sal Mountains only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`).join('')+'</ol>':''});
+  o.innerHTML=RWGate.freeShell({count:r.length,species:SP[S.sp].toLowerCase(),who:who+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Manti and La Sal Mountains only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(utDateLine(UH[x.k]))}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${typeof RWHy==='function'?RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts):''}</button></li>`).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));return}
  const ban=window.RWGate?RWGate.banner():'';
  if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}${mcBar()}<p class="dq">${who}. Colored areas have at least one hunt you can draw; ${S.mc=='h'?'the color is the best harvest success':'the color is the best odds'} there.${hasOTC()?' Purple areas have no hunt to draw with your choices but sell an over-the-counter general-season bull elk permit (no draw).':''} Hunt areas can overlap, so smaller areas sit on top. Tap an area to see its hunts.</p>${yoOnly}`+youthBox()+
@@ -140,13 +153,13 @@ function showList(){const r=lsOrder(ranked()),oR=otcRows(),o=$('out');$('detail'
  const list=window.RWLong?RWLong.applyVd(base,S.vd):base;
  const vbar=window.RWLong?RWLong.vBar(base,S.vd):'';
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
+ o.innerHTML=ban+lsHead(list,true)+utSeaBar()+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details. ${BIRD.has(S.pl)?(S.pl=='swan-pp'?'Utah DWR doesn\'t publish tundra swan hunter success.':`Hunter success is from Utah DWR's ${gl('up','2025–26 Upland Game and Turkey Annual Report')}.`):'Hunter success is from Utah DWR\'s 2025 preliminary harvest report.'}</p>${yoOnly}`+
   youthBox()+spNote()+xaNote()+
   (S.sp=='elk'&&!hasOTC()?`<p class="note"><b>No draw needed:</b> Utah sells general-season any bull and spike bull elk permits over the counter (2026: any bull from July 9, spike bull from July 16; $56 resident, $849 nonresident). Youth general-season elk permits are unlimited (from July 7). Source: <a href="https://wildlife.utah.gov/guidebooks/biggameapp.pdf">2026 Utah Big Game Application Guidebook</a>, pages 13 and 15.</p>`:otcTop(oR))+
-  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(utExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
+  fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(utExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(utDateLine(UH[x.k]))}</span><span class="fd">${land(UH[x.k])}</span>${yTag(x.k)}${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length||yoOnly?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(utOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+otcSec(oR)+note+`<p class="note">${RWLand.pageNote('ut')}</p>`+fpLine()+fbA('find');
- wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('[data-sea]').forEach(b=>b.onclick=()=>{S.sea=b.dataset.sea;S.vd='';S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  o.querySelectorAll('a.ygo').forEach(a=>a.onclick=e=>{e.preventDefault();S.pl=a.dataset.pl;S.sp=PL[S.pl][0];S.yo=1;S.n=25;sync();history.pushState(st('list'),'',url());showList();top2(o)});
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
  if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
@@ -369,7 +382,7 @@ const fbA=about=>`<p class="fbk"><a class="fbl" href="../feedback.html?about=${a
 const top2=e=>{const h=document.querySelector('header');scrollTo({top:e.getBoundingClientRect().top+scrollY-((h&&getComputedStyle(h).position=='sticky')?h.offsetHeight:0)-12,behavior:'instant'})};
 const st=(v,k)=>({v,k,sp:S.sp,pl:S.pl,res:S.res,pts:S.pts,w:S.w,sx:S.sx,unit:S.unit,so:S.so,mc:S.mc,ord:S.ord,yo:S.yo,priv:S.priv,n:S.n,tab:S.tab,mv:S.mv,mu:S.mu,ol:S.ol,y:v=='list'?scrollY:0});
 const oddsAt=(k,r,p,y)=>{const o={res:S.res,pts:S.pts,yo:S.yo};S.res=r;S.pts=p;S.yo=y;try{return odds(k)}finally{Object.assign(S,o)}};
-const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.ord)u.set('ord',S.ord);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(window.RWGate)RWGate.stamp(u);if(window.RWTrophy)RWTrophy.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
+const url=k=>{const u=new URLSearchParams({sp:S.sp,pl:S.pl,r:S.res,p:S.pts});if(S.w)u.set('w',S.w);if(S.sx)u.set('sx',S.sx);if(S.sea)u.set('sea',S.sea);if(S.unit)u.set('unit',S.unit);if(S.so)u.set('so',S.so);if(S.mc)u.set('mc',S.mc);if(S.ord)u.set('ord',S.ord);if(S.yo)u.set('kid',1);if(S.priv)u.set('priv',1);if(k)u.set('h',k);if(S.tab=='map')u.set('tab','map');if(window.RWGate)RWGate.stamp(u);if(window.RWTrophy)RWTrophy.stamp(u);return '?'+u+'#'+(k?'hunt':S.tab=='map'?'map':'list')};
 let fromList=false;
 function openHunt(k){history.replaceState(st('list'),'',url());history.pushState(st('detail',k),'',url(k));fromList=true;showDetail(k)}
 function goBack(){if(fromList)history.back();else{history.replaceState(st('list'),'',url());showList();top2($('out'))}}
@@ -398,7 +411,7 @@ const step=x=>{S.pts=Math.max(0,Math.min(MAXP,S.pts+x));$('pv').textContent=S.pt
 $('go').onclick=()=>{S.n=25;S.on=0;S.mv=null;S.mu=null;S.ol=null;history.pushState(st('list'),'',url());showList();top2($('out'))};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k in UH){if(UH[k].sp!=S.sp)continue;for(const u of utUnits(k)){const x=String(u);if(!x||seen.has(x))continue;seen.add(x);s.push(x)}}return s}});
 if(Q.get('sp')&&typeof UH!='undefined'){const sp=SP[Q.get('sp')]?Q.get('sp'):'elk',pl=PL[Q.get('pl')]&&PL[Q.get('pl')][0]==sp?Q.get('pl'):poolsOf(sp)[0];
- apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:soOf(Q.get('so')),mc:Q.get('mc')=='h'?'h':'',ord:RWDraw.ordOf(Q.get('ord')),yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});
+ apply({sp,pl,res:Q.get('r')=='nonres'?'nonres':'res',pts:Math.max(0,Math.min(MAXP,+Q.get('p')||0)),w:'AMR'.includes(Q.get('w')||'-')?Q.get('w'):'',sx:'MFE'.includes(Q.get('sx')||'-')?Q.get('sx'):'',unit:Q.get('unit')||'',so:soOf(Q.get('so')),mc:Q.get('mc')=='h'?'h':'',ord:RWDraw.ordOf(Q.get('ord')),yo:Q.get('kid')?1:0,priv:Q.get('priv')?1:0,n:25,tab:Q.get('tab')=='map'||location.hash=='#map'?'map':'list'});if(Q.get('sea'))S.sea=Q.get('sea');
  const h=Q.get('h');history.replaceState(st('list'),'',url());if(h&&UH[h]&&UH[h].pool==S.pl&&(paid()||isSample(h))){history.pushState(st('detail',h),'',url(h));fromList=true;showDetail(h)}else showList()}
 sync();
 window.__UT={otcRows,OU:()=>OU,FP,oddsAt,hWhat,hsv,lsort,hbk,hBest,ranked,odds,SX,sxAvail,S,MC,vcol,fee,NOW};
