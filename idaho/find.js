@@ -64,6 +64,13 @@ function oddsHTML(h){
  if(rate==null)return `<span class="fo"><span class="fpn">No exact 2026 count for this residency</span></span>`;
  const n=(typeof raw.drawn==='number'&&typeof raw.apps==='number'&&raw.apps>0)?`, ${raw.drawn.toLocaleString()} drawn of ${raw.apps.toLocaleString()}`:'';
  return `<div class="fo"><b>${pct(rate)}</b> <span>2026 first-choice result${n}</span></div>`}
+function idTags(h){
+  if(!window.RWTags)return '';
+  if(!paid())return RWTags.locked('../pricing.html');
+  const raw=FP?sideRaw(h):null;
+  if(!raw||typeof raw.apps!=='number')return RWTags.missing('The Idaho file on this page has a result band. It does not list how many people applied or drew. Idaho does not use preference points.');
+  return RWTags.show({paid:true,year:2026,rows:[{points:'No points',applied:raw.apps,drew:typeof raw.drawn==='number'?raw.drawn:null,how:'Random draw'}],sentence:'Idaho draws controlled-hunt tags at random. There is no point level.'});
+}
 function countsHTML(h){
  if(!FP||!h.raw)return '';
  const rows=['res','nr'].filter(k=>exactRate(h.raw[k])!=null);
@@ -133,7 +140,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  const where=ids.length?`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p><div id="dmap" class="gmap dm" data-areas="${esc(ids.join(','))}" aria-label="Map of this controlled hunt area"></div>${mapCred()}`:`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p>`;
  const bk=S.tab==='map'?'← Back to the map':'← Back to the list';
  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
-  `<div class="fv">${v==null?'':vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+RWQuota.html('id',k,FP)+idExtra(k,v)+fpBox()+where+segHTML(h)+
+  `<div class="fv">${v==null?'':vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+idTags(h)+RWQuota.html('id',k,FP)+idExtra(k,v)+where+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
  $('back').onclick=()=>showList(1);if($('dmap'))drawDetailMap(v);if(sc)o.scrollIntoView({behavior:'smooth'})}
 function how(){return `Idaho does not use preference points for this draw. IDFG describes controlled-hunt tags as drawn at random, and IDAPA 13.01.04.330 calls it a hunt-choice drawing: if the first choice is not drawn, the application can go to another choice only when that hunt is not already full. A group is one application. Deer, elk and pronghorn groups are two to four people. Moose, bighorn sheep, mountain goat and black bear groups are two people. A group is not selected when fewer tags remain than the group has people. The band is the share of first-choice people who were drawn, not the chance a group will draw. Nonresident tags are capped. That cap is already inside the 2026 result. This page does not recompute it. The second drawing is a later application for leftover tags. It is not a second choice.`}

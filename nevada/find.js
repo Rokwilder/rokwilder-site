@@ -118,6 +118,14 @@ function showList(sc){
   if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
   if(sc)o.scrollIntoView({behavior:'smooth'});
 }
+function nvTags(h){
+  if(!window.RWTags)return '';
+  if(!paid())return RWTags.locked('../pricing.html');
+  const lv=FP&&h.raw&&h.raw.lv;
+  if(!lv)return RWTags.missing('The Nevada file on this page has a result band for each point level. It does not list how many people applied or drew.');
+  const rows=Object.keys(lv).map(Number).filter(n=>!Number.isNaN(n)).sort((a,b)=>b-a).map(n=>{const row=lv[n]!=null?lv[n]:lv[String(n)];return {points:String(n),applied:typeof row.a1==='number'?row.a1:null,drew:typeof row.s1==='number'?row.s1:null,how:'Random draw'}}).filter(r=>r.applied!=null||r.drew!=null);
+  return RWTags.show({paid:true,year:2025,rows,sentence:'Nevada squares bonus points and then draws at random.'});
+}
 async function showDetail(k,sc){
   if(!paid()&&!isSample(k)){showList(sc);return}
   const h=NH[k];if(!h)return;const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;if(LM){LM.remove();LM=null}if(DM){DM.remove();DM=null}
@@ -126,7 +134,7 @@ async function showDetail(k,sc){
   const word=v===null?'No 1st-choice row at this point level':verdictLine(v);
   const src=NV_META.src[h.src];
   const bk=S.tab==='map'?'← Back to the map':'← Back to the list';
-  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
+  o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${word}</div>${oddsHTML(h)}${RWHy(k,null,S.pts)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">This is the 2025 main-draw result for people who put this hunt first and had this many bonus points. It is not a forecast. Nevada squares the bonus points and adds one for the application, then assigns that many random numbers. The lowest number is the one that competes. More points mean more numbers. They do not hold a place in line. A party is averaged before that step, and the 2025 table does not say which rows were parties. Second through fifth choice are not banded.</p>`+nvTags(h)+RWQuota.html('nv',k,FP)+nvExtra(h,v)+
     (v===null?'':ladder(h))+where+fpBox()+
     `<p class="note">Season dates are the dates printed on the 2025 table: ${esc(h.season)}. They are not a 2026 or 2027 season. Source: <a href="${esc(src)}">NDOW 2025 bonus-point table</a>.</p>`;
   $('back').onclick=()=>showList(1);

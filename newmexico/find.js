@@ -210,13 +210,20 @@ function areaHTML(h){
   if(!h.areaChoice||!h.areas||!h.areas.length)return '';
   return '<h3>Hunt areas in the 2026-27 booklet</h3><p class="dq">The odds above are for the whole hunt code. They are not a separate result for one area.</p><ul class="nvr">'+h.areas.map(a=>`<li>${esc(a)}</li>`).join('')+'</ul>';
 }
+function nmTags(h){
+  if(!window.RWTags)return '';
+  if(!paid())return RWTags.locked('../pricing.html');
+  const raw=FP&&h.raw&&h.raw[S.pool];
+  if(!raw||typeof raw.a1!=='number')return RWTags.missing('The New Mexico file on this page has a result band for the pool. It does not list a point-by-point count. New Mexico does not use preference points.');
+  return RWTags.show({paid:true,year:2026,rows:[{points:'No points',applied:raw.a1,drew:typeof raw.s1==='number'?raw.s1:null,how:'Random draw'}],sentence:'New Mexico draws these tags at random. There is no point level.'});
+}
 async function showDetail(k,sc){
   const h=NH[k];if(!h)return;
   if(!paid()&&!(h.units||[]).some(u=>SAMPLES.has(String(u)))){showList(sc);return}
   const v=bandAt(h);const o=$('detail');$('out').hidden=true;o.hidden=false;
   if(LM){LM.remove();LM=null}
   const where=(h.units&&h.units.length)?`<h3>Where this hunt is</h3><p class="dq">${esc(place(h))}. ${h.areaChoice?'The highlighted units are areas a hunter can choose under this code. The color is the code-level result, not an area-level result.':h.units.length>1?'A hunt named in more than one unit is drawn for the whole hunt code.':''} ${h.unmapped&&h.unmapped.length?'Unit '+esc(h.unmapped.join(', '))+' is named in the report and is not a polygon on the 2026 map.':''}</p><div id="dmap" class="gmap dm" data-units="${esc(h.units.join(','))}" aria-label="Map of this game management unit"></div>${mapCred()}`:'<h3>Where this hunt is</h3><p class="dq">The 2026 unit map used here does not have a polygon for '+esc(h.area||'this hunt')+'.</p>';
-  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
+  o.innerHTML=`<button class="btn o" id="back">Back to the list</button><h2>${title(h)}</h2><p class="dq">${esc(whoLine())}</p><div class="fv"><i class="vdot" style="background:${COL[v]||'#E8E0D2'}"></i>${verdictLine(h,v)}</div>${oddsHTML(h)}${RWHy(k,S.pool,null)}<p class="how">${esc(h.area)}. ${esc(h.blab)}. ${esc(h.wlab)}. ${h.season?'2026-27 season: '+esc(h.season)+'.':'2026-27 season dates were not matched from the booklet for this code.'} ${h.fee?'Fee type in the 2026-27 booklet: '+esc(h.fee)+'.':''} ${h.why?esc(h.why):''} This is a 2026 result, not a forecast.</p>${harvestHTML(h)}${landExtra(h,v)}${nmTags(h)}${where}${areaHTML(h)}${choiceTable(h)}<p class="note">Source: <a href="${esc(h.sp==='bear'||h.sp==='turkey'?NM_META.src.bear2026:NM_META.src.complete2026)}">${h.sp==='bear'||h.sp==='turkey'?'2026 Bear and Turkey Draw Odds Report':'2026 Big Game Drawing Odds Complete Report'}</a>. Booklet: <a href="${esc(NM_META.pages.booklet)}">2026-2027 Hunting Rules and Information</a>. Harvest: <a href="${esc(NM_META.pages.harvest)}">NMDGF harvest reports</a>.</p>`;
   $('back').onclick=()=>showList(1);
   if($('dmap'))drawDetailMap(v);
   if(sc)o.scrollIntoView({behavior:'smooth'});
