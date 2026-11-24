@@ -7,7 +7,7 @@
 const $=id=>document.getElementById(id);
 const Q=new URLSearchParams(location.search);
 const M=ID_META;
-let S={sp:'elk',res:'res',draw:1,sx:'',unit:'',youth:1,n:25,focus:'',ord:'',tab:'list'};
+let S={sp:'elk',res:'res',draw:1,sx:'',sea:'',unit:'',youth:1,n:25,focus:'',ord:'',tab:'list'};
 let unitCtl=null;
 const ORDER=['elk','deer','pronghorn','moose','sheep-rm','sheep-ca','goat','bear','turkey'];
 const SXN={'':'Any',M:'Antlered',F:'Antlerless',E:'Either sex'};
@@ -25,9 +25,14 @@ const resName=()=>S.res==='res'?'Idaho resident':'Out of state';
 const who=()=>`${spName(S.sp)} · ${resName()} · 2026 ${drawName()} · first choice${S.sx?' · '+SXN[S.sx].toLowerCase():''}${S.youth?'':' · youth-only hunts hidden'}`;
 const oddsURL=h=>`${M.oddsPage}?biggame=${M.species[h.sp].biggame}&yr=${M.year}&draw=${h.draw}`;
 const rows=()=>Object.entries(IH).filter(([,h])=>h.sp===S.sp&&h.draw===S.draw);
+function idBucket(method){const m=method||'';if(/archery/i.test(m)&&/muzzle/i.test(m))return 'both';if(/archery/i.test(m))return 'archery';if(/muzzle/i.test(m))return 'muzzle';if(/any weapon|short-range/i.test(m))return 'rifle';return ''}
+function idDateLine(h){if(!h.seg||!h.seg.length)return 'Dates: see IDFG regulations';return '2026 dates: '+h.seg.map(g=>`${g.m} ${g.o} to ${g.c}`).join('. ')}
+function idSeaBar(){const items=[['','All'],['archery','Archery'],['muzzle','Muzzleloader'],['rifle','Rifle']];
+ return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.sea===k?' on':''}" data-idsea="${k}">${w}</button>`).join('')}</div><p class="dq">2026 dates from the IDFG Hunt Planner for this hunt number.</p>`}
 function split(){const show=[],under=[],none=[],unlabeled=[];
  for(const [k,h] of rows()){
   if(S.sx&&!(h.sex===S.sx||((h.sex==='E'||!h.sex)&&S.sx!=='E')))continue
+  if(S.sea&&!(h.seg||[]).some(g=>idBucket(g.m)===S.sea))continue
   if(!S.youth&&h.youth)continue;
   if(!RWUnit.hit([h.area,h.n],S.unit))continue;
   const v=S.res==='res'?h.res:h.nr;
@@ -95,8 +100,8 @@ function idChance(k){const h=IH[k];if(FP){const r=exactRate(sideRaw(h));if(r!=nu
 function orderRows(list){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(list,S.ord,x=>RWDraw.measure(()=>idChance(x.k),0),tie);if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
 function bandSeason(){return {y:M.year,kind:'result'}}
 function verdictLine(v){if(v==null)return '';return window.RWSeason?RWSeason.label(bandSeason().y,bandSeason().kind,VERD(v)):VERD(v)}
-function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
-function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
+function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function idOpts(){return {points:null,rule:window.RWLong?RWLong.rules.id:'',member:false,next:null}}
 function lsHead(rows){if(window.RWLong)return RWLong.head(rows,idOpts());const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
 function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
@@ -124,11 +129,12 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
   o.innerHTML=ban+lsHead(list)+tabs+`<p class="dq">${esc(who())}. Colored areas have at least one hunt you can draw. The color is the best 2026 result in that area. Orange is a long shot when the share was above 0 and under one in twenty. Tap an area to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Idaho controlled hunt areas"></div>`+mapCred()+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
   drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+lsHead(list)+vbar+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+ o.innerHTML=ban+lsHead(list)+idSeaBar()+vbar+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length||emptySpecies?'':(window.RWTrophy?RWTrophy.emptyNote(ordered.length,list.length):'')||(window.RWLong?RWLong.empty(idOpts()):`<p class="dq">No hunts you can draw with these choices.</p>`))+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
  if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
+ o.querySelectorAll('[data-idsea]').forEach(b=>b.onclick=()=>{S.sea=b.dataset.idsea;S.vd='';S.n=25;showList()});
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
  if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
