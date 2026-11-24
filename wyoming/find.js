@@ -33,7 +33,8 @@ const usesPts=()=>S.res=='res'?PTSP.has(S.sp):NRPTS.has(S.sp);
 const MAXP=()=>M.maxp[S.sp]||0;
 function band(k){const h=WH[k];if(!h)return null;const b=h.od[pool()]||null;if(!b)return null;return b.o[Math.min(S.pts,b.o.length-1)]}
 const isGen=h=>h.type==''||/GENERAL/.test(h.desc);
-function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(S.sx&&h.sx!=S.sx)return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
+function sexOk(sx){if(!S.sx)return true;if(sx==S.sx)return true;return (sx=='E'||sx==''||sx==null)&&S.sx!='E'}
+function ok(k){const h=WH[k];if(h.sp!=S.sp)return false;if(!sexOk(h.sx))return false;if(!RWUnit.hit([h.area],S.unit))return false;if(!S.red&&h.cls=='reduced')return false;if(!S.gen&&isGen(h))return false;if(pool()=='nrs'&&h.cls=='reduced')return false;return true}
 function tie(a,b){const d=RWUnit.sortNum([WH[a.k].area])-RWUnit.sortNum([WH[b.k].area]);if(d)return d;const ta=String(WH[a.k].type),tb=String(WH[b.k].type);if(ta!==tb)return ta<tb?-1:1;return a.k.localeCompare(b.k)}
 function ranked(){const rows=WK.filter(k=>{if(!ok(k))return false;const v=band(k);return v!=null&&v>0}).map(k=>({k,v:band(k)}));
  return RWDraw.byDraw(rows,row=>RWDraw.spanBand(row.k,pool(),usesPts()?S.pts:''),row=>row.v,tie)}
@@ -89,14 +90,16 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
   o.innerHTML=RWGate.freeShell({count:all.length,species:SP[S.sp].toLowerCase(),who:who()+'.',pricing:'../pricing.html',sampleNote:'<b>Sample.</b> Hunt areas 100 and 102 only, up to 3 hunts from each. This is not your whole list.',samplesHtml:samples.length?`<ol class="fl">`+samples.map(card).join('')+'</ol>':''});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const r=lsOrder(orderRows(all));
- const list=lsOrder(window.RWTrophy?RWTrophy.refine(r):r);
+ const base=lsOrder(window.RWTrophy?RWTrophy.refine(r):r);
+ const list=window.RWLong?RWLong.applyVd(base,S.vd):base;
+ const vbar=window.RWLong?RWLong.vBar(base,S.vd):'';
  const ban=window.RWGate?RWGate.banner():'';
  const tabs=`<div class="tabs" role="tablist"><button role="tab" class="tb${S.tab=='list'?' on':''}" aria-selected="${S.tab=='list'}" data-tab="list">List</button><button role="tab" class="tb${S.tab=='map'?' on':''}" aria-selected="${S.tab=='map'}" data-tab="map">Map</button></div>`;
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Best odds first.'));
  if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}<p class="dq">${who()}. Colored hunt areas have at least one hunt you can draw. The color is the best odds in that area. Tap an area to see its hunts.</p>`+fpBox()+mapKey()+`<div id="map" class="gmap" aria-label="Map of Wyoming hunt areas"></div><div id="mpanel" class="mp" hidden aria-live="polite"></div>`+mapCred()+`<p class="note">A general or region license has no single hunt area in this layer, so it is left off the map. A numbered area that is missing from the layer is left off too.</p>`+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList();o.scrollIntoView({behavior:'smooth'})});drawMap(r);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+lsHead(list,true)+`${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
+ o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${focusBar()}${RWDraw.bar(S.ord,usesPts())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who()}. ${lead} Tap a hunt for the method and the WGFD report.</p>`+fpBox()+redNote+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||(window.RWLong?RWLong.empty(wyOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+note+fpLine();
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{if(S.tab==b.dataset.tab)return;S.tab=b.dataset.tab;S.ol=null;showList()});
@@ -104,6 +107,7 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
  if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if($('more'))$('more').onclick=()=>{S.n+=25;showList()};
  o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
+ if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
  if(sc)o.scrollIntoView({behavior:'smooth'})}
 function ladder(b){const mx=Math.min(b.o.length-1,Math.max(S.pts+3,b.o.findIndex(z=>z>=.995)+1||b.o.length-1));
  return `<p class="lh">Estimated chance by points (2026, 1st choice)</p><table class="dt"><tr><th>Points</th><th>Estimate</th></tr>`+[...Array(mx+1).keys()].map(n=>`<tr class="${n==S.pts?'on':''}"><td>${n}</td><td>${pct(b.o[n])}</td></tr>`).join('')+'</table><p class="dq">Printed point-pool odds mixed with the random estimate. Not a WGFD-printed total.</p>'}
@@ -169,9 +173,9 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
  document.querySelectorAll('[data-res]').forEach(b=>b.classList.toggle('on',b.dataset.res==S.res));
  document.querySelectorAll('[data-dr]').forEach(b=>b.classList.toggle('on',b.dataset.dr==S.dr));
  const av=sxAvail();if(S.sx&&!av.includes(S.sx))S.sx='';const w=SXW[S.sp]||{};
- $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');
- $('sxnote').textContent=av.map(x=>`${SXN[x]} = ${w[x]||SXN[x].toLowerCase()}`).join('. ')+". From the license description in WGFD's reports.";
- $('sxseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;paint()});
+ $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${window.RWLong?RWLong.sexLabel(S.sp,x):SXN[x]}</button>`).join('');
+ $('sxnote').textContent=(window.RWLong?RWLong.sexNote(S.sp,av):'')+(av.length?` ${av.map(x=>`${SXN[x]} means ${w[x]||SXN[x].toLowerCase()}`).join('. ')}.`:'' )+" From the license description in WGFD's reports.";
+ $('sxseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';paint()});
  $('drawbox').hidden=!(S.res=='nr'&&HAS_SPECIAL.has(S.sp));
  const up=usesPts();$('ptsbox').hidden=!up;if(!up)S.pts=0;S.pts=Math.min(S.pts,MAXP());$('pv').textContent=S.pts;
  const np=$('nopts');np.hidden=up;np.textContent=['goat','bison'].includes(S.sp)?`${SP[S.sp]} is a random draw in Wyoming for everyone. No preference points.`:"Wyoming residents don't use preference points for elk, deer or pronghorn. The resident draw is random, and the verdict is an estimate from the quota and 1st-choice applicants.";

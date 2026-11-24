@@ -66,5 +66,69 @@ const rules={
   nm:'New Mexico draws these tags at random, with no preference points, so every hunt below is a long shot you could still pull.',
   co:'Colorado puts applicants with 5 or more points into a hybrid draw on qualifying hunts, so every hunt below is a long shot you could still pull.'
 };
-window.RWLong={word,inDraw,allLong,bestFirst,banner,head,empty,nextFromHistory,dotColor,pointsWord,rules};
+function sexHit(huntSex, pick){
+  const sx=huntSex==null?'':String(huntSex);
+  if(!pick)return true;
+  if(sx===pick)return true;
+  return (sx==='E'||sx==='')&&pick!=='E';
+}
+function sexLabel(sp, code){
+  if(!code)return 'Any';
+  const male={elk:'Bull',deer:'Buck',pronghorn:'Buck',antelope:'Buck',moose:'Bull',sheep:'Ram',dsheep:'Ram',bighorn:'Ram',goat:'Billy',bison:'Bull',bear:'Male',turkey:'Tom'};
+  const female={elk:'Cow',deer:'Doe',pronghorn:'Doe',antelope:'Doe',moose:'Cow',sheep:'Ewe',dsheep:'Ewe',bighorn:'Ewe',goat:'Nanny',bison:'Cow',bear:'Female',turkey:'Hen'};
+  const any={elk:'any-elk',deer:'any-deer',pronghorn:'any-pronghorn',antelope:'any-antelope',moose:'any-moose',sheep:'any-sheep',dsheep:'any-sheep',bighorn:'any-sheep',bison:'any-bison',turkey:'any-turkey',bear:'any-bear',goat:'any-goat'};
+  if(code==='E'){
+    const name=any[sp]||'either sex';
+    return name.charAt(0).toUpperCase()+name.slice(1)+' only';
+  }
+  const word=code==='M'?(male[sp]||'Male'):code==='F'?(female[sp]||'Female'):code;
+  if(any[sp]&&(code==='M'||code==='F'))return word+' (includes '+any[sp]+')';
+  return word;
+}
+function sexNote(sp, codes){
+  const list=codes||[];
+  const bits=[];
+  for(const c of list){
+    if(c==='E')bits.push(sexLabel(sp,'E')+' shows only the either-sex licenses.');
+    else if(c==='M'||c==='F')bits.push(sexLabel(sp,c)+' also lists either-sex and general licenses.');
+  }
+  return bits.join(' ');
+}
+function vKey(v, mode){
+  if(!(typeof v==='number'&&v>0))return '';
+  if(mode==='drew'){
+    if(v>=1)return 'all';
+    if(v>=.75)return 'most';
+    if(v>=.25)return 'some';
+    if(v>=.05)return 'few';
+    return 'long';
+  }
+  if(v>=.995)return 'yes';
+  if(v>=.75)return 'likely';
+  if(v>=.25)return 'maybe';
+  return 'long';
+}
+const VLAB={
+  yes:{yes:'Yes',likely:'Likely',maybe:'Maybe',long:'Long shot'},
+  drew:{all:'All drew',most:'Most drew',some:'Some drew',few:'Few drew',long:'Long shot'}
+};
+function vBar(rows, active, mode){
+  const lab=VLAB[mode==='drew'?'drew':'yes'];
+  const c={};
+  for(const k of Object.keys(lab))c[k]=0;
+  for(const r of rows||[]){const k=vKey(r&&r.v, mode);if(c[k]!=null)c[k]++}
+  const bits=Object.keys(lab).filter(k=>c[k]);
+  if(!bits.length)return '';
+  const btn=(k,text,on)=>`<button type="button" class="vb${on?' on':''}" data-vd="${k}">${text}</button>`;
+  return `<div class="vbar" role="group" aria-label="Show hunts by chance">${btn('','All '+(rows||[]).length.toLocaleString(),!active)}`+bits.map(k=>btn(k,lab[k]+' '+c[k].toLocaleString(),active===k)).join('')+'</div>';
+}
+function applyVd(rows, active, mode){
+  if(!active)return rows||[];
+  return (rows||[]).filter(r=>vKey(r&&r.v, mode)===active);
+}
+function wireVd(root, set){
+  if(!root)return;
+  root.querySelectorAll('[data-vd]').forEach(b=>b.onclick=()=>set(b.dataset.vd||''));
+}
+window.RWLong={word,inDraw,allLong,bestFirst,banner,head,empty,nextFromHistory,dotColor,pointsWord,rules,sexHit,sexLabel,sexNote,vKey,vBar,applyVd,wireVd};
 })();

@@ -49,10 +49,10 @@ function seaOf(k){if(k.at(-1)!='R'||D[k][0]=='turkey')return null;const t=k[5],n
  if(['deer','elk','pronghorn'].includes(sp)&&t=='O'&&'1234'.includes(n))return n;return t=='L'?'L':'O'}
 const seOK=k=>!S.se||seaOf(k)==S.se;
 const seAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){if(priv(D[k])&&!S.priv)continue;const x=seaOf(k);if(x)o.add(x)}return['1','2','3','4','S','R','P','L','O'].filter(x=>o.has(x))};
-const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};const sxOf=k=>'MFE'.includes(k[1])?k[1]:null;const sxOK=k=>!S.sx||sxOf(k)==S.sx;
+const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};const sxOf=k=>'MFE'.includes(k[1])?k[1]:'';function sexOk(sx){if(!S.sx)return true;if(sx==S.sx)return true;return (sx=='E'||sx==''||sx==null)&&S.sx!='E'}const sxOK=k=>sexOk(sxOf(k));
 const SXW={elk:{M:'bull (antlered)',F:'cow (antlerless)'},deer:{M:'buck (antlered)',F:'doe (antlerless)'},pronghorn:{M:'buck (antlered)',F:'doe (antlerless)'},moose:{M:'bull (antlered)',F:'cow (antlerless)'},turkey:{M:'bearded turkey (tom)'},sheep:{M:'ram',F:'ewe'},dsheep:{M:'ram'},goat:{F:'nanny'}};
 const sxAvail=sp=>{const o=new Set();for(const k in D)if(D[k][0]==sp&&!(typeof EXCL!='undefined'&&EXCL.has(k))){const x=sxOf(k);if(x)o.add(x)}return['M','F','E'].filter(x=>o.has(x))};
-function sxNote(sp,av){const w=SXW[sp]||{};return av.map(x=>x=='E'?'Either sex = you may take a male or a female':`${SXN[x]} = ${w[x]||SXN[x].toLowerCase()} hunts`).join('. ')+'. From the sex letter in each CPW hunt code (M, F or E).'}
+function sxNote(sp,av){const w=SXW[sp]||{};const lead=window.RWLong?RWLong.sexNote(sp,av):'';return (lead?lead+' ':'')+av.map(x=>x=='E'?'Either sex means you may take a male or a female':`${SXN[x]} means ${w[x]||SXN[x].toLowerCase()} hunts`).join('. ')+'. From the sex letter in each CPW hunt code (M, F or E).'}
 const SP={elk:'Elk',deer:'Deer',pronghorn:'Pronghorn',bear:'Bear',moose:'Moose',turkey:'Turkey',sheep:'Bighorn sheep',dsheep:'Desert bighorn sheep',goat:'Mountain goat'};
 // Lottery species: moose, Rocky Mountain bighorn sheep and mountain goat use weighted preference points; desert bighorn is a pure random draw.
 const WT=sp=>sp=='moose'||sp=='sheep'||sp=='dsheep'||sp=='goat';
@@ -119,7 +119,7 @@ function ranked(){const rows=Object.keys(D).filter(k=>{const d=D[k];if(d[0]!=S.s
 // license (all its units together), shown as a band.
 const OTCL=()=>typeof OTC!='undefined'?OTC:[];
 const hasOTC=()=>OTCL().some(r=>r.sp==S.sp);
-function otcOK(r){if(r.sp!=S.sp)return false;if(S.res=='res'?!r.res:!r.nr)return false;if(S.w&&r.w!=S.w)return false;if(S.sx&&r.sx!=S.sx)return false;if(S.se&&(r.w!='R'||r.se!=S.se))return false;return true}
+function otcOK(r){if(r.sp!=S.sp)return false;if(S.res=='res'?!r.res:!r.nr)return false;if(S.w&&r.w!=S.w)return false;if(!sexOk(r.sx||''))return false;if(S.se&&(r.w!='R'||r.se!=S.se))return false;return true}
 const OSO=r=>r.w=='A'?0:r.se=='2'?1:r.se=='3'?2:3;
 function otcRows(){const o=[];OTCL().filter(otcOK).forEach(r=>r.u.forEach(u=>{if(!RWUnit.hit([u],S.unit))return;o.push({u:String(u),r})}));const hv=x=>x.r.hb;
  return o.sort((a,b)=>(S.so=='h'?((hv(a)==null)-(hv(b)==null))||((hv(b)??0)-(hv(a)??0)):0)||(+a.u-+b.u)||(OSO(a.r)-OSO(b.r))||a.r.k.localeCompare(b.r.k))}
@@ -174,15 +174,17 @@ function showList(){const r=lsOrder(ranked()),oR=otcRows(),o=$('out');
   `<p class="mapcred"><b>Unit boundaries: Colorado Parks and Wildlife.</b> Lines are simplified and approximate. Check the ${bro()} for official unit boundaries before you apply or hunt.</p>`+
   `<p class="note">Odds are estimates for ${estimateYear()} from CPW's past draws (1st choice). ${coHybrid()?'Qualifying hybrid hunts with odds above 0 are shown. Odds above 0 and under 5% are long shots.':'Hunts under 5% aren\'t shown on points-only hunts'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee.</p>`+fpLine()+fbA('maps');
   wireTabs(o);drawMap(r);return}
- const rawList=rowsInOrder(r), list=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
+ const rawList=rowsInOrder(r), base=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
+ const list=window.RWLong?RWLong.applyVd(base,S.vd):base;
+ const vbar=window.RWLong?RWLong.vBar(base,S.vd):'';
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+lsHead(list,true)+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+
+ o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+
   wtNote()+yxNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>{const bits=RWLand.splitNext(landExtra(x.k,x.v));return `<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${landS(D[x.k][4])}</span>${oddsHTML(x.v,'fo')}${succHTML(x.k,'fs')}${RWHy(x.k,S.yo?(S.res==='res'?'yres':'ynonres'):S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(coOpts(true)):`<p class="dq">No hunts you can draw with these choices.</p>`))+otcSec(oR)+
   `<p class="note">Odds are estimates for ${estimateYear()} from CPW's past draws (1st choice). ${coHybrid()?'Qualifying hybrid hunts with odds above 0 are listed. Odds above 0 and under 5% are long shots.':'Hunts under 5% aren\'t listed on points-only hunts'}${S.priv?'':', and private-land-only hunts are hidden (turn them on under More options)'}. Not a guarantee. Always check the ${bro()} before you apply.</p><p class="note">${RWLand.pageNote('co')}</p>`+fpLine()+fbA('find');
- wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()};
  if($('omore'))$('omore').onclick=()=>{const y=scrollY;S.on=(S.on||25)+25;showList();scrollTo(0,y)};
  o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))});}
@@ -343,7 +345,7 @@ function sync(){{const ea=S.w=='R'&&S.sp!='turkey'?seAvail(S.sp):[];if(S.se&&!ea
  $('seseg').innerHTML=show?['',...ea].map(x=>`<button data-se="${x}" class="${S.se==x?'on':''}">${SEN[x]}</button>`).join(''):'';$('seseg').querySelectorAll('[data-se]').forEach(b=>b.onclick=()=>{S.se=b.dataset.se;sync()});
  $('senote').textContent=S.sp=='bear'?'CPW 2026 bear rifle seasons: Sept. rifle is Sept. 2–30; Oct.–Nov. rifle hunts are good in all four regular rifle seasons (Oct. 14–18, Oct. 24–Nov. 1, Nov. 7–15, Nov. 18–22); private-land-only hunts show when you turn them on under More options. From the season part of each CPW hunt code.':ea.includes('O')?'Other = '+(['deer','elk','pronghorn'].includes(S.sp)?'early, private-land-only, youth-only, special and Ranching for Wildlife rifle hunts':'this species\' own rifle season dates (see each hunt)')+'. From the season part of each CPW hunt code.':'From the season part of each CPW hunt code.'}
  const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';
- $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
+ $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${window.RWLong?RWLong.sexLabel(S.sp,x):SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';sync()});$('sxnote').textContent=sxNote(S.sp,av);
  document.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp==S.sp));document.querySelectorAll('[data-res]').forEach(x=>x.classList.toggle('on',x.dataset.res==S.res));
  document.querySelectorAll('[data-yo]').forEach(x=>x.classList.toggle('on',+x.dataset.yo==S.yo));$('pv').textContent=S.pts;$('priv').checked=!!S.priv;
  document.querySelectorAll('[data-w]').forEach(x=>{x.classList.toggle('on',x.dataset.w==S.w);x.disabled=S.sp=='turkey'});$('wnote').hidden=S.sp!='turkey';if($('pnote'))$('pnote').hidden=!WT(S.sp)||S.sp=='dsheep';if($('dnote'))$('dnote').hidden=S.sp!='dsheep';if($('ynote'))$('ynote').hidden=!S.yo;

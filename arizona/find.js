@@ -36,11 +36,12 @@ const SXN={'':'Any',M:'Male',F:'Female',E:'Either sex'};
 function sxOf(h){const l=h.legal||'';if(/^(Bull elk|Buck pronghorn|Any antlered deer|Antlered (mule|whitetail) deer|Any ram|Bearded turkey|Designated bull bison|Bull bison only)$/.test(l))return'M';
  if(/^(Antlerless (elk|deer)|Designated cow bison|Cow bison only)$/.test(l))return'F';if(/^(Any (elk|deer|turkey|javelina|sandhill crane)|Designated yearling bison)$/.test(l))return'E';return null}
 const SX={};for(const k of AHk)SX[k]=sxOf(AH[k]);
-const sxOK=k=>!S.sx||SX[k]==S.sx;
+function sexOk(sx){if(!S.sx)return true;if(sx==S.sx)return true;return (sx=='E'||sx==''||sx==null)&&S.sx!='E'}
+const sxOK=k=>sexOk(SX[k]);
 const SXW={elk:{M:'bull',F:'antlerless (cow)',E:'any elk'},deer:{M:'antlered (buck)',F:'antlerless (doe)',E:'any deer'},pronghorn:{M:'buck'},turkey:{M:'bearded turkey (spring)',E:'any turkey (fall)'},javelina:{E:'any javelina'},sheep:{M:'ram'},bison:{M:'bull',F:'cow',E:'yearling (under 3 years old, bull or cow)'},crane:{E:'any sandhill crane'}};
 const sxAvail=sp=>{const o=new Set();for(const k of AHk)if(AH[k].sp==sp&&SX[k])o.add(SX[k]);return['M','F','E'].filter(x=>o.has(x))};
-function sxNote(sp,av){const w=SXW[sp]||{};return av.map(x=>`${SXN[x]} = ${w[x]||(x=='E'?'either sex':SXN[x].toLowerCase())}`).join('. ')+". From the legal animal in AZGFD's hunt tables. Only the choices this species has are shown."}
-const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||AHk.some(k=>AH[k].pool==pl&&SX[k]==S.sx));
+function sxNote(sp,av){const w=SXW[sp]||{};const lead=window.RWLong?RWLong.sexNote(sp,av):'';return (lead?lead+' ':'')+av.map(x=>`${SXN[x]} means ${w[x]||(x=='E'?'either sex':SXN[x].toLowerCase())}`).join('. ')+". From the legal animal in AZGFD's hunt tables. Only the choices this species has are shown."}
+const sxPools=sp=>poolsOf(sp).filter(pl=>!S.sx||AHk.some(k=>AH[k].pool==pl&&sexOk(SX[k])));
 const avail=h=>(h.t!='youth'||S.yo)&&(h.t!='champ'||S.champ);
 const wOK=h=>!S.w||h.w==S.w;
 function odds(k){const h=AH[k];if(!h.od)return null;const b=h.od[S.res];if(!b)return null;return b.o[Math.min(S.pts,MAXP)]}
@@ -107,7 +108,7 @@ function bearNote(){return `<div class="note"><p><b>Arizona black bear has no dr
 // No draw and no bonus points, so no verdicts. One row per unit; named elk hunt areas are rows under "Special hunt areas".
 const OTCL=()=>typeof AZ_OTC!='undefined'?AZ_OTC:[];
 const hasOTC=()=>OTCL().some(r=>r.pl==S.pl||plOK({pool:r.pl}));
-function otcOK(r){if(!(r.pl==S.pl||plOK({pool:r.pl})))return false;if(r.yo&&!S.yo)return false;if(S.w&&r.w!=S.w)return false;if(S.sx&&r.sx!=S.sx)return false;return true}
+function otcOK(r){if(!(r.pl==S.pl||plOK({pool:r.pl})))return false;if(r.yo&&!S.yo)return false;if(S.w&&r.w!=S.w)return false;if(!sexOk(r.sx||''))return false;return true}
 function otcRows(){const o=[];OTCL().filter(otcOK).forEach(r=>r.u.forEach(u=>o.push({u,r})));const hv=x=>x.r.hb[x.u]??-1,un=u=>u=='SP'?999:parseInt(u);
  return o.sort((a,b)=>(S.so=='h'?hv(b)-hv(a):0)||un(a.u)-un(b.u)||a.u.localeCompare(b.u)||OTCL().indexOf(a.r)-OTCL().indexOf(b.r))}
 const ADT=s=>s.replace(/\b(Jan|Feb|Mar|Apr|Aug|Sep|Oct|Nov|Dec)\b/g,m=>({Jan:'Jan.',Feb:'Feb.',Mar:'March',Apr:'April',Aug:'Aug.',Sep:'Sept.',Oct:'Oct.',Nov:'Nov.',Dec:'Dec.'})[m]).replace(/ - /g,'–');
@@ -150,13 +151,15 @@ function showList(){const o=$('out');$('detail').hidden=true;o.hidden=false;
  if(S.tab=='map'){o.innerHTML=ban+lsHead(r,true)+`${tabs}${mcBar()}<p class="dq">${who}. Units are grouped by AZGFD region, not drawn to scale. ${S.mc=='h'?'The color is the best harvest success':'The color is the best odds'} for a hunt that includes that unit.${hasOTC()?' Purple units have no hunt to draw with your choices but sell an over-the-counter nonpermit-tag (no draw).':''} Tap a unit to see its hunts.</p>`+xpNote()+youthBox()+fpBox()+mapKey(['No hunt you can draw','(no hunt of this type there, or only hunts with zero odds)'],.55)+mLab()+tiles(r)+
   `<div id="mpanel" class="mp" hidden aria-live="polite"></div>`+
   `<p class="mapcred">This is a list by unit, not a map. For unit boundaries, use AZGFD's official unit maps: ${Object.keys(RG).map(g=>`<a href="${RGU(g)}">Region ${g}</a>`).join(' · ')}.</p>`+note+fpLine()+fbA('maps');wireTabs(o);wireTiles(o,r);fillKey(TK);if(S.mu)pickU(S.mu,r);return}
- const rawList=rowsInOrder(r), list=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
+ const rawList=rowsInOrder(r), base=lsOrder(window.RWTrophy?RWTrophy.refine(rawList):rawList);
+ const list=window.RWLong?RWLong.applyVd(base,S.vd):base;
+ const vbar=window.RWLong?RWLong.vBar(base,S.vd):'';
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
- o.innerHTML=ban+lsHead(list,true)+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
+ o.innerHTML=ban+lsHead(list,true)+vbar+`${tabs}${sortBar()}${RWDraw.bar(S.ord,pointsMatter())}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${who}. ${tNote||orderLine(sortTxt())} Tap a hunt for details.</p>`+xpNote()+youthBox()+spNote()+otcTop(oR)+
   fpBox()+`<ol class="fl">`+list.slice(0,S.n).map((x,i)=>`<li><button class="fh" data-k="${x.k}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v,x.k)}</span><span class="ft">${title(x.k)}</span><span class="fd">Hunt ${AH[x.k].n} · ${esc(AH[x.k].d)}</span>${oddsHTML(x.v,'fo',x.k)}${succHTML(x.k,'fs')}${RWHy(x.k,S.res,S.pts)}${window.RWTrophy?RWTrophy.chip(x.k):''}</button>${azPkg(x.k)}</li>`).join('')+`</ol>`+
   (list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(rawList.length,list.length):'')||(window.RWLong?RWLong.empty(azOpts(true)):'<p class="dq">No hunts you can draw with these choices.</p>'))+otcSec(oR)+note+fpLine()+fbA('find');
- wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
+ wireTabs(o);RWDraw.wire(o,v=>{S.ord=v;S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;history.replaceState(st('list'),'',url());showList()});if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;history.replaceState(st('list'),'',url());showList()});o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>openHunt(b.dataset.k));
  if($('more'))$('more').onclick=()=>{S.n+=25;history.replaceState(st('list'),'',url());showList()}
  if($('omore'))$('omore').onclick=()=>{S.on=(S.on||25)+25;showList()};o.querySelectorAll('a.otj').forEach(a=>a.onclick=e=>{e.preventDefault();top2($('otc'))})}
 // ===== Map key (same as Colorado and Utah, for unit tiles) =====
@@ -268,7 +271,7 @@ function apply(s){Object.assign(S,{sp:s.sp,pl:s.pl,res:s.res,pts:+s.pts,w:s.w||'
 const wsOf=pl=>[...new Set([...AHk.filter(k=>AH[k].pool==pl).map(k=>AH[k].w),...Object.keys(XP[pl]||{})])];
 function sync(){const av=sxAvail(S.sp);if(S.sx&&!av.includes(S.sx))S.sx='';const sp2=sxPools(S.sp);if(S.sp!='bear'&&(!PL[S.pl]||PL[S.pl][0]!=S.sp||!sp2.includes(S.pl)))S.pl=sp2[0];
  const bear=S.sp=='bear';$('form2').hidden=bear;
- if(!bear){$('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;sync()});$('sxnote').textContent=sxNote(S.sp,av);
+ if(!bear){$('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${window.RWLong?RWLong.sexLabel(S.sp,x):SXN[x]}</button>`).join('');$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';sync()});$('sxnote').textContent=sxNote(S.sp,av);
   $('pools').innerHTML=sp2.map(k=>`<button data-pl="${k}" class="${k==S.pl?'on':''}">${PSHORT[k]}</button>`).join('');
   $('pools').querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{S.pl=b.dataset.pl;S.w='';sync()});
   const n=AHk.filter(k=>AH[k].pool==S.pl).length;$('pnote').textContent=`${PL[S.pl][1]}: ${n} draw hunt${n==1?'':'s'} in the current AZGFD booklet. Uses your ${SP[S.sp].toLowerCase()} bonus points.`;

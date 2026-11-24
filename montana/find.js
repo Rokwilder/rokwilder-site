@@ -65,7 +65,7 @@ function oddsHTML(h){
 function passes(h){
   if(h.sp!==S.sp||!sideOf(h))return false;
   if(S.cls&&h.cls!==S.cls)return false;
-  if(S.sx&&h.sx!==S.sx)return false;
+  if(S.sx&&!(h.sx===S.sx||((h.sx==='E'||h.sx===''||h.sx==null)&&S.sx!=='E')))return false;
   if(S.wpn&&h.wpn!==S.wpn)return false;
   if(!S.youth&&h.youth)return false;
   return true;
@@ -141,7 +141,9 @@ function showList(sc){
     return;
   }
   const ordered=rowsInOrder(all);
-  const list=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
+  const base=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
+  const list=window.RWLong?RWLong.applyVd(base,S.vd,'drew'):base;
+  const vbar=window.RWLong?RWLong.vBar(base,S.vd,'drew'):'';
   const ban=window.RWGate?RWGate.banner():'';
   const lead=(window.RWTrophy&&RWTrophy.sortNote())||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus==='land'?'Mostly public land first.':'Strongest 2026 result first.'));
   const tabs=mapTabs();
@@ -150,7 +152,8 @@ function showList(sc){
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return;
   }
-  o.innerHTML=ban+lsHead(list,true)+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(mtOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note;
+  o.innerHTML=ban+lsHead(list,true)+vbar+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(mtOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note;
+  if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.n=25;showList()});
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});
@@ -255,11 +258,11 @@ function paint(){
   const sexes=options(h=>h.sp===S.sp&&(!S.cls||h.cls===S.cls),'sx').filter(Boolean);
   $('sxbox').hidden=sexes.length<2;
   if(S.sx&&!sexes.includes(S.sx))S.sx='';
-  seg('sxseg','sx',S.sx,[['', 'Any']].concat(sexes.map(x=>[x,SXN[x]||x])));
-  $('sxnote').textContent='The class is the wording on the 2026 regulation line or the drawing report. A blank class was not named there.';
+  seg('sxseg','sx',S.sx,[['', 'Any']].concat(sexes.map(x=>[x,window.RWLong?RWLong.sexLabel(S.sp==='antelope'?'antelope':S.sp,x):(SXN[x]||x)])));
+  $('sxnote').textContent=(window.RWLong?RWLong.sexNote(S.sp==='antelope'?'antelope':S.sp,sexes)+' ':'')+'The class is the wording on the 2026 regulation line or the drawing report. A blank class was not named there.';
   const wpns=options(h=>passes(Object.assign({},h))|| (h.sp===S.sp&&(!S.cls||h.cls===S.cls)&&(!S.sx||h.sx===S.sx)),'wpn').filter(Boolean);
   const wset=[];
-  for(const [,h] of H){if(h.sp!==S.sp)continue;if(S.cls&&h.cls!==S.cls)continue;if(S.sx&&h.sx!==S.sx)continue;if(!wset.includes(h.wpn))wset.push(h.wpn)}
+  for(const [,h] of H){if(h.sp!==S.sp)continue;if(S.cls&&h.cls!==S.cls)continue;if(S.sx&&!(h.sx===S.sx||((h.sx==='E'||h.sx===''||h.sx==null)&&S.sx!=='E')))continue;if(!wset.includes(h.wpn))wset.push(h.wpn)}
   $('wpnbox').hidden=wset.length<2;
   if(S.wpn&&!wset.includes(S.wpn))S.wpn='';
   seg('wpnseg','wpn',S.wpn,[['', 'Any']].concat(wset.map(w=>[w,w==='bow'?'Archery only':'Any legal weapon'])));

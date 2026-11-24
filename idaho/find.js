@@ -27,7 +27,7 @@ const oddsURL=h=>`${M.oddsPage}?biggame=${M.species[h.sp].biggame}&yr=${M.year}&
 const rows=()=>Object.entries(IH).filter(([,h])=>h.sp===S.sp&&h.draw===S.draw);
 function split(){const show=[],under=[],none=[],unlabeled=[];
  for(const [k,h] of rows()){
-  if(S.sx&&!h.sex){unlabeled.push(k);continue}
+  if(S.sx&&!(h.sex===S.sx||((h.sex==='E'||!h.sex)&&S.sx!=='E')))continue
   if(!S.youth&&h.youth)continue;
   if(!RWUnit.hit([h.area,h.n],S.unit))continue;
   const v=S.res==='res'?h.res:h.nr;
@@ -107,7 +107,9 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));if(sc)o.scrollIntoView({behavior:'smooth'});return}
  const ban=window.RWGate?RWGate.banner():'';
  const ordered=orderRows(show);
- const list=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
+ const base=lsOrder(window.RWTrophy?RWTrophy.refine(ordered):ordered);
+ const list=window.RWLong?RWLong.applyVd(base,S.vd,'drew'):base;
+ const vbar=window.RWLong?RWLong.vBar(base,S.vd,'drew'):'';
  const tNote=window.RWTrophy?RWTrophy.sortNote():'';
  const lead=tNote||(S.ord==='hard'?'Hardest to draw first.':S.ord==='easy'?'Easiest to draw first.':(S.focus=='land'?'Mostly public land first.':'Highest 2026 result first.'));
  const tabs=mapTabs();
@@ -115,10 +117,11 @@ function showList(sc){const o=$('out');$('detail').hidden=true;o.hidden=false;if
   o.innerHTML=ban+lsHead(list)+tabs+`<p class="dq">${esc(who())}. Colored areas have at least one hunt you can draw. The color is the best 2026 result in that area. Orange is a long shot when the share was above 0 and under one in twenty. Tap an area to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Idaho controlled hunt areas"></div>`+mapCred()+note+fpLine();
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
   drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
- o.innerHTML=ban+lsHead(list)+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
+ o.innerHTML=ban+lsHead(list)+vbar+tabs+`${focusBar()}${RWDraw.bar(S.ord,false)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(who())}. ${lead} Tap a hunt for the rule and the IDFG table.</p>`+fpBox()+
   `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
   (list.length||emptySpecies?'':(window.RWTrophy?RWTrophy.emptyNote(ordered.length,list.length):'')||(window.RWLong?RWLong.empty(idOpts()):`<p class="dq">No hunts you can draw with these choices.</p>`))+note+fpLine();
  o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+ if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
  o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
  RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
  if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
