@@ -275,15 +275,15 @@ export function compareHunts(catalog, list, residency, pts) {
 
 export function classifyJob(body) {
   const job = String(body.job || 'auto').toLowerCase();
-  if (job === 'recommend' || job === 'compare' || job === 'lookup') return job;
   const q = String(body.question || '').toLowerCase();
   const outOfScope = [
-    /regulat/, /legal/, /is it legal/, /caliber/, /rifle should i (bring|use|buy)/,
+    /regulat/, /legal/, /is it legal/, /caliber/, /bait/, /rifle should i (bring|use|buy)/,
     /what (will|shall) .* (year|2027|next year)/, /forecast 2027/,
     /weather/, /outfitter/, /where should i camp/, /road clos/, /what to pack/,
     /wd[ -]?40/, /recipe/, /politic/, /medical/, /taxiderm/
   ];
-  if (outOfScope.some(r => r.test(q))) return 'unknown';
+  if (q && outOfScope.some(r => r.test(q))) return 'unknown';
+  if (job === 'recommend' || job === 'compare' || job === 'lookup') return job;
   if ((body.hunts && body.hunts.length >= 2) || /compar/.test(q)) return 'compare';
   if (body.hunt && body.hunt.key && /odds|this hunt|put this first|should i put/.test(q)) {
     if (/put this first|should i put/.test(q)) return 'recommend';

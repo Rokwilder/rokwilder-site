@@ -167,6 +167,11 @@ await testAsync('quota blocks the 51st reserve and failed release works', async 
   assert.match(monthKey(), /^2026(11|12)$/);
 });
 
+await test('typed caliber/bait stays unknown even if the form sent recommend', () => {
+  const job = classifyJob({ job:'recommend', question:'What caliber should I use, and is baiting legal on this unit?', state:'co', species:'elk', residency:'res', points:6 });
+  assert.equal(job, 'unknown');
+});
+
 if (failed) {
   console.error(failed + ' failed');
   process.exit(1);

@@ -210,12 +210,14 @@ function payloadFrom(box, sug){
   if(sug==='first'){
     return {job:'recommend', question:f.question||'Should I put this first?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
   }
-  if(sug==='putin'||!sug){
-    const question=f.question||'Where should I put in with my points?';
-    if(/compar/i.test(question)&&hunts.length>=2) return {job:'compare', question, residency:f.residency, points:f.points, hunt, hunts};
+  if(sug==='putin'){
+    return {job:'recommend', question:f.question||'Where should I put in with my points?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+  }
+  const question=f.question||'Where should I put in with my points?';
+  if(!f.question){
     return {job:'recommend', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
   }
-  return {job:'auto', question:f.question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+  return {job:'auto', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
 }
 function wire(box){
   if(!box||box.getAttribute('data-wired')) return;
