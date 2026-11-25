@@ -1,13 +1,20 @@
 // Preview-only UnitIQ hunt advisor API.
 // This worker must never be bound to the live members D1 or PRIVATE_KV.
 // Auth is a test stub for screenshots. It cannot mint a real member session.
-import catalogGz from './catalog.json.gz';
 import { loadCatalog } from './catalog-loader.js';
 import { runJob } from './rank.js';
 import { templateText, polishWithAI } from './explain.js';
 import { getUsage, tryReserve, releaseReservation, setCount } from './quota.js';
 
 const WORKER_NAME = 'rokwilder-api-advisor-preview';
+// Official catalog is the gzip already in this preview branch. Not live KV.
+const CATALOG_URL = 'https://raw.githubusercontent.com/Rokwilder/rokwilder-site/cursor/advisor-preview-ced1/workers/advisor-preview/src/catalog.json.gz';
+async function officialCatalog() {
+  const r = await fetch(CATALOG_URL);
+  if (!r.ok) throw new Error('catalog fetch failed');
+  return loadCatalog(await r.arrayBuffer());
+}
+
 const COOKIE = 'rw_advisor_preview';
 const ORIGINS = [
   'https://rokwilder.com',
@@ -125,7 +132,7 @@ export default {
         }
 
         try {
-          const catalog = await loadCatalog(catalogGz);
+          const catalog = await officialCatalog();
           const result = runJob(catalog, body);
           const question = String(body.question || '').slice(0, 1200);
           let text = templateText(result);

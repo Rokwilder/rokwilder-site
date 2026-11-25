@@ -13,7 +13,7 @@
     {
       "binding": "DB",
       "database_name": "rokwilder-advisor-preview",
-      "database_id": "REPLACE_AFTER_CREATE",
+      "database_id": "48bf5206-70a0-4221-b91d-ff6a3ec6ed45",
       "migrations_dir": "migrations"
     }
   ],
