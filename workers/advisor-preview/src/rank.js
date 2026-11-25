@@ -206,6 +206,17 @@ export function getHunt(catalog, state, key) {
   return catalog.hunts[st + ':' + key] || catalog.hunts[key] || null;
 }
 
+
+export function sourceLabelForYear(raw, year) {
+  if (!raw) return null;
+  let s = String(raw);
+  if (year) {
+    s = s.replace(/^\d{4}\b/, String(year));
+    s = s.replace(/\.?\s*\b20\d{2} was not published[\s\S]*$/i, '').trim();
+  }
+  return s || null;
+}
+
 export function officialFacts(catalog, state, key, residency, pts) {
   const hunt = getHunt(catalog, state, key);
   if (!hunt) return null;
@@ -227,7 +238,7 @@ export function officialFacts(catalog, state, key, residency, pts) {
     units: hunt.units || [],
     href: hunt.href,
     draw,
-    drawSource: src.draw || null,
+    drawSource: sourceLabelForYear(src.draw, draw && draw.year) || null,
     harvest: harvest ? { pct: harvest.pct, source: harvest.source || null, text: Math.round(harvest.pct) + '% of hunters harvested' } : null,
     land: hunt.land && (hunt.land.text || hunt.land.band) ? hunt.land : null,
     historyMissing: st === 'az' || !side,

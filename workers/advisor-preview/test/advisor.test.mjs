@@ -3,8 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { loadCatalog } from '../src/catalog-loader.js';
-import { runJob, recommend, officialFacts, classifyJob, cleanHuntTitle } from '../src/rank.js';
-import { templateText, looksSafe, enforceYear, utahDisclaimer } from '../src/explain.js';
+import { runJob, recommend, officialFacts, classifyJob, cleanHuntTitle, sourceLabelForYear } from '../src/rank.js';
+import { templateText, looksSafe, enforceYear, utahDisclaimer, paragraphize, RESTING_TEXT, isAiCapacityError, extractAiUsage } from '../src/explain.js';
 import { monthKey, resetLabel, tryReserve, getUsage, setCount, releaseReservation } from '../src/quota.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -233,6 +233,48 @@ await test('where-to-put-in stays recommend even if saved hunts are attached', (
   assert.equal(job, 'recommend');
   const cmp = classifyJob({ job:'auto', question:'Which of these hunts is better for me?', hunts:[{key:'a'},{key:'b'}] });
   assert.equal(cmp, 'compare');
+});
+
+
+test('answer prose is one short paragraph per hunt', () => {
+  const r = recommend(catalog, { state: 'co', species: 'elk', residency: 'res', points: 6, weapon: 'rifle', sex: 'antlered' });
+  const text = templateText(r);
+  const paras = text.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+  assert.ok((r.picks || []).length >= 2, 'expected several ranked hunts');
+  assert.ok(paras.length >= 1 + r.picks.length, 'intro plus one paragraph per hunt, got ' + paras.length);
+  r.picks.forEach(h => {
+    assert.ok(paras.some(p => p.includes(h.key)), 'paragraph for ' + h.key);
+  });
+});
+
+test('WY elk-122-2 uses one consistent year in the draw source label', () => {
+  const facts = officialFacts(catalog, 'wy', 'elk-122-2', 'res', 6);
+  assert.ok(facts && facts.draw);
+  const year = facts.draw.year;
+  assert.ok(year);
+  assert.match(String(facts.drawSource || ''), new RegExp(String(year)));
+  const other = year === 2025 ? 2026 : 2025;
+  assert.doesNotMatch(String(facts.drawSource || ''), new RegExp(String(other)));
+  const one = runJob(catalog, { job: 'lookup', hunt: { state: 'wy', key: 'elk-122-2' }, residency: 'res', points: 6, question: 'Tell me about this hunt' });
+  const text = templateText(one);
+  assert.match(text, new RegExp(String(year)));
+  assert.doesNotMatch(text, new RegExp('In the ' + other + ' draw'));
+  assert.doesNotMatch(text, new RegExp(other + ' WGFD'));
+  console.log('  WY 122 year/source', year, facts.drawSource);
+});
+
+test('capacity errors map to the resting note and do not look like raw errors', () => {
+  assert.equal(RESTING_TEXT, 'The advisor is resting until tomorrow. Try again then.');
+  assert.doesNotMatch(RESTING_TEXT, /\u2014|\u2013/);
+  assert.equal(isAiCapacityError({ status: 429 }), true);
+  assert.equal(isAiCapacityError({ status: 503 }), true);
+  assert.equal(isAiCapacityError(new Error('Neurons daily limit exceeded')), true);
+  assert.equal(isAiCapacityError({ errors: [{ message: 'You have exceeded your daily Workers AI quota' }] }), true);
+  assert.equal(isAiCapacityError(new Error('model timeout')), false);
+  const u = extractAiUsage({ usage: { prompt_tokens: 1000, completion_tokens: 100, total_tokens: 1100 } });
+  assert.equal(u.inputTokens, 1000);
+  assert.equal(u.outputTokens, 100);
+  assert.equal(u.neurons, Math.round((1000 * 4119 + 100 * 34868) / 1e6 * 1000) / 1000);
 });
 
 if (failed) {

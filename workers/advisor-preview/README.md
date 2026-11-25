@@ -1,14 +1,16 @@
-# UnitIQ hunt advisor (preview only)
+# UnitIQ hunt advisor
 
-This is a separate Cloudflare Worker, `rokwilder-api-advisor-preview`. It is not the live member API.
+Preview worker: `rokwilder-api-advisor-preview`. Production cutover is described in `GO_LIVE.md` and is not done until Christopher says yes.
 
-- Do not deploy this code onto `rokwilder-api` or `rokwilder-waitlist`.
-- The bound D1 database is `rokwilder-advisor-preview` (quota only). It has no access to the live members database.
-- There is no Stripe binding and no live session secret. Login is a test stub for screenshots.
-- Official hunt facts are bundled from public files in this repo (`scripts/build-catalog.mjs`). Live PRIVATE_KV is not read.
+- Do not deploy this wrangler config onto `rokwilder-api` or `rokwilder-waitlist`.
+- This preview D1 is `rokwilder-advisor-preview` (quota only). It must never bind the live members database or PRIVATE_KV.
+- Production auth is the real `rw_s` cookie plus a Full Pass entitlement. The preview stub runs only when `PREVIEW=1` and `SESSION_SECRET` is unset. It cannot mint a real member session. Secret values are never logged.
+- Official hunt facts are packaged with `scripts/embed-catalog.mjs` from `src/catalog.json.gz` (built by `scripts/build-catalog.mjs`). Live PRIVATE_KV is not read.
+- On the Cloudflare Free Workers plan, Workers AI has 10,000 Neurons per day. If that (or any AI capacity/limit error) hits, members see "The advisor is resting until tomorrow. Try again then." That question is not counted.
 
-After changing official data files, run:
+After changing official data files:
 
     node scripts/build-catalog.mjs
+    node scripts/embed-catalog.mjs
 
-Frontend preview mode (`?preview=advisor` on the draft site) is the only way the pages call this worker.
+Frontend: `https://api.rokwilder.com` by default. `?preview=advisor` and `?preview=advisor-free` still call this preview worker.

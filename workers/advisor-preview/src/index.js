@@ -1,20 +1,14 @@
-// Preview-only UnitIQ hunt advisor API.
-// This worker must never be bound to the live members D1 or PRIVATE_KV.
-// Auth is a test stub for screenshots. It cannot mint a real member session.
-import { loadCatalog } from './catalog-loader.js';
-import { runJob } from './rank.js';
-import { templateText, polishWithAI, enforceYear, looksSafe } from './explain.js';
-import { getUsage, tryReserve, releaseReservation, setCount } from './quota.js';
+// Hunt advisor API. This preview worker must never bind the live members D1
+// (2707c02b-725a-418a-89b9-4ec9c533f668) or PRIVATE_KV.
+// Production auth is rw_s + Full Pass. The preview stub is used only when
+// PREVIEW=1 and SESSION_SECRET is not set. This worker never mints a real
+// member session and never logs secret values.
+import { memberFromRequest, envConfigured } from './auth.js';
+import { catalogHow } from './catalog-bundle.js';
+import { handleAsk, handleUsage } from './advisor-handler.js';
+import { setCount } from './quota.js';
 
 const WORKER_NAME = 'rokwilder-api-advisor-preview';
-// Official catalog is the gzip already in this preview branch. Not live KV.
-const CATALOG_URL = 'https://raw.githubusercontent.com/Rokwilder/rokwilder-site/cursor/advisor-preview-ced1/workers/advisor-preview/src/catalog.json.gz';
-async function officialCatalog() {
-  const r = await fetch(CATALOG_URL);
-  if (!r.ok) throw new Error('catalog fetch failed');
-  return loadCatalog(await r.arrayBuffer());
-}
-
 const COOKIE = 'rw_advisor_preview';
 const ORIGINS = [
   'https://rokwilder.com',
@@ -45,17 +39,6 @@ function json(body, status, headers) {
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'private, no-store', ...headers }
   });
 }
-function cookieValue(req, name) {
-  const c = req.headers.get('cookie') || '';
-  const m = c.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-  return m ? decodeURIComponent(m[1]) : '';
-}
-function previewUser(req) {
-  const role = cookieValue(req, COOKIE);
-  if (role === 'member') return { loggedIn: true, role: 'member', userId: 'preview-member', fullpass: { active: true, states: ['ALL'] } };
-  if (role === 'free') return { loggedIn: true, role: 'free', userId: 'preview-free', fullpass: { active: false, states: [] } };
-  return { loggedIn: false, role: 'out', userId: null, fullpass: { active: false, states: [] } };
-}
 function setRoleCookie(role) {
   const v = role === 'member' || role === 'free' ? role : '';
   const max = v ? 'Max-Age=86400' : 'Max-Age=0';
@@ -71,22 +54,32 @@ export default {
 
     try {
       if (url.pathname === '/api/health' && req.method === 'GET') {
-        return json({ ok: true, worker: WORKER_NAME, preview: true, liveMembersDb: false }, 200, h);
+        const flags = envConfigured(env);
+        return json({
+          ok: true,
+          worker: WORKER_NAME,
+          preview: env.PREVIEW === '1',
+          liveMembersDb: false,
+          catalog: catalogHow(),
+          auth: flags.sessionSecret ? 'session' : (env.PREVIEW === '1' ? 'preview-stub' : 'none'),
+          sessionSecretConfigured: flags.sessionSecret,
+          workersAiBound: flags.ai
+        }, 200, h);
       }
 
-      if (url.pathname === '/api/preview/session' && req.method === 'POST') {
+      // Preview-only helpers for screenshots. Not present on the live API.
+      if (env.PREVIEW === '1' && url.pathname === '/api/preview/session' && req.method === 'POST') {
         let body = {};
         try { body = await req.json(); } catch (e) { body = {}; }
         const role = body.role === 'member' ? 'member' : 'free';
         return json({ ok: true, preview: true, role, note: 'Test-only preview login. This is not a real member session.' }, 200, { ...h, 'Set-Cookie': setRoleCookie(role) });
       }
-      if (url.pathname === '/api/preview/session' && req.method === 'GET') {
-        return json({ ok: true, ...previewUser(req), preview: true }, 200, h);
+      if (env.PREVIEW === '1' && url.pathname === '/api/preview/session' && req.method === 'GET') {
+        const user = await memberFromRequest(req, env);
+        return json({ ok: true, ...user, preview: true }, 200, h);
       }
-
-      // Test-only quota seed for the 51st-question check. Preview worker only.
-      if (url.pathname === '/api/preview/quota' && req.method === 'POST') {
-        const user = previewUser(req);
+      if (env.PREVIEW === '1' && url.pathname === '/api/preview/quota' && req.method === 'POST') {
+        const user = await memberFromRequest(req, env);
         if (!user.userId) return json({ error: 'Preview login required.' }, 401, h);
         let body = {};
         try { body = await req.json(); } catch (e) { body = {}; }
@@ -95,112 +88,26 @@ export default {
       }
 
       if (url.pathname === '/api/account' && req.method === 'GET') {
-        const user = previewUser(req);
+        const user = await memberFromRequest(req, env);
         return json({
           loggedIn: user.loggedIn,
-          preview: true,
-          email: user.loggedIn ? 'preview@rokwilder.example' : null,
+          preview: env.PREVIEW === '1',
+          email: user.email,
           fullpass: user.fullpass,
-          testMode: true
+          testMode: env.PREVIEW === '1'
         }, 200, h);
       }
 
       if (url.pathname === '/api/fullpass/advisor/usage' && req.method === 'GET') {
-        const user = previewUser(req);
-        if (!user.loggedIn) return json({ error: 'Please log in first.' }, 401, h);
-        if (!user.fullpass.active) return json({ error: 'The hunt advisor is part of the Full Pass.', usage: null }, 402, h);
-        const usage = await getUsage(env.DB, user.userId);
-        return json({ ok: true, usage }, 200, h);
+        return handleUsage(req, env, h, json);
       }
-
       if (url.pathname === '/api/fullpass/advisor/ask' && req.method === 'POST') {
-        const user = previewUser(req);
-        if (!user.loggedIn) return json({ error: 'Please log in first.' }, 401, h);
-        if (!user.fullpass.active) return json({ error: 'The hunt advisor is part of the Full Pass.', kind: 'locked' }, 402, h);
-        let body;
-        try { body = await req.json(); } catch (e) { return json({ error: 'Bad request.' }, 400, h); }
-        if (!body || typeof body !== 'object') return json({ error: 'Bad request.' }, 400, h);
-
-        const reserved = await tryReserve(env.DB, user.userId);
-        if (!reserved.reserved) {
-          return json({
-            ok: false,
-            kind: 'limit',
-            error: "You've used all 50 questions for this month. Your limit resets on " + reserved.usage.reset + '. You can still use Hunt Planner, compare hunts, and Find Your Hunt as usual. If you need a hand before then, use the help form on this page or email support@rokwilder.com.',
-            usage: reserved.usage
-          }, 429, h);
-        }
-
-        try {
-          const catalog = await officialCatalog();
-          const result = runJob(catalog, body);
-          if (result.kind === 'need_sex') {
-            await releaseReservation(env.DB, user.userId);
-            const usage = await getUsage(env.DB, user.userId);
-            return json({
-              ok: true,
-              preview: true,
-              kind: 'need_sex',
-              text: templateText(result),
-              usedModel: false,
-              counted: false,
-              result: {
-                kind: 'need_sex',
-                query: result.query || null,
-                source: result.source || null,
-                picks: null,
-                caution: null,
-                bits: null,
-                reason: result.reason || null,
-                sexOptions: result.sexOptions || null
-              },
-              usage
-            }, 200, h);
-          }
-          const question = String(body.question || '').slice(0, 1200);
-          let text = enforceYear(templateText(result), result);
-          let usedModel = false;
-          if (env.AI && result.kind !== 'unknown' && result.kind !== 'need_sex') {
-            try {
-              const polished = await polishWithAI(env.AI, result, question);
-              text = enforceYear(polished.text, result);
-              usedModel = !!polished.usedModel;
-              if (!looksSafe(text, result)) {
-                text = enforceYear(templateText(result), result);
-                usedModel = false;
-              }
-            } catch (e) {
-              usedModel = false;
-              text = enforceYear(templateText(result), result);
-            }
-          }
-          const usage = reserved.usage;
-          return json({
-            ok: true,
-            preview: true,
-            kind: result.kind,
-            text,
-            usedModel,
-            result: {
-              kind: result.kind,
-              query: result.query || null,
-              source: result.source || null,
-              picks: result.picks || result.hunts || null,
-              caution: result.caution || null,
-              bits: result.bits || null,
-              reason: result.reason || null
-            },
-            usage
-          }, 200, h);
-        } catch (e) {
-          await releaseReservation(env.DB, user.userId);
-          return json({ error: 'Something went wrong. That question was not counted. Please try again.' }, 500, h);
-        }
+        return handleAsk(req, env, h, json);
       }
 
-      return json({ error: 'not found', preview: true, worker: WORKER_NAME }, 404, h);
+      return json({ error: 'not found', preview: env.PREVIEW === '1', worker: WORKER_NAME }, 404, h);
     } catch (e) {
-      return json({ error: 'Something went wrong. Please try again.', preview: true }, 500, h);
+      return json({ error: 'Something went wrong. Please try again.', preview: env.PREVIEW === '1' }, 500, h);
     }
   }
 };

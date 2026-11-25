@@ -1,9 +1,20 @@
-// Hunt advisor UI. Talks to the preview worker only when preview=advisor or preview=advisor-free.
-// Does not call the live member API.
+// Hunt advisor UI. Default API is the live member API. Preview flags still use the preview worker.
 (function(){
 'use strict';
+const LIVE_API='https://api.rokwilder.com';
 const PREVIEW_API='https://rokwilder-api-advisor-preview.rokwilder.workers.dev';
-const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'':PREVIEW_API;
+function previewFlag(){
+  const q=new URLSearchParams(location.search).get('preview');
+  return q==='advisor'||q==='advisor-free';
+}
+function apiBase(){
+  if(previewFlag()){
+    if(location.hostname==='localhost'||location.hostname==='127.0.0.1') return '';
+    return PREVIEW_API;
+  }
+  return LIVE_API;
+}
+const API=apiBase();
 const STATES=[['co','Colorado'],['ut','Utah'],['az','Arizona'],['wy','Wyoming'],['id','Idaho'],['nv','Nevada'],['mt','Montana'],['nm','New Mexico']];
 const SPECIES=['elk','deer','pronghorn','bear','moose','bighorn sheep','desert bighorn','goat','bison','turkey'];
 const $=id=>document.getElementById(id);
@@ -88,6 +99,7 @@ async function api(path, body){
 let sessionReady=null;
 function ensureSession(){
   if(sessionReady) return sessionReady;
+  if(!previewFlag()) return Promise.resolve(null);
   const m=mode();
   if(!m) return Promise.resolve(null);
   sessionReady=api('/api/preview/session',{role:m==='member'?'member':'free'}).then(r=>r.j).catch(()=>null);
@@ -139,10 +151,10 @@ function renderAnswer(box, data){
     return;
   }
   const text=j.text||j.error||"I don't know.";
-  const hunts=(j.result&&(j.result.picks||(j.result.caution?[j.result.caution]:null)))||null;
+  const paras=String(text).split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean).map(p=>'<p>'+esc(p)+'</p>').join('')||'<p>'+esc(text)+'</p>';
   const extra=j.result&&j.result.caution&&j.result.picks? [j.result.caution] : [];
-  const links=huntLinks([].concat(j.result&&j.result.picks||[], j.result&&j.result.hunts||[], extra).filter((h,i,a)=>h&&a.findIndex(x=>x.key===h.key)===i));
-  host.innerHTML='<div class="adv-ans"><p>'+esc(text)+'</p>'+links+'<p class="remain">'+esc(usageLine(j.usage))+'</p></div>';
+  const links=j.kind==='resting'?'':huntLinks([].concat(j.result&&j.result.picks||[], j.result&&j.result.hunts||[], extra).filter((h,i,a)=>h&&a.findIndex(x=>x.key===h.key)===i));
+  host.innerHTML='<div class="adv-ans">'+paras+links+'<p class="remain">'+esc(usageLine(j.usage))+'</p></div>';
 }
 function formValues(box){
   const f=pageFilters();
@@ -167,6 +179,9 @@ async function send(box, payload){
   box._lastPayload=payload;
   try{
     await ensureSession();
+    if(previewFlag() && new URLSearchParams(location.search).get('resting')==='1'){
+      payload=Object.assign({},payload,{previewResting:true});
+    }
     const r=await api('/api/fullpass/advisor/ask', payload);
     if(r.status===402){
       box.outerHTML=lockedHTML();
@@ -200,7 +215,7 @@ function plannerHTML(filters){
   const res=[['res','Resident'],['nonres','Nonresident']];
   return '<div class="askbox" id="advisor">'+
     '<h2>Ask the hunt advisor</h2>'+
-    '<p class="ctx">Preview only. Answers come from official draw, harvest, and public-land files already on this site. This is not a forecast for the next draw.</p>'+
+    '<p class="ctx">'+(previewFlag()?'Preview only. ':'')+'Answers come from official draw, harvest, and public-land files already on this site. This is not a forecast for the next draw.</p>'+
     '<div class="adv-grid">'+
     '<label>State<select data-adv="state">'+opts(STATES,f.state)+'</select></label>'+
     '<label>Species<select data-adv="species">'+opts(species,f.species)+'</select></label>'+
@@ -357,7 +372,7 @@ function boot(){
   if(document.body&&document.body.getAttribute('data-page')==='hunt-planner') paintPlanner();
   paintCards(document);
 }
-window.RWAdvisor={API,mode,paintPlanner,paintCards,boot,ensureSession};
+window.RWAdvisor={API,apiBase,mode,paintPlanner,paintCards,boot,ensureSession};
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
 else boot();
 })();
