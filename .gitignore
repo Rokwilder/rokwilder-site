@@ -2,3 +2,4 @@ private/
 /data/nm.js
 /scripts/trophy/cache/
 __pycache__/
+workers/advisor-preview/src/catalog.json

@@ -1,0 +1,27 @@
+{
+  // Preview-only hunt advisor. Do not deploy this config onto rokwilder-api or rokwilder-waitlist.
+  // This file must never bind the live members D1 (2707c02b-725a-418a-89b9-4ec9c533f668) or PRIVATE_KV.
+  "$schema": "https://www.schemastore.org/wrangler.json",
+  "name": "rokwilder-api-advisor-preview",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "ai": { "binding": "AI" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rokwilder-advisor-preview",
+      "database_id": "REPLACE_AFTER_CREATE",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "rules": [
+    { "type": "Data", "globs": ["**/*.gz"] }
+  ],
+  "vars": {
+    "PREVIEW": "1",
+    "PUBLIC_ORIGIN": "https://rokwilder.com"
+  }
+}
