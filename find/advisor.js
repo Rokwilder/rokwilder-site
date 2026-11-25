@@ -169,10 +169,10 @@ function plannerHTML(filters){
 function cardHTML(key, filters){
   const f=filters||pageFilters();
   const title=cardTitle(key)||('this hunt ('+key+')');
-  const who=[title, f.residency==='nonres'?'nonresident':'resident', f.points+' point'+(f.points===1?'':'s'), f.weapon!=='any'?f.weapon:''].filter(Boolean).join(', ');
+  const who=[f.residency==='nonres'?'a nonresident':'a resident', (f.points||0)+' point'+(Number(f.points)===1?'':'s'), f.weapon!=='any'?f.weapon:''].filter(Boolean).join(', ');
   return '<div class="askbox adv-card" data-adv-card="'+esc(key)+'">'+
     '<h3>Ask about this hunt</h3>'+
-    '<p class="ctx">This question is about '+esc(title)+'. We already have you as a '+esc(who)+'.</p>'+
+    '<p class="ctx">This question is about '+esc(title)+'. We already have you as '+esc(who)+'.</p>'+
     '<div class="suggestions">'+
     '<button type="button" data-adv-sug="odds">What are my odds with my points?</button>'+
     '<button type="button" data-adv-sug="compare">Compare with my saved hunts</button>'+
@@ -188,7 +188,13 @@ function cardTitle(key){
   let el=null;
   document.querySelectorAll('button.fh[data-k]').forEach(b=>{if(!el&&b.getAttribute('data-k')===key)el=b});
   const t=el&&el.querySelector('.ft');
-  return t?t.textContent.replace(/\s+/g,' ').trim():'';
+  if(t&&t.textContent.trim()) return t.textContent.replace(/\s+/g,' ').trim();
+  const det=document.getElementById('detail');
+  if(det&&!det.hidden){
+    const tg=det.querySelector('.tg');
+    if(tg&&tg.textContent.trim()) return tg.textContent.replace(/\s+/g,' ').trim();
+  }
+  return '';
 }
 function payloadFrom(box, sug){
   const f=formValues(box);
