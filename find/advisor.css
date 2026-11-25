@@ -1,0 +1,30 @@
+/* Hunt advisor (preview mode). Large controls for phone use. */
+.askbox{background:var(--panel);border:2px solid var(--acc);border-radius:10px;padding:1rem;margin:.8rem 0 1.1rem}
+.askbox h2,.askbox h3{border:0;padding:0;margin:0 0 .45rem;font-size:1.25rem}
+.askbox .ctx{color:var(--mute);margin:0 0 .7rem;font-size:1.02rem}
+.askbox label{display:block;font-weight:700;margin:.35rem 0 .3rem;font-size:1.05rem}
+.askbox textarea,.askbox input[type=text],.askbox input[type=number],.askbox select{
+  display:block;width:100%;min-height:56px;margin:0 0 .6rem;
+  font:inherit;font-size:1.08rem;padding:.65rem .75rem;
+  border:2px solid var(--line);border-radius:10px;
+  background:#141612;color:var(--ink)
+}
+.askbox textarea{min-height:6.2rem}
+.askbox .btn{display:block;width:100%;min-height:56px;font-size:1.15rem;text-align:center;margin-top:.2rem}
+.askbox .suggestions{display:flex;flex-direction:column;gap:.5rem;margin:0 0 .8rem}
+.askbox .suggestions button{
+  display:block;width:100%;text-align:left;min-height:52px;padding:.7rem .8rem;
+  font:inherit;font-size:1.02rem;font-weight:700;
+  background:#141612;color:var(--ink);border:2px solid var(--line);border-radius:10px;cursor:pointer
+}
+.askbox .suggestions button:hover,.askbox .suggestions button:focus{border-color:var(--acc)}
+.adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .6rem;margin:0 0 .6rem}
+@media(max-width:420px){.adv-grid{grid-template-columns:1fr}}
+.adv-msg,.remain{color:var(--mute);font-size:1rem;margin:.6rem 0 0}
+.adv-ans{margin-top:.8rem}
+.adv-ans p{font-size:1.08rem;line-height:1.5}
+.adv-hunt{display:block;text-decoration:none;color:var(--ink);background:#141612;border:2px solid var(--line);border-radius:10px;padding:.8rem .9rem;margin:.6rem 0}
+.adv-hunt:hover,.adv-hunt:focus{border-color:var(--acc)}
+.adv-ht{display:block;font-size:1.08rem;font-weight:800;color:var(--acc);margin:0 0 .2rem}
+.adv-hk{display:block;color:var(--mute);font-size:.95rem}
+.adv-hd{display:block;margin-top:.25rem;color:var(--ink);font-size:1rem}

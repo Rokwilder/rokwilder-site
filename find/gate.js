@@ -5,12 +5,27 @@
 (function(){
 const FULLPASS_GATING=true;
 const Q=new URLSearchParams(location.search);
+function advisorMode(){
+  const q=new URLSearchParams(location.search).get('preview');
+  if(q==='advisor'||q==='advisor-free'){
+    try{sessionStorage.setItem('rw_advisor_preview', q==='advisor'?'member':'free')}catch(e){}
+    return q==='advisor'?'member':'free';
+  }
+  try{
+    const s=sessionStorage.getItem('rw_advisor_preview');
+    if(s==='member'||s==='free') return s;
+  }catch(e){}
+  return null;
+}
 function paid(){
   if(!FULLPASS_GATING)return true;
-  return window.RW_FP===true || Q.get('preview')==='fullpass';
+  return window.RW_FP===true || Q.get('preview')==='fullpass' || advisorMode()==='member';
 }
 function stamp(params){
-  if(Q.get('preview')==='fullpass' || window.RW_FP===true) params.set('preview','fullpass');
+  const a=advisorMode();
+  if(a==='member') params.set('preview','advisor');
+  else if(a==='free') params.set('preview','advisor-free');
+  else if(Q.get('preview')==='fullpass' || window.RW_FP===true) params.set('preview','fullpass');
   return params;
 }
 function sale(){return (window.RW&&window.RW.saleState)||{open:false,pass:false}}
@@ -82,5 +97,5 @@ function freeShell(o){
     (o.extra||'')+
     (sale().open?'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee.</p>':'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee. Checkout is not open.</p>');
 }
-window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit,offerHTML,paintOffers};
+window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit,offerHTML,paintOffers,advisorMode};
 })();
