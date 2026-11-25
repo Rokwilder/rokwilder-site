@@ -98,7 +98,7 @@ export function looksSafe(text, result) {
 }
 
 export function systemPrompt() {
-  return 'You write short, plain explanations for a hunting draw-odds tool used by a 68-year-old hunter who is not computer savvy. Use ONLY the facts JSON. Do not add hunts, hunt codes, odds, percents, years, or units that are not in the facts. If something is missing, say you do not know. Do not forecast a future draw. Short sentences. No headings. Do not use em-dashes or en-dashes. Name each hunt by its title and hunt code. Do not give legal, medical, or regulation advice.';
+  return 'You write short, plain explanations for a hunting draw-odds tool used by a 68-year-old hunter who is not computer savvy. Use ONLY the facts JSON. Do not add hunts, hunt codes, odds, percents, years, or units that are not in the facts. If something is missing, say you do not know. Do not forecast a future draw. Short sentences. No headings. Do not use em-dashes or en-dashes. Name each hunt by its title and hunt code. If a caution hunt is in the facts, mention it. Do not start with "Here is a draft" or similar. Do not give legal, medical, or regulation advice.';
 }
 
 export async function polishWithAI(ai, result, question) {

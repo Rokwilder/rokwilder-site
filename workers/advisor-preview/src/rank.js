@@ -199,7 +199,6 @@ export function recommend(catalog, q) {
     if (varied.length >= 3) break;
   }
   const chosen = varied.length ? varied : pool.slice(0, 3);
-  chosen.forEach(p => { delete p._score; delete p._sex; });
   let caution = null;
   const dream = none.concat(long).sort((a, b) => {
     const la = a.land && a.land.pct || (a.land && a.land.band === 'pub' ? 0.8 : 0);
@@ -207,6 +206,9 @@ export function recommend(catalog, q) {
     return lb - la;
   })[0];
   if (dream && !chosen.some(c => c.key === dream.key)) caution = dream;
+  const clean = h => { if(h){ delete h._score; delete h._sex; } return h; };
+  chosen.forEach(clean);
+  clean(caution);
   return {
     ok: true,
     kind: 'recommend',
