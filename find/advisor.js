@@ -2,7 +2,8 @@
 // Does not call the live member API.
 (function(){
 'use strict';
-const API='https://rokwilder-api-advisor-preview.rokwilder.workers.dev';
+const PREVIEW_API='https://rokwilder-api-advisor-preview.rokwilder.workers.dev';
+const API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')?'':PREVIEW_API;
 const STATES=[['co','Colorado'],['ut','Utah'],['az','Arizona'],['wy','Wyoming'],['id','Idaho'],['nv','Nevada'],['mt','Montana'],['nm','New Mexico']];
 const SPECIES=['elk','deer','pronghorn','bear','moose','bighorn sheep','desert bighorn','goat','bison','turkey'];
 const $=id=>document.getElementById(id);
