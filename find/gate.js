@@ -5,12 +5,21 @@
 (function(){
 const FULLPASS_GATING=true;
 const Q=new URLSearchParams(location.search);
+function advisorMode(){
+  const q=new URLSearchParams(location.search).get('preview');
+  if(q==='advisor') return 'member';
+  if(q==='advisor-free') return 'free';
+  if(window.RW_FP===true) return 'member';
+  return 'free';
+}
 function paid(){
   if(!FULLPASS_GATING)return true;
-  return window.RW_FP===true || Q.get('preview')==='fullpass';
+  return window.RW_FP===true || Q.get('preview')==='fullpass' || Q.get('preview')==='advisor';
 }
 function stamp(params){
-  if(Q.get('preview')==='fullpass' || window.RW_FP===true) params.set('preview','fullpass');
+  const q=Q.get('preview');
+  if(q==='advisor'||q==='advisor-free') params.set('preview', q);
+  else if(q==='fullpass' || window.RW_FP===true) params.set('preview','fullpass');
   return params;
 }
 function sale(){return (window.RW&&window.RW.saleState)||{open:false,pass:false}}
@@ -82,5 +91,5 @@ function freeShell(o){
     (o.extra||'')+
     (sale().open?'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee.</p>':'<p class="note">Season dates, how the draw works and the checklist on this page stay free. Not a guarantee. Checkout is not open.</p>');
 }
-window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit,offerHTML,paintOffers};
+window.RWGate={FULLPASS_GATING,paid,stamp,banner,unlock,freeShell,takePerUnit,offerHTML,paintOffers,advisorMode};
 })();

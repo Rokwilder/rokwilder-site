@@ -753,7 +753,7 @@ function render(){
   mount();
   const box=$('rwtools');
   if(!box) return;
-  if(!paid()){box.innerHTML=teaser()+helpHTML(); wireHelp(box); return}
+  if(!paid()){box.innerHTML=teaser()+helpHTML(); wireHelp(box); if(window.RWAdvisor) RWAdvisor.paintPlanner(); return}
   const picks=loadPicks().map(p=>{
     if(p.state===here()){
       const fresh=snap(p.key);
@@ -767,6 +767,7 @@ function render(){
   box.innerHTML=banner+printSheetHTML(picks)+'<div id="rwdates">'+empty+(picks.length?datesHTML(picks):pointsHTML())+'</div>'+helpHTML();
   wirePlanner(box);
   wireHelp(box);
+  if(window.RWAdvisor) RWAdvisor.paintPlanner();
 }
 function wirePlanner(box){
   box.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{remove(b.getAttribute('data-rm'))});
@@ -832,6 +833,7 @@ function ensureButtons(root){
     }
   }
   paintButtons();
+  if(window.RWAdvisor) RWAdvisor.paintCards(root);
 }
 function remove(id){
   savePicks(loadPicks().filter(p=>p.id!==id));
