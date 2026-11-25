@@ -112,6 +112,8 @@ function formValues(box){
 async function send(box, payload){
   const msg=box.querySelector('.adv-msg');
   const btn=box.querySelector('[data-adv=send]');
+  const out=box.querySelector('.adv-out');
+  if(out) out.innerHTML='';
   if(msg) msg.textContent='Working on your answer…';
   if(btn) btn.disabled=true;
   try{
@@ -135,6 +137,7 @@ async function send(box, payload){
     if(msg) msg.textContent='Something went wrong. Please try again.';
   }finally{
     if(btn) btn.disabled=false;
+    if(msg&&msg.textContent==='Working on your answer…') msg.textContent='';
   }
 }
 function lockedHTML(){
@@ -273,8 +276,8 @@ function paintCards(root){
       const wrap=document.createElement('div');
       wrap.innerHTML=cardHTML(key);
       const el=wrap.firstElementChild;
-      const bar=det.querySelector('.pkbar');
-      if(bar) bar.insertAdjacentElement('afterend', el);
+      const after=det.querySelector('.yo')||det.querySelector('.pkbar');
+      if(after) after.insertAdjacentElement('afterend', el);
       else det.appendChild(el);
       wire(el);
     }

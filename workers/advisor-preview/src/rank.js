@@ -284,7 +284,7 @@ export function classifyJob(body) {
   ];
   if (q && outOfScope.some(r => r.test(q))) return 'unknown';
   if (job === 'recommend' || job === 'compare' || job === 'lookup') return job;
-  if ((body.hunts && body.hunts.length >= 2) || /compar/.test(q)) return 'compare';
+  if (/compar|which of these|better for me|which hunt is better/.test(q)) return 'compare';
   if (body.hunt && body.hunt.key && /odds|this hunt|put this first|should i put/.test(q)) {
     if (/put this first|should i put/.test(q)) return 'recommend';
     return 'lookup';

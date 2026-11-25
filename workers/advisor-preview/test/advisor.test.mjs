@@ -172,6 +172,18 @@ await test('typed caliber/bait stays unknown even if the form sent recommend', (
   assert.equal(job, 'unknown');
 });
 
+await test('where-to-put-in stays recommend even if saved hunts are attached', () => {
+  const job = classifyJob({
+    job:'auto',
+    question:'I have 6 elk points in Colorado. Where should I put in?',
+    state:'co', species:'elk', residency:'res', points:6, weapon:'rifle',
+    hunts:[{state:'co', key:'EM066O1R'},{state:'co', key:'EM057O1R'},{state:'co', key:'EE064O1R'}]
+  });
+  assert.equal(job, 'recommend');
+  const cmp = classifyJob({ job:'auto', question:'Which of these hunts is better for me?', hunts:[{key:'a'},{key:'b'}] });
+  assert.equal(cmp, 'compare');
+});
+
 if (failed) {
   console.error(failed + ' failed');
   process.exit(1);
