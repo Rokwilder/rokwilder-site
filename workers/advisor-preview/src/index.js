@@ -3,7 +3,7 @@
 // Auth is a test stub for screenshots. It cannot mint a real member session.
 import { loadCatalog } from './catalog-loader.js';
 import { runJob } from './rank.js';
-import { templateText, polishWithAI } from './explain.js';
+import { templateText, polishWithAI, enforceYear, looksSafe } from './explain.js';
 import { getUsage, tryReserve, releaseReservation, setCount } from './quota.js';
 
 const WORKER_NAME = 'rokwilder-api-advisor-preview';
@@ -134,17 +134,44 @@ export default {
         try {
           const catalog = await officialCatalog();
           const result = runJob(catalog, body);
+          if (result.kind === 'need_sex') {
+            await releaseReservation(env.DB, user.userId);
+            const usage = await getUsage(env.DB, user.userId);
+            return json({
+              ok: true,
+              preview: true,
+              kind: 'need_sex',
+              text: templateText(result),
+              usedModel: false,
+              counted: false,
+              result: {
+                kind: 'need_sex',
+                query: result.query || null,
+                source: result.source || null,
+                picks: null,
+                caution: null,
+                bits: null,
+                reason: result.reason || null,
+                sexOptions: result.sexOptions || null
+              },
+              usage
+            }, 200, h);
+          }
           const question = String(body.question || '').slice(0, 1200);
-          let text = templateText(result);
+          let text = enforceYear(templateText(result), result);
           let usedModel = false;
-          if (env.AI && result.kind !== 'unknown') {
+          if (env.AI && result.kind !== 'unknown' && result.kind !== 'need_sex') {
             try {
               const polished = await polishWithAI(env.AI, result, question);
-              text = polished.text;
+              text = enforceYear(polished.text, result);
               usedModel = !!polished.usedModel;
+              if (!looksSafe(text, result)) {
+                text = enforceYear(templateText(result), result);
+                usedModel = false;
+              }
             } catch (e) {
               usedModel = false;
-              text = templateText(result);
+              text = enforceYear(templateText(result), result);
             }
           }
           const usage = reserved.usage;

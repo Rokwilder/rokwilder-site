@@ -24,6 +24,30 @@ function here(){
   if(/\/newmexico\//.test(path)) return 'nm';
   return 'co';
 }
+function mapSex(v){
+  const t=String(v||'').toLowerCase();
+  if(t==='m'||t==='antlered'||t==='bull'||t==='buck'||t==='male') return 'antlered';
+  if(t==='f'||t==='antlerless'||t==='cow'||t==='doe'||t==='female') return 'antlerless';
+  if(t==='e'||t==='either'||t==='either-sex'||t==='eithersex') return 'either';
+  return '';
+}
+function sexRows(species){
+  const sp=String(species||'elk').toLowerCase();
+  if(sp==='deer'||sp==='pronghorn') return [['','Please choose'],['antlered','Buck'],['antlerless','Doe'],['either','Either']];
+  if(sp==='elk'||sp==='moose') return [['','Please choose'],['antlered','Bull'],['antlerless','Cow'],['either','Either']];
+  return null;
+}
+function sexFromHunt(key, title){
+  const t=String(title||'').toLowerCase();
+  if(/\bbull\b|\bbuck\b|\bantlered\b/.test(t) && !/\bcow\b|\bdoe\b|\beither\b/.test(t)) return 'antlered';
+  if(/\bcow\b|\bdoe\b|\bantlerless\b/.test(t) && !/\bbull\b|\bbuck\b|\beither\b/.test(t)) return 'antlerless';
+  if(/\beither\b/.test(t)) return 'either';
+  const k=String(key||'');
+  if(/^[A-Z]M/.test(k) || /^E[BD]/.test(k)) return 'antlered';
+  if(/^[A-Z]F/.test(k) || /^E[A]/.test(k)) return 'antlerless';
+  if(/^[A-Z]E/.test(k)) return 'either';
+  return '';
+}
 function pageFilters(){
   const q=new URLSearchParams(location.search);
   const w=q.get('w');
@@ -32,7 +56,8 @@ function pageFilters(){
     species: q.get('sp')||'elk',
     residency: q.get('r')==='nonres'||q.get('r')==='nr'?'nonres':'res',
     points: q.get('p')!=null&&q.get('p')!==''?Number(q.get('p')):0,
-    weapon: !w?'any':w==='A'?'archery':w==='M'?'muzzleloader':w==='R'?'rifle':'any'
+    weapon: !w?'any':w==='A'?'archery':w==='M'?'muzzleloader':w==='R'?'rifle':'any',
+    sex: mapSex(q.get('sx')||q.get('sex')||'')
   };
 }
 function savedHunts(){
@@ -76,11 +101,16 @@ function huntLinks(list){
   if(!list||!list.length) return '';
   return list.map(h=>{
     const href=prefix()+(h.href||'find.html');
-    const word=h.draw&&h.draw.word?esc(h.draw.word):'';
-    const year=h.draw&&h.draw.year?esc(String(h.draw.year))+' draw: ':'';
+    const y=h.draw&&h.draw.year;
+    const w=h.draw&&h.draw.word||'';
+    let draw='';
+    if(y && (/you(?:'ll| will) draw/i.test(w) || w==="YES, you'll draw")) draw='In the '+y+' draw, you would have drawn';
+    else if(y && /not this year/i.test(w)) draw='In the '+y+' draw, you would not have drawn';
+    else if(y && w) draw='In the '+y+' draw: '+w;
+    else if(w) draw=w;
     const land=h.land&&h.land.text?esc(h.land.text):'';
     const harv=h.harvest&&h.harvest.pct!=null?esc(Math.round(h.harvest.pct)+'% hunter success'):'';
-    const bits=[year+word, harv, land].filter(Boolean).join('. ');
+    const bits=[draw?esc(draw):'', harv, land].filter(Boolean).join('. ');
     return '<a class="adv-hunt" href="'+esc(href)+'"><span class="adv-ht">'+esc(h.stateName||'')+' · '+esc(h.title)+'</span><span class="adv-hk">Hunt code '+esc(h.key)+'</span>'+(bits?'<span class="adv-hd">'+bits+'</span>':'')+'</a>';
   }).join('');
 }
@@ -92,6 +122,22 @@ function renderAnswer(box, data){
     return;
   }
   const j=data.j||data;
+  if((j.kind==='need_sex' || (j.result&&j.result.kind==='need_sex'))){
+    const opts=(j.result&&j.result.sexOptions)||j.sexOptions||[];
+    const buttons=opts.map(o=>'<button type="button" data-adv-sex-pick="'+esc(o.value)+'">'+esc(o.label)+'</button>').join('');
+    host.innerHTML='<div class="adv-ans"><p>'+esc(j.text||j.reason||j.result&&j.result.reason||'')+'</p><div class="suggestions adv-sexes">'+buttons+'</div></div>';
+    host.querySelectorAll('[data-adv-sex-pick]').forEach(b=>{
+      b.onclick=()=>{
+        const val=b.getAttribute('data-adv-sex-pick');
+        const sel=box.querySelector('[data-adv=sex]');
+        if(sel) sel.value=val;
+        const prev=Object.assign({}, box._lastPayload||payloadFrom(box,null));
+        prev.sex=val;
+        send(box, prev);
+      };
+    });
+    return;
+  }
   const text=j.text||j.error||"I don't know.";
   const hunts=(j.result&&(j.result.picks||(j.result.caution?[j.result.caution]:null)))||null;
   const extra=j.result&&j.result.caution&&j.result.picks? [j.result.caution] : [];
@@ -107,7 +153,9 @@ function formValues(box){
   const points=ptsEl&&ptsEl.value!==''?Number(ptsEl.value):f.points;
   const weapon=(box.querySelector('[data-adv=weapon]')||{}).value||f.weapon;
   const question=(box.querySelector('[data-adv=q]')||{}).value||'';
-  return {state:st, species:sp, residency:res, points, weapon, question};
+  const sexEl=box.querySelector('[data-adv=sex]');
+  const sex=mapSex((sexEl&&sexEl.value)||box.getAttribute('data-adv-sex')||f.sex||'');
+  return {state:st, species:sp, residency:res, points, weapon, sex, question};
 }
 async function send(box, payload){
   const msg=box.querySelector('.adv-msg');
@@ -116,6 +164,7 @@ async function send(box, payload){
   if(out) out.innerHTML='';
   if(msg) msg.textContent='Working on your answer…';
   if(btn) btn.disabled=true;
+  box._lastPayload=payload;
   try{
     await ensureSession();
     const r=await api('/api/fullpass/advisor/ask', payload);
@@ -158,6 +207,11 @@ function plannerHTML(filters){
     '<label>Residency<select data-adv="res">'+opts(res,f.residency)+'</select></label>'+
     '<label>Points<input data-adv="points" type="number" min="0" max="40" step="1" value="'+esc(f.points)+'"></label>'+
     '<label>Weapon<select data-adv="weapon">'+opts(weapons,f.weapon)+'</select></label>'+
+    (function(){
+      const rows=sexRows(f.species);
+      if(!rows) return '';
+      return '<label>Sex<select data-adv="sex">'+opts(rows,f.sex||'')+'</select></label>';
+    }())+
     '</div>'+
     '<div class="suggestions">'+
     '<button type="button" data-adv-sug="putin">Where should I put in with my points?</button>'+
@@ -173,7 +227,8 @@ function cardHTML(key, filters){
   const f=filters||pageFilters();
   const title=cardTitle(key)||('this hunt ('+key+')');
   const who=[f.residency==='nonres'?'a nonresident':'a resident', (f.points||0)+' point'+(Number(f.points)===1?'':'s'), f.weapon!=='any'?f.weapon:''].filter(Boolean).join(', ');
-  return '<div class="askbox adv-card" data-adv-card="'+esc(key)+'">'+
+  const sex=f.sex||sexFromHunt(key, title);
+  return '<div class="askbox adv-card" data-adv-card="'+esc(key)+'"'+(sex?' data-adv-sex="'+esc(sex)+'"':'')+'>'+
     '<h3>Ask about this hunt</h3>'+
     '<p class="ctx">This question is about '+esc(title)+'. We already have you as '+esc(who)+'.</p>'+
     '<div class="suggestions">'+
@@ -205,22 +260,22 @@ function payloadFrom(box, sug){
   const hunt=key?{state:here(), key}:null;
   const hunts=savedHunts();
   if(sug==='compare'){
-    return {job:'compare', question:f.question||'Compare with my saved hunts', residency:f.residency, points:f.points, hunt, hunts};
+    return {job:'compare', question:f.question||'Compare with my saved hunts', residency:f.residency, points:f.points, hunt, hunts, sex:f.sex};
   }
   if(sug==='odds'){
-    return {job:'lookup', question:f.question||'What are my odds with my points?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt};
+    return {job:'lookup', question:f.question||'What are my odds with my points?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, sex:f.sex||sexFromHunt(key, cardTitle(key))};
   }
   if(sug==='first'){
-    return {job:'recommend', question:f.question||'Should I put this first?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+    return {job:'recommend', question:f.question||'Should I put this first?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts, sex:f.sex||sexFromHunt(key, cardTitle(key))};
   }
   if(sug==='putin'){
-    return {job:'recommend', question:f.question||'Where should I put in with my points?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+    return {job:'recommend', question:f.question||'Where should I put in with my points?', state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts, sex:f.sex||sexFromHunt(key, cardTitle(key))};
   }
   const question=f.question||'Where should I put in with my points?';
   if(!f.question){
-    return {job:'recommend', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+    return {job:'recommend', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts, sex:f.sex||sexFromHunt(key, cardTitle(key))};
   }
-  return {job:'auto', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts};
+  return {job:'auto', question, state:f.state, species:f.species, residency:f.residency, points:f.points, weapon:f.weapon, hunt, hunts, sex:f.sex||sexFromHunt(key, cardTitle(key))};
 }
 function wire(box){
   if(!box||box.getAttribute('data-wired')) return;
@@ -234,6 +289,19 @@ function wire(box){
   });
   const go=box.querySelector('[data-adv=send]');
   if(go) go.onclick=()=>send(box, payloadFrom(box, null));
+  const sp=box.querySelector('[data-adv=species]');
+  if(sp) sp.addEventListener('change', ()=>refreshSexSelect(box));
+  refreshSexSelect(box);
+}
+function refreshSexSelect(box){
+  const sel=box.querySelector('[data-adv=sex]');
+  const sp=(box.querySelector('[data-adv=species]')||{}).value||pageFilters().species;
+  const rows=sexRows(sp);
+  if(!sel) return;
+  const cur=sel.value;
+  if(!rows){ sel.closest('label').hidden=true; return; }
+  sel.closest('label').hidden=false;
+  sel.innerHTML=rows.map(([v,l])=>'<option value="'+esc(v)+'"'+(cur===v?' selected':'')+'>'+esc(l)+'</option>').join('');
 }
 function paintPlanner(){
   const m=mode();

@@ -76,10 +76,121 @@ function isPrivateOnly(hunt) {
   return /private-land-only|private land only/i.test(s);
 }
 function sexClass(hunt) {
+  const sx = String(hunt.sex || hunt.sx || '').toUpperCase();
+  if (sx === 'M') return 'antlered';
+  if (sx === 'F') return 'antlerless';
+  if (sx === 'E') return 'either';
   const s = (hunt.sexTitle || hunt.sex || hunt.title || '').toLowerCase();
-  if (/cow|doe|nanny|ewe|antlerless|female/.test(s) && !/either/.test(s)) return 'antlerless';
+  if (/cow|doe|nanny|ewe|antlerless|female/.test(s) && !/either|any elk|any deer/.test(s)) return 'antlerless';
   if (/bull|buck|ram|billy|antlered|bearded|male/.test(s) && !/either/.test(s)) return 'antlered';
   return 'either';
+}
+
+const SEX_SPECIES = {
+  elk: { antlered: 'Bull', antlerless: 'Cow', either: 'Either' },
+  deer: { antlered: 'Buck', antlerless: 'Doe', either: 'Either' },
+  pronghorn: { antlered: 'Buck', antlerless: 'Doe', either: 'Either' },
+  moose: { antlered: 'Bull', antlerless: 'Cow', either: 'Either' }
+};
+
+export function parseSex(raw) {
+  const t = String(raw || '').toLowerCase().trim();
+  if (!t || t === 'any' || t === 'please choose') return '';
+  if (t === 'm' || t === 'bull' || t === 'buck' || t === 'antlered' || t === 'male' || t === 'antlered elk' || t === 'antlered deer') return 'antlered';
+  if (t === 'f' || t === 'cow' || t === 'doe' || t === 'antlerless' || t === 'female' || t === 'cow or calf' || t === 'antlerless elk') return 'antlerless';
+  if (t === 'e' || t === 'either' || t === 'either-sex' || t === 'eithersex' || t === 'either sex') return 'either';
+  return '';
+}
+
+export function inferSex(q, catalog) {
+  const direct = parseSex(q && q.sex);
+  if (direct) return direct;
+  const question = String((q && q.question) || '').toLowerCase();
+  const wantsBull = /\bbulls?\b|\bbucks?\b|\bantlered\b/.test(question);
+  const wantsCow = /\bcows?\b|\bdoes?\b|\bantlerless\b/.test(question);
+  if (wantsBull && !wantsCow) return 'antlered';
+  if (wantsCow && !wantsBull) return 'antlerless';
+  if (/\beither(\s|-)?sex\b/.test(question)) return 'either';
+  const hunt = q && q.hunt && q.hunt.key ? getHunt(catalog, q.hunt.state || q.state, q.hunt.key) : null;
+  if (hunt) {
+    const c = sexClass(hunt);
+    if (c === 'antlered' || c === 'antlerless') return c;
+  }
+  return '';
+}
+
+function sexMatches(want, hunt) {
+  if (!want || want === 'either') return true;
+  const c = sexClass(hunt);
+  if (want === 'antlered') return c === 'antlered' || c === 'either';
+  if (want === 'antlerless') return c === 'antlerless' || c === 'either';
+  return true;
+}
+
+export function sexChoices(species) {
+  const sp = normSpecies(species);
+  return SEX_SPECIES[sp] || null;
+}
+
+export function speciesHasSexChoice(catalog, state, species) {
+  const labels = sexChoices(species);
+  if (!labels) return false;
+  const st = String(state || '').toLowerCase();
+  let antlered = false, antlerless = false;
+  for (const hunt of Object.values(catalog.hunts || {})) {
+    if (hunt.state !== st) continue;
+    if (!speciesMatch(hunt.species, species)) continue;
+    const c = sexClass(hunt);
+    if (c === 'antlered') antlered = true;
+    if (c === 'antlerless') antlerless = true;
+    if (antlered && antlerless) return true;
+  }
+  return false;
+}
+
+function fragmentBroken(s) {
+  const t = String(s || '').trim();
+  if (!t) return false;
+  const opens = (t.match(/\(/g) || []).length;
+  const closes = (t.match(/\)/g) || []).length;
+  if (opens !== closes) return true;
+  if (/\(\d*\s*$/.test(t)) return true;
+  if (t.length === 20) return true;
+  if (/ (ONL|DEE|WE|EA|CO|EX|TA|PO|SNA)\s*$/i.test(t)) return true;
+  if (/[ ,][A-Z]$/.test(t)) return true;
+  return false;
+}
+
+function sexPhrase(hunt) {
+  const sp = normSpecies(hunt.species) || 'animal';
+  const c = sexClass(hunt);
+  if (c === 'antlered') {
+    if (sp === 'elk') return 'antlered elk';
+    if (sp === 'deer') return 'antlered deer';
+    return 'antlered ' + sp;
+  }
+  if (c === 'antlerless') {
+    if (sp === 'elk') return 'antlerless elk';
+    if (sp === 'deer') return 'antlerless deer';
+    return 'antlerless ' + sp;
+  }
+  if (sp === 'elk') return 'any elk';
+  if (sp === 'deer') return 'any deer';
+  return sp;
+}
+
+export function cleanHuntTitle(hunt) {
+  const raw = String(hunt && hunt.title || '');
+  const desc = String(hunt && (hunt.sexTitle || hunt.desc) || '');
+  const tail = raw.includes('·') ? raw.split('·').pop().trim() : raw;
+  if (!fragmentBroken(raw) && !fragmentBroken(desc) && !fragmentBroken(tail)) return raw || desc;
+  const units = (hunt.units && hunt.units[0]) || hunt.area || '';
+  const typ = hunt.wyType || String(hunt.season || '').replace(/^Type\s+/i, '');
+  const bits = [];
+  if (units) bits.push('Hunt area ' + units);
+  if (typ) bits.push('type ' + typ);
+  bits.push(sexPhrase(hunt));
+  return bits.join(', ');
 }
 function sideOf(hunt, residency, draw) {
   const sides = hunt.sides || {};
@@ -109,7 +220,7 @@ export function officialFacts(catalog, state, key, residency, pts) {
     key: hunt.key,
     state: st,
     stateName: STATE_NAMES[st] || st,
-    title: hunt.title,
+    title: cleanHuntTitle(hunt),
     species: hunt.species,
     weapon: hunt.weapon,
     season: hunt.season,
@@ -143,6 +254,7 @@ export function recommend(catalog, q) {
   const residency = q.residency || q.res || 'res';
   const pts = q.points == null || q.points === '' ? null : Number(q.points);
   const weapon = q.weapon || 'any';
+  const sex = inferSex(q, catalog);
   if (!STATE_NAMES[state]) {
     return { ok: false, kind: 'unknown', reason: "I don't know that state in our files." };
   }
@@ -156,12 +268,29 @@ export function recommend(catalog, q) {
       picks: []
     };
   }
+  if (speciesHasSexChoice(catalog, state, species) && !sex) {
+    const labels = sexChoices(species);
+    return {
+      ok: true,
+      kind: 'need_sex',
+      reason: 'Before I rank hunts, I need to know whether you want a ' + labels.antlered.toLowerCase() + ', a ' + labels.antlerless.toLowerCase() + ', or either.',
+      sexOptions: [
+        { value: 'antlered', label: labels.antlered },
+        { value: 'antlerless', label: labels.antlerless },
+        { value: 'either', label: labels.either }
+      ],
+      query: { state, stateName: STATE_NAMES[state], species, residency, points: pts, weapon, sex: '' },
+      source: src.draw,
+      picks: []
+    };
+  }
   const out = [];
   const skipped = [];
   for (const hunt of Object.values(catalog.hunts)) {
     if (hunt.state !== state) continue;
     if (!speciesMatch(hunt.species, species)) continue;
     if (!weaponMatch(hunt.weapon, weapon)) continue;
+    if (!sexMatches(sex, hunt)) continue;
     if (!q.includePrivate && isPrivateOnly(hunt)) continue;
     const facts = officialFacts(catalog, hunt.state, hunt.key, residency, pts);
     if (!facts) continue;
@@ -192,7 +321,7 @@ export function recommend(catalog, q) {
   for (const p of pool) {
     const u = (p.units && p.units[0]) || p.key;
     if (seenU.has(u) && varied.length) continue;
-    if (varied.length === 2 && seenS.size === 1 && p._sex === [...seenS][0] && pool.some(x => x._sex !== p._sex && !seenU.has((x.units && x.units[0]) || x.key))) continue;
+    if (sex === 'either' && varied.length === 2 && seenS.size === 1 && p._sex === [...seenS][0] && pool.some(x => x._sex !== p._sex && !seenU.has((x.units && x.units[0]) || x.key))) continue;
     seenU.add(u);
     seenS.add(p._sex || 'either');
     varied.push(p);
@@ -212,7 +341,7 @@ export function recommend(catalog, q) {
   return {
     ok: true,
     kind: 'recommend',
-    query: { state, stateName: STATE_NAMES[state], species, residency, points: pts, weapon },
+    query: { state, stateName: STATE_NAMES[state], species, residency, points: pts, weapon, sex },
     source: src.draw,
     note: src.note,
     words: src.words,

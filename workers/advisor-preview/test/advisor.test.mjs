@@ -3,8 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { loadCatalog } from '../src/catalog-loader.js';
-import { runJob, recommend, officialFacts, classifyJob } from '../src/rank.js';
-import { templateText, looksSafe } from '../src/explain.js';
+import { runJob, recommend, officialFacts, classifyJob, cleanHuntTitle } from '../src/rank.js';
+import { templateText, looksSafe, enforceYear, utahDisclaimer } from '../src/explain.js';
 import { monthKey, resetLabel, tryReserve, getUsage, setCount, releaseReservation } from '../src/quota.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -68,8 +68,17 @@ test('catalog has eight states', () => {
   for (const s of ['co','ut','az','wy','id','nv','mt','nm']) assert.ok(st.has(s), s);
 });
 
-test('CO elk 6 resident points ranks official 2026 hunts', () => {
+test('CO elk without a sex choice asks Bull / Cow / Either first', () => {
   const r = recommend(catalog, { state: 'co', species: 'elk', residency: 'res', points: 6, weapon: 'rifle' });
+  assert.equal(r.kind, 'need_sex');
+  const labels = (r.sexOptions || []).map(o => o.label);
+  assert.deepEqual(labels, ['Bull', 'Cow', 'Either']);
+  assert.match(r.reason, /bull/i);
+  assert.equal((r.picks || []).length, 0);
+});
+
+test('CO elk 6 resident points ranks official 2026 hunts', () => {
+  const r = recommend(catalog, { state: 'co', species: 'elk', residency: 'res', points: 6, weapon: 'rifle', sex: 'antlered' });
   assert.equal(r.kind, 'recommend');
   assert.ok(r.picks.length >= 3, 'expected 3 picks, got ' + r.picks.length);
   const keys = r.picks.map(p => p.key);
@@ -86,30 +95,72 @@ test('CO elk 6 resident points ranks official 2026 hunts', () => {
   assert.equal(u61.draw.word, 'NOT THIS YEAR');
   const text = templateText(r);
   assert.match(text, /2026/);
+  assert.doesNotMatch(text, /this year/i);
   assert.doesNotMatch(text, /[\u2014\u2013]/);
   assert.ok(looksSafe(text, r));
   console.log('  CO picks', keys.join(', '));
 });
 
+test('bull-only CO elk does not include cow hunts', () => {
+  const r = recommend(catalog, { state: 'co', species: 'elk', residency: 'res', points: 6, weapon: 'rifle', sex: 'antlered' });
+  assert.equal(r.kind, 'recommend');
+  const keys = r.picks.map(p => p.key);
+  assert.ok(keys.every(k => k[1] !== 'F'), 'no cow hunt codes, got ' + keys.join(', '));
+  const text = templateText(r);
+  assert.doesNotMatch(text, /\bcow\b/i);
+  if (r.caution) assert.notEqual(r.caution.key[1], 'F');
+  console.log('  bull-only picks', keys.join(', '));
+});
+
 test('Utah elk resident example uses 2025 published table', () => {
-  const r = recommend(catalog, { state: 'ut', species: 'elk', residency: 'res', points: 6, weapon: 'any' });
+  const r = recommend(catalog, { state: 'ut', species: 'elk', residency: 'res', points: 6, weapon: 'any', sex: 'antlered' });
   assert.equal(r.kind, 'recommend');
   assert.ok(r.picks.length >= 1);
   assert.ok(r.picks.every(p => p.draw && p.draw.year === 2025), 'Utah history year should be 2025');
   assert.match(r.source || '', /2025 Utah DWR/);
   const text = templateText(r);
   assert.match(text, /2025/);
+  assert.match(text, /Based on the 2025 Utah draw\. Utah has not published the full 2026 results table\./);
+  assert.doesNotMatch(text, /this year/i);
   console.log('  UT picks', r.picks.map(p => p.key + ' ' + p.title).join(' | '));
 });
 
 test('Wyoming resident elk example (points often not used)', () => {
-  const r = recommend(catalog, { state: 'wy', species: 'elk', residency: 'res', points: 6, weapon: 'any' });
+  const r = recommend(catalog, { state: 'wy', species: 'elk', residency: 'res', points: 6, weapon: 'any', sex: 'antlered' });
   assert.equal(r.kind, 'recommend');
   assert.ok(r.picks.length >= 1);
   assert.ok(r.picks.every(p => p.draw && p.draw.year >= 2025));
   const text = templateText(r);
   assert.match(text, /202[56]/);
   console.log('  WY picks', r.picks.map(p => p.key + ' ' + p.title + ' ' + p.draw.word).join(' | '));
+});
+
+
+test('Wyoming truncated official titles are repaired or replaced with a clean label', () => {
+  const facts = officialFacts(catalog, 'wy', 'elk-122-2', 'res', 6);
+  assert.ok(facts);
+  assert.equal(facts.title, 'Hunt area 122, type 2, antlered elk');
+  assert.doesNotMatch(facts.title, /FIVE \(5/);
+  const r = recommend(catalog, { state: 'wy', species: 'elk', residency: 'res', sex: 'antlered' });
+  const hit = (r.picks || []).concat(r.caution || []).find(h => h && h.key === 'elk-122-2');
+  const text = templateText(r);
+  if (hit) {
+    assert.equal(hit.title, 'Hunt area 122, type 2, antlered elk');
+    assert.match(text, /Hunt area 122, type 2, antlered elk/);
+  }
+  assert.doesNotMatch(text, /FIVE \(5/);
+  assert.doesNotMatch(text, /this year/i);
+  console.log('  WY 122 title', facts.title, hit ? 'in result' : 'not in top picks');
+});
+
+test('year post-check rewrites this year and bare you will draw', () => {
+  const r = recommend(catalog, { state: 'co', species: 'elk', residency: 'res', points: 6, weapon: 'rifle', sex: 'antlered' });
+  const out = enforceYear("You'll draw this year. Unit 76 was NOT THIS YEAR.", r);
+  assert.match(out, /2026/);
+  assert.doesNotMatch(out, /this year/i);
+  assert.match(out, /you would have drawn/i);
+  const utah = utahDisclaimer({ query: { state: 'ut' }, source: '2025 Utah DWR 1st-choice result. 2026 was not published as a full table', picks: [{ state: 'ut', draw: { year: 2025 } }] });
+  assert.equal(utah, 'Based on the 2025 Utah draw. Utah has not published the full 2026 results table.');
 });
 
 test('compare three official CO hunts', () => {
