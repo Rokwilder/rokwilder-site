@@ -74,21 +74,19 @@ const hi = paid.refine(rows).map(r => r.k);
 ok(hi[0] === 'a' && hi[1] === 'b' && hi[hi.length - 1] !== 'a', 'high to low puts Top ahead of Below average');
 ok(hi.indexOf('c') > hi.indexOf('b') && hi.indexOf('d') > hi.indexOf('b'), 'Not enough data and Thin data sort after ranked hunts');
 
-// low to high
-const loc = paid;
-// flip by calling wire again is messy; set via stamp path
-const u = new URLSearchParams('preview=fullpass&ts=lo');
-// re-boot low
+// old ts=lo URLs map to default order (no low-to-high sort)
 const lowT = boot('ut', '?preview=fullpass&ts=lo', true, data);
 const lo = lowT.refine(rows).map(r => r.k);
-ok(lo[0] === 'b' && lo[1] === 'a', 'low to high puts Below average ahead of Top');
-ok(lo.indexOf('c') > lo.indexOf('a') && lo.indexOf('d') > lo.indexOf('a'), 'unranked hunts stay last when sorting low to high');
+ok(lo.join() === rows.map(r => r.k).join(), 'ts=lo maps to the default list order');
+ok(!lowT.bar('elk').includes('Trophy, low to high'), 'the low-to-high button is gone');
 
 const mq = boot('ut', '?preview=fullpass&mq=1&uf=Monroe', true, data);
 const filtered = mq.refine(rows).map(r => r.k);
-ok(filtered.length === 1 && filtered[0] === 'a', 'managed-for-quality filter and unit filter work together');
-ok(mq.bar('elk').includes('Trophy, high to low') && mq.bar('elk').includes('Managed for quality only'), 'member bar has the sort and the filter');
-ok(mq.emptyNote(4, 0).includes('trophy filter'), 'an empty filtered list says so');
+ok(filtered.length === 1 && filtered[0] === 'a', 'quality-area filter and unit filter work together');
+ok(mq.bar('elk').includes('Trophy, high to low') && mq.bar('elk').includes('Only show big-bull areas (state managed)'), 'member bar has the sort and the species-correct filter');
+ok(mq.bar('deer').includes('Only show big-buck areas (state managed)'), 'deer uses big-buck wording');
+ok(mq.emptyNote(4, 0).includes('None of these hunts are in a big-buck area.'), 'an empty quality filter uses the species word');
+ok(mq.bar('elk').includes('Find a unit number'), 'unit box is labeled Find a unit number');
 
 const missing = boot('ut', '?preview=fullpass', true, {});
 ok(missing.bar('elk').includes('not in the public file') && missing.chip('a') === '', 'a paid page without the private file does not invent levels');

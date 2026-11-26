@@ -72,27 +72,45 @@ function sexHit(huntSex, pick){
   if(sx===pick)return true;
   return (sx==='E'||sx==='')&&pick!=='E';
 }
+function sexWords(sp){
+  const s=String(sp||'').toLowerCase();
+  const animal={elk:'elk',deer:'deer',pronghorn:'pronghorn',antelope:'pronghorn',moose:'moose',bison:'bison',sheep:'bighorn sheep',dsheep:'desert bighorn',bighorn:'bighorn sheep',goat:'mountain goat',bear:'bear',turkey:'turkey'}[s]||(s||'this animal');
+  const male={elk:'Bulls',deer:'Bucks',pronghorn:'Bucks',antelope:'Bucks',moose:'Bulls',sheep:'Rams',dsheep:'Rams',bighorn:'Rams',goat:'Billys',bison:'Bulls',bear:'Males',turkey:'Toms'};
+  const female={elk:'Cows',deer:'Does',pronghorn:'Does',antelope:'Does',moose:'Cows',sheep:'Ewes',dsheep:'Ewes',bighorn:'Ewes',goat:'Nannies',bison:'Cows',bear:'Females',turkey:'Hens'};
+  const maleOne={elk:'bull',deer:'buck',pronghorn:'buck',antelope:'buck',moose:'bull',sheep:'ram',dsheep:'ram',bighorn:'ram',goat:'billy',bison:'bull',bear:'male',turkey:'tom'};
+  const femaleOne={elk:'cow',deer:'doe',pronghorn:'doe',antelope:'doe',moose:'cow',sheep:'ewe',dsheep:'ewe',bighorn:'ewe',goat:'nanny',bison:'cow',bear:'female',turkey:'hen'};
+  const any={elk:'any-elk',deer:'any-deer',pronghorn:'any-pronghorn',antelope:'any-pronghorn',moose:'any-moose',sheep:'any-sheep',dsheep:'any-desert bighorn',bighorn:'any-sheep',bison:'any-bison',turkey:'any-turkey',bear:'any-bear',goat:'any-goat'};
+  return {animal, male:male[s]||'Males', female:female[s]||'Females', maleOne:maleOne[s]||'male', femaleOne:femaleOne[s]||'female', any:any[s]||('any-'+animal), all:'Show me all '+animal+' tags'};
+}
 function sexLabel(sp, code){
-  if(!code)return 'Any';
-  const male={elk:'Bull',deer:'Buck',pronghorn:'Buck',antelope:'Buck',moose:'Bull',sheep:'Ram',dsheep:'Ram',bighorn:'Ram',goat:'Billy',bison:'Bull',bear:'Male',turkey:'Tom'};
-  const female={elk:'Cow',deer:'Doe',pronghorn:'Doe',antelope:'Doe',moose:'Cow',sheep:'Ewe',dsheep:'Ewe',bighorn:'Ewe',goat:'Nanny',bison:'Cow',bear:'Female',turkey:'Hen'};
-  const any={elk:'any-elk',deer:'any-deer',pronghorn:'any-pronghorn',antelope:'any-antelope',moose:'any-moose',sheep:'any-sheep',dsheep:'any-sheep',bighorn:'any-sheep',bison:'any-bison',turkey:'any-turkey',bear:'any-bear',goat:'any-goat'};
-  if(code==='E'){
-    const name=any[sp]||'either sex';
-    return name.charAt(0).toUpperCase()+name.slice(1)+' only';
-  }
-  const word=code==='M'?(male[sp]||'Male'):code==='F'?(female[sp]||'Female'):code;
-  if(any[sp]&&(code==='M'||code==='F'))return word+' (includes '+any[sp]+')';
-  return word;
+  const w=sexWords(sp);
+  if(!code||code==='E')return w.all;
+  if(code==='M')return w.male;
+  if(code==='F')return w.female;
+  return code;
 }
 function sexNote(sp, codes){
   const list=codes||[];
-  const bits=[];
-  for(const c of list){
-    if(c==='E')bits.push(sexLabel(sp,'E')+' shows only the either-sex licenses.');
-    else if(c==='M'||c==='F')bits.push(sexLabel(sp,c)+' also lists either-sex and general licenses.');
-  }
-  return bits.join(' ');
+  if(!list.includes('E'))return '';
+  const w=sexWords(sp);
+  const name=w.any;
+  return name.charAt(0).toUpperCase()+name.slice(1)+' tags let you take a '+w.maleOne+' or a '+w.femaleOne+', so they show up under both.';
+}
+function sexParam(sx){
+  const v=String(sx==null?'':sx);
+  if(!v||v==='E'||v==='e'||v==='any-only'||v==='anyonly'||v==='any_only')return '';
+  return v;
+}
+function sexSplit(codes){
+  const s=new Set(codes||[]);
+  return s.has('M')&&s.has('F');
+}
+function sexButtons(sp, sx, codes){
+  const shown=sexSplit(codes);
+  const pick=shown?sexParam(sx):'';
+  const opts=shown?[...['M','F'].filter(c=>(codes||[]).includes(c)),'']:[];
+  const html=opts.map(x=>'<button type="button" data-sx="'+x+'" class="'+(pick===x?'on':'')+'">'+sexLabel(sp,x)+'</button>').join('');
+  return {shown, sx:pick, html, note:shown?sexNote(sp, codes):''};
 }
 function vKey(v, mode){
   if(!(typeof v==='number'&&v>0))return '';
@@ -130,5 +148,5 @@ function wireVd(root, set){
   if(!root)return;
   root.querySelectorAll('[data-vd]').forEach(b=>b.onclick=()=>set(b.dataset.vd||''));
 }
-window.RWLong={word,inDraw,allLong,bestFirst,banner,head,empty,nextFromHistory,dotColor,pointsWord,rules,sexHit,sexLabel,sexNote,vKey,vBar,applyVd,wireVd};
+window.RWLong={word,inDraw,allLong,bestFirst,banner,head,empty,nextFromHistory,dotColor,pointsWord,rules,sexHit,sexWords,sexLabel,sexNote,sexParam,sexSplit,sexButtons,vKey,vBar,applyVd,wireVd};
 })();

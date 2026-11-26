@@ -17,8 +17,13 @@ ok(L.banner({points:10, rule:L.rules.utBonus, member:false, next:{name:'Hidden',
 ok(!L.empty({points:18, member:true, next:null}).includes('0 hunts'), 'an empty list does not say 0 hunts');
 ok(L.bestFirst([{k:'b',v:0.01},{k:'a',v:0.04}])[0].k === 'a', 'long shots sort best odds first');
 ok(L.sexHit('E','M') && L.sexHit('','M') && L.sexHit('M','M') && !L.sexHit('F','M') && !L.sexHit('','E') && L.sexHit('E','E'), 'bull and cow include any and general; either-sex only stays exact');
-ok(L.sexLabel('elk','M') === 'Bull (includes any-elk)' && L.sexLabel('deer','M') === 'Buck (includes any-deer)' && L.sexLabel('elk','F') === 'Cow (includes any-elk)', 'sex buttons name the included any-animal licenses');
-ok(!L.sexNote('elk',['M','F','E']).includes('\u2014'), 'sex note has no em dash');
+ok(L.sexLabel('elk','M') === 'Bulls' && L.sexLabel('deer','M') === 'Bucks' && L.sexLabel('elk','F') === 'Cows' && L.sexLabel('elk','') === 'Show me all elk tags', 'sex buttons use short species words and an all-tags default');
+ok(L.sexParam('E') === '' && L.sexParam('M') === 'M' && !L.sexButtons('elk','E',['M','F','E']).html.includes('data-sx="E"'), 'any-only URL param maps to all and the any-only button is gone');
+const sexHtml=L.sexButtons('elk','',['M','F','E']).html;
+ok(sexHtml.indexOf('data-sx="M"') < sexHtml.indexOf('data-sx=""') && sexHtml.indexOf('data-sx="F"') < sexHtml.indexOf('data-sx=""'), 'Bulls and Cows sit above the all-tags button');
+ok(L.sexNote('elk',['M','F','E']) === 'Any-elk tags let you take a bull or a cow, so they show up under both.', 'one-line any-elk note');
+ok(!L.sexNote('elk',['M','F','E']).includes('\u2014') && !L.sexNote('deer',['M','F']).includes('Any-deer'), 'sex note has no em dash and is omitted when there are no any-sex tags');
+ok(L.sexSplit(['M','F','E']) && !L.sexSplit(['M','E']) && !L.sexSplit(['F']), 'the picker shows only when both sexes exist');
 
 const UH = new Function(readFileSync(new URL('../utah/data.js', import.meta.url), 'utf8') + '\nreturn UH;')();
 for (const pts of [10, 18]) {
