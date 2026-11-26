@@ -105,8 +105,8 @@ function wyBand(k){const h=WH[k];return RWLand.band('wy',RWLand.wyKey(h.sp,h.are
 function wyExtra(k,v){if(!paid())return '';const h=WH[k],b=wyBand(k),place=/^\d+$/.test(String(h.area))?`${SP[h.sp]} Hunt Area ${+h.area}`:'';
  return RWLand.extra({band:b,land:b,voice:'forecast',odds:RWLand.oddsKind(v),place,href:place?RWLand.pkgHref('../','wy',String(h.area),h.sp):''})}
 function focusBar(){return `<div class="sbar"><span class="lbl">What matters most to you?</span><div class="seg"><button type="button" data-focus="" class="${S.focus?'':'on'}">Draw odds</button><button type="button" data-focus="land" class="${S.focus=='land'?'on':''}">Public land</button></div></div>`}
-function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
-function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="ft">${title(x.k)}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}</button></li>`}
+function cardFull(x,i){const bits=RWLand.splitNext(wyExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="ft">${title(x.k)}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="fd">${esc(dateLine(WH[x.k]))}</span><span class="fd">WGFD 2026 draw · 1st choice · estimate where noted</span>${oddsHTML(x.v)}${RWHy(x.k,pool(),usesPts()?S.pts:'')}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function wyName(k){const h=WH[k];return isGen(h)?(h.area=='GEN'?'Nonresident general license':`Nonresident general license, Region ${h.area}`):`Hunt area ${h.area}`}
 function wyOpts(member){const pts=usesPts()?S.pts:null;return {points:pts,rule:window.RWLong?RWLong.rules.wy:'',member:!!member,next:pts!=null&&window.RWLong?RWLong.nextFromHistory(WK.filter(ok),pool(),S.pts,wyName):null}}
 function lsHead(rows,member){if(window.RWLong)return RWLong.head(rows,wyOpts(member));const n=rows.length;return n?`<h2 id="lt">${n} hunt${n==1?'':'s'} you can draw</h2>`:''}
@@ -153,7 +153,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  const aid=areaId(h.area);let where='';
  if(aid){try{await ensureMap();if(GJ.features.some(f=>String(f.properties.u)===aid))where=`<h3>Where this hunt is</h3><p class="dq">Hunt area ${esc(h.area)}, highlighted on the hunt area map.</p><div id="dmap" class="gmap dm" data-area="${aid}" aria-label="Map of this hunt area"></div>${mapCred()}<p><button class="btn o" id="vsm">View on statewide map</button></p>`}catch(e){where=''}}
  const bk=S.tab=='map'?'← Back to the map':'← Back to the list';
- o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
+ o.innerHTML=`<button class="btn big2" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${who()}</p>`+
  `<div class="fv">${vdot(v)}${verdictLine(v)}</div>${RWHy(k,pool(),usesPts()?S.pts:'')}`+(FP?`<p class="fo"><b>${pct(v)}</b> <span>estimated 1st-choice chance with ${ptsWord()}</span></p>`:'')+(window.RWTrophy?RWTrophy.block(k):'')+RWQuota.html('wy',k,FP)+wyExtra(k,v)+
  `<p class="how">${how(h,b)}</p><p class="dq">${esc(dateLine(h))}</p>`+(FP?(b.pts?ladder(b):'')+numbers(h):(paid()?(window.RWTags?RWTags.missing('The Wyoming file on this page has a band, not how many people applied or drew at each point level.'):''):(window.RWTags?RWTags.locked('../pricing.html'):fpBox())))+where+
  (S.res=='nr'?`<p class="note"><b>Nonresidents:</b> if any part of this hunt area is designated wilderness, WGFD says Wyoming law requires a licensed guide or a resident companion with the free non-commercial guide license to hunt big or trophy game there (W.S. 23-2-401). Check the hunt area map before you apply.</p>`:'')+
@@ -206,10 +206,11 @@ function sxAvail(){const s=new Set();for(const k of WK){const h=WH[k];if(h.sp==S
 function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.toggle('on',b.dataset.sp==S.sp));
  document.querySelectorAll('[data-res]').forEach(b=>b.classList.toggle('on',b.dataset.res==S.res));
  document.querySelectorAll('[data-dr]').forEach(b=>b.classList.toggle('on',b.dataset.dr==S.dr));
- const av=sxAvail();if(S.sx&&!av.includes(S.sx))S.sx='';const w=SXW[S.sp]||{};
- $('sxseg').innerHTML=['',...av].map(x=>`<button data-sx="${x}" class="${S.sx==x?'on':''}">${window.RWLong?RWLong.sexLabel(S.sp,x):SXN[x]}</button>`).join('');
- $('sxnote').textContent=(window.RWLong?RWLong.sexNote(S.sp,av):'')+(av.length?` ${av.map(x=>`${SXN[x]} means ${w[x]||SXN[x].toLowerCase()}`).join('. ')}.`:'' )+" From the license description in WGFD's reports.";
- $('sxseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';paint()});
+ const av=sxAvail();if(window.RWLong&&RWLong.sexParam)S.sx=RWLong.sexParam(S.sx);if(S.sx&&!av.includes(S.sx))S.sx='';
+ const pick=window.RWLong&&RWLong.sexButtons?RWLong.sexButtons(S.sp,S.sx,av):null;
+ if(pick){S.sx=pick.sx;if($('sxbox'))$('sxbox').hidden=!pick.shown;$('sxseg').innerHTML=pick.html;$('sxnote').textContent=pick.note;}
+ else{$('sxseg').innerHTML=['',...av.filter(x=>x!=='E')].map(x=>`<button type="button" data-sx="${x}" class="${S.sx==x?'on':''}">${window.RWLong?RWLong.sexLabel(S.sp,x):SXN[x]}</button>`).join('');$('sxnote').textContent='';if($('sxbox'))$('sxbox').hidden=!(av.includes('M')&&av.includes('F'));}
+ $('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;S.vd='';paint()});
  $('drawbox').hidden=!(S.res=='nr'&&HAS_SPECIAL.has(S.sp));
  const up=usesPts();$('ptsbox').hidden=!up;if(!up)S.pts=0;S.pts=Math.min(S.pts,MAXP());$('pv').textContent=S.pts;
  const np=$('nopts');np.hidden=up;np.textContent=['goat','bison'].includes(S.sp)?`${SP[S.sp]} is a random draw for residents and for hunters from out of state, so points don't count.`:"Residents draw at random for this animal, so points don't count. Hunting from out of state? Tap Out of state to enter your points.";
@@ -222,7 +223,7 @@ $('pm').onclick=()=>{S.pts=Math.max(0,S.pts-1);paint()};$('pp').onclick=()=>{S.p
 $('redp').onchange=e=>S.red=e.target.checked?1:0;$('genl').onchange=e=>S.gen=e.target.checked?1:0;
 $('go').onclick=()=>{S.n=25;showList(1)};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const k of WK){if(WH[k].sp!=S.sp)continue;const x=String(WH[k].area);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
-if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=Q.get('sx');if(Q.get('sea'))S.sea=Q.get('sea');if(Q.get('unit'))S.unit=Q.get('unit');
+if(Q.get('sp')&&SP[Q.get('sp')])S.sp=Q.get('sp');if(Q.get('res')=='nr')S.res='nr';if(Q.get('dr')=='nrs')S.dr='nrs';if(Q.get('pts'))S.pts=+Q.get('pts')||0;if(Q.get('sx'))S.sx=window.RWLong&&RWLong.sexParam?RWLong.sexParam(Q.get('sx')):(Q.get('sx')==='E'?'':Q.get('sx'));if(Q.get('sea'))S.sea=Q.get('sea');if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');if(Q.get('tab')==='map')S.tab='map';
 paint();if(Q.get('go'))showList();if(Q.get('k')&&WH[Q.get('k')])showDetail(Q.get('k'));
 window.RWFindRefresh=function(){const det=$('detail'),out=$('out');if(det&&!det.hidden)return;if(out&&!out.hidden)showList()};

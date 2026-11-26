@@ -100,8 +100,8 @@ function idChance(k){const h=IH[k];if(FP){const r=exactRate(sideRaw(h));if(r!=nu
 function orderRows(list){if(S.ord==='hard'||S.ord==='easy')return RWDraw.order(list,S.ord,x=>RWDraw.measure(()=>idChance(x.k),0),tie);if(S.focus!='land')return list;return [...list].sort((a,b)=>RWLand.rank(idBand(b.k))-RWLand.rank(idBand(a.k))||b.v-a.v||IH[a.k].area.localeCompare(IH[b.k].area))}
 function bandSeason(){return {y:M.year,kind:'result'}}
 function verdictLine(v){if(v==null)return '';return window.RWSeason?RWSeason.label(bandSeason().y,bandSeason().kind,VERD(v)):VERD(v)}
-function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
-function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="ft">${title(x.k)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
+function card(x,i){const h=IH[x.k];return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="ft">${title(x.k)}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}</button></li>`}
+function cardFull(x,i){const h=IH[x.k];const bits=RWLand.splitNext(idExtra(x.k,x.v));return `<li><button class="fh" data-k="${esc(x.k)}"><span class="rk">${i+1}</span><span class="ft">${title(x.k)}</span><span class="fv">${vdot(x.v)}${verdictLine(x.v)}</span><span class="fd">${esc(idDateLine(h))}</span><span class="fd">${h.sex?SXN[h.sex]+' · ':''}2026 ${h.draw===2?'second':'first'} drawing · first-choice result · not a forecast</span>${oddsHTML(h)}${RWHy(x.k,S.res)}${window.RWTrophy?RWTrophy.chip(x.k):''}${bits.info}</button>${bits.next}</li>`}
 function idOpts(){return {points:null,rule:window.RWLong?RWLong.rules.id:'',member:false,next:null}}
 function lsHead(rows){if(window.RWLong)return RWLong.head(rows,idOpts());const n=rows.length;return n?`<h2 id="lt">${n} hunt${n===1?'':'s'} you can draw</h2>`:''}
 function lsOrder(rows){if(!(window.RWLong&&RWLong.allLong(rows)))return rows;if(S.ord==='hard'||S.ord==='easy'||S.focus==='land')return rows;return RWLong.bestFirst(rows)}
@@ -145,7 +145,7 @@ async function showDetail(k,sc){if(!paid()&&!isSample(k)){showList(sc);return}co
  let ids=[];try{await ensureMap();ids=areaCodes(h.area)}catch(e){ids=[]}
  const where=ids.length?`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p><div id="dmap" class="gmap dm" data-areas="${esc(ids.join(','))}" aria-label="Map of this controlled hunt area"></div>${mapCred()}`:`<h3>Where this hunt is</h3><p class="dq">${esc(whereCopy(h,ids))}</p>`;
  const bk=S.tab==='map'?'← Back to the map':'← Back to the list';
- o.innerHTML=`<button class="btn o" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
+ o.innerHTML=`<button class="btn big2" id="back">${bk}</button><h2>${title(k)}</h2><p class="dq">${esc(who())}</p>`+
   `<div class="fv">${v==null?'':vdot(v)}${verdictLine(v)}</div>${RWHy(k,S.res)}${oddsHTML(h)}${window.RWTrophy?RWTrophy.block(k):''}<p class="how">${wordNote(v)} ${how()}</p>`+countsHTML(h)+idTags(h)+RWQuota.html('id',k,FP)+idExtra(k,v)+where+segHTML(h)+
   `<p class="note">Source: <a href="${esc(oddsURL(h))}">IDFG 2026 drawing odds</a> for this species and drawing, first-choice residency columns. Area: <a href="https://idfg.idaho.gov/ifwis/huntplanner/area.aspx?id=${encodeURIComponent(h.areaId)}">Hunt Planner area ${esc(h.areaId)}</a>. Retrieved ${esc(M.retrieved)}. Rules: <a href="${esc(M.rules)}">IDAPA 13.01.04, current chapter retrieved the same day</a>.</p>`;
  $('back').onclick=()=>showList(1);if($('dmap'))drawDetailMap(v);if(sc)o.scrollIntoView({behavior:'smooth'})}
@@ -216,10 +216,14 @@ async function drawDetailMap(v){
  on.forEach(l=>l.bindTooltip(String(l.feature.properties.u),{permanent:true,direction:'center',className:'ulab'}));
  if(on.length)DM.fitBounds(L.featureGroup(on).getBounds(),{padding:[18,18],maxZoom:9});
 }
+function sxAvail(){const s=new Set();for(const h of Object.values(IH)){if(h.sp===S.sp&&h.sex)s.add(h.sex)}return['M','F','E'].filter(x=>s.has(x))}
 function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.toggle('on',b.dataset.sp===S.sp));
  document.querySelectorAll('[data-res]').forEach(b=>b.classList.toggle('on',b.dataset.res===S.res));
  document.querySelectorAll('[data-draw]').forEach(b=>b.classList.toggle('on',+b.dataset.draw===S.draw));
- document.querySelectorAll('[data-sx]').forEach(b=>b.classList.toggle('on',b.dataset.sx===S.sx));
+ const av=sxAvail();if(window.RWLong&&RWLong.sexParam)S.sx=RWLong.sexParam(S.sx);if(S.sx&&!av.includes(S.sx))S.sx='';
+ const pick=window.RWLong&&RWLong.sexButtons?RWLong.sexButtons(S.sp,S.sx,av):null;
+ if(pick){S.sx=pick.sx;if($('sxbox'))$('sxbox').hidden=!pick.shown;$('sxseg').innerHTML=pick.html;$('sxnote').textContent=pick.note;$('sxseg').querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;paint()});}
+ else{if($('sxbox'))$('sxbox').hidden=!(av.includes('M')&&av.includes('F'));}
  const has2=Object.values(IH).some(h=>h.sp===S.sp&&h.draw===2);
  const missing=ORDER.filter(sp=>!Object.values(IH).some(h=>h.sp===sp&&h.draw===2)).map(spName);
  $('d2note').textContent=`IDFG's 2026 odds table has no second-drawing rows for ${missing.join(', ')}.`;
@@ -230,7 +234,6 @@ function paint(){document.querySelectorAll('[data-sp]').forEach(b=>b.classList.t
 document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.sp=b.dataset.sp;paint()});
 document.querySelectorAll('[data-res]').forEach(b=>b.onclick=()=>{S.res=b.dataset.res;paint()});
 document.querySelectorAll('[data-draw]').forEach(b=>b.onclick=()=>{S.draw=+b.dataset.draw;paint()});
-document.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sx=b.dataset.sx;paint()});
 $('youth').onchange=e=>{S.youth=e.target.checked?1:0};
 $('go').onclick=()=>{S.n=25;showList(1)};
 unitCtl=RWUnit.bind({input:$('unitq'),clear:$('unitclr'),list:$('unitlist'),submit:()=>$('go').click(),onChange:v=>{S.unit=v},getUnits(){const s=[];const seen=new Set();for(const h of Object.values(IH)){if(h.sp!==S.sp)continue;const x=String(h.area);if(seen.has(x))continue;seen.add(x);s.push(x)}return s}});
@@ -238,7 +241,7 @@ if(Q.get('sp')&&M.species[Q.get('sp')])S.sp=Q.get('sp');
 if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('res')==='nr')S.res='nr';
 if(Q.get('draw')==='2')S.draw=2;
-if(Q.get('sx')&&SXN[Q.get('sx')])S.sx=Q.get('sx');
+if(Q.get('sx'))S.sx=window.RWLong&&RWLong.sexParam?RWLong.sexParam(Q.get('sx')):(Q.get('sx')==='E'?'':Q.get('sx'));
 if(Q.get('youth')==='0'){$('youth').checked=false;S.youth=0}
 paint();
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');

@@ -114,6 +114,43 @@ def assign_levels(places):
             p['peers'] = 'few'
             continue
         v = p['value']
+        # Ties count at the higher level: share of peer places with value <= v
+        # (best rank among ties). A cluster of 100% values all rank Top.
+        le = sum(1 for x in vals if x <= v)
+        pct = le / len(vals) if vals else 1
+        p['level'] = level_of(pct)
+        p['peers'] = 'ok'
+
+
+def assign_levels_legacy(places):
+    """Previous formula: strictly-below / (n-1). Used only to report the tie-fix change."""
+    usable = []
+    seen = {}
+    for p in places:
+        p.pop('level', None)
+        p.pop('peers', None)
+        if p.get('value') is None:
+            continue
+        n = p.get('n')
+        if p.get('thin') or (n is not None and n < 10):
+            p['level'] = 'thin'
+            continue
+        if p['place'] not in seen:
+            seen[p['place']] = p['value']
+            usable.append(p['place'])
+    vals = [seen[i] for i in usable]
+    few = len(vals) < 5
+    for p in places:
+        if p.get('level') == 'thin':
+            continue
+        if p.get('value') is None:
+            p['level'] = 'none'
+            continue
+        if few:
+            p['level'] = 'none'
+            p['peers'] = 'few'
+            continue
+        v = p['value']
         below = sum(1 for x in vals if x < v)
         pct = below / (len(vals) - 1) if len(vals) > 1 else 1
         p['level'] = level_of(pct)
@@ -1109,8 +1146,57 @@ def main():
         }
         print(st, path, 'hunts', len(hunts))
     cov_path = ROOT / 'scripts' / 'trophy' / 'coverage.json'
+    prev = None
+    if cov_path.exists():
+        try:
+            prev = json.loads(cov_path.read_text())
+        except Exception:
+            prev = None
     cov_path.write_text(json.dumps(coverage, indent=2))
     print('coverage', cov_path)
+    write_level_report(coverage, prev)
+
+def write_level_report(coverage, prev):
+    lines = [
+        '# Trophy level counts after the tie fix',
+        '',
+        'Tied values now use the share of peer places with a value at or below that hunt, so a cluster of equal top scores all rank Top.',
+        'Thin data and Not enough data rules are unchanged.',
+        '',
+    ]
+    order = ['top', 'above', 'typical', 'below', 'thin', 'none']
+    for st, row in coverage.get('states', {}).items():
+        lines.append('## ' + st.upper())
+        prev_sp = ((prev or {}).get('states') or {}).get(st, {}).get('species') or {}
+        for sp, meta in (row.get('species') or {}).items():
+            new_lv = meta.get('levels') or {}
+            old_lv = (prev_sp.get(sp) or {}).get('levels') or {}
+            bits = []
+            changed = False
+            keys = list(order) + [k for k in set(old_lv) | set(new_lv) if k not in order]
+            for lv in keys:
+                a, b = int(old_lv.get(lv) or 0), int(new_lv.get(lv) or 0)
+                if a == 0 and b == 0:
+                    continue
+                if a != b:
+                    changed = True
+                    bits.append(f'{lv}: {a} to {b}')
+                else:
+                    bits.append(f'{lv}: {b} (unchanged)')
+            flag = 'changed' if changed else 'unchanged'
+            lines.append(f'- {sp} ({flag}): ' + ('; '.join(bits) if bits else 'no hunts'))
+        lines.append('')
+    if prev is None:
+        lines.append('No previous coverage.json was on disk, so this file is the new baseline only.')
+        lines.append('')
+    report = '\n'.join(lines) + '\n'
+    out1 = ROOT / 'scripts' / 'trophy' / 'level-change-report.md'
+    out1.write_text(report)
+    preview = Path('/workspace/picker-preview')
+    preview.mkdir(parents=True, exist_ok=True)
+    (preview / 'trophy-level-counts.md').write_text(report)
+    print('level report', out1)
+
 
 if __name__ == '__main__':
     main()

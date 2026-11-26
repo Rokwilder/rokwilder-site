@@ -44,8 +44,8 @@ function mapSex(v){
 }
 function sexRows(species){
   const sp=String(species||'elk').toLowerCase();
-  if(sp==='deer'||sp==='pronghorn') return [['','Please choose'],['antlered','Buck'],['antlerless','Doe'],['either','Either']];
-  if(sp==='elk'||sp==='moose') return [['','Please choose'],['antlered','Bull'],['antlerless','Cow'],['either','Either']];
+  if(sp==='deer'||sp==='pronghorn') return [['','Please choose'],['antlered','Bucks'],['antlerless','Does'],['either','Either']];
+  if(sp==='elk'||sp==='moose') return [['','Please choose'],['antlered','Bulls'],['antlerless','Cows'],['either','Either']];
   return null;
 }
 function sexFromHunt(key, title){

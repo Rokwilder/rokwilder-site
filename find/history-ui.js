@@ -344,9 +344,17 @@ function htmlFor(el){
   const hintHtml=hint?`<span class="hyhint">${esc(hint)}</span>`:'';
   return `<span class="hynum">${headHtml}</span>${subHtml}${hintHtml}`;
 }
+function placeIdentity(parent){
+  const title=[...parent.children].find(c=>c.classList&&c.classList.contains('ft'));
+  if(!title)return;
+  const rk=[...parent.children].find(c=>c.classList&&c.classList.contains('rk'));
+  const dest=rk?rk.nextSibling:parent.firstChild;
+  if(dest!==title)parent.insertBefore(title, dest);
+}
 function place(el){
   const parent=el.parentElement;
   if(!parent)return;
+  placeIdentity(parent);
   const head=verdictHead(el);
   if(!head)return;
   if(isEstimateCard(el)){

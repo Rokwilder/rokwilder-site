@@ -28,11 +28,11 @@ function rateAt(hunt,pts){
 }
 function seasonCard(row,i){
   const dates=row.dates&&row.dates.length?row.dates.join('; '):'Dates are in the 2026 regulations for this district. They were not read as a single labeled season on this line.';
-  return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Season window</span><span class="ft">HD ${esc(row.hd)}${row.name?' · '+esc(row.name):''}</span><span class="fd">${esc(row.opp)}</span><span class="fd">${esc(dates)}</span><span class="fo"><span class="fpn">Where a resident general ${esc(row.sp)} license is valid in 2026. Not a draw result and not a harvest rate.</span></span>${RWHyNone('History not available. A general-season window is not a draw result.')}</div></li>`;
+  return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ft">HD ${esc(row.hd)}${row.name?' · '+esc(row.name):''}</span><span class="ov">Season window</span><span class="fd">${esc(row.opp)}</span><span class="fd">${esc(dates)}</span><span class="fo"><span class="fpn">Where a resident general ${esc(row.sp)} license is valid in 2026. Not a draw result and not a harvest rate.</span></span>${RWHyNone('History not available. A general-season window is not a draw result.')}</div></li>`;
 }
 function otcCard(row,i){
   const dates=row.dates&&row.dates.length?row.dates.join('; '):'See the 2026 regulations for the dates.';
-  return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ov">Over the counter</span><span class="ft">${esc(row.lpt)} · HD ${esc(row.hd)}</span><span class="fd">${esc(row.opp)}</span><span class="fd">${esc(dates)}</span><span class="fo"><span class="fpn">${esc(row.note||'The 2026 regulation line says June 15 or OTC. This is not a limited-draw band, and it does not say the license is still for sale.')}</span></span></div></li>`;
+  return `<li><div class="oh"><span class="rk">${i+1}</span><span class="ft">${esc(row.lpt)} · HD ${esc(row.hd)}</span><span class="ov">Over the counter</span><span class="fd">${esc(row.opp)}</span><span class="fd">${esc(dates)}</span><span class="fo"><span class="fpn">${esc(row.note||'The 2026 regulation line says June 15 or OTC. This is not a limited-draw band, and it does not say the license is still for sale.')}</span></span></div></li>`;
 }
 function comboCard(k, hunt){
   const g=groupAt(hunt,S.pts);
@@ -41,7 +41,7 @@ function comboCard(k, hunt){
   const count=exact&&typeof g.apps==='number'?`, ${g.succ.toLocaleString()} drawn of ${g.apps.toLocaleString()}`:'';
   const share=exact?`<div class="fo"><b>${pct(g.rate)}</b> <span>2026 primary drawing${count}</span></div>`:'<span class="fo"><span class="fpn">Exact percent is in the Full Pass. The word is the 2026 result band.</span></span>';
   const groupNote=g.exactGroup?'This is the row for that exact point total.':`The 2026 report groups this with ${esc(g.label)}. A party average in that range is in the same row. The applications in that row are not all people with exactly ${S.pts} point${S.pts===1?'':'s'}.`;
-  return `<li><div class="oh"><span class="rk">${S.pts}</span><span class="fv"><i class="vdot" style="background:${COL[g.band]||'#E8E0D2'}"></i>${VERD(g.band)}</span><span class="ft">${esc(hunt.name)}</span><span class="fd">${S.pts} preference point${S.pts===1?'':'s'} · ${esc(g.label)} · 2026 primary drawing · not a forecast</span>${share}<span class="fd">${groupNote}</span><span class="fd">${esc(hunt.quotaText||'')}</span>${typeof RWHy==='function'?RWHy(k,'nr',S.pts):''}</div></li>`;
+  return `<li><div class="oh"><span class="rk">${S.pts}</span><span class="ft">${esc(hunt.name)}</span><span class="fv"><i class="vdot" style="background:${COL[g.band]||'#E8E0D2'}"></i>${VERD(g.band)}</span><span class="fd">${S.pts} preference point${S.pts===1?'':'s'} · ${esc(g.label)} · 2026 primary drawing · not a forecast</span>${share}<span class="fd">${groupNote}</span><span class="fd">${esc(hunt.quotaText||'')}</span>${typeof RWHy==='function'?RWHy(k,'nr',S.pts):''}</div></li>`;
 }
 function comboList(){
   const rows=Object.entries(MC.hunts).filter(([,h])=>S.sp==='both'||h.sp===S.sp).map(([k,h])=>({k,h,v:rateAt(h,S.pts)}));
