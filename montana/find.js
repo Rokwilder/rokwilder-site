@@ -16,7 +16,7 @@ const SXN={M:'Antlered',F:'Antlerless',E:'Either sex','':'Any'};
 const WORD={1:'ALL DREW',0.75:'MOST DREW',0.25:'SOME DREW',0.05:'FEW DREW',0.01:'LONG SHOT',0:'NONE DREW'};
 const COL={1:'#263E2C',0.75:'#6F7F4F',0.25:'#C4B28C',0.05:'#D2501F'};
 const MC={all:'#263E2C',most:'#6F7F4F',some:'#C4B28C',few:'#D2501F',long:'#D2501F',none:'#E8E0D2',line:'#1E1E1C',sel:'#E8E0D2'};
-let S={sp:'elk',cls:'',sx:'',wpn:'',res:'res',pts:0,unit:'',youth:true,n:25,focus:'',ord:'',tab:'list',ol:''};
+let S={sp:'elk',cls:'',sx:'',wpn:'',res:'res',pts:0,unit:'',youth:true,n:25,focus:'',ord:'',tab:'list',ol:'',sea:''};
 let unitCtl=null;
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const usesPts=()=>S.sp!=='bison';
@@ -67,8 +67,37 @@ function passes(h){
   if(S.cls&&h.cls!==S.cls)return false;
   if(S.sx&&!(h.sx===S.sx||((h.sx==='E'||h.sx===''||h.sx==null)&&S.sx!=='E')))return false;
   if(S.wpn&&h.wpn!==S.wpn)return false;
+  if(!seaHit(h))return false;
   if(!S.youth&&h.youth)return false;
   return true;
+}
+function seaHit(h){
+  if(!S.sea)return true;
+  const text=(h.season||'').toLowerCase();
+  const archery=/archery/.test(text)||h.wpn==='bow';
+  const general=/general/.test(text)||h.wpn==='gen';
+  if(S.sea==='archery')return archery;
+  if(S.sea==='gen')return general;
+  return true;
+}
+function seaNote(){
+  let unlabeled=0;
+  for(const [,h] of H){
+    if(h.sp!==S.sp)continue;
+    const text=(h.season||'').toLowerCase();
+    if(!/archery/.test(text)&&!/general/.test(text))unlabeled++;
+  }
+  const name=(SP[S.sp]||'hunt').toLowerCase();
+  return '2026 seasons from Montana Fish, Wildlife and Parks. Archery means the regulation names an archery season, or the license is archery only. Any legal weapon means the regulation names a general season, or the license is not archery only. A license that lists both is under both buttons.'+(unlabeled?` ${unlabeled} ${name} license${unlabeled===1?'':'s'} kept the dates without a season name, so ${unlabeled===1?'it follows':'they follow'} the archery only or any legal weapon label.`:'')+' These tables do not list a muzzleloader season.';
+}
+function seaBar(){
+  const items=[['','All'],['archery','Archery'],['gen','Any legal weapon']];
+  return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.sea===k?' on':''}" data-sea="${k}">${w}</button>`).join('')}</div><p class="dq">${seaNote()}</p>`;
+}
+function stampSea(){
+  const u=new URL(location.href);
+  if(S.sea)u.searchParams.set('sea',S.sea);else u.searchParams.delete('sea');
+  history.replaceState(null,'',u.pathname+u.search+u.hash);
 }
 function pool(){return H.filter(([,h])=>passes(h))}
 function tie(a,b){
@@ -94,6 +123,8 @@ function whoLine(){
   if(S.cls)bits.push(CLS[S.cls]||S.cls);
   if(S.sx)bits.push(SXN[S.sx]);
   if(S.wpn)bits.push(S.wpn==='bow'?'Archery only':'Any legal weapon');
+  if(S.sea==='archery')bits.push('Archery season');
+  if(S.sea==='gen')bits.push('Any legal weapon season');
   bits.push(S.res==='res'?'Montana resident':'Out of state');
   if(usesPts())bits.push(S.pts+' bonus point'+(S.pts===1?'':'s'));
   return bits.join(' · ');
@@ -152,7 +183,8 @@ function showList(sc){
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return;
   }
-  o.innerHTML=ban+lsHead(list,true)+vbar+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(mtOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note;
+  o.innerHTML=ban+lsHead(list,true)+seaBar()+vbar+tabs+focusBar()+RWDraw.bar(S.ord,usesPts())+(window.RWTrophy?RWTrophy.bar(S.sp):'')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(mtOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note;
+  o.querySelectorAll('[data-sea]').forEach(b=>b.onclick=()=>{S.sea=b.dataset.sea||'';S.vd='';S.n=25;stampSea();showList()});
   if(window.RWLong)RWLong.wireVd(o,v=>{S.vd=v;S.n=25;showList()});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.n=25;showList()});
@@ -351,6 +383,7 @@ if(Q.get('res')==='nr'||Q.get('res')==='res')S.res=Q.get('res');
 if(Q.get('cls'))S.cls=Q.get('cls');
 if(Q.get('sx'))S.sx=window.RWLong&&RWLong.sexParam?RWLong.sexParam(Q.get('sx')):(Q.get('sx')==='E'?'':Q.get('sx'));
 if(Q.get('wpn'))S.wpn=Q.get('wpn');
+if(Q.get('sea')==='archery'||Q.get('sea')==='gen')S.sea=Q.get('sea');
 if(Q.get('pts'))S.pts=+Q.get('pts')||0;
 if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
@@ -370,7 +403,7 @@ window.__DRAW={
       for(const res of ['res','nr']){
         const idr=id+'|'+res;if(seen.has(idr))continue;seen.add(idr);
         if(!Object.values(MH).some(x=>x.sp===h.sp&&x.cls===h.cls&&(x.sx||'')===(h.sx||'')&&(x.wpn||'')===(h.wpn||'')&&x.od&&x.od[res]))continue;
-        out.push({id:idr,apply(){Object.assign(S,{sp:h.sp,cls:h.cls,sx:h.sx||'',wpn:h.wpn||'',res,unit:'',youth:true,focus:'',ord:'',tab:'list'})}});
+        out.push({id:idr,apply(){Object.assign(S,{sp:h.sp,cls:h.cls,sx:h.sx||'',wpn:h.wpn||'',res,unit:'',youth:true,focus:'',ord:'',tab:'list',sea:''})}});
       }
     }
     return out;

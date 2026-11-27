@@ -49,6 +49,35 @@ function passes(h){
   if(!S.youth&&h.youth)return false;
   return true;
 }
+function armChoices(){
+  const order=['any','bow','muzzle'];
+  const have=new Set();
+  for(const [,h] of H){if(h.sp===S.sp&&h.wpn)have.add(h.wpn)}
+  return order.filter(w=>have.has(w));
+}
+function armLabel(w){return w==='bow'?'Bow':w==='muzzle'?'Muzzleloader':'Any legal sporting arm'}
+function seaNote(){
+  let missing=0, orBow=0;
+  for(const [,h] of H){
+    if(h.sp!==S.sp)continue;
+    if(!h.season)missing++;
+    if(h.wpn==='muzzle'&&/bow/i.test(h.wlab||''))orBow++;
+  }
+  let text='2026-27 seasons from the New Mexico hunting rules booklet. The button is the sporting arm on the hunt code: any legal, bow, or muzzleloader.';
+  if(orBow)text+=` ${orBow} hunt${orBow===1?' is':'s are'} printed as muzzleloader or bow and stay under Muzzleloader.`;
+  if(missing)text+=` ${missing} hunt${missing===1?' has':'s have'} no booklet date and stay in the list. The date is not filled in.`;
+  else text+=' Dates are the ones printed for that hunt code.';
+  return text;
+}
+function seaBar(){
+  const items=[['', 'All']].concat(armChoices().map(w=>[w, armLabel(w)]));
+  return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.wpn===k?' on':''}" data-nmsea="${k}">${w}</button>`).join('')}</div><p class="dq">${seaNote()}</p>`;
+}
+function stampWpn(){
+  const u=new URL(location.href);
+  if(S.wpn)u.searchParams.set('wpn',S.wpn);else u.searchParams.delete('wpn');
+  history.replaceState(null,'',u.pathname+u.search+u.hash);
+}
 function pool(){return H.filter(([,h])=>passes(h))}
 function tie(a,b){
   const au=a.h.units&&a.h.units.length?a.h.units:[a.h.area];
@@ -168,7 +197,8 @@ function showList(sc){
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return;
   }
-  o.innerHTML=ban+lsHead(list)+tabs+focusBar()+(usesRate()?RWDraw.bar(S.ord,false):'<p class="dnote">Points are not used in New Mexico. First-choice drawn counts were not published for this species, so the list stays in unit order.</p>')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other choices.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(nmOpts()):`<p class="dq">No hunts you can draw in this pool.</p>`))+note;
+  o.innerHTML=ban+lsHead(list)+seaBar()+tabs+focusBar()+(usesRate()?RWDraw.bar(S.ord,false):'<p class="dnote">Points are not used in New Mexico. First-choice drawn counts were not published for this species, so the list stays in unit order.</p>')+`<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other choices.</p><ol class="fl">`+list.slice(0,S.n).map((x,i)=>card(x,i,true)).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+(list.length?'':(window.RWLong?RWLong.empty(nmOpts()):`<p class="dq">No hunts you can draw in this pool.</p>`))+note;
+  o.querySelectorAll('[data-nmsea]').forEach(b=>b.onclick=()=>{S.wpn=b.dataset.nmsea||'';S.n=25;stampWpn();paint();showList()});
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.n=25;showList()});
   o.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.focus;S.n=25;showList()});

@@ -42,7 +42,24 @@ let S={sp:'elk',sx:'M',live:'res',who:'main',wpn:'alw',pts:0,unit:'',n:25,focus:
 let unitCtl=null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rows=()=>H.filter(([,h])=>h.sp===S.sp&&h.sx===S.sx&&h.live===S.live&&h.who===S.who);
-const weaponRows=()=>rows().filter(([,h])=>h.wpn===S.wpn);
+const weaponRows=()=>rows().filter(([,h])=>!S.wpn||h.wpn===S.wpn);
+const WPN_ORDER=['alw','bow','muz','classic','shotgun','prim'];
+function weaponChoices(){
+  const seen=new Set();
+  const wpns=[];
+  for(const [,h] of rows())if(!seen.has(h.wpn)){seen.add(h.wpn);wpns.push(h.wpn)}
+  wpns.sort((a,b)=>WPN_ORDER.indexOf(a)-WPN_ORDER.indexOf(b));
+  return wpns;
+}
+function seaBar(){
+  const items=[['', 'All']].concat(weaponChoices().map(w=>[w, WPN[w]||w]));
+  return `<div class="vbar" role="group" aria-label="Season">${items.map(([k,w])=>`<button type="button" class="vb${S.wpn===k?' on':''}" data-nvsea="${k}">${w}</button>`).join('')}</div><p class="dq">2025 seasons from the NDOW bonus point table. The button is the weapon printed on that hunt. The dates are on each hunt. NDOW did not print an early or late name on these rows.</p>`;
+}
+function stampWpn(){
+  const u=new URL(location.href);
+  u.searchParams.set('wpn', S.wpn||'all');
+  history.replaceState(null,'',u.pathname+u.search+u.hash);
+}
 function bandAt(h){return Object.prototype.hasOwnProperty.call(h.bp,S.pts)?h.bp[S.pts]:null}
 function tie(a,b){const d=RWUnit.sortNum([a.h.units])-RWUnit.sortNum([b.h.units]);if(d)return d;const s=a.h.season.localeCompare(b.h.season);return s||a.k.localeCompare(b.k)}
 function nvChance(h,pts){const prev=S.pts;S.pts=pts;try{if(FP){const row=lvRaw(h);if(row&&typeof row.rate1==='number'&&row.rate1>=0&&row.rate1<=1)return row.rate1}return bandAt(h)}finally{S.pts=prev}}
@@ -55,7 +72,7 @@ const maxPts=()=>{let m=0;for(const [,h] of rows())for(const p of Object.keys(h.
 const whoWord=()=>S.who==='junior'?'Junior hunt':S.who==='guided'?'Guided nonresident':'Main draw';
 const liveWord=()=>S.live==='res'?'Nevada resident':'Out of state';
 const sxWord=()=>(SX[S.sp]&&SX[S.sp][S.sx])||'';
-const whoLine=()=>`${SP[S.sp]} · ${sxWord()} · ${WPN[S.wpn]||S.wpn} · ${liveWord()} · ${whoWord()} · ${S.pts} bonus point${S.pts===1?'':'s'}`;
+const whoLine=()=>`${SP[S.sp]} · ${sxWord()} · ${S.wpn?(WPN[S.wpn]||S.wpn):'Any weapon'} · ${liveWord()} · ${whoWord()} · ${S.pts} bonus point${S.pts===1?'':'s'}`;
 function title(h){return `${esc(h.units)} · ${esc(h.wlab)}`}
 function nvPlace(text){const key=RWLand.nvKey(text);if(!key)return String(text);const nums=key.split('+').map(n=>+n);
  if(nums.length===1)return 'Unit '+nums[0];const run=nums.every((n,i)=>i===0||n===nums[i-1]+1);if(run)return 'Units '+nums[0]+'–'+nums[nums.length-1];return RWLand.human(nums.map(String),'Unit','Units')}
@@ -107,10 +124,11 @@ function showList(sc){
     o.innerHTML=ban+lsHead(list,true)+tabs+`<p class="dq">${esc(whoLine())}. Colored units have at least one hunt you can draw. The color is the best 2025 result among hunts that include that unit. Orange is a long shot when the share was above 0 and under one in twenty. Tap a unit to see its hunts.</p>`+mapKey()+`<div id="map" class="gmap" aria-label="Map of Nevada hunt units"></div>`+mapCred()+note+fpLine();
     o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
     drawMap(list);if(sc)o.scrollIntoView({behavior:'smooth'});return}
-  o.innerHTML=ban+lsHead(list,true)+tabs+`${focusBar()}${RWDraw.bar(S.ord,true)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p>`+fpBox()+
+  o.innerHTML=ban+lsHead(list,true)+seaBar()+tabs+`${focusBar()}${RWDraw.bar(S.ord,true)}${window.RWTrophy?RWTrophy.bar(S.sp):''}<p class="dq">${esc(whoLine())}. ${lead} Tap a hunt for the other point levels.</p>`+fpBox()+
     `<ol class="fl">`+list.slice(0,S.n).map(cardFull).join('')+`</ol>`+(list.length>S.n?`<button class="btn o big2" id="more">Show ${Math.min(25,list.length-S.n)} more (${list.length-S.n} left)</button>`:'')+
     (list.length?'':(window.RWTrophy?RWTrophy.emptyNote(r.length,list.length):'')||(window.RWLong?RWLong.empty(nvOpts(true)):`<p class="dq">No hunts you can draw at this point level.</p>`))+note+fpLine();
   o.querySelectorAll('.fh').forEach(b=>b.onclick=()=>showDetail(b.dataset.k,1));
+  o.querySelectorAll('[data-nvsea]').forEach(b=>b.onclick=()=>{S.wpn=b.dataset.nvsea||'';S.vd='';S.n=25;stampWpn();paint();showList()});
   o.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab==='list')S.n=25;showList()});
   RWDraw.wire(o,v=>{S.ord=v;S.n=25;showList()});
   if(window.RWTrophy)RWTrophy.wire(o,()=>{S.n=25;showList()});
@@ -220,14 +238,10 @@ function paint(){
   if(!programs.some(p=>p[0]===S.who))S.who='main';
   $('progbox').hidden=programs.length<2;
   seg('progseg','who',S.who,programs);
-  const wpns=[];
-  const seen=new Set();
-  for(const [,h] of rows())if(!seen.has(h.wpn)){seen.add(h.wpn);wpns.push(h.wpn)}
-  const order=['alw','bow','muz','classic','shotgun','prim'];
-  wpns.sort((a,b)=>order.indexOf(a)-order.indexOf(b));
-  if(!wpns.includes(S.wpn))S.wpn=wpns[0]||'alw';
+  const wpns=weaponChoices();
+  if(S.wpn&&!wpns.includes(S.wpn))S.wpn=wpns[0]||'alw';
   $('wpnbox').hidden=wpns.length<2;
-  seg('wpnseg','wpn',S.wpn,wpns.map(w=>[w,WPN[w]||w]));
+  seg('wpnseg','wpn',S.wpn,[['', 'Any']].concat(wpns.map(w=>[w,WPN[w]||w])));
   const mx=maxPts();S.pts=Math.max(0,Math.min(S.pts,mx));$('pv').textContent=S.pts;
   $('ptnote').textContent=mx?`The stepper stops at ${mx}, the highest level in the 2025 tables for this category. A higher total is not treated as a draw.`:'This category has no 2025 table for these choices.';
   $('empty').hidden=rows().length>0;
@@ -244,7 +258,8 @@ if(Q.get('unit'))S.unit=Q.get('unit');
 if(Q.get('sx'))S.sx=Q.get('sx');
 if(Q.get('live')==='nr'||Q.get('live')==='res')S.live=Q.get('live');
 if(Q.get('who'))S.who=Q.get('who');
-if(Q.get('wpn'))S.wpn=Q.get('wpn');
+if(Q.get('wpn')==='all')S.wpn='';
+else if(Q.get('wpn'))S.wpn=Q.get('wpn');
 if(Q.get('pts'))S.pts=+Q.get('pts')||0;
 if(Q.get('ord')==='hard'||Q.get('ord')==='easy')S.ord=Q.get('ord');
 if(Q.get('tab')==='map')S.tab='map';
